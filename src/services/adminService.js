@@ -399,7 +399,10 @@ export const adminService = {
       return {
         ...order,
         date: order.created_at,
-        customer: order.shipping_name || getCustomerName(profile),
+        customer: order.shippingName || order.shipping_name || getCustomerName(profile),
+        email: profile?.email || 'N/A',
+        phone: order.shippingPhone || order.shipping_phone || profile?.phone || 'N/A',
+        shippingAddress: order.shippingAddress || order.shipping_address || 'Address not provided',
         items: order.order_items?.reduce((sum, item) => sum + Number(item.quantity || 0), 0) || order.order_items?.length || 0,
         total: Number(order.total_amount || 0),
         status: normalizeStatus(order.status),
@@ -465,7 +468,7 @@ export const adminService = {
       const profile = profiles[invoice.orders?.user_id || invoice.customer_id];
       return {
         ...invoice,
-        customer: invoice.orders?.shipping_name || getCustomerName(profile),
+        customer: invoice.orders?.shippingName || invoice.orders?.shipping_name || getCustomerName(profile),
         total_amount: invoice.orders?.total_amount || invoice.total_amount || 0,
         payment_status: invoice.orders?.payment_status || 'unpaid',
         pdf_url: invoice.pdf_url || invoice.invoice_url

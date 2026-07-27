@@ -195,9 +195,9 @@ const OrderDetailsPage = () => {
                 <h3 className="font-bold text-lg">Shipping Address</h3>
               </div>
               <div className="text-slate-600 dark:text-slate-400 space-y-1">
-                <p className="font-semibold text-slate-900 dark:text-white">{order.shipping_name}</p>
-                <p>{order.shipping_addr}</p>
-                <p>{order.shipping_phone}</p>
+                <p className="font-semibold text-slate-900 dark:text-white">{order.shippingName || order.shipping_name}</p>
+                <p>{order.shippingAddress || order.shipping_address || order.shipping_addr}</p>
+                <p>{order.shippingPhone || order.shipping_phone}</p>
               </div>
             </div>
 

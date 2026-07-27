@@ -12,7 +12,8 @@ const createOrder = async (orderData) => {
     
     const {
       items, total_amount, payment_status,
-      shipping_city, shipping_postal_code, notes
+      shippingName, shippingPhone, shippingAddress,
+      shippingCity, shippingPostalCode, notes
     } = orderData;
     
     const { data: order, error: orderError } = await supabase.from('orders').insert({
@@ -20,11 +21,11 @@ const createOrder = async (orderData) => {
       total_amount,
       payment_status: payment_status || 'unpaid',
       status: 'pending',
-      shipping_name: shipping_name || null,
-      shipping_phone: shipping_phone || null,
-      shipping_address: shipping_address || null,
-      shipping_city: shipping_city || null,
-      shipping_postal_code: shipping_postal_code || null,
+      shipping_name: shippingName || null,
+      shipping_phone: shippingPhone || null,
+      shipping_address: shippingAddress || null,
+      shipping_city: shippingCity || null,
+      shipping_postal_code: shippingPostalCode || null,
       notes: notes || null,
     }).select().single();
     
@@ -57,7 +58,15 @@ const getOrders = async () => {
     
     const { data, error } = await supabase.from('orders').select('*').eq('user_id', userId).order('created_at', { ascending: false });
     if (error) throw error;
-    return { success: true, data: { orders: data } };
+    const mappedData = data.map(order => ({
+      ...order,
+      shippingName: order.shipping_name,
+      shippingPhone: order.shipping_phone,
+      shippingAddress: order.shipping_address,
+      shippingCity: order.shipping_city,
+      shippingPostalCode: order.shipping_postal_code,
+    }));
+    return { success: true, data: { orders: mappedData } };
   } catch (error) {
     return { success: false, message: error.message };
   }
@@ -80,7 +89,17 @@ const getOrderDetails = async (orderId) => {
       line_total: item.price * item.quantity
     }));
     
-    return { success: true, data: { order: { ...order, items: formattedItems } } };
+    const formattedOrder = {
+      ...order,
+      shippingName: order.shipping_name,
+      shippingPhone: order.shipping_phone,
+      shippingAddress: order.shipping_address,
+      shippingCity: order.shipping_city,
+      shippingPostalCode: order.shipping_postal_code,
+      items: formattedItems
+    };
+
+    return { success: true, data: { order: formattedOrder } };
   } catch (error) {
     return { success: false, message: error.message };
   }

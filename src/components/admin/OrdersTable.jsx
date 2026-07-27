@@ -286,7 +286,7 @@ const OrdersTable = () => {
                   </div>
                   <div className="col-span-2">
                     <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Shipping Address</p>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">{selectedOrder.shipping_address || 'Address not provided'}</p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-white">{selectedOrder.shippingAddress || selectedOrder.shipping_address || 'Address not provided'}</p>
                   </div>
                 </div>
               </div>
