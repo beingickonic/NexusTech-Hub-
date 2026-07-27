@@ -9,11 +9,14 @@ const PaymentsDashboard = () => {
   const [filter, setFilter] = useState('all'); // all, paid, pending, failed
   const [search, setSearch] = useState('');
 
+  const [selectedPayload, setSelectedPayload] = useState(null);
+
   const fetchPayments = async () => {
     setLoading(true);
+    // Join payment_callbacks to get receipt and phone number for searching
     const { data: paymentsData } = await supabase
       .from('payments')
-      .select('*, profiles(full_name, email)')
+      .select('*, profiles(full_name, email), payment_callbacks(mpesa_receipt, phone_number, raw_payload)')
       .order('created_at', { ascending: false });
       
     const { data: logsData } = await supabase
@@ -41,15 +44,44 @@ const PaymentsDashboard = () => {
   };
 
   const getProviderIcon = (provider) => {
-    // Return simple text badges for providers
     return <span className="uppercase text-xs font-bold text-slate-500">{provider}</span>;
   };
 
   const filteredPayments = payments.filter(p => {
     if (filter !== 'all' && p.status !== filter) return false;
-    if (search && !p.transaction_reference?.toLowerCase().includes(search.toLowerCase()) && !p.profiles?.full_name?.toLowerCase().includes(search.toLowerCase())) return false;
+    if (search) {
+      const s = search.toLowerCase();
+      const matchRef = p.transaction_reference?.toLowerCase().includes(s);
+      const matchName = p.profiles?.full_name?.toLowerCase().includes(s);
+      // callbacks might be an array depending on how supabase joins 1:many
+      const callbacks = Array.isArray(p.payment_callbacks) ? p.payment_callbacks : (p.payment_callbacks ? [p.payment_callbacks] : []);
+      const matchReceipt = callbacks.some(c => c.mpesa_receipt?.toLowerCase().includes(s) || c.phone_number?.includes(s));
+      if (!matchRef && !matchName && !matchReceipt) return false;
+    }
     return true;
   });
+
+  const handleExportCSV = () => {
+    const headers = ["ID", "Reference", "Order ID", "Customer", "Amount", "Status", "Date", "Receipt", "Phone"];
+    const rows = filteredPayments.map(p => {
+      const callbacks = Array.isArray(p.payment_callbacks) ? p.payment_callbacks : (p.payment_callbacks ? [p.payment_callbacks] : []);
+      const receipt = callbacks[0]?.mpesa_receipt || '';
+      const phone = callbacks[0]?.phone_number || '';
+      return [
+        p.id, p.transaction_reference, p.order_id, p.profiles?.full_name || 'Guest',
+        p.amount, p.status, new Date(p.created_at).toISOString(), receipt, phone
+      ].join(',');
+    });
+    
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "payments_export.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const totalRevenue = payments.filter(p => p.status === 'paid').reduce((sum, p) => sum + p.amount, 0);
 
@@ -134,6 +166,12 @@ const PaymentsDashboard = () => {
                 <option value="pending">Pending</option>
                 <option value="failed">Failed</option>
               </select>
+              <button 
+                onClick={handleExportCSV}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                Export CSV
+              </button>
             </div>
           </div>
 
@@ -147,6 +185,7 @@ const PaymentsDashboard = () => {
                   <th className="px-6 py-4">Provider</th>
                   <th className="px-6 py-4">Status</th>
                   <th className="px-6 py-4">Date</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
@@ -176,10 +215,21 @@ const PaymentsDashboard = () => {
                     <td className="px-6 py-4 text-sm text-slate-500">
                       {new Date(payment.created_at).toLocaleDateString()}
                     </td>
+                    <td className="px-6 py-4 text-right">
+                      <button 
+                        onClick={() => {
+                          const callbacks = Array.isArray(payment.payment_callbacks) ? payment.payment_callbacks : (payment.payment_callbacks ? [payment.payment_callbacks] : []);
+                          setSelectedPayload(callbacks[0]?.raw_payload || { message: "No payload available" });
+                        }}
+                        className="text-orange-500 hover:text-orange-600 font-medium text-xs underline"
+                      >
+                        View Payload
+                      </button>
+                    </td>
                   </tr>
                 )) : (
                   <tr>
-                    <td colSpan="6" className="px-6 py-12 text-center text-slate-500">
+                    <td colSpan="7" className="px-6 py-12 text-center text-slate-500">
                       No payments found.
                     </td>
                   </tr>
@@ -213,6 +263,36 @@ const PaymentsDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Payload Modal */}
+      {selectedPayload && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-2xl max-h-[80vh] flex flex-col shadow-2xl">
+            <div className="flex justify-between items-center p-6 border-b border-slate-200 dark:border-slate-700">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Raw Callback Payload</h3>
+              <button 
+                onClick={() => setSelectedPayload(null)}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-white"
+              >
+                <XCircle size={24} />
+              </button>
+            </div>
+            <div className="p-6 overflow-y-auto flex-1 bg-slate-50 dark:bg-slate-900/50">
+              <pre className="text-xs font-mono text-slate-800 dark:text-slate-300 whitespace-pre-wrap break-words">
+                {JSON.stringify(selectedPayload, null, 2)}
+              </pre>
+            </div>
+            <div className="p-4 border-t border-slate-200 dark:border-slate-700 text-right">
+              <button 
+                onClick={() => setSelectedPayload(null)}
+                className="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -49,6 +49,61 @@ const OrderDetailsPage = () => {
     year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
   });
 
+  const handlePrintInvoice = () => {
+    const printWindow = window.open('', '_blank');
+    const html = `
+      <html>
+        <head>
+          <title>Invoice - ${order.order_number}</title>
+          <style>
+            body { font-family: sans-serif; padding: 40px; color: #333; }
+            h1 { color: #f97316; }
+            .header { display: flex; justify-content: space-between; border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+            .table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            .table th, .table td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
+            .total { font-weight: bold; font-size: 1.2em; text-align: right; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div>
+              <h1>NexusTech Hub</h1>
+              <p>Order Number: ${order.order_number}</p>
+              <p>Date: ${date}</p>
+            </div>
+            <div style="text-align: right">
+              <h3>INVOICE</h3>
+              <p>Status: ${order.payment_status?.toUpperCase() || 'UNPAID'}</p>
+            </div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${order.items?.map(item => `
+                <tr>
+                  <td>${item.product_name}</td>
+                  <td>${item.quantity}</td>
+                  <td>KES ${item.line_total}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <p class="total">Total: KES ${order.total_amount}</p>
+        </body>
+      </html>
+    `;
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+  };
+
   return (
     <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6 max-w-5xl">
@@ -66,7 +121,10 @@ const OrderDetailsPage = () => {
             <p className="text-slate-500 dark:text-slate-400 mt-2">Placed on {date}</p>
           </div>
           
-          <button className="flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-xl transition-colors font-medium">
+          <button 
+            onClick={handlePrintInvoice}
+            className="flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-xl transition-colors font-medium"
+          >
             <Download size={18} />
             Download Invoice
           </button>
