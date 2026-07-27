@@ -47,6 +47,7 @@ const AdminInventoryPage = lazy(() => import('./pages/admin/InventoryPage'));
 const AdminSettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
 const AdminReviewsPage = lazy(() => import('./pages/admin/ReviewsPage'));
 const AdminTicketsPage = lazy(() => import('./pages/admin/TicketsPage'));
+const AdminPaymentsDashboard = lazy(() => import('./pages/admin/PaymentsDashboard'));
 
 const PaymentLoaderPage = lazy(() => import('./pages/payment/PaymentLoaderPage'));
 const PaymentSuccessPage = lazy(() => import('./pages/payment/PaymentSuccessPage'));
@@ -119,10 +120,12 @@ function App() {
                   <Route path="orders" element={<AdminOrdersPage />} />
                   <Route path="inventory" element={<AdminInventoryPage />} />
                   <Route path="reviews" element={<AdminReviewsPage />} />
+                  <Route path="refunds" element={<AdminRefundsPage />} />
                   
                   {/* Strict Admin-only Routes nested */}
                   <Route path="customers" element={<AdminRoute><AdminCustomersPage /></AdminRoute>} />
                   <Route path="invoices" element={<AdminRoute><AdminInvoicesPage /></AdminRoute>} />
+                  <Route path="payments" element={<AdminRoute><AdminPaymentsDashboard /></AdminRoute>} />
                   <Route path="reports" element={<AdminRoute><AdminReportsPage /></AdminRoute>} />
                   <Route path="tickets" element={<AdminRoute><AdminTicketsPage /></AdminRoute>} />
                   <Route path="settings" element={<AdminRoute><AdminSettingsPage /></AdminRoute>} />

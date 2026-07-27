@@ -84,25 +84,13 @@ const PaymentsDashboard = () => {
         
         <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-medium text-slate-500 dark:text-slate-400">Successful</h3>
+            <h3 className="font-medium text-slate-500 dark:text-slate-400">Success Rate</h3>
             <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-500">
               <CheckCircle size={20} />
             </div>
           </div>
           <p className="text-3xl font-bold text-slate-900 dark:text-white">
-            {payments.filter(p => p.status === 'paid').length}
-          </p>
-        </div>
-
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-medium text-slate-500 dark:text-slate-400">Pending / Processing</h3>
-            <div className="w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center text-yellow-500">
-              <Clock size={20} />
-            </div>
-          </div>
-          <p className="text-3xl font-bold text-slate-900 dark:text-white">
-            {payments.filter(p => ['pending', 'processing'].includes(p.status)).length}
+            {payments.length > 0 ? Math.round((payments.filter(p => p.status === 'paid').length / payments.length) * 100) : 0}%
           </p>
         </div>
 

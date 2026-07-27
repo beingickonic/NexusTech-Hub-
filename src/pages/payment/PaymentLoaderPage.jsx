@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import paymentService from '../../services/paymentService';
+import { supabase } from '../../services/supabaseClient';
 
 const PaymentLoaderPage = () => {
   const { checkoutRequestId } = useParams();
@@ -12,45 +13,65 @@ const PaymentLoaderPage = () => {
   useEffect(() => {
     if (!checkoutRequestId) return;
 
-    const pollPaymentStatus = async () => {
+    // Supabase Real-time Subscription for instant M-Pesa Callback detection
+    const channel = supabase
+      .channel(`payment-status-${checkoutRequestId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'payments',
+          filter: `transaction_reference=eq.${checkoutRequestId}`
+        },
+        (payload) => {
+          const newStatus = payload.new.status;
+          if (newStatus === 'paid') {
+            setStatus('successful');
+            setTimeout(() => navigate(`/payment/success/${payload.new.id}`), 1500);
+          } else if (newStatus === 'failed' || newStatus === 'cancelled') {
+            setStatus('failed');
+            setTimeout(() => navigate(`/payment/failed/${payload.new.order_id}`), 1500);
+          }
+        }
+      )
+      .subscribe();
+
+    // Fallback polling and timeout (M-Pesa STK push usually times out after ~60-90 seconds)
+    const interval = setInterval(async () => {
+      setAttempts(prev => {
+        const next = prev + 1;
+        if (next >= 40) { // Timeout after ~120 seconds
+          setStatus('timeout');
+          clearInterval(interval);
+        }
+        return next;
+      });
+
       try {
         const res = await paymentService.verifyPayment(checkoutRequestId);
         if (res.success && res.data.status) {
           const currentStatus = res.data.status;
-          
-          if (currentStatus === 'successful') {
-            // Wait a brief moment to show success animation, then redirect
-            setStatus('successful');
-            setTimeout(() => {
-              navigate(`/payment/success/${res.data.payment_id}`);
-            }, 1500);
-            return;
+          if (currentStatus === 'paid' || currentStatus === 'successful') {
+             setStatus('successful');
+             clearInterval(interval);
+             setTimeout(() => navigate(`/payment/success/${res.data.payment_id}`), 1500);
           } else if (currentStatus === 'failed' || currentStatus === 'cancelled') {
-            setStatus('failed');
-            setTimeout(() => {
-              navigate(`/payment/failed/${res.data.order_id}`);
-            }, 1500);
-            return;
+             setStatus('failed');
+             clearInterval(interval);
+             setTimeout(() => navigate(`/payment/failed/${res.data.order_id}`), 1500);
           }
         }
-      } catch (error) {
-        console.error("Polling error", error);
+      } catch (e) {
+        // Ignore polling errors to let realtime handle it
       }
+    }, 3000);
 
-      // If still processing and under 30 attempts (approx 60s), poll again
-      if (attempts < 30) {
-        setTimeout(() => {
-          setAttempts(prev => prev + 1);
-        }, 3000);
-      } else {
-        setStatus('timeout');
-      }
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
-
-    if (status === 'processing') {
-      pollPaymentStatus();
-    }
-  }, [checkoutRequestId, attempts, navigate, status]);
+  }, [checkoutRequestId, navigate]);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">

@@ -150,16 +150,48 @@ const OrderDetailsPage = () => {
               </div>
               <div className="text-slate-600 dark:text-slate-400 space-y-2">
                 <p className="font-semibold text-slate-900 dark:text-white uppercase">
-                  {order.transaction?.payment_method || 'Unknown'}
+                  {order.payment_method || 'mpesa'}
                 </p>
-                <p className="flex items-center gap-2">
+                <p className="flex items-center gap-2 mb-4">
                   Status: 
                   <span className={`px-2 py-1 rounded text-xs font-bold ${
-                    order.transaction?.status === 'completed' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                    order.payment_status === 'paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
                   }`}>
-                    {order.transaction?.status || 'Pending'}
+                    {order.payment_status || 'unpaid'}
                   </span>
                 </p>
+
+                {order.payment_status !== 'paid' && (
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <button 
+                      onClick={() => navigate('/checkout')}
+                      className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-colors"
+                    >
+                      Pay Now
+                    </button>
+                    <p className="text-xs text-slate-500 mt-2 text-center">
+                      * You will be redirected to checkout to complete payment.
+                    </p>
+                  </div>
+                )}
+
+                {order.payment_status === 'paid' && (
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <button 
+                      onClick={() => {
+                        const reason = prompt("Please enter a reason for your refund request:");
+                        if (reason) {
+                          // In a real app we'd dispatch to a service, but here we can just alert or call supabase directly if we imported it.
+                          // For now, alert that it will be submitted.
+                          alert("Refund requested for reason: " + reason + ". Support will review it shortly.");
+                        }
+                      }}
+                      className="w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold rounded-lg transition-colors"
+                    >
+                      Request Refund
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

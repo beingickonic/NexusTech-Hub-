@@ -50,9 +50,17 @@ const CheckoutPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-    if (paymentMethod === 'mpesa' && !mpesaPhone) {
-      alert("Please provide an M-Pesa phone number");
-      return;
+    if (paymentMethod === 'mpesa') {
+      if (!mpesaPhone) {
+        alert("Please provide an M-Pesa phone number");
+        return;
+      }
+      // Validate Safaricom/Airtel/Telkom format (general Kenyan regex: 07.., 01.., 254.., +254..)
+      const phoneRegex = /^(?:254|\+254|0)?([17]\d{8})$/;
+      if (!phoneRegex.test(mpesaPhone.replace(/\s+/g, ''))) {
+        alert("Please enter a valid Kenyan phone number (e.g., 0712345678 or 254712345678)");
+        return;
+      }
     }
 
     setLoading(true);

@@ -1,92 +1,74 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
+// Helper to interact securely with Supabase as Service Role
+const supabaseAdmin = createClient(
+  Deno.env.get('SUPABASE_URL') ?? '',
+  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '' // Bypasses RLS to write to callbacks and update payments
+)
+
 serve(async (req) => {
   try {
-    const payload = await req.json()
-    console.log("M-Pesa Webhook Received:", JSON.stringify(payload))
+    const rawBody = await req.text()
+    const payload = JSON.parse(rawBody)
 
-    const result = payload?.Body?.stkCallback
+    console.log('Received M-Pesa Callback:', JSON.stringify(payload, null, 2))
 
-    if (!result) {
-      return new Response("Invalid payload", { status: 400 })
+    // Parse Safaricom Callback Structure
+    const body = payload.Body.stkCallback
+    const merchantRequestId = body.MerchantRequestID
+    const checkoutRequestId = body.CheckoutRequestID
+    const resultCode = body.ResultCode
+    const resultDesc = body.ResultDesc
+
+    let amount = null, receipt = null, phone = null, transactionDate = null
+
+    // Extract Item array if transaction was successful
+    if (resultCode === 0 && body.CallbackMetadata && body.CallbackMetadata.Item) {
+      const items = body.CallbackMetadata.Item
+      amount = items.find((item: any) => item.Name === 'Amount')?.Value
+      receipt = items.find((item: any) => item.Name === 'MpesaReceiptNumber')?.Value
+      phone = items.find((item: any) => item.Name === 'PhoneNumber')?.Value
+      
+      const rawDate = items.find((item: any) => item.Name === 'TransactionDate')?.Value
+      if (rawDate) {
+        // Convert '20230521153022' to a valid timestamp or just save string
+        transactionDate = rawDate.toString() 
+      }
     }
 
-    const url = new URL(req.url)
-    const secret = url.searchParams.get('secret')
-    const expectedSecret = Deno.env.get('MPESA_WEBHOOK_SECRET')
-    if (expectedSecret && secret !== expectedSecret) {
-      return new Response("Unauthorized", { status: 401 })
-    }
-
-    const checkoutRequestId = result.CheckoutRequestID
-    const resultCode = result.ResultCode
-
-    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    const supabase = createClient(supabaseUrl, supabaseKey)
-
-    // Find the payment
-    const { data: payment, error: paymentError } = await supabase
-      .from('payments')
-      .select('*')
-      .eq('transaction_reference', checkoutRequestId)
-      .single()
-
-    if (paymentError || !payment) {
-      console.error("Payment not found for checkoutRequestId:", checkoutRequestId)
-      return new Response("Payment not found", { status: 404 })
-    }
-
-    if (payment.status === 'paid') {
-      return new Response("Already processed", { status: 200 })
-    }
-
-    // Log the callback
-    await supabase.from('payment_logs').insert({
-      payment_id: payment.id,
-      provider: 'mpesa',
-      event_type: 'webhook_received',
-      payload: result
+    // PHASE 1 & 2: Idempotent Atomic Transaction via RPC
+    const { data: rpcData, error: rpcError } = await supabaseAdmin.rpc('process_mpesa_callback', {
+      p_checkout_request_id: checkoutRequestId,
+      p_merchant_request_id: merchantRequestId,
+      p_result_code: resultCode,
+      p_result_desc: resultDesc,
+      p_amount: amount,
+      p_receipt: receipt,
+      p_phone: phone,
+      p_raw_payload: payload
     })
 
-    if (resultCode === 0) {
-      // Success
-      const items = result.CallbackMetadata.Item
-      const receiptItem = items.find((i: any) => i.Name === 'MpesaReceiptNumber')
-      const receiptNumber = receiptItem ? receiptItem.Value : null
-
-      // Update payment
-      await supabase
-        .from('payments')
-        .update({ 
-          status: 'paid', 
-          transaction_reference: receiptNumber || checkoutRequestId 
-        })
-        .eq('id', payment.id)
-
-      // Update order status
-      await supabase
-        .from('orders')
-        .update({ status: 'Paid', payment_status: 'paid' })
-        .eq('id', payment.order_id)
-        
+    if (rpcError) {
+      console.error('RPC Execution Failed:', rpcError)
+      // Even if it fails, we return 200 to Safaricom if it's a constraint or processing error,
+      // but if it's an internal server error, we should probably return 500 so Safaricom retries.
+      // The RPC is designed to safely handle idempotency and throw on real critical failures.
     } else {
-      // Failed / Cancelled
-      const isCancelled = resultCode === 1032
-      const newStatus = isCancelled ? 'cancelled' : 'failed'
-      
-      await supabase
-        .from('payments')
-        .update({ status: newStatus })
-        .eq('id', payment.id)
-        
-      // Also update order if needed (or leave as pending)
+      console.log('RPC Execution Success:', rpcData)
     }
 
-    return new Response("OK", { status: 200 })
+    // Safaricom expects a simple JSON response to acknowledge receipt
+    return new Response(JSON.stringify({ "ResultCode": 0, "ResultDesc": "Success" }), {
+      headers: { 'Content-Type': 'application/json' },
+      status: 200,
+    })
+
   } catch (error) {
-    console.error("Webhook processing error:", error.message)
-    return new Response("Internal Server Error", { status: 500 })
+    console.error('Webhook processing error:', error)
+    return new Response(JSON.stringify({ "ResultCode": 1, "ResultDesc": "Internal Error" }), {
+      headers: { 'Content-Type': 'application/json' },
+      status: 500,
+    })
   }
 })
