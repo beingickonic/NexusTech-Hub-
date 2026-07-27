@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   User, FolderOpen, BarChart2, Package, Heart,
   MessageSquare, MessageCircle, Settings, LogOut,
-  Menu, X, Bell, ChevronRight, ShieldCheck
+  ChevronRight, ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
 import { supabase } from '../../services/supabaseClient';
@@ -98,7 +98,6 @@ const SideNavItem = ({ item, onClick }) => (
 const CustomerDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const [orderCount, setOrderCount] = useState(0);
 
@@ -143,7 +142,7 @@ const CustomerDashboard = () => {
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {NAV_ITEMS.map(item => (
-          <SideNavItem key={item.path} item={item} onClick={() => mobile && setSidebarOpen(false)} />
+          <SideNavItem key={item.path} item={item} />
         ))}
       </nav>
 
@@ -152,7 +151,6 @@ const CustomerDashboard = () => {
         {orderCount > 0 && (
           <NavLink
             to="orders"
-            onClick={() => mobile && setSidebarOpen(false)}
             className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#FF6B57]/10 border border-[#FF6B57]/20 text-sm"
           >
             <span className="text-slate-600 dark:text-gray-300">Active Orders</span>
@@ -171,60 +169,9 @@ const CustomerDashboard = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#070B1A] flex flex-col">
-      {/* Mobile top bar */}
-      <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-white dark:bg-[#0C1220] border-b border-slate-200 dark:border-[#1F2937] sticky top-0 z-30">
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="p-2 rounded-xl text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
-          aria-label="Open menu"
-        >
-          <Menu size={22} />
-        </button>
-        <span className="text-slate-900 dark:text-white font-semibold text-sm">My Account</span>
-        <button
-          className="p-2 rounded-xl text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
-          aria-label="Notifications"
-        >
-          <Bell size={20} />
-        </button>
-      </div>
-
-      <div className="flex flex-1 overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#070B1A] flex flex-col">      <div className="flex flex-1 overflow-hidden">
         {/* Desktop Sidebar */}
         <Sidebar />
-
-        {/* Mobile Sidebar Drawer */}
-        <AnimatePresence>
-          {sidebarOpen && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
-                onClick={() => setSidebarOpen(false)}
-              />
-              <motion.div
-                initial={{ x: -280 }}
-                animate={{ x: 0 }}
-                exit={{ x: -280 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                className="fixed left-0 top-0 bottom-0 z-50 w-72 flex flex-col lg:hidden"
-              >
-                <div className="absolute top-4 right-4 z-10">
-                  <button
-                    onClick={() => setSidebarOpen(false)}
-                    className="p-2 rounded-xl text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-                <Sidebar mobile />
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
 
         {/* Main content */}
         <main className="flex-1 overflow-y-auto">

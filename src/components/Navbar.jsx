@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Heart, User, ShoppingCart, Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
+import { Search, Heart, User, ShoppingCart, Menu, X, Sun, Moon, ChevronDown, FolderOpen, BarChart2, Package, MessageSquare, MessageCircle, Settings, LogOut } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../auth/AuthContext';
@@ -254,32 +254,71 @@ const Navbar = () => {
 
                 {/* Nav Links */}
                 <nav className="flex flex-col gap-1">
-                  {[
-                    { to: '/products', label: 'Shop All' },
-                    { to: '/about', label: 'About Us' },
-                    { to: '/contact', label: 'Contact Us' },
-                    { to: '/wishlist', label: 'Wishlist', icon: <Heart size={18} /> },
-                    { to: user ? '/profile' : '/login', label: user ? 'My Profile' : 'Sign In', icon: <User size={18} /> },
-                  ].map(({ to, label, icon }) => (
-                    <Link
-                      key={to}
-                      to={to}
-                      onClick={closeMobile}
-                      className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-base"
-                    >
-                      <span>{label}</span>
-                      {icon && <span className="text-slate-400">{icon}</span>}
-                    </Link>
-                  ))}
+                  {user ? (
+                    <>
+                      {[
+                        { to: '/profile/account', label: 'My Account', icon: <User size={18} /> },
+                        { to: '/profile/assets', label: 'My Assets', icon: <FolderOpen size={18} /> },
+                        { to: '/profile/business', label: 'Business', icon: <BarChart2 size={18} /> },
+                        { to: '/profile/orders', label: 'My Orders', icon: <Package size={18} /> },
+                        { to: '/wishlist', label: 'Wish List', icon: <Heart size={18} /> },
+                        { to: '/profile/messages', label: 'Messages', icon: <MessageSquare size={18} /> },
+                        { to: '/profile/chats', label: 'Chats with Sellers', icon: <MessageCircle size={18} /> },
+                        { to: '/profile/settings', label: 'Settings', icon: <Settings size={18} /> },
+                      ].map(({ to, label, icon }) => (
+                        <Link
+                          key={to}
+                          to={to}
+                          onClick={closeMobile}
+                          className="flex items-center gap-3 py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-base"
+                        >
+                          <span className="text-slate-500 dark:text-gray-400">{icon}</span>
+                          <span>{label}</span>
+                        </Link>
+                      ))}
 
-                  {user && (user.role === 'Admin' || user.role === 'super_admin') && (
-                    <Link
-                      to="/admin/dashboard"
-                      onClick={closeMobile}
-                      className="flex items-center justify-between py-3 px-3 rounded-xl text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 transition-colors font-semibold text-base mt-2"
-                    >
-                      Admin Dashboard
-                    </Link>
+                      {user && (user.role === 'Admin' || user.role === 'super_admin') && (
+                        <Link
+                          to="/admin/dashboard"
+                          onClick={closeMobile}
+                          className="flex items-center gap-3 py-3 px-3 rounded-xl text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 transition-colors font-semibold text-base mt-2"
+                        >
+                          <span className="text-orange-400"><User size={18} /></span>
+                          Admin Dashboard
+                        </Link>
+                      )}
+
+                      <button
+                        onClick={() => {
+                          closeMobile();
+                          logout();
+                        }}
+                        className="flex items-center gap-3 w-full py-3 px-3 mt-4 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors font-medium text-base text-left"
+                      >
+                        <span className="text-red-400"><LogOut size={18} /></span>
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      {[
+                        { to: '/products', label: 'Shop All' },
+                        { to: '/about', label: 'About Us' },
+                        { to: '/contact', label: 'Contact Us' },
+                        { to: '/wishlist', label: 'Wishlist', icon: <Heart size={18} /> },
+                        { to: '/login', label: 'Sign In', icon: <User size={18} /> },
+                      ].map(({ to, label, icon }) => (
+                        <Link
+                          key={to}
+                          to={to}
+                          onClick={closeMobile}
+                          className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-base"
+                        >
+                          <span>{label}</span>
+                          {icon && <span className="text-slate-400">{icon}</span>}
+                        </Link>
+                      ))}
+                    </>
                   )}
                 </nav>
               </div>
