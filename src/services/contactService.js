@@ -15,6 +15,7 @@ export const submitContactForm = async ({ name, email, subject, message }) => {
       email: email.trim().toLowerCase(),
       subject: subject.trim(),
       message: message.trim(),
+      priority: 'normal',
       status: 'open',
     });
 

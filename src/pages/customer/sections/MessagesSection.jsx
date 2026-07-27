@@ -45,17 +45,15 @@ const NewTicketModal = ({ onClose, onCreated }) => {
     try {
       const { data: ticket, error } = await supabase.from('support_tickets').insert({
         user_id: user.id,
+        name: user.full_name || 'Customer',
+        email: user.email || '',
         subject: form.subject,
+        message: form.message,
         priority: form.priority,
         status: 'open',
       }).select().single();
       if (error) throw error;
 
-      await supabase.from('ticket_messages').insert({
-        ticket_id: ticket.id,
-        user_id: user.id,
-        message: form.message,
-      });
       toast.success('Ticket submitted! We\'ll respond shortly.');
       onCreated();
       onClose();
@@ -131,8 +129,6 @@ const MessagesSection = () => {
   const [showNew, setShowNew] = useState(false);
   const [selected, setSelected] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [reply, setReply] = useState('');
-  const [sending, setSending] = useState(false);
 
   const fetchTickets = async () => {
     if (!user) return;
@@ -145,18 +141,22 @@ const MessagesSection = () => {
 
   const openTicket = async (ticket) => {
     setSelected(ticket);
-    const { data } = await supabase.from('ticket_messages').select('*').eq('ticket_id', ticket.id).order('created_at');
-    setMessages(data || []);
-  };
-
-  const handleReply = async (e) => {
-    e.preventDefault();
-    if (!reply.trim() || !selected) return;
-    setSending(true);
-    const { data, error } = await supabase.from('ticket_messages').insert({ ticket_id: selected.id, user_id: user.id, message: reply.trim() }).select().single();
-    if (!error) { setMessages(prev => [...prev, data]); setReply(''); }
-    else toast.error('Failed to send message');
-    setSending(false);
+    const msgs = [];
+    msgs.push({
+      id: `${ticket.id}-user`,
+      user_id: ticket.user_id,
+      message: ticket.message,
+      created_at: ticket.created_at,
+    });
+    if (ticket.admin_reply) {
+      msgs.push({
+        id: `${ticket.id}-admin`,
+        user_id: 'admin',
+        message: ticket.admin_reply,
+        created_at: ticket.updated_at,
+      });
+    }
+    setMessages(msgs);
   };
 
   const statusConfig = (s) => STATUS_ICONS[s] || STATUS_ICONS.open;
@@ -235,15 +235,7 @@ const MessagesSection = () => {
                     );
                   })}
                 </div>
-                <form onSubmit={handleReply} className="p-4 border-t border-slate-200 dark:border-[#1F2937] flex gap-2">
-                  <input value={reply} onChange={e => setReply(e.target.value)}
-                    placeholder="Type a reply..."
-                    className="flex-1 bg-white dark:bg-[#0C1220] border border-slate-200 dark:border-[#1F2937] text-slate-900 dark:text-white rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#FF6B57] transition-colors placeholder-gray-600" />
-                  <button type="submit" disabled={sending || !reply.trim()}
-                    className="p-2.5 rounded-xl bg-[#FF6B57] hover:bg-[#ff5a2e] text-slate-900 dark:text-white transition-colors disabled:opacity-50">
-                    {sending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
-                  </button>
-                </form>
+                {/* Reply Form Removed as per single-message schema */}
               </>
             ) : (
               <div className="flex-1 flex items-center justify-center text-slate-400 dark:text-gray-600">
