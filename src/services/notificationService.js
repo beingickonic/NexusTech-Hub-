@@ -4,7 +4,7 @@ import { supabase } from './supabaseClient';
 
 export const initializePushNotifications = async () => {
   if (!Capacitor.isNativePlatform()) {
-    console.log('Push notifications are only available on native Android/iOS devices.');
+    // Push notifications are only available on native Android/iOS devices.
     return false;
   }
 
@@ -19,7 +19,7 @@ export const initializePushNotifications = async () => {
     }
 
     if (permStatus.receive !== 'granted') {
-      console.warn('User denied push notification permissions.');
+      // User denied push notification permissions.
       return false;
     }
 
@@ -28,7 +28,7 @@ export const initializePushNotifications = async () => {
 
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', async (token) => {
-      console.log('Push registration success, token: ' + token.value);
+      // Push registration success
       
       // Store the token in Supabase against the current user
       const { data: { user } } = await supabase.auth.getUser();
@@ -39,25 +39,25 @@ export const initializePushNotifications = async () => {
 
     // Some issue with our setup and push will not work
     PushNotifications.addListener('registrationError', (error) => {
-      console.error('Error on push registration: ' + JSON.stringify(error));
+      // Error on push registration
     });
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived', (notification) => {
-      console.log('Push received: ' + JSON.stringify(notification));
+      // Push received
       // Could trigger a local toast or UI update here
     });
 
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
-      console.log('Push action performed: ' + JSON.stringify(notification));
+      // Push action performed
       // Could trigger deep link navigation based on notification.data payload
     });
 
     return true;
 
   } catch (error) {
-    console.error('Push notification initialization failed', error);
+    // Push notification initialization failed
     return false;
   }
 };
