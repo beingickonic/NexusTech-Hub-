@@ -1,5 +1,5 @@
 import React from 'react';
-import { DollarSign, ShoppingCart, Users, AlertCircle, TrendingUp, Mail } from 'lucide-react';
+import { DollarSign, ShoppingCart, Users, AlertCircle, TrendingUp, Mail, Headset } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const DashboardStats = ({ stats }) => {
@@ -53,6 +53,16 @@ const DashboardStats = ({ stats }) => {
       color: 'text-violet-500',
       bg: 'bg-violet-500/10',
       border: 'border-violet-500/20',
+    },
+    {
+      title: 'Active Tickets',
+      value: stats?.tickets ?? 0,
+      subtitle: 'Needs Attention',
+      trend: 'warning',
+      icon: Headset,
+      color: 'text-rose-500',
+      bg: 'bg-rose-500/10',
+      border: 'border-rose-500/20',
     }
   ];
 
@@ -74,7 +84,7 @@ const DashboardStats = ({ stats }) => {
       variants={container}
       initial="hidden"
       animate="show"
-      className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-6 mb-4 md:mb-8"
+      className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 md:gap-6 mb-4 md:mb-8"
     >
       {cards.map((card, index) => (
         <motion.div 

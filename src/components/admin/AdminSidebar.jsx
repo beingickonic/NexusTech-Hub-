@@ -9,7 +9,8 @@ import {
   LogOut, 
   Boxes,
   ReceiptText,
-  MessageSquare
+  MessageSquare,
+  Headset
 } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
 import { RoleGate } from '../../auth/ProtectedRoute';
@@ -34,6 +35,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
     { name: 'Reviews', path: '/admin/reviews', icon: MessageSquare },
     { name: 'Invoices', path: '/admin/invoices', icon: ReceiptText },
     { name: 'Reports', path: '/admin/reports', icon: BarChart3 },
+    { name: 'Support', path: '/admin/tickets', icon: Headset },
     { name: 'Settings', path: '/admin/settings', icon: Settings },
   ];
 
@@ -80,7 +82,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
               </NavLink>
             );
 
-            if (['Customers', 'Reports', 'Settings', 'Invoices'].includes(item.name)) {
+            if (['Customers', 'Reports', 'Settings', 'Invoices', 'Support'].includes(item.name)) {
               return (
                 <RoleGate key={item.name} allowedRoles={['Admin', 'super_admin']}>
                   {navLink}

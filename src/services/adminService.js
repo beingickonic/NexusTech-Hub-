@@ -107,7 +107,8 @@ export const adminService = {
         { count: pendingOrdersCount },
         { count: subscribersCount },
         { count: cashOrdersCount },
-        { data: weekOrders }
+        { data: weekOrders },
+        { count: activeTicketsCount }
       ] = await Promise.all([
         supabase.from('products').select('*', { count: 'exact', head: true }),
         supabase.from('orders').select('total_amount').gte('created_at', todayStr),
@@ -115,7 +116,8 @@ export const adminService = {
         supabase.from('orders').select('*', { count: 'exact', head: true }).in('status', ['pending', 'processing', 'awaiting_payment']),
         supabase.from('newsletter_subscribers').select('*', { count: 'exact', head: true }),
         supabase.from('orders').select('*', { count: 'exact', head: true }).in('payment_method', ['cash', 'cash_on_delivery', 'Cash On Delivery', 'Cash']),
-        supabase.from('orders').select('total_amount, created_at').gte('created_at', sevenDaysAgo.toISOString()).order('created_at', { ascending: true })
+        supabase.from('orders').select('total_amount, created_at').gte('created_at', sevenDaysAgo.toISOString()).order('created_at', { ascending: true }),
+        supabase.from('support_tickets').select('*', { count: 'exact', head: true }).in('status', ['open', 'pending'])
       ]);
 
       const totalRevenue = todayOrders?.reduce((sum, order) => sum + Number(order.total_amount || 0), 0) || 0;
@@ -148,13 +150,14 @@ export const adminService = {
           pendingOrders: pendingOrdersCount || 0,
           products: productsCount || 0,
           subscribers: subscribersCount || 0,
-          cashOrders: cashOrdersCount || 0
+          cashOrders: cashOrdersCount || 0,
+          tickets: activeTicketsCount || 0
         },
         chartData
       };
     } catch (error) {
       console.error('Dashboard stats error:', error);
-      return { status: 'error', stats: { revenue: 0, orders: 0, customers: 0, pendingOrders: 0, products: 0, subscribers: 0 }, chartData: [] };
+      return { status: 'error', stats: { revenue: 0, orders: 0, customers: 0, pendingOrders: 0, products: 0, subscribers: 0, tickets: 0 }, chartData: [] };
     }
   },
 
