@@ -122,8 +122,8 @@ const ReceiptPage = () => {
               <div className="flex-1">
                 <h4 className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wider">Payment Info</h4>
                 <div className="space-y-2 text-sm">
-                  <p className="flex justify-between max-w-xs"><span className="text-slate-500">Method:</span> <span className="font-bold text-slate-900 dark:text-white uppercase">{receipt.payment_method}</span></p>
-                  <p className="flex justify-between max-w-xs"><span className="text-slate-500">M-Pesa Ref:</span> <span className="font-mono font-bold text-slate-900 dark:text-white">{receipt.mpesa_receipt}</span></p>
+                  <p className="flex justify-between max-w-xs"><span className="text-slate-500">Method:</span> <span className="font-bold text-slate-900 dark:text-white uppercase">{receipt.provider || 'ONLINE'}</span></p>
+                  <p className="flex justify-between max-w-xs"><span className="text-slate-500">M-Pesa Ref:</span> <span className="font-mono font-bold text-slate-900 dark:text-white">{receipt.mpesa_receipt || receipt.payment_id}</span></p>
                   <p className="flex justify-between max-w-xs"><span className="text-slate-500">Status:</span> <span className="text-green-500 font-bold">Successful</span></p>
                 </div>
               </div>

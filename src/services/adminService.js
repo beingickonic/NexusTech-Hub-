@@ -115,7 +115,7 @@ export const adminService = {
         supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'Customer').gte('created_at', monthStr),
         supabase.from('orders').select('*', { count: 'exact', head: true }).in('status', ['pending', 'processing', 'awaiting_payment']),
         supabase.from('newsletter_subscribers').select('*', { count: 'exact', head: true }),
-        supabase.from('orders').select('*', { count: 'exact', head: true }).in('payment_method', ['cash', 'cash_on_delivery', 'Cash On Delivery', 'Cash']),
+        supabase.from('payments').select('*', { count: 'exact', head: true }).in('provider', ['cash', 'cash_on_delivery', 'Cash On Delivery', 'Cash']),
         supabase.from('orders').select('total_amount, created_at').gte('created_at', sevenDaysAgo.toISOString()).order('created_at', { ascending: true }),
         supabase.from('support_tickets').select('*', { count: 'exact', head: true }).in('status', ['open', 'pending'])
       ]);

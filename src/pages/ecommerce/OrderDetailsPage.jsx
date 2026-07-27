@@ -208,7 +208,7 @@ const OrderDetailsPage = () => {
               </div>
               <div className="text-slate-600 dark:text-slate-400 space-y-2">
                 <p className="font-semibold text-slate-900 dark:text-white uppercase">
-                  {order.payment_method || 'mpesa'}
+                  ONLINE PAYMENT
                 </p>
                 <p className="flex items-center gap-2 mb-4">
                   Status: 

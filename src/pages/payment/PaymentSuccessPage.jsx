@@ -59,7 +59,7 @@ const PaymentSuccessPage = () => {
             <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 mb-8 text-left border border-slate-200 dark:border-slate-700">
               <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
                 <span className="text-slate-500 dark:text-slate-400">Receipt Number</span>
-                <span className="font-semibold text-slate-900 dark:text-white">{receipt.receipt_number}</span>
+                <span className="font-semibold text-slate-900 dark:text-white">{receipt.mpesa_receipt || receipt.payment_id}</span>
               </div>
               <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
                 <span className="text-slate-500 dark:text-slate-400">Amount Paid</span>
@@ -67,7 +67,7 @@ const PaymentSuccessPage = () => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 dark:text-slate-400">Payment Method</span>
-                <span className="font-semibold text-slate-900 dark:text-white uppercase">{receipt.payment_method}</span>
+                <span className="font-semibold text-slate-900 dark:text-white uppercase">{receipt.provider || 'ONLINE'}</span>
               </div>
             </div>
           ) : null}

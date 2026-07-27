@@ -112,6 +112,50 @@ const verifyPayment = async (transactionRef) => {
   }
 };
 
+const createReceipt = async (paymentId) => {
+  try {
+    const { data: payment, error } = await supabase
+      .from('payments')
+      .select(`
+        *,
+        orders!inner (
+          *,
+          order_items (
+            *,
+            products (name)
+          )
+        ),
+        payment_callbacks (
+          mpesa_receipt
+        )
+      `)
+      .eq('id', paymentId)
+      .single();
+
+    if (error) throw error;
+
+    // Transform data to match receipt format
+    const receiptData = {
+      payment_id: payment.id,
+      order_id: payment.order_id,
+      amount: payment.amount,
+      provider: payment.provider,
+      status: payment.status,
+      created_at: payment.created_at,
+      mpesa_receipt: payment.payment_callbacks?.[0]?.mpesa_receipt || payment.transaction_reference,
+      items: payment.orders.order_items.map(item => ({
+        product_name: item.products?.name || 'Unknown Product',
+        quantity: item.quantity,
+        line_total: item.price * item.quantity
+      }))
+    };
+
+    return { success: true, data: { receipt: receiptData } };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 const paymentService = {
   createPayment,
   updatePaymentStatus,
@@ -119,7 +163,8 @@ const paymentService = {
   initiateFlutterwavePayment,
   createPayPalOrder,
   capturePayPalOrder,
-  verifyPayment
+  verifyPayment,
+  createReceipt
 };
 
 export default paymentService;

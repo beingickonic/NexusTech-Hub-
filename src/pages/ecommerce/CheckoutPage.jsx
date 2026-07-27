@@ -72,8 +72,7 @@ const CheckoutPage = () => {
       shipping_phone: formData.phone,
       shipping_address: formData.address,
       shipping_city: formData.city,
-      shipping_postal_code: formData.postalCode,
-      payment_method: paymentMethod
+      shipping_postal_code: formData.postalCode
     };
 
     try {

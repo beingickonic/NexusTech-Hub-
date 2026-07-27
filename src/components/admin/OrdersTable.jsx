@@ -96,18 +96,6 @@ const OrdersTable = () => {
     }
   };
 
-  const handlePaymentMethodChange = async (orderId, newMethod) => {
-    try {
-      await adminService.updateOrder(orderId, { payment_method: newMethod });
-      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, payment_method: newMethod } : o));
-      if (selectedOrder?.id === orderId) {
-        setSelectedOrder(prev => ({ ...prev, payment_method: newMethod }));
-      }
-    } catch (error) {
-      console.error("Failed to update payment method", error);
-    }
-  };
-
   return (
     <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
       <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-slate-700">
@@ -351,22 +339,6 @@ const OrdersTable = () => {
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-slate-500 dark:text-slate-400">Payment Method</label>
-                    <select 
-                      value={selectedOrder.payment_method || 'mpesa'}
-                      onChange={(e) => handlePaymentMethodChange(selectedOrder.id, e.target.value)}
-                      className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500/50"
-                    >
-                      <option value="mpesa">M-Pesa</option>
-                      <option value="paypal">PayPal</option>
-                      <option value="flutterwave">Flutterwave</option>
-                      <option value="cash">Cash</option>
-                      <option value="cash_on_delivery">Cash On Delivery</option>
-                      <option value="bank_transfer">Bank Transfer</option>
-                    </select>
-                  </div>
-                  
-                  <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-medium text-slate-500 dark:text-slate-400">Order Status</label>
                     <select 
                       value={selectedOrder.status}
@@ -401,7 +373,7 @@ const OrdersTable = () => {
                     <div className="relative">
                       <div className="absolute -left-[19px] top-1 w-3 h-3 rounded-full bg-success ring-4 ring-white dark:ring-slate-900" />
                       <p className="text-sm font-medium text-slate-900 dark:text-white">Payment Confirmed</p>
-                      <p className="text-xs text-slate-500">Method: {selectedOrder.payment_method?.replace(/_/g, ' ') || 'Online'}</p>
+                      <p className="text-xs text-slate-500">Tracked in Payments</p>
                     </div>
                   )}
                   {(selectedOrder.status === 'shipped' || selectedOrder.status === 'delivered') && (

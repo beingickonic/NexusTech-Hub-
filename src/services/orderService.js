@@ -12,8 +12,7 @@ const createOrder = async (orderData) => {
     
     const {
       items, total_amount, payment_status,
-      shipping_name, shipping_phone, shipping_address,
-      shipping_city, shipping_postal_code, payment_method, notes
+      shipping_city, shipping_postal_code, notes
     } = orderData;
     
     const { data: order, error: orderError } = await supabase.from('orders').insert({
@@ -26,7 +25,6 @@ const createOrder = async (orderData) => {
       shipping_address: shipping_address || null,
       shipping_city: shipping_city || null,
       shipping_postal_code: shipping_postal_code || null,
-      payment_method: payment_method || null,
       notes: notes || null,
     }).select().single();
     
