@@ -1,0 +1,111 @@
+import React, { useEffect, useState } from 'react';
+import { ShoppingCart, Star, MessageSquare, CreditCard, UserPlus } from 'lucide-react';
+import { adminService } from '../../../services/adminService';
+import { supabase } from '../../../services/supabaseClient';
+
+const getRelativeTime = (dateStr) => {
+  if (!dateStr) return 'Just now';
+  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+  const diff = new Date(dateStr) - new Date();
+  const mins = Math.round(diff / 60000);
+  const hrs = Math.round(diff / 3600000);
+  const days = Math.round(diff / 86400000);
+
+  if (Math.abs(mins) < 60) return rtf.format(mins, 'minute');
+  if (Math.abs(hrs) < 24) return rtf.format(hrs, 'hour');
+  return rtf.format(days, 'day');
+};
+
+const ActivityFeedWidget = () => {
+  const [activities, setActivities] = useState([]);
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const [ordersRes, profilesRes] = await Promise.all([
+          supabase.from('orders').select('id, total_amount, created_at, status').order('created_at', { ascending: false }).limit(10),
+          supabase.from('profiles').select('id, email, created_at').order('created_at', { ascending: false }).limit(10)
+        ]);
+
+        const acts = [];
+        (ordersRes.data || []).forEach(o => {
+          acts.push({
+            id: `ord-${o.id}`,
+            type: o.status === 'completed' ? 'payment' : 'order',
+            title: o.status === 'completed' ? 'Payment completed' : 'New order placed',
+            description: `Order for KES ${Number(o.total_amount || 0).toLocaleString()}`,
+            date: o.created_at,
+          });
+        });
+        (profilesRes.data || []).forEach(p => {
+          acts.push({
+            id: `usr-${p.id}`,
+            type: 'user',
+            title: 'New customer registered',
+            description: p.email,
+            date: p.created_at,
+          });
+        });
+
+        acts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setActivities(acts.slice(0, 15));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchActivities();
+    
+    const interval = setInterval(() => setNow(Date.now()), 60000);
+
+    const unsubscribeOrders = adminService.subscribeToNewOrders((newOrder) => {
+      setActivities(prev => [{
+        id: `ord-${newOrder.id}`,
+        type: 'order',
+        title: 'New order placed',
+        description: `Order for KES ${Number(newOrder.total_amount || 0).toLocaleString()}`,
+        date: newOrder.created_at || new Date().toISOString()
+      }, ...prev].slice(0, 15));
+    });
+
+    return () => {
+      clearInterval(interval);
+      if (unsubscribeOrders) unsubscribeOrders();
+    };
+  }, []);
+
+  const getIcon = (type) => {
+    switch(type) {
+      case 'order': return <div className="p-2 bg-blue-500/10 text-blue-500 rounded-full border border-blue-500/20"><ShoppingCart size={16} /></div>;
+      case 'user': return <div className="p-2 bg-purple-500/10 text-purple-500 rounded-full border border-purple-500/20"><UserPlus size={16} /></div>;
+      case 'payment': return <div className="p-2 bg-success/10 text-success rounded-full border border-success/20"><CreditCard size={16} /></div>;
+      default: return <div className="p-2 bg-slate-500/10 text-slate-500 rounded-full border border-slate-500/20"><Star size={16} /></div>;
+    }
+  };
+
+  return (
+    <div className="bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md p-4 md:p-6 rounded-xl md:rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm h-full max-h-[400px] md:max-h-[500px] overflow-hidden flex flex-col">
+      <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white mb-4 md:mb-6">Live Activity Feed</h3>
+      <div className="flex-1 overflow-y-auto pr-1 md:pr-2 space-y-4 md:space-y-6">
+        {activities.map((activity, idx) => (
+          <div key={activity.id} className="flex gap-4 relative">
+            {idx !== activities.length - 1 && (
+              <div className="absolute left-[17px] top-10 bottom-[-24px] w-[2px] bg-slate-100 dark:bg-slate-800"></div>
+            )}
+            <div className="relative z-10">
+              {getIcon(activity.type)}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-slate-900 dark:text-white">{activity.title}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{activity.description}</p>
+              <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 mt-2 block">{getRelativeTime(activity.date)}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ActivityFeedWidget;

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /payment/
+
+Sitemap: https://nexustechhub.com/sitemap.xml
