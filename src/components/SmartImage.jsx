@@ -53,8 +53,6 @@ const SmartImage = React.memo(({ src, alt, className, imageClassName, iconClassN
     const gen = ++generationRef.current;
     setStatus('loading');
 
-    console.log('[SmartImage] Loading:', src);
-
     // Use an off-screen Image object to preload — bypasses lazy-loading restrictions
     const preloader = new Image();
 
@@ -66,7 +64,6 @@ const SmartImage = React.memo(({ src, alt, className, imageClassName, iconClassN
         imgRef.current.src = src;
       }
       setStatus('success');
-      console.log('[SmartImage] ✓ Ready:', src);
     };
 
     preloader.onerror = () => {

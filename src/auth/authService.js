@@ -1,12 +1,9 @@
 import { supabase } from '../services/supabaseClient';
-console.log("ADMIN FIX BUILD 2026-06-15");
 
 const fetchProfile = async (userId) => {
   const { data, error } = await supabase.from('profiles').select('role, full_name, avatar_url').eq('id', userId).single();
   if (error) {
-    console.error('Error fetching profile:', error);
-  } else {
-    console.log('Fetched profile data:', data);
+    // Profile fetch errors are non-fatal; user may not have a profile yet
   }
   return data;
 };
@@ -54,20 +51,12 @@ const verifyToken = async () => {
   if (error || !session) return { success: false, message: 'Invalid or missing session' };
   
   const profile = await fetchProfile(session.user.id);
-  // Phase B & C Logging
-  console.log("SUPABASE URL:", import.meta.env.VITE_SUPABASE_URL);
-  console.log("SESSION:", session);
-  console.log("EMAIL:", session.user?.email);
-  console.log("PROFILE:", profile);
   
   let role = profile?.role || 'Customer';
   if (role.toLowerCase().trim() === 'admin') role = 'Admin';
   if (role.toLowerCase().trim() === 'super_admin') role = 'super_admin';
   if (session.user?.email === 'admin@gmail.com') role = 'Admin';
   const userWithRole = { ...session.user, role, full_name: profile?.full_name, avatar_url: profile?.avatar_url };
-  
-  console.log("USER:", userWithRole);
-  console.log("ROLE:", userWithRole.role);
   
   return { success: true, data: { user: userWithRole } };
 };

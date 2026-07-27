@@ -45,11 +45,14 @@ const AdminReportsPage = lazy(() => import('./pages/admin/ReportsPage'));
 const AdminInvoicesPage = lazy(() => import('./pages/admin/InvoicesPage'));
 const AdminInventoryPage = lazy(() => import('./pages/admin/InventoryPage'));
 const AdminSettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
+const AdminReviewsPage = lazy(() => import('./pages/admin/ReviewsPage'));
 
 const PaymentLoaderPage = lazy(() => import('./pages/payment/PaymentLoaderPage'));
 const PaymentSuccessPage = lazy(() => import('./pages/payment/PaymentSuccessPage'));
 const PaymentFailedPage = lazy(() => import('./pages/payment/PaymentFailedPage'));
+const PaymentStatusPage = lazy(() => import('./pages/payment/PaymentStatusPage'));
 const ReceiptPage = lazy(() => import('./pages/payment/ReceiptPage'));
+const HelpPage = lazy(() => import('./pages/public/HelpPage'));
 
 const LoadingFallback = () => (
   <div className="min-h-screen flex items-center justify-center bg-[#F4F4F8] dark:bg-[#0F172A]">
@@ -74,6 +77,7 @@ function App() {
                   <Route path="products/:id" element={<ProductDetailsPage />} />
                   <Route path="about" element={<AboutPage />} />
                   <Route path="contact" element={<ContactPage />} />
+                  <Route path="help" element={<HelpPage />} />
 
                   <Route element={<ProtectedRoute />}>
                     <Route path="profile" element={<CustomerDashboard />}>
@@ -93,6 +97,7 @@ function App() {
                     <Route path="payment/processing/:checkoutRequestId" element={<PaymentLoaderPage />} />
                     <Route path="payment/success/:paymentId" element={<PaymentSuccessPage />} />
                     <Route path="payment/failed/:orderId" element={<PaymentFailedPage />} />
+                    <Route path="payment/status" element={<PaymentStatusPage />} />
                     <Route path="payment/receipt/:receiptId" element={<ReceiptPage />} />
                     <Route path="orders" element={<OrdersPage />} />
                     <Route path="orders/:id" element={<OrderDetailsPage />} />
@@ -112,6 +117,7 @@ function App() {
                   <Route path="products/edit/:id" element={<ProductFormPage />} />
                   <Route path="orders" element={<AdminOrdersPage />} />
                   <Route path="inventory" element={<AdminInventoryPage />} />
+                  <Route path="reviews" element={<AdminReviewsPage />} />
                   
                   {/* Strict Admin-only Routes nested */}
                   <Route path="customers" element={<AdminRoute><AdminCustomersPage /></AdminRoute>} />

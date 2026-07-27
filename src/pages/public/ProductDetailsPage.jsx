@@ -6,9 +6,10 @@ import ProductCard from '../../components/ProductCard';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { formatCurrency } from '../../utils/currency';
-import { getImageUrl, handleImageError } from '../../utils/imageHelper';
+import { getImageUrl } from '../../utils/imageHelper';
 import SmartImage from '../../components/SmartImage';
 import { productService } from '../../services/productService';
+import ReviewSection from '../../components/reviews/ReviewSection';
 
 const ProductDetailsPage = () => {
   const { id } = useParams();
@@ -249,7 +250,7 @@ const ProductDetailsPage = () => {
             )}
             {activeTab === 'reviews' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <p>Customer reviews will be displayed here.</p>
+                <ReviewSection productId={id} />
               </motion.div>
             )}
           </div>

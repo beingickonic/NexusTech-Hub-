@@ -19,7 +19,6 @@ export const getImageUrl = (path, size = 'original') => {
     path.startsWith('blob:') ||
     path.startsWith('//')
   ) {
-    console.log('[imageHelper] External URL, returning as-is:', path);
     return path;
   }
 
@@ -39,7 +38,6 @@ export const getImageUrl = (path, size = 'original') => {
   }
 
   // Fallback for any remaining relative paths (legacy)
-  console.log('[imageHelper] Relative path passed (unexpected):', path);
   return path;
 };
 

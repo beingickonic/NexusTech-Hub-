@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Save, Store, Image as ImageIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { adminService } from '../../services/adminService';
+import { getImageUrl } from '../../utils/imageHelper';
 
 const SettingsPage = () => {
   const [settings, setSettings] = useState({
@@ -35,10 +36,10 @@ const SettingsPage = () => {
             theme_primary_color: data.theme_primary_color || '#FF724C'
           });
           if (data.logo_url) {
-            setLogoPreview(`${import.meta.env.VITE_API_BASE_URL}/${data.logo_url}`);
+            setLogoPreview(getImageUrl(data.logo_url));
           }
           if (data.favicon_url) {
-            setFaviconPreview(`${import.meta.env.VITE_API_BASE_URL}/${data.favicon_url}`);
+            setFaviconPreview(getImageUrl(data.favicon_url));
           }
         }
       } catch (err) {

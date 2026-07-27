@@ -1,21 +1,66 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { submitContactForm } from '../../services/contactService';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const validate = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      return 'Please enter your full name (at least 2 characters).';
+    }
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      return 'Please enter a valid email address.';
+    }
+    if (!formData.subject.trim() || formData.subject.trim().length < 5) {
+      return 'Please enter a subject (at least 5 characters).';
+    }
+    if (!formData.message.trim() || formData.message.trim().length < 20) {
+      return 'Please enter your message (at least 20 characters).';
+    }
+    return null;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate form submission
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
-    setFormData({ name: '', email: '', subject: '', message: '' });
+
+    const validationError = validate();
+    if (validationError) {
+      setErrorMessage(validationError);
+      setStatus('error');
+      return;
+    }
+
+    setStatus('loading');
+    setErrorMessage('');
+
+    const result = await submitContactForm(formData);
+
+    if (result.success) {
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } else {
+      setStatus('error');
+      setErrorMessage(result.message || 'Something went wrong. Please try again.');
+    }
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Clear error when user starts typing again
+    if (status === 'error') {
+      setStatus('idle');
+      setErrorMessage('');
+    }
+  };
+
+  const handleReset = () => {
+    setStatus('idle');
+    setErrorMessage('');
   };
 
   return (
@@ -95,61 +140,102 @@ const ContactPage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 p-8 md:p-12 shadow-sm relative overflow-hidden"
           >
-            {isSubmitted && (
-              <div className="absolute inset-0 bg-white/90 dark:bg-dark-surface/90 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-8">
-                <div className="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mb-6 shadow-glow">
-                  <Send size={32} />
+            {/* Success State */}
+            {status === 'success' && (
+              <div className="absolute inset-0 bg-white/95 dark:bg-dark-surface/95 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-8">
+                <div className="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mb-6 shadow-lg">
+                  <CheckCircle size={40} />
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Message Sent!</h3>
-                <p className="text-slate-500 dark:text-gray-400">We'll get back to you as soon as possible.</p>
+                <p className="text-slate-500 dark:text-gray-400 mb-6 max-w-sm">
+                  Thank you for reaching out. Our team will review your message and get back to you within 24 hours.
+                </p>
+                <button
+                  onClick={handleReset}
+                  className="px-6 py-3 bg-primary hover:bg-orange-600 text-white font-bold rounded-xl transition-all hover:-translate-y-0.5"
+                >
+                  Send Another Message
+                </button>
               </div>
             )}
 
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">Send us a message</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* Error Banner */}
+            {status === 'error' && errorMessage && (
+              <div className="flex items-start gap-3 p-4 mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-xl text-red-600 dark:text-red-400 text-sm">
+                <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-gray-300">Full Name</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-gray-300">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
                   <input 
                     type="text" id="name" name="name" required
                     value={formData.name} onChange={handleChange}
-                    className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                    disabled={status === 'loading'}
+                    className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                     placeholder="Mary Ivy"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-gray-300">Email Address</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-gray-300">
+                    Email Address <span className="text-red-500">*</span>
+                  </label>
                   <input 
                     type="email" id="email" name="email" required
                     value={formData.email} onChange={handleChange}
-                    className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                    disabled={status === 'loading'}
+                    className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                     placeholder="Ivy@gmail.com"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <label htmlFor="subject" className="block text-sm font-medium text-slate-700 dark:text-gray-300">Subject</label>
+                <label htmlFor="subject" className="block text-sm font-medium text-slate-700 dark:text-gray-300">
+                  Subject <span className="text-red-500">*</span>
+                </label>
                 <input 
                   type="text" id="subject" name="subject" required
                   value={formData.subject} onChange={handleChange}
-                  className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                  disabled={status === 'loading'}
+                  className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                   placeholder="How can we help you?"
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-gray-300">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-gray-300">
+                  Message <span className="text-red-500">*</span>
+                </label>
                 <textarea 
                   id="message" name="message" rows="5" required
                   value={formData.message} onChange={handleChange}
-                  className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+                  disabled={status === 'loading'}
+                  className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none disabled:opacity-60"
                   placeholder="Write your message here..."
-                ></textarea>
+                />
               </div>
               <button 
                 type="submit"
-                className="w-full bg-primary hover:bg-orange-600 text-white font-bold py-4 rounded-xl shadow-glow transition-all hover:-translate-y-0.5"
+                disabled={status === 'loading'}
+                className="w-full bg-primary hover:bg-orange-600 text-white font-bold py-4 rounded-xl shadow-glow transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:translate-y-0"
               >
-                Send Message
+                {status === 'loading' ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send size={20} />
+                    Send Message
+                  </>
+                )}
               </button>
             </form>
           </motion.div>

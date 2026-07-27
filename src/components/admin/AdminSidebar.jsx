@@ -8,7 +8,8 @@ import {
   Settings, 
   LogOut, 
   Boxes,
-  ReceiptText
+  ReceiptText,
+  MessageSquare
 } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
 import { RoleGate } from '../../auth/ProtectedRoute';
@@ -30,6 +31,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
     { name: 'Products', path: '/admin/products', icon: Package },
     { name: 'Orders', path: '/admin/orders', icon: ShoppingCart },
     { name: 'Inventory', path: '/admin/inventory', icon: Boxes },
+    { name: 'Reviews', path: '/admin/reviews', icon: MessageSquare },
     { name: 'Invoices', path: '/admin/invoices', icon: ReceiptText },
     { name: 'Reports', path: '/admin/reports', icon: BarChart3 },
     { name: 'Settings', path: '/admin/settings', icon: Settings },

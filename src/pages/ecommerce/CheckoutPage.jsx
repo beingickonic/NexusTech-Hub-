@@ -59,7 +59,13 @@ const CheckoutPage = () => {
     const orderData = {
       items: cartItems,
       total_amount: cartSummary.total,
-      payment_status: 'unpaid'
+      payment_status: 'unpaid',
+      shipping_name: formData.fullName,
+      shipping_phone: formData.phone,
+      shipping_address: formData.address,
+      shipping_city: formData.city,
+      shipping_postal_code: formData.postalCode,
+      payment_method: paymentMethod
     };
 
     try {

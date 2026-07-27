@@ -1,8 +1,20 @@
 User-agent: *
 Allow: /
+
+# Disallow admin routes
 Disallow: /admin/
+Disallow: /#/admin/
+
+# Disallow private auth routes
 Disallow: /checkout/
-Disallow: /cart/
-Disallow: /payment/
+Disallow: /#/checkout/
+Disallow: /profile/
+Disallow: /#/profile/
+
+# Allow public pages
+Allow: /#/products
+Allow: /#/about
+Allow: /#/contact
+Allow: /#/help
 
 Sitemap: https://nexustechhub.com/sitemap.xml

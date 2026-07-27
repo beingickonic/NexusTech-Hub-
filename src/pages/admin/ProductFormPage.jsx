@@ -5,8 +5,10 @@ import { Save, ArrowLeft, Image as ImageIcon, UploadCloud, X, Link } from 'lucid
 import ProductCard from '../../components/ProductCard';
 import SmartImage from '../../components/SmartImage';
 import { getImageUrl } from '../../utils/imageHelper';
+import { supabase } from '../../services/supabaseClient';
 
-const CATEGORIES = [
+// Fallback static list in case DB fetch fails
+const FALLBACK_CATEGORIES = [
   { id: 1, name: 'Laptops & Notebooks' },
   { id: 2, name: 'Smartphones & Tablets' },
   { id: 3, name: 'Desktops & Workstations' },
@@ -48,6 +50,18 @@ const ProductFormPage = () => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [urlError, setUrlError] = useState('');
+  const [categories, setCategories] = useState(FALLBACK_CATEGORIES);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+
+  // Fetch categories from DB
+  useEffect(() => {
+    supabase.from('categories').select('id, name').order('name')
+      .then(({ data }) => {
+        if (data && data.length > 0) setCategories(data);
+      })
+      .catch(() => { /* keep fallback */ })
+      .finally(() => setCategoriesLoading(false));
+  }, []);
 
   useEffect(() => {
     if (isEditMode) {
@@ -212,12 +226,6 @@ const ProductFormPage = () => {
         }
       }
 
-      console.group("ProductFormPage: Form Submission");
-      for (let [key, value] of dataToSubmit.entries()) {
-        console.log(`${key}:`, value);
-      }
-      console.groupEnd();
-
       if (isEditMode) {
         await adminService.updateProduct(dataToSubmit);
       } else {
@@ -284,8 +292,8 @@ const ProductFormPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Category *</label>
-                    <select required name="category_id" value={formData.category_id} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all">
-                      {CATEGORIES.map(cat => (
+                    <select required name="category_id" value={formData.category_id} onChange={handleChange} disabled={categoriesLoading} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all disabled:opacity-60">
+                      {categories.map(cat => (
                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                       ))}
                     </select>

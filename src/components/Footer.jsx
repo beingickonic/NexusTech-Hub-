@@ -43,11 +43,14 @@ const Footer = () => {
           <div className="flex flex-col gap-6">
             <h4 className="text-white font-bold text-base sm:text-lg">Customer Support</h4>
             <ul className="flex flex-col gap-4 text-sm">
-              {['Help Center', 'Track Order', 'Returns & Exchanges', 'Shipping Info', 'Warranty'].map((label) => (
-                <li key={label}>
-                  <Link to="/contact" className="text-slate-400 hover:text-primary transition-colors">{label}</Link>
-                </li>
-              ))}
+              {['Help Center', 'Track Order', 'Returns & Exchanges', 'Shipping Info', 'Warranty'].map((label) => {
+                const route = label === 'Help Center' ? '/help' : '/contact';
+                return (
+                  <li key={label}>
+                    <Link to={route} className="text-slate-400 hover:text-primary transition-colors">{label}</Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

@@ -10,13 +10,24 @@ const createOrder = async (orderData) => {
     const userId = await getUserId();
     if (!userId) throw new Error("User not authenticated");
     
-    const { items, total_amount, payment_status } = orderData;
+    const {
+      items, total_amount, payment_status,
+      shipping_name, shipping_phone, shipping_address,
+      shipping_city, shipping_postal_code, payment_method, notes
+    } = orderData;
     
     const { data: order, error: orderError } = await supabase.from('orders').insert({
       user_id: userId,
       total_amount,
       payment_status: payment_status || 'unpaid',
-      status: 'pending'
+      status: 'pending',
+      shipping_name: shipping_name || null,
+      shipping_phone: shipping_phone || null,
+      shipping_address: shipping_address || null,
+      shipping_city: shipping_city || null,
+      shipping_postal_code: shipping_postal_code || null,
+      payment_method: payment_method || null,
+      notes: notes || null,
     }).select().single();
     
     if (orderError) throw orderError;

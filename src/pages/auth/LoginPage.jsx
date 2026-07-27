@@ -22,10 +22,6 @@ const LoginPage = () => {
     try {
       const res = await login(email, password);
       if (res.success) {
-        console.log("USER:", res.data.user);
-        console.log("EMAIL:", res.data.user?.email);
-        console.log("ROLE:", res.data.user?.role);
-        
         if (res.data.user.role === 'Admin' || res.data.user.role === 'super_admin') {
           navigate('/admin');
         } else if (res.data.user.role === 'Manager') {

@@ -96,28 +96,48 @@ export const adminService = {
       const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
       const monthStr = firstDayOfMonth.toISOString();
 
+      // Last 7 days for chart
+      const sevenDaysAgo = new Date(today);
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+
       const [
         { count: productsCount },
         { data: todayOrders },
         { count: customersCount },
         { count: pendingOrdersCount },
         { count: subscribersCount },
-        { count: cashOrdersCount }
+        { count: cashOrdersCount },
+        { data: weekOrders }
       ] = await Promise.all([
         supabase.from('products').select('*', { count: 'exact', head: true }),
         supabase.from('orders').select('total_amount').gte('created_at', todayStr),
         supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'Customer').gte('created_at', monthStr),
         supabase.from('orders').select('*', { count: 'exact', head: true }).in('status', ['pending', 'processing', 'awaiting_payment']),
         supabase.from('newsletter_subscribers').select('*', { count: 'exact', head: true }),
-        supabase.from('orders').select('*', { count: 'exact', head: true }).in('payment_method', ['cash', 'cash_on_delivery', 'Cash On Delivery', 'Cash'])
+        supabase.from('orders').select('*', { count: 'exact', head: true }).in('payment_method', ['cash', 'cash_on_delivery', 'Cash On Delivery', 'Cash']),
+        supabase.from('orders').select('total_amount, created_at').gte('created_at', sevenDaysAgo.toISOString()).order('created_at', { ascending: true })
       ]);
 
       const totalRevenue = todayOrders?.reduce((sum, order) => sum + Number(order.total_amount || 0), 0) || 0;
       const ordersCount = todayOrders?.length || 0;
 
-      // Used for mock chart data for now, could be calculated properly if needed
-      const { data: allOrders } = await supabase.from('orders').select('total_amount, created_at').order('created_at', { ascending: false }).limit(100);
-      const overallRevenue = allOrders?.reduce((sum, order) => sum + Number(order.total_amount || 0), 0) || 0;
+      // Build real per-day chart data for last 7 days
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const chartMap = {};
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date(today);
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().slice(0, 10);
+        const label = dayNames[d.getDay()];
+        chartMap[key] = { name: label, revenue: 0 };
+      }
+      (weekOrders || []).forEach(order => {
+        const key = order.created_at?.slice(0, 10);
+        if (chartMap[key]) {
+          chartMap[key].revenue += Number(order.total_amount || 0);
+        }
+      });
+      const chartData = Object.values(chartMap);
 
       return {
         status: 'success',
@@ -130,25 +150,59 @@ export const adminService = {
           subscribers: subscribersCount || 0,
           cashOrders: cashOrdersCount || 0
         },
-        chartData: [
-          { name: 'Mon', revenue: overallRevenue * 0.1 },
-          { name: 'Tue', revenue: overallRevenue * 0.15 },
-          { name: 'Wed', revenue: overallRevenue * 0.2 },
-          { name: 'Thu', revenue: overallRevenue * 0.25 },
-          { name: 'Fri', revenue: overallRevenue * 0.1 },
-          { name: 'Sat', revenue: overallRevenue * 0.05 },
-          { name: 'Sun', revenue: overallRevenue * 0.15 }
-        ]
+        chartData
       };
     } catch (error) {
-      console.error(error);
+      console.error('Dashboard stats error:', error);
       return { status: 'error', stats: { revenue: 0, orders: 0, customers: 0, pendingOrders: 0, products: 0, subscribers: 0 }, chartData: [] };
     }
   },
 
-  getSettings: async () => ({ success: true, data: { storeName: 'NexusTech Hub', currency: 'Ksh', notifications: true } }),
+  getSettings: async () => {
+    try {
+      const { data, error } = await supabase.from('settings').select('key, value');
+      if (error) throw error;
+      const settingsMap = Object.fromEntries((data || []).map(s => [s.key, s.value]));
+      return {
+        success: true,
+        status: 'success',
+        data: {
+          store_name:          settingsMap.store_name          || 'NexusTech Hub',
+          contact_email:       settingsMap.contact_email       || '',
+          contact_phone:       settingsMap.contact_phone       || '',
+          currency:            settingsMap.currency            || 'KES',
+          theme_primary_color: settingsMap.theme_primary_color || '#FF724C',
+          tax_rate:            settingsMap.tax_rate            || '0',
+          shipping_fee:        settingsMap.shipping_fee        || '0',
+        }
+      };
+    } catch (error) {
+      console.error('Settings fetch error:', error);
+      return { success: true, status: 'success', data: { store_name: 'NexusTech Hub', currency: 'KES', theme_primary_color: '#FF724C' } };
+    }
+  },
 
-  updateSettings: async (settings) => ({ success: true, data: settings }),
+  updateSettings: async (settings) => {
+    try {
+      // Convert FormData or plain object to array of {key, value} upserts
+      const entries = settings instanceof FormData
+        ? Array.from(settings.entries())
+        : Object.entries(settings);
+
+      const upserts = entries
+        .filter(([key]) => !['logo', 'favicon'].includes(key))
+        .map(([key, value]) => ({ key, value: String(value), updated_at: new Date().toISOString() }));
+
+      if (upserts.length > 0) {
+        const { error } = await supabase.from('settings').upsert(upserts, { onConflict: 'key' });
+        if (error) throw error;
+      }
+      return { success: true, data: Object.fromEntries(entries) };
+    } catch (error) {
+      console.error('Settings update error:', error);
+      return { success: false, message: error.message };
+    }
+  },
 
   getCustomers: async ({ page = 1, limit = DEFAULT_LIMIT, search = '' } = {}) => {
     const { data, error } = await supabase.functions.invoke('admin-users');
@@ -334,18 +388,6 @@ export const adminService = {
     if (search) query = query.or(`status.ilike.%${search}%,payment_status.ilike.%${search}%,shipping_name.ilike.%${search}%`);
 
     const { data, count, error } = await query.range(from, to);
-    
-    console.log("Orders query executed.");
-    console.log("Orders returned:", data);
-    console.log("Order query error:", error);
-
-    // Also check current user role for debugging RLS
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-      console.log("Current user role:", profile?.role);
-    }
-    
     if (error) throw error;
 
     const profiles = await getProfilesById((data || []).map((order) => order.user_id || order.customer_id));
