@@ -42,8 +42,8 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: 'Nexus TechHub Support <support@nexustechhub.com>',
-        to: email || 'admin@nexustechhub.com', // fallback to admin if guest didn't provide email
+        from: 'Nexus TechHub Support <onboarding@resend.dev>',
+        to: 'muriithiderrick08@gmail.com', // Restricted to verified email during Resend onboarding
         subject: `Ticket Received: ${subject}`,
         html: `
           <div style="font-family: sans-serif; max-w-xl; margin: 0 auto;">
