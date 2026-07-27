@@ -17,8 +17,8 @@ DROP TABLE IF EXISTS public.support_tickets CASCADE;
 CREATE TABLE public.support_tickets (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id     UUID REFERENCES auth.users(id) ON DELETE SET NULL,
-  name        TEXT NOT NULL,
-  email       TEXT NOT NULL,
+  name        TEXT,
+  email       TEXT,
   subject     TEXT NOT NULL,
   message     TEXT NOT NULL,
   priority    TEXT DEFAULT 'normal',

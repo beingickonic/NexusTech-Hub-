@@ -45,8 +45,8 @@ const NewTicketModal = ({ onClose, onCreated }) => {
     try {
       const { data: ticket, error } = await supabase.from('support_tickets').insert({
         user_id: user.id,
-        name: user.full_name || 'Customer',
-        email: user.email || '',
+        name: user.full_name,
+        email: user.email,
         subject: form.subject,
         message: form.message,
         priority: form.priority,
