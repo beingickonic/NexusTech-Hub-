@@ -29,34 +29,39 @@ export const financeService = {
         { data: todayIncome },
         { data: monthIncome },
         { data: monthExpenses },
-        { data: pendingPayments }
+        { data: pendingPayments },
+        { data: invAssetData },
+        { data: writeOffData }
       ] = await Promise.all([
         supabase.from('transactions')
           .select('amount')
-          .eq('type', 'income')
-          .eq('status', 'completed')
+          .eq('type', 'Income')
           .gte('created_at', todayStr),
         supabase.from('transactions')
           .select('amount')
-          .eq('type', 'income')
-          .eq('status', 'completed')
+          .eq('type', 'Income')
           .gte('created_at', monthStr),
         supabase.from('transactions')
           .select('amount')
-          .eq('type', 'expense')
-          .eq('status', 'completed')
+          .eq('type', 'Expense')
           .gte('created_at', monthStr),
         supabase.from('orders')
           .select('total_amount')
           .eq('payment_status', 'unpaid')
-          .in('status', ['Processing', 'Shipped', 'Delivered'])
+          .in('status', ['Processing', 'Shipped', 'Delivered']),
+        supabase.from('inventory').select('quantity_on_hand, cost_price'),
+        supabase.from('transactions').select('amount').eq('type', 'Write-off').gte('created_at', monthStr)
       ]);
 
       const revenueToday   = (todayIncome   || []).reduce((s, t) => s + Number(t.amount), 0);
       const revenueMonth   = (monthIncome   || []).reduce((s, t) => s + Number(t.amount), 0);
       const expensesMonth  = (monthExpenses || []).reduce((s, t) => s + Number(t.amount), 0);
       const outstanding    = (pendingPayments || []).reduce((s, o) => s + Number(o.total_amount), 0);
-      const profitMonth    = revenueMonth - expensesMonth;
+      
+      const invValue = (invAssetData || []).reduce((s, i) => s + (Number(i.quantity_on_hand) * Number(i.cost_price || 0)), 0);
+      const writeOffs = (writeOffData || []).reduce((s, t) => s + Number(t.amount), 0);
+
+      const profitMonth    = revenueMonth - expensesMonth - writeOffs;
 
       return {
         success: true,
@@ -66,7 +71,9 @@ export const financeService = {
           expenses_month: expensesMonth,
           profit_month: profitMonth,
           profit_margin: revenueMonth > 0 ? ((profitMonth / revenueMonth) * 100).toFixed(1) : 0,
-          outstanding_payments: outstanding
+          outstanding_payments: outstanding,
+          inventory_value: invValue,
+          write_offs: writeOffs
         }
       };
     } catch (error) {
@@ -82,16 +89,14 @@ export const financeService = {
       .from('transactions')
       .select(`
         *,
-        orders(id, status),
-        profiles(full_name, email),
-        suppliers(name)
+        profiles:recorded_by(full_name, email)
       `, { count: 'exact' })
       .order('created_at', { ascending: false });
 
-    if (type && type !== 'all') query = query.eq('type', type);
-    if (search) query = query.or(`description.ilike.%${search}%,reference.ilike.%${search}%`);
-    if (startDate) query = query.gte('transaction_date', startDate);
-    if (endDate)   query = query.lte('transaction_date', endDate);
+    if (type && type !== 'all') query = query.ilike('type', type);
+    if (search) query = query.or(`description.ilike.%${search}%,category.ilike.%${search}%`);
+    if (startDate) query = query.gte('created_at', startDate);
+    if (endDate)   query = query.lte('created_at', endDate);
 
     const { data, count, error } = await query.range(from, to);
     if (error) throw error;
@@ -104,8 +109,11 @@ export const financeService = {
     const { data, error } = await supabase
       .from('transactions')
       .insert([{
-        ...transactionData,
-        transaction_date: transactionData.transaction_date || new Date().toISOString().split('T')[0]
+        type: transactionData.type || 'Income',
+        category: transactionData.category || 'General',
+        amount: transactionData.amount,
+        description: transactionData.description || '',
+        recorded_by: transactionData.recorded_by || null
       }])
       .select()
       .single();
@@ -117,7 +125,7 @@ export const financeService = {
   updateTransaction: async (id, updates) => {
     const { data, error } = await supabase
       .from('transactions')
-      .update({ ...updates, updated_at: new Date().toISOString() })
+      .update(updates)
       .eq('id', id)
       .select()
       .single();
@@ -137,7 +145,7 @@ export const financeService = {
     const { from, to } = pageRange(page, limit);
     let query = supabase
       .from('expenses')
-      .select('*, suppliers(name), profiles(full_name)', { count: 'exact' })
+      .select('*, profiles:recorded_by(full_name)', { count: 'exact' })
       .order('created_at', { ascending: false });
 
     if (search) query = query.or(`description.ilike.%${search}%,category.ilike.%${search}%`);
@@ -158,38 +166,13 @@ export const financeService = {
 
     // Also create a transaction record for the expense
     await supabase.from('transactions').insert([{
-      type: 'expense',
+      type: 'Expense',
       category: expenseData.category,
       description: expenseData.description,
       amount: expenseData.amount,
-      payment_method: expenseData.payment_method,
-      supplier_id: expenseData.supplier_id || null,
-      transaction_date: expenseData.expense_date || new Date().toISOString().split('T')[0],
-      status: 'completed',
-      notes: expenseData.notes || null
+      recorded_by: expenseData.recorded_by || null
     }]);
 
-    return { success: true, data };
-  },
-
-  // ── Get Bank Accounts ──────────────────────────────────────────
-  getBankAccounts: async () => {
-    const { data, error } = await supabase
-      .from('bank_accounts')
-      .select('*')
-      .order('is_default', { ascending: false });
-    if (error) throw error;
-    return { success: true, data: data || [] };
-  },
-
-  // ── Create Bank Account ────────────────────────────────────────
-  createBankAccount: async (accountData) => {
-    const { data, error } = await supabase
-      .from('bank_accounts')
-      .insert([accountData])
-      .select()
-      .single();
-    if (error) throw error;
     return { success: true, data };
   },
 
@@ -197,19 +180,17 @@ export const financeService = {
   getProfitLossReport: async (startDate, endDate) => {
     const [incomeRes, expenseRes] = await Promise.all([
       supabase.from('transactions')
-        .select('amount, category, transaction_date')
-        .eq('type', 'income')
-        .eq('status', 'completed')
-        .gte('transaction_date', startDate)
-        .lte('transaction_date', endDate)
-        .order('transaction_date'),
+        .select('amount, category, created_at')
+        .eq('type', 'Income')
+        .gte('created_at', startDate)
+        .lte('created_at', endDate)
+        .order('created_at'),
       supabase.from('transactions')
-        .select('amount, category, transaction_date')
-        .eq('type', 'expense')
-        .eq('status', 'completed')
-        .gte('transaction_date', startDate)
-        .lte('transaction_date', endDate)
-        .order('transaction_date')
+        .select('amount, category, created_at')
+        .eq('type', 'Expense')
+        .gte('created_at', startDate)
+        .lte('created_at', endDate)
+        .order('created_at')
     ]);
 
     const income   = incomeRes.data   || [];
@@ -222,15 +203,15 @@ export const financeService = {
     // Group by month for chart
     const chartMap = {};
     [...income, ...expenses].forEach(t => {
-      const month = t.transaction_date?.slice(0, 7) || 'Unknown';
+      const month = t.created_at?.slice(0, 7) || 'Unknown';
       if (!chartMap[month]) chartMap[month] = { month, revenue: 0, expenses: 0 };
     });
     income.forEach(t => {
-      const month = t.transaction_date?.slice(0, 7) || 'Unknown';
+      const month = t.created_at?.slice(0, 7) || 'Unknown';
       if (chartMap[month]) chartMap[month].revenue += Number(t.amount);
     });
     expenses.forEach(t => {
-      const month = t.transaction_date?.slice(0, 7) || 'Unknown';
+      const month = t.created_at?.slice(0, 7) || 'Unknown';
       if (chartMap[month]) chartMap[month].expenses += Number(t.amount);
     });
 
@@ -242,30 +223,6 @@ export const financeService = {
     return {
       success: true,
       data: { income, expenses, totalIncome, totalExpenses, netProfit, chartData }
-    };
-  },
-
-  // ── Revenue Report (by payment method) ────────────────────────
-  getRevenueByMethod: async (startDate, endDate) => {
-    const { data, error } = await supabase
-      .from('transactions')
-      .select('amount, payment_method')
-      .eq('type', 'income')
-      .eq('status', 'completed')
-      .gte('transaction_date', startDate)
-      .lte('transaction_date', endDate);
-
-    if (error) throw error;
-
-    const byMethod = {};
-    (data || []).forEach(t => {
-      const method = t.payment_method || 'other';
-      byMethod[method] = (byMethod[method] || 0) + Number(t.amount);
-    });
-
-    return {
-      success: true,
-      data: Object.entries(byMethod).map(([method, amount]) => ({ method, amount }))
     };
   },
 

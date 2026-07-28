@@ -8,6 +8,7 @@ import QuickActionsPanel from '../../components/admin/widgets/QuickActionsPanel'
 import DispatchWidget from '../../components/admin/widgets/DispatchWidget';
 import DriverStatusWidget from '../../components/admin/widgets/DriverStatusWidget';
 import { adminService } from '../../services/adminService';
+import { inventoryService } from '../../services/inventoryService';
 import { supabase } from '../../services/supabaseClient';
 import { useAuth } from '../../auth/AuthContext';
 
@@ -33,7 +34,7 @@ const DashboardPage = () => {
         const [statsRes, ordersRes, inventoryRes] = await Promise.all([
           adminService.getDashboardStats(),
           adminService.getOrders(),
-          adminService.getInventory()
+          inventoryService.getInventoryItems({limit: 10})
         ]);
 
         if (statsRes.status === 'success') {

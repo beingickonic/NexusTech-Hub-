@@ -47,7 +47,7 @@ const TransactionModal = ({ type = 'income', onClose, onSaved }) => {
     payment_method: 'cash',
     reference: '',
     notes: '',
-    transaction_date: new Date().toISOString().split('T')[0],
+    created_at: new Date().toISOString().split('T')[0],
     status: 'completed'
   });
   const [loading, setLoading] = useState(false);
@@ -71,7 +71,7 @@ const TransactionModal = ({ type = 'income', onClose, onSaved }) => {
           description: form.description,
           amount: Number(form.amount),
           payment_method: form.payment_method,
-          expense_date: form.transaction_date,
+          created_at: form.created_at,
           notes: form.notes,
           status: 'approved'
         });
@@ -131,7 +131,7 @@ const TransactionModal = ({ type = 'income', onClose, onSaved }) => {
             </div>
             <div>
               <label className={labelCls}>Date</label>
-              <input type="date" {...f('transaction_date')} className={inputCls} />
+              <input type="date" {...f('created_at')} className={inputCls} />
             </div>
           </div>
           <div>
@@ -355,7 +355,7 @@ const FinancePage = () => {
               ) : transactions.map((txn, i) => (
                 <motion.tr key={txn.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.02 }}
                   className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
-                  <td className="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">{txn.transaction_date || new Date(txn.created_at).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">{txn.created_at || new Date(txn.created_at).toLocaleDateString()}</td>
                   <td className="px-4 py-3 max-w-[200px]">
                     <p className="font-medium text-slate-900 dark:text-white truncate">{txn.description}</p>
                     {txn.profiles?.full_name && <p className="text-xs text-slate-400">{txn.profiles.full_name}</p>}

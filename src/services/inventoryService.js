@@ -18,9 +18,11 @@ export const inventoryService = {
   // ── Stats ──────────────────────────────────────────────────────
   getInventoryStats: async () => {
     try {
-      const { data: invItems } = await supabase
+      const { data: invItems, error } = await supabase
         .from('inventory')
-        .select('quantity_on_hand, quantity_reserved, reorder_level, cost_price, products(title, price)');
+        .select('quantity_on_hand, quantity_reserved, reorder_level, cost_price');
+
+      if (error) throw error;
 
       const stats = {
         total_items: invItems?.length || 0,
@@ -33,24 +35,10 @@ export const inventoryService = {
       (invItems || []).forEach(item => {
         const qty = item.quantity_on_hand || 0;
         const reorder = item.reorder_level || 10;
-        const cost = item.cost_price || item.products?.price || 0;
-        stats.total_value += qty * Number(cost);
+        stats.total_value += qty * Number(item.cost_price || 0);
         if (qty === 0) stats.out_of_stock++;
         else if (qty <= reorder) stats.low_stock++;
         else if (qty > reorder * 5) stats.overstock++;
-      });
-
-      // Also check products.stock for items not in inventory table
-      const { data: products } = await supabase
-        .from('products')
-        .select('stock, price')
-        .not('id', 'in', `(SELECT product_id FROM inventory WHERE product_id IS NOT NULL)`);
-
-      (products || []).forEach(p => {
-        const qty = p.stock || 0;
-        stats.total_value += qty * Number(p.price || 0);
-        if (qty === 0) stats.out_of_stock++;
-        else if (qty <= 10) stats.low_stock++;
       });
 
       return { success: true, stats };
@@ -71,7 +59,8 @@ export const inventoryService = {
         categories(name),
         inventory(
           id, quantity_on_hand, quantity_reserved, reorder_level,
-          reorder_quantity, cost_price, location, last_restocked, supplier_id,
+          reorder_quantity, cost_price, last_restocked,
+          warehouse_locations(name),
           suppliers(name)
         )
       `, { count: 'exact' })
@@ -107,9 +96,8 @@ export const inventoryService = {
         reorder_level: reorder,
         reorder_quantity: inv.reorder_quantity ?? 50,
         cost_price:    inv.cost_price,
-        location:      inv.location,
+        location:      inv.warehouse_locations?.name || 'Main Warehouse',
         last_restocked: inv.last_restocked,
-        supplier_id:   inv.supplier_id,
         supplier_name: inv.suppliers?.name,
         stock_status:  stockStatus
       };
@@ -128,109 +116,24 @@ export const inventoryService = {
 
     if (existing) return existing.id;
 
-    const { data: product } = await supabase
-      .from('products')
-      .select('stock, sku')
-      .eq('id', productId)
-      .single();
+    // Get default warehouse
+    let { data: wh } = await supabase.from('warehouse_locations').select('id').limit(1).single();
+    if (!wh) {
+      const { data: newWh } = await supabase.from('warehouse_locations').insert([{ name: 'Main Warehouse' }]).select('id').single();
+      wh = newWh;
+    }
 
     const { data: newInv, error } = await supabase
       .from('inventory')
-      .insert([{ product_id: productId, quantity_on_hand: product?.stock || 0, sku: product?.sku }])
+      .insert([{ product_id: productId, warehouse_id: wh.id, quantity_on_hand: 0 }])
       .select('id')
       .single();
     if (error) throw error;
     return newInv.id;
   },
 
-  // ── Add Stock ──────────────────────────────────────────────────
-  addStock: async (productId, quantity, { supplierId, unitCost, notes, reference } = {}) => {
-    const qty = Number(quantity);
-    if (qty <= 0) throw new Error('Quantity must be positive');
-
-    const inventoryId = await inventoryService.ensureInventoryRecord(productId);
-
-    // Get current quantity
-    const { data: current } = await supabase
-      .from('inventory')
-      .select('quantity_on_hand')
-      .eq('id', inventoryId)
-      .single();
-
-    const before = current?.quantity_on_hand || 0;
-    const after  = before + qty;
-
-    // Update inventory
-    await supabase.from('inventory').update({
-      quantity_on_hand: after,
-      supplier_id: supplierId || null,
-      cost_price: unitCost || null,
-      last_restocked: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    }).eq('id', inventoryId);
-
-    // Update products.stock
-    await supabase.from('products').update({ stock: after }).eq('id', productId);
-
-    // Log movement
-    const { data: movement, error } = await supabase.from('stock_movements').insert([{
-      product_id: productId,
-      inventory_id: inventoryId,
-      supplier_id: supplierId || null,
-      movement_type: 'purchase',
-      quantity: qty,
-      quantity_before: before,
-      quantity_after: after,
-      unit_cost: unitCost || null,
-      reference: reference || null,
-      notes: notes || null
-    }]).select().single();
-    if (error) throw error;
-
-    return { success: true, data: movement, quantity_after: after };
-  },
-
-  // ── Remove Stock ───────────────────────────────────────────────
-  removeStock: async (productId, quantity, { reason = 'damage', notes, reference } = {}) => {
-    const qty = Number(quantity);
-    if (qty <= 0) throw new Error('Quantity must be positive');
-
-    const inventoryId = await inventoryService.ensureInventoryRecord(productId);
-    const { data: current } = await supabase
-      .from('inventory')
-      .select('quantity_on_hand')
-      .eq('id', inventoryId)
-      .single();
-
-    const before = current?.quantity_on_hand || 0;
-    if (qty > before) throw new Error(`Cannot remove ${qty}. Only ${before} available.`);
-
-    const after = before - qty;
-
-    await supabase.from('inventory').update({
-      quantity_on_hand: after,
-      updated_at: new Date().toISOString()
-    }).eq('id', inventoryId);
-
-    await supabase.from('products').update({ stock: after }).eq('id', productId);
-
-    const { data: movement, error } = await supabase.from('stock_movements').insert([{
-      product_id: productId,
-      inventory_id: inventoryId,
-      movement_type: reason,
-      quantity: -qty,
-      quantity_before: before,
-      quantity_after: after,
-      reference: reference || null,
-      notes: notes || null
-    }]).select().single();
-    if (error) throw error;
-
-    return { success: true, data: movement, quantity_after: after };
-  },
-
   // ── Adjust Stock ───────────────────────────────────────────────
-  adjustStock: async (productId, newQuantity, { notes } = {}) => {
+  adjustStock: async (productId, newQuantity, userId, { notes } = {}) => {
     const qty = Number(newQuantity);
     if (qty < 0) throw new Error('Quantity cannot be negative');
 
@@ -251,43 +154,33 @@ export const inventoryService = {
 
     await supabase.from('products').update({ stock: qty }).eq('id', productId);
 
-    const { data: movement, error } = await supabase.from('stock_movements').insert([{
-      product_id: productId,
+    const { data: movement, error } = await supabase.from('inventory_movements').insert([{
       inventory_id: inventoryId,
-      movement_type: 'adjustment',
+      movement_type: 'ADJUSTMENT',
       quantity: diff,
-      quantity_before: before,
-      quantity_after: qty,
-      notes: notes || 'Manual stock adjustment'
+      reason: notes || 'Manual stock adjustment',
+      user_id: userId
     }]).select().single();
     if (error) throw error;
 
     return { success: true, data: movement, quantity_after: qty };
   },
 
-  // ── Update Inventory Record Settings ──────────────────────────
-  updateInventorySettings: async (inventoryId, updates) => {
-    const { data, error } = await supabase
-      .from('inventory')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', inventoryId)
-      .select()
-      .single();
-    if (error) throw error;
-    return { success: true, data };
-  },
-
   // ── Get Stock Movements ────────────────────────────────────────
   getStockMovements: async (productId, { page = 1, limit = 20 } = {}) => {
     const { from, to } = pageRange(page, limit);
+    
+    // We need to resolve inventory_id from product_id
+    const { data: invData } = await supabase.from('inventory').select('id').eq('product_id', productId).single();
+    if (!invData) return { success: true, data: [], meta: responseMeta(0, page, limit) };
+
     const { data, count, error } = await supabase
-      .from('stock_movements')
+      .from('inventory_movements')
       .select(`
         *,
-        profiles(full_name),
-        suppliers(name)
+        profiles:user_id(full_name)
       `, { count: 'exact' })
-      .eq('product_id', productId)
+      .eq('inventory_id', invData.id)
       .order('created_at', { ascending: false })
       .range(from, to);
     if (error) throw error;
@@ -299,36 +192,57 @@ export const inventoryService = {
   getAllStockMovements: async ({ page = 1, limit = DEFAULT_LIMIT } = {}) => {
     const { from, to } = pageRange(page, limit);
     const { data, count, error } = await supabase
-      .from('stock_movements')
-      .select(`*, products(title, sku), profiles(full_name), suppliers(name)`, { count: 'exact' })
+      .from('inventory_movements')
+      .select(`*, inventory(products(title, sku)), profiles:user_id(full_name)`, { count: 'exact' })
       .order('created_at', { ascending: false })
       .range(from, to);
     if (error) throw error;
     return { success: true, data: data || [], meta: responseMeta(count, page, limit) };
   },
 
-  // ── Low Stock Products ─────────────────────────────────────────
-  getLowStockProducts: async (limit = 10) => {
-    const { data, error } = await supabase
-      .from('products')
-      .select('id, title, sku, stock, image_url')
-      .lte('stock', 10)
-      .gt('stock', 0)
-      .order('stock', { ascending: true })
-      .limit(limit);
+  // ── Report Damaged Stock ───────────────────────────────────────
+  reportDamagedStock: async (productId, quantity, reason, userId) => {
+    const inventoryId = await inventoryService.ensureInventoryRecord(productId);
+    const { data, error } = await supabase.from('damaged_stock').insert([{
+      inventory_id: inventoryId,
+      quantity,
+      reason,
+      reported_by: userId
+    }]).select().single();
     if (error) throw error;
-    return { success: true, data: data || [] };
+    return { success: true, data };
   },
 
-  // ── Realtime subscription ──────────────────────────────────────
-  subscribeToInventoryAlerts: (callback) => {
-    const channel = supabase
-      .channel('erp-inventory-alerts')
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'products' }, payload => {
-        const product = payload.new;
-        if (product.stock <= 0 || product.stock <= 10) callback({ type: 'low_stock', product });
-      })
-      .subscribe();
-    return () => supabase.removeChannel(channel);
+  // ── Dispose Damaged Stock (RPC) ───────────────────────────────
+  disposeDamagedStock: async (damageId, userId) => {
+    const { error } = await supabase.rpc('dispose_damaged_stock', {
+      p_damage_id: damageId,
+      p_user_id: userId
+    });
+    if (error) throw error;
+    return { success: true };
+  },
+
+  // ── Receive Goods (RPC) ───────────────────────────────────────
+  receiveGoods: async (purchaseRequestId, warehouseId, quantity, userId) => {
+    const { error } = await supabase.rpc('receive_goods', {
+      p_request_id: purchaseRequestId,
+      p_warehouse_id: warehouseId,
+      p_quantity: quantity,
+      p_user_id: userId
+    });
+    if (error) throw error;
+    
+    // Also sync products.stock for legacy fallback
+    // Getting product id from purchase_requests
+    const { data: pr } = await supabase.from('purchase_requests').select('product_id').eq('id', purchaseRequestId).single();
+    if (pr) {
+       const { data: inv } = await supabase.from('inventory').select('quantity_on_hand').eq('product_id', pr.product_id).eq('warehouse_id', warehouseId).single();
+       if (inv) {
+          await supabase.from('products').update({ stock: inv.quantity_on_hand }).eq('id', pr.product_id);
+       }
+    }
+    
+    return { success: true };
   }
 };

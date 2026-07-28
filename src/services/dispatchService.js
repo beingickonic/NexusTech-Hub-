@@ -18,10 +18,10 @@ export const dispatchService = {
   // ── Stats ──────────────────────────────────────────────────────
   getDispatchStats: async () => {
     try {
-      const statuses = ['pending', 'assigned', 'picked_up', 'in_transit', 'delivered', 'failed', 'returned'];
+      const statuses = ['Pending', 'Packed', 'Ready', 'Out For Delivery', 'Delivered', 'Failed'];
       const results = await Promise.all(
         statuses.map(s =>
-          supabase.from('dispatches').select('*', { count: 'exact', head: true }).eq('status', s)
+          supabase.from('dispatch_orders').select('*', { count: 'exact', head: true }).eq('status', s)
         )
       );
       const stats = {};
@@ -31,10 +31,10 @@ export const dispatchService = {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const { count: todayCount } = await supabase
-        .from('dispatches')
+        .from('dispatch_orders')
         .select('*', { count: 'exact', head: true })
-        .eq('status', 'delivered')
-        .gte('actual_delivery', today.toISOString());
+        .eq('status', 'Delivered')
+        .gte('delivered_at', today.toISOString());
 
       return { success: true, stats: { ...stats, today_delivered: todayCount || 0 } };
     } catch (error) {
@@ -47,18 +47,18 @@ export const dispatchService = {
   getDispatches: async ({ page = 1, limit = DEFAULT_LIMIT, status = 'all', search = '' } = {}) => {
     const { from, to } = pageRange(page, limit);
     let query = supabase
-      .from('dispatches')
+      .from('dispatch_orders')
       .select(`
         *,
         orders(id, total_amount, status),
-        drivers(id, full_name, phone, vehicle_number, vehicle_type, photo_url)
+        drivers(id, vehicle_info)
       `, { count: 'exact' })
       .order('created_at', { ascending: false });
 
-    if (status && status !== 'all') query = query.eq('status', status);
-    if (search) query = query.or(
-      `customer_name.ilike.%${search}%,dispatch_number.ilike.%${search}%,delivery_address.ilike.%${search}%`
-    );
+    if (status && status !== 'all') query = query.ilike('status', status);
+    
+    // Simplistic search for now, could search by order ID
+    if (search) query = query.or(`notes.ilike.%${search}%`);
 
     const { data, count, error } = await query.range(from, to);
     if (error) throw error;
@@ -69,7 +69,7 @@ export const dispatchService = {
   // ── Get Single Dispatch ────────────────────────────────────────
   getDispatch: async (id) => {
     const { data, error } = await supabase
-      .from('dispatches')
+      .from('dispatch_orders')
       .select(`*, orders(*, order_items(*, products(title, image_url))), drivers(*)`)
       .eq('id', id)
       .single();
@@ -80,8 +80,8 @@ export const dispatchService = {
   // ── Create Dispatch from Order ─────────────────────────────────
   createDispatch: async (dispatchData) => {
     const { data, error } = await supabase
-      .from('dispatches')
-      .insert([{ ...dispatchData, dispatch_number: '' }])
+      .from('dispatch_orders')
+      .insert([dispatchData])
       .select()
       .single();
     if (error) throw error;
@@ -90,68 +90,52 @@ export const dispatchService = {
 
   // ── Assign Driver ──────────────────────────────────────────────
   assignDriver: async (dispatchId, driverId) => {
-    // Get driver info for vehicle field
-    const { data: driver } = await supabase
-      .from('drivers')
-      .select('full_name, vehicle_number, vehicle_type')
-      .eq('id', driverId)
-      .single();
-
     const { data, error } = await supabase
-      .from('dispatches')
-      .update({
-        driver_id: driverId,
-        status: 'assigned',
-        vehicle: driver ? `${driver.vehicle_type || ''} - ${driver.vehicle_number || ''}`.trim() : null,
-        updated_at: new Date().toISOString()
+      .from('dispatch_orders')
+      .update({ 
+        driver_id: driverId, 
+        status: 'Out For Delivery', 
+        updated_at: new Date().toISOString() 
       })
       .eq('id', dispatchId)
       .select()
       .single();
+      
     if (error) throw error;
     return { success: true, data };
   },
 
   // ── Update Status ──────────────────────────────────────────────
-  updateStatus: async (dispatchId, status, extra = {}) => {
-    const updates = { status, updated_at: new Date().toISOString(), ...extra };
-    if (status === 'delivered') updates.actual_delivery = new Date().toISOString();
+  updateStatus: async (dispatchId, status, { notes } = {}) => {
+    const updateData = { status, updated_at: new Date().toISOString() };
+    if (notes) updateData.notes = notes;
+    if (status === 'Out For Delivery') updateData.dispatched_at = new Date().toISOString();
+    if (status === 'Delivered') updateData.delivered_at = new Date().toISOString();
 
     const { data, error } = await supabase
-      .from('dispatches')
-      .update(updates)
+      .from('dispatch_orders')
+      .update(updateData)
       .eq('id', dispatchId)
       .select()
       .single();
+      
     if (error) throw error;
+
+    // Trigger Order status sync if Delivered
+    if (status === 'Delivered' && data.order_id) {
+       await supabase.from('orders').update({ status: 'Delivered' }).eq('id', data.order_id);
+    }
+
     return { success: true, data };
   },
 
-  // ── Update Dispatch ────────────────────────────────────────────
-  updateDispatch: async (id, updates) => {
+  // ── Get Drivers ────────────────────────────────────────────────
+  getDrivers: async () => {
     const { data, error } = await supabase
-      .from('dispatches')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', id)
-      .select()
-      .single();
+      .from('drivers')
+      .select('*, profiles:user_id(full_name, phone, photo_url)')
+      .eq('status', 'Available');
     if (error) throw error;
-    return { success: true, data };
-  },
-
-  // ── Delete Dispatch ────────────────────────────────────────────
-  deleteDispatch: async (id) => {
-    const { error } = await supabase.from('dispatches').delete().eq('id', id);
-    if (error) throw error;
-    return { success: true };
-  },
-
-  // ── Realtime subscription ──────────────────────────────────────
-  subscribeToDispatches: (callback) => {
-    const channel = supabase
-      .channel('erp-dispatches')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'dispatches' }, payload => callback(payload))
-      .subscribe();
-    return () => supabase.removeChannel(channel);
+    return { success: true, data: data || [] };
   }
 };
