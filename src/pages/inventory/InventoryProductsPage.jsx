@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Plus, Edit, Image as ImageIcon, Barcode, Package, ArrowRightLeft } from 'lucide-react';
 import { supabase } from '../../services/supabaseClient';
+import { inventoryService } from '../../services/inventoryService';
 
 const InventoryProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -12,82 +13,35 @@ const InventoryProductsPage = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        
-        // Simulating a complex join across products, inventory, and categories
-        // In a real app, this would be: 
-        // const { data } = await supabase.from('products').select(`*, category:categories(*), inventory:inventory(*)`)
-        
-        setTimeout(() => {
-          setProducts([
-            {
-              id: '1',
-              title: 'Dell XPS 15',
-              sku: 'LPT-DELL-XPS15',
-              barcode: '8492019382',
-              category: 'Laptops',
-              price: 1499.99,
-              cost_price: 1200.00,
-              quantity: 45,
-              reserved: 5,
-              available: 40,
-              image_url: null,
-            },
-            {
-              id: '2',
-              title: 'Samsung Galaxy S23 Ultra',
-              sku: 'MOB-SAM-S23U',
-              barcode: '8492019383',
-              category: 'Smartphones',
-              price: 1199.99,
-              cost_price: 950.00,
-              quantity: 120,
-              reserved: 10,
-              available: 110,
-              image_url: null,
-            },
-            {
-              id: '3',
-              title: 'Herman Miller Aeron',
-              sku: 'FURN-HM-AER',
-              barcode: '8492019384',
-              category: 'Office Furniture',
-              price: 1250.00,
-              cost_price: 800.00,
-              quantity: 15,
-              reserved: 2,
-              available: 13,
-              image_url: null,
-            },
-            {
-              id: '4',
-              title: 'Logitech MX Master 3S',
-              sku: 'ACC-LOG-MX3S',
-              barcode: '8492019385',
-              category: 'Accessories',
-              price: 99.99,
-              cost_price: 60.00,
-              quantity: 5,
-              reserved: 0,
-              available: 5,
-              image_url: null,
-            }
-          ]);
-          setLoading(false);
-        }, 800);
+        const { success, data } = await inventoryService.getInventoryItems({ search: searchQuery });
+        if (success) {
+          // map to UI expected format
+          const mapped = data.map(p => ({
+            id: p.id,
+            title: p.title,
+            sku: p.sku || 'N/A',
+            barcode: p.barcode || 'N/A',
+            category: p.category_name || 'Uncategorized',
+            price: p.price || 0,
+            cost_price: p.cost_price || 0,
+            quantity: p.quantity_on_hand || 0,
+            reserved: p.quantity_reserved || 0,
+            available: p.quantity_available || 0,
+            image_url: p.image_url
+          }));
+          setProducts(mapped);
+        }
       } catch (error) {
         console.error(error);
+      } finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [searchQuery]);
 
-  const filteredProducts = products.filter(p => 
-    p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.barcode.includes(searchQuery)
-  );
+  const filteredProducts = products;
 
   return (
     <div className="space-y-6">

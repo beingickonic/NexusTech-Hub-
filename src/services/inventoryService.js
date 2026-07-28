@@ -15,37 +15,144 @@ const responseMeta = (count = 0, page = 1, limit = DEFAULT_LIMIT) => ({
 });
 
 export const inventoryService = {
-  // ── Stats ──────────────────────────────────────────────────────
-  getInventoryStats: async () => {
+  // ── Dashboard Stats ──────────────────────────────────────────────
+  getDashboardStats: async () => {
     try {
-      const { data: invItems, error } = await supabase
+      // 1. Base Inventory Stats
+      const { data: invItems, error: invError } = await supabase
         .from('inventory')
         .select('quantity_on_hand, quantity_reserved, reorder_level, cost_price');
-
-      if (error) throw error;
+      if (invError) throw invError;
 
       const stats = {
-        total_items: invItems?.length || 0,
-        total_value: 0,
-        low_stock: 0,
-        out_of_stock: 0,
-        overstock: 0
+        totalProducts: invItems?.length || 0,
+        totalValue: 0,
+        lowStock: 0,
+        outOfStock: 0,
+        overstock: 0,
+        incoming: 0,
+        pendingRequests: 0,
+        receivedToday: 0,
+        adjustmentsToday: 0
       };
 
       (invItems || []).forEach(item => {
         const qty = item.quantity_on_hand || 0;
         const reorder = item.reorder_level || 10;
-        stats.total_value += qty * Number(item.cost_price || 0);
-        if (qty === 0) stats.out_of_stock++;
-        else if (qty <= reorder) stats.low_stock++;
+        stats.totalValue += qty * Number(item.cost_price || 0);
+        if (qty === 0) stats.outOfStock++;
+        else if (qty <= reorder) stats.lowStock++;
         else if (qty > reorder * 5) stats.overstock++;
+      });
+
+      // 2. Purchase Requests (Incoming / Pending)
+      const { data: prData } = await supabase
+        .from('purchase_requests')
+        .select('status, quantity');
+      
+      (prData || []).forEach(pr => {
+        const s = (pr.status || '').toLowerCase();
+        if (s === 'pending' || s === 'awaiting_approval') stats.pendingRequests++;
+        else if (s === 'approved' || s === 'in_transit') stats.incoming += (pr.quantity || 1); // rough estimate if counting items or shipments
+      });
+
+      // 3. Today's Movements (Received & Adjustments)
+      const startOfDay = new Date();
+      startOfDay.setHours(0, 0, 0, 0);
+
+      const { data: movData } = await supabase
+        .from('inventory_movements')
+        .select('movement_type, quantity')
+        .gte('created_at', startOfDay.toISOString());
+      
+      (movData || []).forEach(m => {
+        if (m.movement_type === 'IN' || m.movement_type === 'RECEIPT') stats.receivedToday += Math.abs(m.quantity || 0);
+        if (m.movement_type === 'ADJUSTMENT') stats.adjustmentsToday++; // Count of adjustment events
       });
 
       return { success: true, stats };
     } catch (error) {
       console.error('Inventory stats error:', error);
-      return { success: false, stats: { total_items: 0, total_value: 0, low_stock: 0, out_of_stock: 0, overstock: 0 } };
+      return { success: false, stats: { totalProducts: 0, totalValue: 0, lowStock: 0, outOfStock: 0, overstock: 0, incoming: 0, pendingRequests: 0, receivedToday: 0, adjustmentsToday: 0 } };
     }
+  },
+
+  // ── Dashboard Activity ───────────────────────────────────────────
+  getDashboardActivity: async () => {
+    try {
+      const { data, error } = await supabase
+        .from('inventory_movements')
+        .select(`
+          id, movement_type, quantity, reason, created_at,
+          profiles:user_id(full_name),
+          inventory(products(title))
+        `)
+        .order('created_at', { ascending: false })
+        .limit(5);
+      
+      if (error) throw error;
+      
+      const activity = (data || []).map(m => ({
+        id: m.id,
+        type: m.movement_type,
+        quantity: m.quantity,
+        reason: m.reason,
+        date: m.created_at,
+        user: m.profiles?.full_name || 'System',
+        product: m.inventory?.products?.title || 'Unknown Product'
+      }));
+
+      return { success: true, activity };
+    } catch (error) {
+      console.error('Activity error:', error);
+      return { success: false, activity: [] };
+    }
+  },
+
+  // ── Get Warehouses ────────────────────────────────────────────────
+  getWarehouses: async () => {
+    try {
+      const { data, error } = await supabase
+        .from('warehouse_locations')
+        .select('*');
+      if (error) throw error;
+      return { success: true, data: data || [] };
+    } catch (error) {
+      console.error(error);
+      return { success: false, data: [] };
+    }
+  },
+
+  // ── Get Purchase Requests (GRNs) ─────────────────────────────────
+  getPurchaseRequests: async ({ page = 1, limit = DEFAULT_LIMIT, search = '' } = {}) => {
+    const { from, to } = pageRange(page, limit);
+    let query = supabase
+      .from('purchase_requests')
+      .select(`
+        *,
+        suppliers(name),
+        products(title, sku),
+        profiles:requested_by(full_name)
+      `, { count: 'exact' })
+      .order('created_at', { ascending: false });
+
+    // Assuming search logic could be added if needed, but for simplicity returning all
+    const { data, count, error } = await query.range(from, to);
+    if (error) throw error;
+    
+    return { success: true, data: data || [], meta: responseMeta(count, page, limit) };
+  },
+
+  // ── Update Purchase Request Status ──────────────────────────────
+  updatePurchaseRequestStatus: async (id, status) => {
+    const { data, error } = await supabase
+      .from('purchase_requests')
+      .update({ status, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+    return { success: true, data };
   },
 
   // ── Get Inventory Items ────────────────────────────────────────
@@ -211,6 +318,27 @@ export const inventoryService = {
     }]).select().single();
     if (error) throw error;
     return { success: true, data };
+  },
+
+  // ── Get Damaged Stock ──────────────────────────────────────────
+  getDamagedStock: async ({ page = 1, limit = DEFAULT_LIMIT } = {}) => {
+    const { from, to } = pageRange(page, limit);
+    try {
+      const { data, count, error } = await supabase
+        .from('damaged_stock')
+        .select(`
+          *,
+          inventory(products(title, sku)),
+          profiles:reported_by(full_name)
+        `, { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range(from, to);
+      if (error) throw error;
+      return { success: true, data: data || [], meta: responseMeta(count, page, limit) };
+    } catch (error) {
+      console.error('getDamagedStock error:', error);
+      return { success: false, data: [] };
+    }
   },
 
   // ── Dispose Damaged Stock (RPC) ───────────────────────────────

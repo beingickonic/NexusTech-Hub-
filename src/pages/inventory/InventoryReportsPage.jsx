@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, FileText, Download, BarChart2, Filter } from 'lucide-react';
+import { Search, FileText, Download, BarChart2 } from 'lucide-react';
 import { supabase } from '../../services/supabaseClient';
 
 const InventoryReportsPage = () => {
@@ -8,15 +8,10 @@ const InventoryReportsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setReports([
-        { id: 1, name: 'Q3 Inventory Valuation', type: 'Valuation', date: new Date().toISOString(), size: '2.4 MB' },
-        { id: 2, name: 'Monthly Stock Movement - August', type: 'Movement', date: new Date(Date.now() - 86400000).toISOString(), size: '1.1 MB' },
-        { id: 3, name: 'Low Stock Alerts Summary', type: 'Alerts', date: new Date(Date.now() - 172800000).toISOString(), size: '845 KB' },
-        { id: 4, name: 'Damaged Stock Disposal Q2', type: 'Disposal', date: new Date(Date.now() - 2592000000).toISOString(), size: '3.2 MB' },
-      ]);
-      setLoading(false);
-    }, 800);
+    // In a real app, fetch from inventoryService.getReports()
+    // For now, no reports generated yet.
+    setReports([]);
+    setLoading(false);
   }, []);
 
   return (
@@ -76,26 +71,40 @@ const InventoryReportsPage = () => {
             <tbody className="divide-y divide-slate-200 dark:divide-white/10">
               {loading ? (
                 <tr><td colSpan="4" className="px-6 py-12 text-center text-slate-400">Loading reports...</td></tr>
-              ) : reports.map((r) => (
-                <motion.tr key={r.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <FileText className="text-violet-500" size={20} />
-                      <div>
-                        <p className="font-semibold text-slate-900 dark:text-white">{r.name}</p>
-                        <p className="text-xs text-slate-500 mt-0.5">{r.size} • PDF</p>
+              ) : reports.length > 0 ? (
+                reports.map((r) => (
+                  <motion.tr key={r.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <FileText className="text-violet-500" size={20} />
+                        <div>
+                          <p className="font-semibold text-slate-900 dark:text-white">{r.name}</p>
+                          <p className="text-xs text-slate-500 mt-0.5">{r.size} • PDF</p>
+                        </div>
                       </div>
+                    </td>
+                    <td className="px-6 py-4"><span className="text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-white/5 px-2 py-1 rounded">{r.type}</span></td>
+                    <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">{new Date(r.date).toLocaleDateString()}</td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="inline-flex items-center gap-1.5 text-sm font-semibold text-violet-600 hover:text-violet-700 bg-violet-50 hover:bg-violet-100 dark:bg-violet-500/10 dark:hover:bg-violet-500/20 px-3 py-1.5 rounded-lg transition-colors">
+                        <Download size={16} /> Download
+                      </button>
+                    </td>
+                  </motion.tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="px-6 py-16 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <div className="w-16 h-16 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center mb-4">
+                        <FileText size={32} className="text-slate-400" />
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">No Reports Found</h3>
+                      <p className="text-slate-500 text-sm max-w-sm mx-auto">No inventory reports have been generated yet. Use the action cards above to generate a new report.</p>
                     </div>
                   </td>
-                  <td className="px-6 py-4"><span className="text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-white/5 px-2 py-1 rounded">{r.type}</span></td>
-                  <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">{new Date(r.date).toLocaleDateString()}</td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="inline-flex items-center gap-1.5 text-sm font-semibold text-violet-600 hover:text-violet-700 bg-violet-50 hover:bg-violet-100 dark:bg-violet-500/10 dark:hover:bg-violet-500/20 px-3 py-1.5 rounded-lg transition-colors">
-                      <Download size={16} /> Download
-                    </button>
-                  </td>
-                </motion.tr>
-              ))}
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

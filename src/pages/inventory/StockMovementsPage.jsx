@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, ArrowRightLeft, ArrowUpRight, ArrowDownRight, Package, Calendar } from 'lucide-react';
 import { supabase } from '../../services/supabaseClient';
+import { inventoryService } from '../../services/inventoryService';
 
 const StockMovementsPage = () => {
   const [movements, setMovements] = useState([]);
@@ -11,64 +12,27 @@ const StockMovementsPage = () => {
   useEffect(() => {
     async function fetchMovements() {
       setLoading(true);
-      // Simulating API fetch
-      setTimeout(() => {
-        setMovements([
-          {
-            id: 'MOV-1004',
-            date: new Date().toISOString(),
-            product: 'Dell XPS 15',
-            sku: 'LPT-DELL-XPS15',
-            type: 'purchase',
-            previousQty: 25,
-            newQty: 45,
-            change: 20,
-            reason: 'PO-2023-085 Received',
-            user: 'Derrick (Admin)',
-            warehouse: 'Main WH (Nairobi)'
-          },
-          {
-            id: 'MOV-1003',
-            date: new Date(Date.now() - 3600000).toISOString(),
-            product: 'Samsung Galaxy S23 Ultra',
-            sku: 'MOB-SAM-S23U',
-            type: 'sale',
-            previousQty: 122,
-            newQty: 120,
-            change: -2,
-            reason: 'Order #ORD-8492 Dispatch',
-            user: 'System',
-            warehouse: 'Main WH (Nairobi)'
-          },
-          {
-            id: 'MOV-1002',
-            date: new Date(Date.now() - 86400000).toISOString(),
-            product: 'Herman Miller Aeron',
-            sku: 'FURN-HM-AER',
-            type: 'adjustment',
-            previousQty: 16,
-            newQty: 15,
-            change: -1,
-            reason: 'Stock Count Correction',
-            user: 'Inventory Officer',
-            warehouse: 'Mombasa Depot'
-          },
-          {
-            id: 'MOV-1001',
-            date: new Date(Date.now() - 172800000).toISOString(),
-            product: 'Logitech MX Master 3S',
-            sku: 'ACC-LOG-MX3S',
-            type: 'transfer',
-            previousQty: 25,
-            newQty: 5,
-            change: -20,
-            reason: 'Transfer to Mombasa Depot',
-            user: 'Inventory Officer',
-            warehouse: 'Main WH (Nairobi)'
-          }
-        ]);
+      try {
+        const { success, data } = await inventoryService.getAllStockMovements({ limit: 50 });
+        if (success) {
+          const mapped = data.map(m => ({
+            id: m.id,
+            date: m.created_at,
+            product: m.inventory?.products?.title || 'Unknown Product',
+            sku: m.inventory?.products?.sku || 'N/A',
+            type: (m.movement_type || 'adjustment').toLowerCase(),
+            change: m.quantity || 0,
+            reason: m.reason || 'No reason provided',
+            user: m.profiles?.full_name || 'System',
+            warehouse: 'Main Warehouse' // Assuming Main Warehouse for now if not joined
+          }));
+          setMovements(mapped);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
         setLoading(false);
-      }, 800);
+      }
     }
     fetchMovements();
   }, []);
@@ -184,11 +148,10 @@ const StockMovementsPage = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <span className="text-sm text-slate-500 line-through">{movement.previousQty}</span>
-                        <ArrowRightLeft size={14} className="text-slate-400" />
-                        <span className="text-sm font-bold text-slate-900 dark:text-white">{movement.newQty}</span>
-                        <span className={`text-xs font-bold px-2 py-0.5 rounded ${
-                          movement.change > 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+                        <span className={`text-sm font-bold px-2.5 py-1 rounded-md ${
+                          movement.change > 0 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400' : 
+                          movement.change < 0 ? 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400' :
+                          'bg-slate-100 text-slate-700 dark:bg-slate-500/20 dark:text-slate-400'
                         }`}>
                           {movement.change > 0 ? '+' : ''}{movement.change}
                         </span>

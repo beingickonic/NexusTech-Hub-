@@ -2,20 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Plus, Package, Users } from 'lucide-react';
 import { supabase } from '../../services/supabaseClient';
+import { inventoryService } from '../../services/inventoryService';
 
 const WarehouseLocationsPage = () => {
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLocations([
-        { id: 1, name: 'Main HQ Warehouse', location: 'Nairobi, Industrial Area', capacity: 50000, current: 34500, manager: 'Derrick (Admin)', status: 'active' },
-        { id: 2, name: 'Mombasa Depot', location: 'Mombasa, Port View', capacity: 20000, current: 18200, manager: 'John Doe', status: 'active' },
-        { id: 3, name: 'Kisumu Hub', location: 'Kisumu Central', capacity: 15000, current: 4000, manager: 'Jane Smith', status: 'maintenance' }
-      ]);
-      setLoading(false);
-    }, 800);
+    const fetchWarehouses = async () => {
+      setLoading(true);
+      try {
+        const { success, data } = await inventoryService.getWarehouses();
+        if (success) {
+          const mapped = data.map((wh) => ({
+            id: wh.id,
+            name: wh.name,
+            location: wh.location || 'Unknown Location',
+            capacity: wh.capacity || 50000,
+            current: wh.current_utilization || 0, // Fallback if missing
+            manager: wh.manager_name || 'System Admin',
+            status: wh.status?.toLowerCase() || 'active'
+          }));
+          
+          if (mapped.length === 0) {
+             // Let's at least show the one we create by default or an empty state
+          }
+          setLocations(mapped);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchWarehouses();
   }, []);
 
   return (
@@ -40,7 +60,7 @@ const WarehouseLocationsPage = () => {
               <div className="h-4 w-24 bg-slate-100 dark:bg-white/5 rounded"></div>
             </div>
           ))
-        ) : (
+        ) : locations.length > 0 ? (
           locations.map((loc) => (
             <motion.div 
               key={loc.id}
@@ -90,6 +110,12 @@ const WarehouseLocationsPage = () => {
               </div>
             </motion.div>
           ))
+        ) : (
+          <div className="col-span-1 md:col-span-2 lg:col-span-3 p-12 text-center bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col items-center justify-center">
+            <Package size={48} className="text-slate-300 dark:text-slate-600 mb-4" />
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">No Warehouses Found</h3>
+            <p className="text-slate-500 text-sm max-w-sm mx-auto">You haven't added any warehouse locations yet. Click "Add Warehouse" to get started.</p>
+          </div>
         )}
       </div>
     </div>

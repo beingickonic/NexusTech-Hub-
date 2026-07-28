@@ -1,62 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Filter, ClipboardCheck, Eye, CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { Search, Filter, Eye, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import { supabase } from '../../services/supabaseClient';
+import { inventoryService } from '../../services/inventoryService';
 
 const GoodsReceivedPage = () => {
   const [grns, setGrns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
-      setGrns([
-        {
-          id: 'GRN-2023-045',
-          supplier: 'TechSource Ltd',
-          poReference: 'PO-2023-085',
-          date: new Date().toISOString(),
-          status: 'pending',
-          items: 12,
-          receivedBy: null
-        },
-        {
-          id: 'GRN-2023-044',
-          supplier: 'Global Office Supplies',
-          poReference: 'PO-2023-082',
-          date: new Date(Date.now() - 86400000).toISOString(),
-          status: 'accepted',
-          items: 45,
-          receivedBy: 'Derrick (Admin)'
-        },
-        {
-          id: 'GRN-2023-043',
-          supplier: 'Samsung Kenya',
-          poReference: 'PO-2023-080',
-          date: new Date(Date.now() - 172800000).toISOString(),
-          status: 'rejected',
-          items: 120,
-          receivedBy: 'Derrick (Admin)'
-        }
-      ]);
+  const fetchGrns = async () => {
+    setLoading(true);
+    try {
+      const { success, data } = await inventoryService.getPurchaseRequests();
+      if (success) {
+        const mapped = data.map(pr => ({
+          id: pr.id,
+          supplier: pr.suppliers?.name || 'Unknown Supplier',
+          poReference: pr.product_id ? `PROD-${pr.product_id.substring(0, 6)}` : 'PO-N/A',
+          date: pr.created_at,
+          status: pr.status?.toLowerCase() || 'pending',
+          items: pr.quantity || 0,
+          receivedBy: pr.profiles?.full_name || null,
+          productTitle: pr.products?.title || 'Unknown Product'
+        }));
+        setGrns(mapped);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
       setLoading(false);
-    }, 800);
+    }
+  };
+
+  useEffect(() => {
+    fetchGrns();
   }, []);
+
+  const handleReceive = async (grn) => {
+    if (!window.confirm(`Receive ${grn.items} units of ${grn.productTitle}?`)) return;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      // Get a default warehouse
+      const { data: whData } = await supabase.from('warehouse_locations').select('id').limit(1).single();
+      if (!whData) {
+         alert("No warehouse found to receive goods into.");
+         return;
+      }
+      await inventoryService.receiveGoods(grn.id, whData.id, grn.items, user?.id);
+      await fetchGrns();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to receive goods.");
+    }
+  };
 
   const filteredGrns = grns.filter(g => 
     g.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
     g.supplier.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    g.poReference.toLowerCase().includes(searchQuery.toLowerCase())
+    g.poReference.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    g.productTitle.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'accepted': 
-        return <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 px-2.5 py-1 rounded-md text-xs font-semibold"><CheckCircle2 size={14}/> Accepted</span>;
+      case 'approved': 
+      case 'received':
+      case 'completed':
+      case 'accepted':
+        return <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 px-2.5 py-1 rounded-md text-xs font-semibold"><CheckCircle2 size={14}/> {status.charAt(0).toUpperCase() + status.slice(1)}</span>;
       case 'rejected': 
-        return <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400 px-2.5 py-1 rounded-md text-xs font-semibold"><XCircle size={14}/> Rejected</span>;
+      case 'cancelled':
+        return <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400 px-2.5 py-1 rounded-md text-xs font-semibold"><XCircle size={14}/> {status.charAt(0).toUpperCase() + status.slice(1)}</span>;
       case 'pending':
+      case 'awaiting_approval':
       default:
         return <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400 px-2.5 py-1 rounded-md text-xs font-semibold"><Clock size={14}/> Pending Review</span>;
     }
@@ -138,9 +155,14 @@ const GoodsReceivedPage = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      {grn.status === 'pending' ? (
+                      {grn.status === 'pending' || grn.status === 'awaiting_approval' || grn.status === 'approved' ? (
                          <div className="flex items-center justify-end gap-2">
-                           <button className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-sm font-medium transition-colors">Accept</button>
+                           <button 
+                             onClick={() => handleReceive(grn)}
+                             className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-sm font-medium transition-colors"
+                           >
+                             Accept
+                           </button>
                            <button className="px-3 py-1.5 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white rounded-lg text-sm font-medium transition-colors">Review</button>
                          </div>
                       ) : (

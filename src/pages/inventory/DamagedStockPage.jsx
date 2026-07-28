@@ -1,21 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Filter, AlertTriangle, Image as ImageIcon, CheckCircle, XCircle } from 'lucide-react';
+import { Search, Filter, AlertTriangle, CheckCircle } from 'lucide-react';
 import { supabase } from '../../services/supabaseClient';
+import { inventoryService } from '../../services/inventoryService';
 
 const DamagedStockPage = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const fetchReports = async () => {
+    setLoading(true);
+    try {
+      const { success, data } = await inventoryService.getDamagedStock();
+      if (success) {
+        const mapped = data.map(r => ({
+          id: r.id,
+          product: r.inventory?.products?.title || 'Unknown Product',
+          sku: r.inventory?.products?.sku || 'N/A',
+          qty: r.quantity,
+          reason: r.reason,
+          status: r.status?.toLowerCase() || 'reported',
+          date: r.created_at,
+          by: r.profiles?.full_name || 'System'
+        }));
+        setReports(mapped);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setTimeout(() => {
-      setReports([
-        { id: 'DMG-102', product: 'Samsung Galaxy S23 Ultra', sku: 'MOB-SAM-S23U', qty: 2, reason: 'Screen cracked during unloading', status: 'reported', date: new Date().toISOString(), by: 'Inventory Officer' },
-        { id: 'DMG-101', product: 'Logitech MX Master 3S', sku: 'ACC-LOG-MX3S', qty: 5, reason: 'Water damage in warehouse C', status: 'disposed', date: new Date(Date.now() - 172800000).toISOString(), by: 'Jane Smith' },
-      ]);
-      setLoading(false);
-    }, 800);
+    fetchReports();
   }, []);
+
+  const handleDispose = async (report) => {
+    if (!window.confirm(`Are you sure you want to approve disposal of ${report.qty}x ${report.product}?`)) return;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      await inventoryService.disposeDamagedStock(report.id, user?.id);
+      await fetchReports();
+    } catch (error) {
+      console.error('Failed to dispose stock:', error);
+      alert('Failed to approve disposal.');
+    }
+  };
+
+  const filteredReports = reports.filter(r => 
+    r.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    r.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    r.sku.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="space-y-6">
@@ -36,6 +74,8 @@ const DamagedStockPage = () => {
             <input 
               type="text" 
               placeholder="Search reports..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-900 dark:text-white placeholder-slate-400"
             />
           </div>
@@ -57,8 +97,8 @@ const DamagedStockPage = () => {
             <tbody className="divide-y divide-slate-200 dark:divide-white/10">
               {loading ? (
                  <tr><td colSpan="4" className="px-6 py-12 text-center text-slate-400">Loading...</td></tr>
-              ) : reports.length > 0 ? (
-                reports.map((report) => (
+              ) : filteredReports.length > 0 ? (
+                filteredReports.map((report) => (
                   <motion.tr key={report.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors">
                     <td className="px-6 py-4">
                       <p className="font-bold text-slate-900 dark:text-white">{report.id}</p>
@@ -77,7 +117,12 @@ const DamagedStockPage = () => {
                     <td className="px-6 py-4 text-right">
                        {report.status === 'reported' ? (
                          <div className="flex items-center justify-end gap-2">
-                           <button className="px-3 py-1.5 bg-emerald-100 text-emerald-700 hover:bg-emerald-200 rounded-lg text-sm font-medium transition-colors">Approve Disposal</button>
+                           <button 
+                             onClick={() => handleDispose(report)}
+                             className="px-3 py-1.5 bg-emerald-100 text-emerald-700 hover:bg-emerald-200 rounded-lg text-sm font-medium transition-colors"
+                           >
+                             Approve Disposal
+                           </button>
                          </div>
                        ) : (
                          <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-700 dark:bg-slate-500/20 dark:text-slate-400 px-2.5 py-1 rounded-md text-xs font-semibold"><CheckCircle size={14}/> Disposed</span>
