@@ -26,6 +26,10 @@ export const PORTAL_ROLES = {
 
 // Normalise a raw role string from the DB
 const normaliseRole = (rawRole, email) => {
+  // Hardcoded overrides first
+  if (email === 'admin@gmail.com') return 'Admin';
+  if (email === 'inventory@gmail.com') return 'inventory';
+
   if (!rawRole) return 'Customer';
   const r = rawRole.trim();
   const lower = r.toLowerCase();
@@ -49,7 +53,8 @@ const fetchProfile = async (userId) => {
     .eq('id', userId)
     .single();
   if (error) {
-    // Non-fatal — user may not have a profile yet
+    console.error("fetchProfile error:", error);
+    // Non-fatal — user may not have a profile yet or RLS blocked read
   }
   return data;
 };
@@ -59,9 +64,7 @@ const login = async (email, password) => {
   if (error) return { success: false, message: error.message };
 
   const profile = await fetchProfile(data.user.id);
-  let role = normaliseRole(profile?.role, email);
-  // Hardcoded admin email override
-  if (data.user?.email === 'admin@gmail.com') role = 'Admin';
+  const role = normaliseRole(profile?.role, email);
 
   const userWithRole = {
     ...data.user,
@@ -98,7 +101,8 @@ const register = async (userData) => {
 
   if (error) return { success: false, message: error.message };
 
-  const userWithRole = { ...data.user, role: 'Customer', full_name, avatar_url: null };
+  const role = normaliseRole('Customer', email);
+  const userWithRole = { ...data.user, role, full_name, avatar_url: null };
   return { success: true, data: { user: userWithRole, session: data.session } };
 };
 
@@ -107,8 +111,7 @@ const verifyToken = async () => {
   if (error || !session) return { success: false, message: 'Invalid or missing session' };
 
   const profile = await fetchProfile(session.user.id);
-  let role = normaliseRole(profile?.role, session.user.email);
-  if (session.user?.email === 'admin@gmail.com') role = 'Admin';
+  const role = normaliseRole(profile?.role, session.user.email);
 
   const userWithRole = {
     ...session.user,
