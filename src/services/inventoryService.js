@@ -26,24 +26,44 @@ export const inventoryService = {
 
       const stats = {
         totalProducts: invItems?.length || 0,
-        totalValue: 0,
+        totalInventory: 0,
+        availableStock: 0,
+        reservedStock: 0,
+        inTransitStock: 0,
+        inventoryValue: 0,
         lowStock: 0,
         outOfStock: 0,
         overstock: 0,
+        healthyStock: 0,
         incoming: 0,
         pendingRequests: 0,
         receivedToday: 0,
-        adjustmentsToday: 0
+        adjustmentsToday: 0,
+        warehouseCapacity: 0,
+        inventoryHealthScore: 0
       };
 
       (invItems || []).forEach(item => {
         const qty = item.quantity_on_hand || 0;
+        const reserved = item.quantity_reserved || 0;
+        const available = Math.max(0, qty - reserved);
         const reorder = item.reorder_level || 10;
-        stats.totalValue += qty * Number(item.cost_price || 0);
+        
+        stats.totalInventory += qty;
+        stats.availableStock += available;
+        stats.reservedStock += reserved;
+        stats.inventoryValue += qty * Number(item.cost_price || 0);
+
         if (qty === 0) stats.outOfStock++;
         else if (qty <= reorder) stats.lowStock++;
         else if (qty > reorder * 5) stats.overstock++;
+        else stats.healthyStock++;
       });
+
+      // Calculate simple health score percentage
+      if (stats.totalProducts > 0) {
+        stats.inventoryHealthScore = Math.round((stats.healthyStock / stats.totalProducts) * 100);
+      }
 
       // 2. Purchase Requests (Incoming / Pending)
       const { data: prData } = await supabase
@@ -52,8 +72,13 @@ export const inventoryService = {
       
       (prData || []).forEach(pr => {
         const s = (pr.status || '').toLowerCase();
+        const qty = pr.quantity || 0;
         if (s === 'pending' || s === 'awaiting_approval') stats.pendingRequests++;
-        else if (s === 'approved' || s === 'in_transit') stats.incoming += (pr.quantity || 1); // rough estimate if counting items or shipments
+        else if (s === 'approved') stats.incoming += qty;
+        else if (s === 'in_transit') {
+          stats.incoming += qty;
+          stats.inTransitStock += qty;
+        }
       });
 
       // 3. Today's Movements (Received & Adjustments)
@@ -69,6 +94,21 @@ export const inventoryService = {
         if (m.movement_type === 'IN' || m.movement_type === 'RECEIPT') stats.receivedToday += Math.abs(m.quantity || 0);
         if (m.movement_type === 'ADJUSTMENT') stats.adjustmentsToday++; // Count of adjustment events
       });
+
+      // 4. Warehouse Capacity
+      const { data: whData } = await supabase
+        .from('warehouse_locations')
+        .select('capacity, current_utilization');
+
+      let totalCapacity = 0;
+      let totalUtilized = 0;
+      (whData || []).forEach(wh => {
+         totalCapacity += Number(wh.capacity || 0);
+         totalUtilized += Number(wh.current_utilization || 0);
+      });
+
+      // Simple average capacity percentage
+      stats.warehouseCapacity = totalCapacity > 0 ? Math.round((totalUtilized / totalCapacity) * 100) : 0;
 
       return { success: true, stats };
     } catch (error) {
@@ -120,6 +160,54 @@ export const inventoryService = {
     } catch (error) {
       console.error(error);
       return { success: false, data: [] };
+    }
+  },
+
+  // ── Create Warehouse ──────────────────────────────────────────────
+  createWarehouse: async (warehouseData) => {
+    try {
+      const { data, error } = await supabase
+        .from('warehouse_locations')
+        .insert([warehouseData])
+        .select()
+        .single();
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error creating warehouse:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // ── Update Warehouse ──────────────────────────────────────────────
+  updateWarehouse: async (id, warehouseData) => {
+    try {
+      const { data, error } = await supabase
+        .from('warehouse_locations')
+        .update(warehouseData)
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error updating warehouse:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // ── Delete Warehouse ──────────────────────────────────────────────
+  deleteWarehouse: async (id) => {
+    try {
+      const { error } = await supabase
+        .from('warehouse_locations')
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      console.error('Error deleting warehouse:', error);
+      return { success: false, error: error.message };
     }
   },
 

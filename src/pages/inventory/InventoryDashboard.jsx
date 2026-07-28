@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   Warehouse, Package, AlertTriangle, ArrowRightLeft, 
   TrendingUp, TrendingDown, ClipboardCheck, DollarSign,
-  ShoppingCart, Box, BarChart2, Calendar, Truck
+  ShoppingCart, Box, BarChart2, Calendar, Truck, Database, Activity
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie } from 'recharts';
@@ -55,14 +55,17 @@ const InventoryDashboard = () => {
 
   const kpis = [
     { label: 'Total Products', value: stats.totalProducts.toLocaleString(), color: 'text-primary', bg: 'bg-primary/10 dark:bg-primary/10', icon: Box },
-    { label: 'Total Stock Value', value: `$${stats.totalValue.toLocaleString()}`, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: DollarSign },
-    { label: 'Low Stock Items', value: stats.lowStock, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10', icon: AlertTriangle },
-    { label: 'Out of Stock', value: stats.outOfStock, color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-500/10', icon: Warehouse },
-    
-    { label: 'Incoming Deliveries', value: stats.incoming, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-500/10', icon: Truck },
-    { label: 'Pending POs', value: stats.pendingRequests, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-500/10', icon: ShoppingCart },
-    { label: 'Received Today', value: stats.receivedToday, color: 'text-teal-500', bg: 'bg-teal-50 dark:bg-teal-500/10', icon: ClipboardCheck },
-    { label: 'Adjustments Today', value: stats.adjustmentsToday, color: 'text-slate-500', bg: 'bg-slate-50 dark:bg-slate-500/10', icon: ArrowRightLeft },
+    { label: 'Total Inventory', value: stats.totalInventory?.toLocaleString() || 0, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-500/10', icon: Package },
+    { label: 'Available Stock', value: stats.availableStock?.toLocaleString() || 0, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: ClipboardCheck },
+    { label: 'Reserved Stock', value: stats.reservedStock?.toLocaleString() || 0, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10', icon: AlertTriangle },
+    { label: 'In Transit', value: stats.inTransitStock?.toLocaleString() || 0, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-500/10', icon: Truck },
+    { label: 'Total Stock Value', value: `$${stats.inventoryValue?.toLocaleString() || 0}`, color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: DollarSign },
+    { label: 'Low Stock Items', value: stats.lowStock || 0, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-500/10', icon: TrendingDown },
+    { label: 'Out of Stock', value: stats.outOfStock || 0, color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-500/10', icon: AlertTriangle },
+    { label: 'Pending POs', value: stats.pendingRequests || 0, color: 'text-violet-500', bg: 'bg-violet-50 dark:bg-violet-500/10', icon: ShoppingCart },
+    { label: 'Received Today', value: stats.receivedToday || 0, color: 'text-teal-500', bg: 'bg-teal-50 dark:bg-teal-500/10', icon: Warehouse },
+    { label: 'Warehouse Capacity', value: `${stats.warehouseCapacity || 0}%`, color: 'text-slate-500', bg: 'bg-slate-50 dark:bg-slate-500/10', icon: Database },
+    { label: 'Inventory Health', value: `${stats.inventoryHealthScore || 0}%`, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: Activity },
   ];
 
   return (
