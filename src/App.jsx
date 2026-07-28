@@ -82,6 +82,19 @@ const DriverMyDeliveries = lazy(() => import('./pages/driver/pages/MyDeliveriesP
 // Inventory Portal
 const InventoryLoginPage = lazy(() => import('./pages/inventory/InventoryLoginPage'));
 const InventoryDashboard = lazy(() => import('./pages/inventory/InventoryDashboard'));
+const InventoryProductsPage = lazy(() => import('./pages/inventory/InventoryProductsPage'));
+const StockMovementsPage = lazy(() => import('./pages/inventory/StockMovementsPage'));
+const GoodsReceivedPage = lazy(() => import('./pages/inventory/GoodsReceivedPage'));
+const PurchaseOrdersPage = lazy(() => import('./pages/inventory/PurchaseOrdersPage'));
+const InventorySuppliersPage = lazy(() => import('./pages/inventory/InventorySuppliersPage'));
+const StockTransfersPage = lazy(() => import('./pages/inventory/StockTransfersPage'));
+const InventoryReturnsPage = lazy(() => import('./pages/inventory/InventoryReturnsPage'));
+const DamagedStockPage = lazy(() => import('./pages/inventory/DamagedStockPage'));
+const WarehouseLocationsPage = lazy(() => import('./pages/inventory/WarehouseLocationsPage'));
+const InventoryReportsPage = lazy(() => import('./pages/inventory/InventoryReportsPage'));
+const InventoryNotificationsPage = lazy(() => import('./pages/inventory/InventoryNotificationsPage'));
+const InventorySettingsPage = lazy(() => import('./pages/inventory/InventorySettingsPage'));
+const InventoryProfilePage = lazy(() => import('./pages/inventory/InventoryProfilePage'));
 
 // Finance Portal
 const FinanceLoginPage = lazy(() => import('./pages/finance/FinanceLoginPage'));
@@ -91,7 +104,7 @@ const FinanceDashboard = lazy(() => import('./pages/finance/FinanceDashboard'));
 const SupplierLoginPage = lazy(() => import('./pages/supplier/SupplierLoginPage'));
 const SupplierDashboard = lazy(() => import('./pages/supplier/SupplierDashboard'));
 
-import { Truck, MapPin, Warehouse, TrendingUp, Building2, Package, Search, ListTodo, ShieldAlert } from 'lucide-react';
+import { Truck, MapPin, Warehouse, TrendingUp, Building2, Package, Search, ListTodo, ShieldAlert, Box, ClipboardCheck, ShoppingCart, Users, ArrowLeftRight, Undo2, AlertTriangle, BarChart2, Bell, Settings, User } from 'lucide-react';
 
 const PaymentLoaderPage = lazy(() => import('./pages/payment/PaymentLoaderPage'));
 const PaymentSuccessPage = lazy(() => import('./pages/payment/PaymentSuccessPage'));
@@ -229,14 +242,38 @@ function App() {
                       name: 'Inventory', accentHex: '#8b5cf6', homeRoute: '/inventory/dashboard', icon: Warehouse,
                       nav: [
                         { name: 'Dashboard', path: '/inventory/dashboard', icon: Warehouse },
-                        { name: 'Stock Levels', path: '/inventory/stock', icon: Package }
+                        { name: 'Products', path: '/inventory/products', icon: Box },
+                        { name: 'Stock Movement', path: '/inventory/movements', icon: Package },
+                        { name: 'Goods Received', path: '/inventory/goods-received', icon: ClipboardCheck },
+                        { name: 'Purchase Orders', path: '/inventory/purchase-orders', icon: ShoppingCart },
+                        { name: 'Suppliers', path: '/inventory/suppliers', icon: Users },
+                        { name: 'Transfers', path: '/inventory/transfers', icon: ArrowLeftRight },
+                        { name: 'Returns', path: '/inventory/returns', icon: Undo2 },
+                        { name: 'Damaged Stock', path: '/inventory/damaged-stock', icon: AlertTriangle },
+                        { name: 'Warehouse Locations', path: '/inventory/locations', icon: MapPin },
+                        { name: 'Reports', path: '/inventory/reports', icon: BarChart2 },
+                        { name: 'Notifications', path: '/inventory/notifications', icon: Bell },
+                        { name: 'Settings', path: '/inventory/settings', icon: Settings },
+                        { name: 'Profile', path: '/inventory/profile', icon: User }
                       ]
                     }} />
                   </InventoryRoute>
                 }>
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<InventoryDashboard />} />
-                  <Route path="stock" element={<AdminInventoryPage />} />
+                  <Route path="products" element={<InventoryProductsPage />} />
+                  <Route path="movements" element={<StockMovementsPage />} />
+                  <Route path="goods-received" element={<GoodsReceivedPage />} />
+                  <Route path="purchase-orders" element={<PurchaseOrdersPage />} />
+                  <Route path="suppliers" element={<InventorySuppliersPage />} />
+                  <Route path="transfers" element={<StockTransfersPage />} />
+                  <Route path="returns" element={<InventoryReturnsPage />} />
+                  <Route path="damaged-stock" element={<DamagedStockPage />} />
+                  <Route path="locations" element={<WarehouseLocationsPage />} />
+                  <Route path="reports" element={<InventoryReportsPage />} />
+                  <Route path="notifications" element={<InventoryNotificationsPage />} />
+                  <Route path="settings" element={<InventorySettingsPage />} />
+                  <Route path="profile" element={<InventoryProfilePage />} />
                 </Route>
 
                 {/* ── Finance Portal ── */}
