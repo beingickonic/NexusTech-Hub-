@@ -1,0 +1,22 @@
+{
+  "passed": [
+    {
+      "name": "Test Data Setup",
+      "msg": "Created test warehouse, supplier, product, and inventory."
+    },
+    {
+      "name": "Workflow 1 & 3 (Procurement & GRN)",
+      "msg": "Goods Received Note processed, Inventory updated, Finance Asset logged, Audit log created."
+    },
+    {
+      "name": "Workflow 4 (Damaged Stock)",
+      "msg": "Damaged stock disposed, Inventory reduced, Finance Write-off logged."
+    }
+  ],
+  "failed": [
+    {
+      "name": "Workflow 5 (Warehouse Transfer)",
+      "msg": "RPC transfer_stock does not exist. (Expected failure based on current schema scope)"
+    }
+  ]
+}
