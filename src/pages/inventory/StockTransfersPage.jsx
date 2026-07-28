@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, ArrowRightLeft, CheckCircle2, Clock, XCircle, Truck } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../services/supabaseClient';
 
 const StockTransfersPage = () => {
   const [transfers, setTransfers] = useState([]);

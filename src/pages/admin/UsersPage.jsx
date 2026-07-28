@@ -7,7 +7,7 @@ import {
 import { supabase } from '../../services/supabaseClient';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../auth/AuthContext';
-import UserAvatar from '../common/UserAvatar';
+import UserAvatar from '../../components/common/UserAvatar';
 
 const AdminUsersPage = () => {
   const [usersList, setUsersList] = useState([]);

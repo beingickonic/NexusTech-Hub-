@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, FileText, Download, BarChart2, Filter } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../services/supabaseClient';
 
 const InventoryReportsPage = () => {
   const [reports, setReports] = useState([]);

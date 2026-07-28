@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { Loader2 } from 'lucide-react';
+import { ROLE_PORTAL_MAP } from './authService';
 
 const Spinner = () => (
   <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-[#020617]">
@@ -14,6 +15,11 @@ export const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
+  
+  if (user.role && user.role !== 'Customer') {
+    return <Navigate to={ROLE_PORTAL_MAP[user.role] || "/403"} replace />;
+  }
+
   return children || <Outlet />;
 };
 
