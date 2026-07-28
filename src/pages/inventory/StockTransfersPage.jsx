@@ -17,8 +17,8 @@ const StockTransfersPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm p-12 flex flex-col items-center justify-center text-center min-h-[400px]"
       >
-        <div className="w-20 h-20 bg-violet-100 dark:bg-violet-500/20 rounded-full flex items-center justify-center mb-6 relative">
-          <ArrowRightLeft size={36} className="text-violet-600 dark:text-violet-400" />
+        <div className="w-20 h-20 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mb-6 relative">
+          <ArrowRightLeft size={36} className="text-primary dark:text-primary" />
           <Sparkles size={20} className="text-amber-500 absolute -top-1 -right-1" />
         </div>
         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Coming Soon</h2>

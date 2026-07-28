@@ -54,7 +54,7 @@ const InventoryDashboard = () => {
   }, []);
 
   const kpis = [
-    { label: 'Total Products', value: stats.totalProducts.toLocaleString(), color: 'text-violet-500', bg: 'bg-violet-50 dark:bg-violet-500/10', icon: Box },
+    { label: 'Total Products', value: stats.totalProducts.toLocaleString(), color: 'text-primary', bg: 'bg-primary/10 dark:bg-primary/10', icon: Box },
     { label: 'Total Stock Value', value: `$${stats.totalValue.toLocaleString()}`, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: DollarSign },
     { label: 'Low Stock Items', value: stats.lowStock, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10', icon: AlertTriangle },
     { label: 'Out of Stock', value: stats.outOfStock, color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-500/10', icon: Warehouse },
@@ -77,7 +77,7 @@ const InventoryDashboard = () => {
           <Link to="/inventory/goods-received" className="inline-flex items-center gap-2 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white px-4 py-2.5 rounded-xl font-medium text-sm transition-colors">
             <ClipboardCheck size={18} /> Receive GRN
           </Link>
-          <Link to="/inventory/movements" className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-violet-600/20">
+          <Link to="/inventory/movements" className="inline-flex items-center gap-2 bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25">
             <ArrowRightLeft size={18} /> Transfer Stock
           </Link>
         </div>
@@ -91,7 +91,7 @@ const InventoryDashboard = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.05 }}
-            className="bg-white dark:bg-dark-surface p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex items-center gap-4 group hover:border-violet-300 dark:hover:border-violet-500/30 transition-colors"
+            className="bg-white dark:bg-dark-surface p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex items-center gap-4 group hover:border-primary/40 dark:hover:border-primary/30 transition-colors"
           >
             <div className={`p-4 rounded-xl ${kpi.bg} transition-transform group-hover:scale-110`}>
               <kpi.icon size={24} className={kpi.color} />
@@ -112,9 +112,9 @@ const InventoryDashboard = () => {
         <div className="lg:col-span-2 bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
           <div className="flex items-center justify-between mb-6">
              <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-               <TrendingUp className="text-violet-500" size={20} /> Monthly Stock Movement
+               <TrendingUp className="text-primary" size={20} /> Monthly Stock Movement
              </h3>
-             <select className="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-sm rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-violet-500">
+             <select className="bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-sm rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-primary/40">
                <option>Last 6 Months</option>
                <option>This Year</option>
              </select>
@@ -156,7 +156,7 @@ const InventoryDashboard = () => {
         {/* Category Distribution */}
         <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
           <h3 className="font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-            <BarChart2 className="text-violet-500" size={20} /> Category Distribution
+            <BarChart2 className="text-primary" size={20} /> Category Distribution
           </h3>
           <div className="h-[250px] w-full flex items-center justify-center bg-slate-50/50 dark:bg-white/[0.02] rounded-xl border border-dashed border-slate-200 dark:border-white/10">
             {categoryData.length > 0 ? (
@@ -200,9 +200,9 @@ const InventoryDashboard = () => {
       <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
          <div className="flex items-center justify-between mb-6">
            <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-             <Calendar className="text-violet-500" size={20} /> Recent Activity
+             <Calendar className="text-primary" size={20} /> Recent Activity
            </h3>
-           <Link to="/inventory/movements" className="text-xs font-bold text-violet-600 hover:text-violet-700">View All</Link>
+           <Link to="/inventory/movements" className="text-xs font-bold text-primary hover:text-orange-600">View All</Link>
          </div>
          
          <div className="space-y-4">
@@ -215,7 +215,7 @@ const InventoryDashboard = () => {
            ) : activity.length > 0 ? (
              activity.map(act => (
                <div key={act.id} className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-transparent hover:border-slate-200 dark:hover:border-white/10 transition-colors">
-                 <div className="p-2 bg-violet-100 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400 rounded-lg">
+                 <div className="p-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary rounded-lg">
                    <Package size={20} />
                  </div>
                  <div className="flex-1">

@@ -239,7 +239,7 @@ function App() {
                 <Route path="/inventory" element={
                   <InventoryRoute>
                     <PortalLayout config={{
-                      name: 'Inventory', accentHex: '#8b5cf6', homeRoute: '/inventory/dashboard', icon: Warehouse,
+                      name: 'Inventory', accentHex: '#FF6B57', homeRoute: '/inventory/dashboard', icon: Warehouse,
                       nav: [
                         { name: 'Dashboard', path: '/inventory/dashboard', icon: Warehouse },
                         { name: 'Products', path: '/inventory/products', icon: Box },

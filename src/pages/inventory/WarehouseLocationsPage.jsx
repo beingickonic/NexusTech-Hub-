@@ -45,7 +45,7 @@ const WarehouseLocationsPage = () => {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Warehouse Locations</h1>
           <p className="text-slate-500 text-sm mt-1">Manage multiple warehouses and capacity</p>
         </div>
-        <button className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-violet-600/20">
+        <button className="inline-flex items-center gap-2 bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25">
           <Plus size={18} /> Add Warehouse
         </button>
       </div>
@@ -66,11 +66,11 @@ const WarehouseLocationsPage = () => {
               key={loc.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col group hover:border-violet-300 dark:hover:border-violet-500/30 transition-colors"
+              className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col group hover:border-primary/40 dark:hover:border-primary/30 transition-colors"
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">{loc.name}</h3>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-primary transition-colors">{loc.name}</h3>
                   <div className="flex items-center gap-1.5 text-slate-500 text-sm mt-1">
                     <MapPin size={14} /> {loc.location}
                   </div>
@@ -106,7 +106,7 @@ const WarehouseLocationsPage = () => {
                 <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
                   <Users size={16} /> {loc.manager}
                 </div>
-                <button className="text-sm font-semibold text-violet-600 hover:text-violet-700">Manage</button>
+                <button className="text-sm font-semibold text-primary hover:text-orange-600">Manage</button>
               </div>
             </motion.div>
           ))

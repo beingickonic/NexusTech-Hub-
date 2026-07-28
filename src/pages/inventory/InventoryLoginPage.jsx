@@ -8,10 +8,10 @@ const InventoryLoginPage = () => {
         name: 'Inventory',
         subtitle: 'Manage stock levels, movements, and supplier purchase orders.',
         icon: Warehouse,
-        accentHex: '#8b5cf6', // violet
-        bgFrom: 'from-violet-600',
-        bgVia: 'via-violet-500',
-        bgTo: 'to-violet-400',
+        accentHex: '#FF6B57', // primary
+        bgFrom: 'from-orange-600',
+        bgVia: 'via-orange-500',
+        bgTo: 'to-orange-400',
         features: [
           'Real-time stock valuation',
           'Low stock automated alerts',

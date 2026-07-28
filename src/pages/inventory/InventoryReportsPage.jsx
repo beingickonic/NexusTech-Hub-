@@ -21,14 +21,14 @@ const InventoryReportsPage = () => {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Inventory Reports</h1>
           <p className="text-slate-500 text-sm mt-1">Generate and download warehouse analytics</p>
         </div>
-        <button className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-violet-600/20">
+        <button className="inline-flex items-center gap-2 bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25">
           <BarChart2 size={18} /> Generate Report
         </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-         <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10 hover:border-violet-300 transition-colors cursor-pointer group">
-           <FileText className="text-violet-500 mb-2 group-hover:scale-110 transition-transform" />
+         <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10 hover:border-primary/40 transition-colors cursor-pointer group">
+           <FileText className="text-primary mb-2 group-hover:scale-110 transition-transform" />
            <h3 className="font-bold text-slate-900 dark:text-white">Valuation Report</h3>
            <p className="text-xs text-slate-500 mt-1">Current value of all stock in warehouses</p>
          </div>
@@ -54,7 +54,7 @@ const InventoryReportsPage = () => {
           <h3 className="font-bold text-slate-900 dark:text-white">Saved Reports</h3>
           <div className="relative w-full sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-            <input type="text" placeholder="Search..." className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 text-slate-900 dark:text-white placeholder-slate-400" />
+            <input type="text" placeholder="Search..." className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white placeholder-slate-400" />
           </div>
         </div>
 
@@ -76,7 +76,7 @@ const InventoryReportsPage = () => {
                   <motion.tr key={r.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <FileText className="text-violet-500" size={20} />
+                        <FileText className="text-primary" size={20} />
                         <div>
                           <p className="font-semibold text-slate-900 dark:text-white">{r.name}</p>
                           <p className="text-xs text-slate-500 mt-0.5">{r.size} • PDF</p>
@@ -86,7 +86,7 @@ const InventoryReportsPage = () => {
                     <td className="px-6 py-4"><span className="text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-white/5 px-2 py-1 rounded">{r.type}</span></td>
                     <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">{new Date(r.date).toLocaleDateString()}</td>
                     <td className="px-6 py-4 text-right">
-                      <button className="inline-flex items-center gap-1.5 text-sm font-semibold text-violet-600 hover:text-violet-700 bg-violet-50 hover:bg-violet-100 dark:bg-violet-500/10 dark:hover:bg-violet-500/20 px-3 py-1.5 rounded-lg transition-colors">
+                      <button className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-orange-600 bg-primary/10 hover:bg-primary/20 dark:bg-primary/10 dark:hover:bg-primary/20 px-3 py-1.5 rounded-lg transition-colors">
                         <Download size={16} /> Download
                       </button>
                     </td>
