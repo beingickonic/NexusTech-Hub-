@@ -9,70 +9,69 @@ const StockMovementsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
+    async function fetchMovements() {
+      setLoading(true);
+      // Simulating API fetch
+      setTimeout(() => {
+        setMovements([
+          {
+            id: 'MOV-1004',
+            date: new Date().toISOString(),
+            product: 'Dell XPS 15',
+            sku: 'LPT-DELL-XPS15',
+            type: 'purchase',
+            previousQty: 25,
+            newQty: 45,
+            change: 20,
+            reason: 'PO-2023-085 Received',
+            user: 'Derrick (Admin)',
+            warehouse: 'Main WH (Nairobi)'
+          },
+          {
+            id: 'MOV-1003',
+            date: new Date(Date.now() - 3600000).toISOString(),
+            product: 'Samsung Galaxy S23 Ultra',
+            sku: 'MOB-SAM-S23U',
+            type: 'sale',
+            previousQty: 122,
+            newQty: 120,
+            change: -2,
+            reason: 'Order #ORD-8492 Dispatch',
+            user: 'System',
+            warehouse: 'Main WH (Nairobi)'
+          },
+          {
+            id: 'MOV-1002',
+            date: new Date(Date.now() - 86400000).toISOString(),
+            product: 'Herman Miller Aeron',
+            sku: 'FURN-HM-AER',
+            type: 'adjustment',
+            previousQty: 16,
+            newQty: 15,
+            change: -1,
+            reason: 'Stock Count Correction',
+            user: 'Inventory Officer',
+            warehouse: 'Mombasa Depot'
+          },
+          {
+            id: 'MOV-1001',
+            date: new Date(Date.now() - 172800000).toISOString(),
+            product: 'Logitech MX Master 3S',
+            sku: 'ACC-LOG-MX3S',
+            type: 'transfer',
+            previousQty: 25,
+            newQty: 5,
+            change: -20,
+            reason: 'Transfer to Mombasa Depot',
+            user: 'Inventory Officer',
+            warehouse: 'Main WH (Nairobi)'
+          }
+        ]);
+        setLoading(false);
+      }, 800);
+    }
     fetchMovements();
   }, []);
-
-  async function fetchMovements() {
-    setLoading(true);
-    // Simulating API fetch
-    setTimeout(() => {
-      setMovements([
-        {
-          id: 'MOV-1004',
-          date: new Date().toISOString(),
-          product: 'Dell XPS 15',
-          sku: 'LPT-DELL-XPS15',
-          type: 'purchase',
-          previousQty: 25,
-          newQty: 45,
-          change: 20,
-          reason: 'PO-2023-085 Received',
-          user: 'Derrick (Admin)',
-          warehouse: 'Main WH (Nairobi)'
-        },
-        {
-          id: 'MOV-1003',
-          date: new Date(Date.now() - 3600000).toISOString(),
-          product: 'Samsung Galaxy S23 Ultra',
-          sku: 'MOB-SAM-S23U',
-          type: 'sale',
-          previousQty: 122,
-          newQty: 120,
-          change: -2,
-          reason: 'Order #ORD-8492 Dispatch',
-          user: 'System',
-          warehouse: 'Main WH (Nairobi)'
-        },
-        {
-          id: 'MOV-1002',
-          date: new Date(Date.now() - 86400000).toISOString(),
-          product: 'Herman Miller Aeron',
-          sku: 'FURN-HM-AER',
-          type: 'adjustment',
-          previousQty: 16,
-          newQty: 15,
-          change: -1,
-          reason: 'Stock Count Correction',
-          user: 'Inventory Officer',
-          warehouse: 'Mombasa Depot'
-        },
-        {
-          id: 'MOV-1001',
-          date: new Date(Date.now() - 172800000).toISOString(),
-          product: 'Logitech MX Master 3S',
-          sku: 'ACC-LOG-MX3S',
-          type: 'transfer',
-          previousQty: 25,
-          newQty: 5,
-          change: -20,
-          reason: 'Transfer to Mombasa Depot',
-          user: 'Inventory Officer',
-          warehouse: 'Main WH (Nairobi)'
-        }
-      ]);
-      setLoading(false);
-    }, 800);
-  };
 
   const filteredMovements = movements.filter(m => 
     m.product.toLowerCase().includes(searchQuery.toLowerCase()) ||

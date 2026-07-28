@@ -9,79 +9,79 @@ const InventoryProductsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        
+        // Simulating a complex join across products, inventory, and categories
+        // In a real app, this would be: 
+        // const { data } = await supabase.from('products').select(`*, category:categories(*), inventory:inventory(*)`)
+        
+        setTimeout(() => {
+          setProducts([
+            {
+              id: '1',
+              title: 'Dell XPS 15',
+              sku: 'LPT-DELL-XPS15',
+              barcode: '8492019382',
+              category: 'Laptops',
+              price: 1499.99,
+              cost_price: 1200.00,
+              quantity: 45,
+              reserved: 5,
+              available: 40,
+              image_url: null,
+            },
+            {
+              id: '2',
+              title: 'Samsung Galaxy S23 Ultra',
+              sku: 'MOB-SAM-S23U',
+              barcode: '8492019383',
+              category: 'Smartphones',
+              price: 1199.99,
+              cost_price: 950.00,
+              quantity: 120,
+              reserved: 10,
+              available: 110,
+              image_url: null,
+            },
+            {
+              id: '3',
+              title: 'Herman Miller Aeron',
+              sku: 'FURN-HM-AER',
+              barcode: '8492019384',
+              category: 'Office Furniture',
+              price: 1250.00,
+              cost_price: 800.00,
+              quantity: 15,
+              reserved: 2,
+              available: 13,
+              image_url: null,
+            },
+            {
+              id: '4',
+              title: 'Logitech MX Master 3S',
+              sku: 'ACC-LOG-MX3S',
+              barcode: '8492019385',
+              category: 'Accessories',
+              price: 99.99,
+              cost_price: 60.00,
+              quantity: 5,
+              reserved: 0,
+              available: 5,
+              image_url: null,
+            }
+          ]);
+          setLoading(false);
+        }, 800);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
     fetchProducts();
   }, []);
-
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-      
-      // Simulating a complex join across products, inventory, and categories
-      // In a real app, this would be: 
-      // const { data } = await supabase.from('products').select(`*, category:categories(*), inventory:inventory(*)`)
-      
-      setTimeout(() => {
-        setProducts([
-          {
-            id: '1',
-            title: 'Dell XPS 15',
-            sku: 'LPT-DELL-XPS15',
-            barcode: '8492019382',
-            category: 'Laptops',
-            price: 1499.99,
-            cost_price: 1200.00,
-            quantity: 45,
-            reserved: 5,
-            available: 40,
-            image_url: null,
-          },
-          {
-            id: '2',
-            title: 'Samsung Galaxy S23 Ultra',
-            sku: 'MOB-SAM-S23U',
-            barcode: '8492019383',
-            category: 'Smartphones',
-            price: 1199.99,
-            cost_price: 950.00,
-            quantity: 120,
-            reserved: 10,
-            available: 110,
-            image_url: null,
-          },
-          {
-            id: '3',
-            title: 'Herman Miller Aeron',
-            sku: 'FURN-HM-AER',
-            barcode: '8492019384',
-            category: 'Office Furniture',
-            price: 1250.00,
-            cost_price: 800.00,
-            quantity: 15,
-            reserved: 2,
-            available: 13,
-            image_url: null,
-          },
-          {
-            id: '4',
-            title: 'Logitech MX Master 3S',
-            sku: 'ACC-LOG-MX3S',
-            barcode: '8492019385',
-            category: 'Accessories',
-            price: 99.99,
-            cost_price: 60.00,
-            quantity: 5,
-            reserved: 0,
-            available: 5,
-            image_url: null,
-          }
-        ]);
-        setLoading(false);
-      }, 800);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
-  };
 
   const filteredProducts = products.filter(p => 
     p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
