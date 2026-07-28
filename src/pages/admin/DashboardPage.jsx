@@ -5,6 +5,8 @@ import RecentOrdersWidget from '../../components/admin/widgets/RecentOrdersWidge
 import InventoryHealthWidget from '../../components/admin/widgets/InventoryHealthWidget';
 import ActivityFeedWidget from '../../components/admin/widgets/ActivityFeedWidget';
 import QuickActionsPanel from '../../components/admin/widgets/QuickActionsPanel';
+import DispatchWidget from '../../components/admin/widgets/DispatchWidget';
+import DriverStatusWidget from '../../components/admin/widgets/DriverStatusWidget';
 import { adminService } from '../../services/adminService';
 import { supabase } from '../../services/supabaseClient';
 import { useAuth } from '../../auth/AuthContext';
@@ -108,6 +110,12 @@ const DashboardPage = () => {
         <div className="h-full">
           <ActivityFeedWidget />
         </div>
+      </div>
+
+      {/* ERP Widgets Row: Dispatch & Drivers */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+        <DispatchWidget />
+        <DriverStatusWidget />
       </div>
     </div>
   );
