@@ -1,7 +1,16 @@
 import { Suspense, lazy, useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthContext';
-import { ProtectedRoute, AdminRoute, ManagerRoute } from './auth/ProtectedRoute';
+import { 
+  ProtectedRoute, 
+  AdminRoute, 
+  ManagerRoute,
+  DispatchRoute,
+  DriverRoute,
+  InventoryRoute,
+  FinanceRoute,
+  SupplierRoute
+} from './auth/ProtectedRoute';
 import PublicLayout from './layouts/PublicLayout';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
