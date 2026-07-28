@@ -22,7 +22,7 @@ export const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return <Spinner />;
   if (!user || !['Admin', 'super_admin'].includes(user.role))
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };
 
@@ -31,7 +31,7 @@ export const ManagerRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return <Spinner />;
   if (!user || !['Admin', 'super_admin', 'Manager'].includes(user.role))
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };
 
@@ -41,7 +41,7 @@ export const DispatchRoute = ({ children }) => {
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/dispatch/login" replace />;
   if (!['Admin', 'super_admin', 'Manager', 'Dispatch_Officer'].includes(user.role))
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };
 
@@ -51,7 +51,7 @@ export const DriverRoute = ({ children }) => {
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/driver/login" replace />;
   if (!['Admin', 'super_admin', 'Driver'].includes(user.role))
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };
 
@@ -60,8 +60,8 @@ export const InventoryRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/inventory/login" replace />;
-  if (!['Admin', 'super_admin', 'Manager', 'Warehouse_Staff'].includes(user.role))
-    return <Navigate to="/unauthorized" replace />;
+  if (!['Admin', 'super_admin', 'Manager', 'Warehouse_Staff', 'inventory'].includes(user.role))
+    return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };
 
@@ -71,7 +71,7 @@ export const FinanceRoute = ({ children }) => {
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/finance/login" replace />;
   if (!['Admin', 'super_admin', 'Finance_Officer'].includes(user.role))
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };
 
@@ -81,7 +81,7 @@ export const SupplierRoute = ({ children }) => {
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/supplier/login" replace />;
   if (!['Admin', 'super_admin', 'Supplier'].includes(user.role))
-    return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };
 

@@ -8,6 +8,7 @@ export const ROLE_PORTAL_MAP = {
   Dispatch_Officer: '/dispatch/dashboard',
   Driver:           '/driver/dashboard',
   Warehouse_Staff:  '/inventory/dashboard',
+  inventory:        '/inventory/dashboard',
   Finance_Officer:  '/finance/dashboard',
   Supplier:         '/supplier/dashboard',
   Customer:         '/profile',
@@ -18,7 +19,7 @@ export const PORTAL_ROLES = {
   admin:     ['Admin', 'super_admin', 'Manager'],
   dispatch:  ['Dispatch_Officer'],
   driver:    ['Driver'],
-  inventory: ['Warehouse_Staff'],
+  inventory: ['Warehouse_Staff', 'inventory'],
   finance:   ['Finance_Officer'],
   supplier:  ['Supplier'],
 };
@@ -33,7 +34,8 @@ const normaliseRole = (rawRole, email) => {
   if (lower === 'manager')         return 'Manager';
   if (lower === 'dispatch_officer')return 'Dispatch_Officer';
   if (lower === 'driver')          return 'Driver';
-  if (lower === 'warehouse_staff') return 'Warehouse_Staff';
+  if (lower === 'warehouse_staff') return 'inventory';
+  if (lower === 'inventory')       return 'inventory';
   if (lower === 'finance_officer') return 'Finance_Officer';
   if (lower === 'supplier')        return 'Supplier';
   if (lower === 'customer')        return 'Customer';

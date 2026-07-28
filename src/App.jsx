@@ -194,7 +194,7 @@ function App() {
                 </Route>
 
                 {/* Catch-all 404 Route and Portals */}
-                <Route path="/unauthorized" element={<UnauthorizedPage />} />
+                <Route path="/403" element={<UnauthorizedPage />} />
                 
                 {/* ── Dispatch Portal ── */}
                 <Route path="/dispatch/login" element={<DispatchLoginPage />} />
