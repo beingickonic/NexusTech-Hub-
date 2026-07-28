@@ -63,6 +63,7 @@ const AdminDispatchPage = lazy(() => import('./pages/admin/DispatchPage'));
 const AdminDriversPage  = lazy(() => import('./pages/admin/DriversPage'));
 const AdminFinancePage  = lazy(() => import('./pages/admin/FinancePage'));
 const AdminSuppliersPage = lazy(() => import('./pages/admin/SuppliersPage'));
+const AdminUsersPage = lazy(() => import('./pages/admin/UsersPage'));
 
 // New ERP Portals
 import PortalLayout from './components/portal/PortalLayout';
@@ -175,6 +176,7 @@ function App() {
                   <Route path="payments" element={<AdminRoute><AdminPaymentsDashboard /></AdminRoute>} />
                   <Route path="reports" element={<AdminRoute><AdminReportsPage /></AdminRoute>} />
                   <Route path="tickets" element={<AdminRoute><AdminTicketsPage /></AdminRoute>} />
+                  <Route path="users" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />
                   <Route path="settings" element={<AdminRoute><AdminSettingsPage /></AdminRoute>} />
                 </Route>
 

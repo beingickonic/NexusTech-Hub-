@@ -72,6 +72,7 @@ const NAV_SECTIONS = [
       { name: 'Reports',   path: '/admin/reports',   icon: BarChart3,   roles: ADMIN_ONLY },
       { name: 'Refunds',   path: '/admin/refunds',   icon: ReceiptText, roles: STAFF },
       { name: 'Support',   path: '/admin/tickets',   icon: Headset,     roles: ADMIN_ONLY },
+      { name: 'User Mgmt', path: '/admin/users',     icon: Users,       roles: ADMIN_ONLY },
       { name: 'Settings',  path: '/admin/settings',  icon: Settings,    roles: ADMIN_ONLY },
     ]
   }
