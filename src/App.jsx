@@ -55,6 +55,34 @@ const AdminDriversPage  = lazy(() => import('./pages/admin/DriversPage'));
 const AdminFinancePage  = lazy(() => import('./pages/admin/FinancePage'));
 const AdminSuppliersPage = lazy(() => import('./pages/admin/SuppliersPage'));
 
+// New ERP Portals
+import PortalLayout from './components/portal/PortalLayout';
+import PortalLoginPage from './components/portal/PortalLoginPage';
+const UnauthorizedPage = lazy(() => import('./pages/portal/UnauthorizedPage'));
+
+// Dispatch Portal
+const DispatchLoginPage = lazy(() => import('./pages/dispatch/DispatchLoginPage'));
+const DispatchDashboard = lazy(() => import('./pages/dispatch/DispatchDashboard'));
+
+// Driver Portal
+const DriverLoginPage = lazy(() => import('./pages/driver/DriverLoginPage'));
+const DriverDashboard = lazy(() => import('./pages/driver/DriverDashboard'));
+const DriverMyDeliveries = lazy(() => import('./pages/driver/pages/MyDeliveriesPage'));
+
+// Inventory Portal
+const InventoryLoginPage = lazy(() => import('./pages/inventory/InventoryLoginPage'));
+const InventoryDashboard = lazy(() => import('./pages/inventory/InventoryDashboard'));
+
+// Finance Portal
+const FinanceLoginPage = lazy(() => import('./pages/finance/FinanceLoginPage'));
+const FinanceDashboard = lazy(() => import('./pages/finance/FinanceDashboard'));
+
+// Supplier Portal
+const SupplierLoginPage = lazy(() => import('./pages/supplier/SupplierLoginPage'));
+const SupplierDashboard = lazy(() => import('./pages/supplier/SupplierDashboard'));
+
+import { Truck, MapPin, Warehouse, TrendingUp, Building2, Package, Search, ListTodo, ShieldAlert } from 'lucide-react';
+
 const PaymentLoaderPage = lazy(() => import('./pages/payment/PaymentLoaderPage'));
 const PaymentSuccessPage = lazy(() => import('./pages/payment/PaymentSuccessPage'));
 const PaymentFailedPage = lazy(() => import('./pages/payment/PaymentFailedPage'));
@@ -139,6 +167,101 @@ function App() {
                   <Route path="reports" element={<AdminRoute><AdminReportsPage /></AdminRoute>} />
                   <Route path="tickets" element={<AdminRoute><AdminTicketsPage /></AdminRoute>} />
                   <Route path="settings" element={<AdminRoute><AdminSettingsPage /></AdminRoute>} />
+                </Route>
+
+                {/* Catch-all 404 Route and Portals */}
+                <Route path="/unauthorized" element={<UnauthorizedPage />} />
+                
+                {/* ── Dispatch Portal ── */}
+                <Route path="/dispatch/login" element={<DispatchLoginPage />} />
+                <Route path="/dispatch" element={
+                  <DispatchRoute>
+                    <PortalLayout config={{
+                      name: 'Dispatch', accentHex: '#f59e0b', homeRoute: '/dispatch/dashboard', icon: Truck,
+                      nav: [
+                        { name: 'Dashboard', path: '/dispatch/dashboard', icon: Truck },
+                        { name: 'All Dispatches', path: '/dispatch/all', icon: Package },
+                        { name: 'Driver Roster', path: '/dispatch/drivers', icon: Search }
+                      ]
+                    }} />
+                  </DispatchRoute>
+                }>
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<DispatchDashboard />} />
+                  <Route path="all" element={<AdminDispatchPage />} />
+                  <Route path="drivers" element={<AdminDriversPage />} />
+                </Route>
+
+                {/* ── Driver Portal ── */}
+                <Route path="/driver/login" element={<DriverLoginPage />} />
+                <Route path="/driver" element={
+                  <DriverRoute>
+                    <PortalLayout config={{
+                      name: 'Driver', accentHex: '#10b981', homeRoute: '/driver/dashboard', icon: MapPin,
+                      nav: [
+                        { name: 'My Dashboard', path: '/driver/dashboard', icon: MapPin },
+                        { name: 'My Deliveries', path: '/driver/deliveries', icon: ListTodo }
+                      ]
+                    }} />
+                  </DriverRoute>
+                }>
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<DriverDashboard />} />
+                  <Route path="deliveries" element={<DriverMyDeliveries />} />
+                </Route>
+
+                {/* ── Inventory Portal ── */}
+                <Route path="/inventory/login" element={<InventoryLoginPage />} />
+                <Route path="/inventory" element={
+                  <InventoryRoute>
+                    <PortalLayout config={{
+                      name: 'Inventory', accentHex: '#8b5cf6', homeRoute: '/inventory/dashboard', icon: Warehouse,
+                      nav: [
+                        { name: 'Dashboard', path: '/inventory/dashboard', icon: Warehouse },
+                        { name: 'Stock Levels', path: '/inventory/stock', icon: Package }
+                      ]
+                    }} />
+                  </InventoryRoute>
+                }>
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<InventoryDashboard />} />
+                  <Route path="stock" element={<AdminInventoryPage />} />
+                </Route>
+
+                {/* ── Finance Portal ── */}
+                <Route path="/finance/login" element={<FinanceLoginPage />} />
+                <Route path="/finance" element={
+                  <FinanceRoute>
+                    <PortalLayout config={{
+                      name: 'Finance', accentHex: '#3b82f6', homeRoute: '/finance/dashboard', icon: TrendingUp,
+                      nav: [
+                        { name: 'Dashboard', path: '/finance/dashboard', icon: TrendingUp },
+                        { name: 'Transactions', path: '/finance/transactions', icon: ShieldAlert }
+                      ]
+                    }} />
+                  </FinanceRoute>
+                }>
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<FinanceDashboard />} />
+                  <Route path="transactions" element={<AdminFinancePage />} />
+                </Route>
+
+                {/* ── Supplier Portal ── */}
+                <Route path="/supplier/login" element={<SupplierLoginPage />} />
+                <Route path="/supplier" element={
+                  <SupplierRoute>
+                    <PortalLayout config={{
+                      name: 'Supplier', accentHex: '#14b8a6', homeRoute: '/supplier/dashboard', icon: Building2,
+                      nav: [
+                        { name: 'Dashboard', path: '/supplier/dashboard', icon: Building2 },
+                        { name: 'Purchase Orders', path: '/supplier/orders', icon: Package }
+                      ]
+                    }} />
+                  </SupplierRoute>
+                }>
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<SupplierDashboard />} />
+                  <Route path="orders" element={<AdminSuppliersPage />} />
                 </Route>
 
                 {/* Catch-all 404 Route */}

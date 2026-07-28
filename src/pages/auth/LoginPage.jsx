@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
+import { ROLE_PORTAL_MAP } from '../../auth/authService';
 import AuthLayout from '../../components/auth/AuthLayout';
 
 const LoginPage = () => {
@@ -10,7 +11,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -18,17 +19,13 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
-    
+
     try {
       const res = await login(email, password);
       if (res.success) {
-        if (res.data.user.role === 'Admin' || res.data.user.role === 'super_admin') {
-          navigate('/admin');
-        } else if (res.data.user.role === 'Manager') {
-          navigate('/manager');
-        } else {
-          navigate('/profile');
-        }
+        const role = res.data.user.role;
+        const dest = ROLE_PORTAL_MAP[role] || '/profile';
+        navigate(dest);
       } else {
         setError(res.message || 'Invalid credentials');
       }
@@ -38,6 +35,7 @@ const LoginPage = () => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <AuthLayout 
