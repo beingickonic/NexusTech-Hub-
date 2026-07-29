@@ -62,6 +62,7 @@ const NAV_SECTIONS = [
     items: [
       { name: 'Finance',  path: '/admin/finance',   icon: TrendingUp,  roles: FINANCE },
       { name: 'Payments', path: '/admin/payments',  icon: ReceiptText, roles: ADMIN_ONLY },
+      { name: 'Manual Pymts', path: '/admin/payments/manual', icon: ReceiptText, roles: ADMIN_ONLY },
       { name: 'Invoices', path: '/admin/invoices',  icon: FileText,    roles: ADMIN_ONLY },
     ]
   },

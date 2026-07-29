@@ -112,6 +112,73 @@ const verifyPayment = async (transactionRef) => {
   }
 };
 
+const submitManualPayment = async (orderId, transactionCode, amount, userId) => {
+  try {
+    const { data: payment, error: paymentError } = await supabase.from('payments').insert({
+      order_id: orderId,
+      user_id: userId,
+      amount,
+      provider: 'mpesa_manual',
+      currency: 'KES',
+      transaction_reference: transactionCode,
+      status: 'pending'
+    }).select().single();
+    
+    if (paymentError) throw paymentError;
+    
+    const { error: orderError } = await supabase.from('orders').update({
+      status: 'Pending Payment Verification'
+    }).eq('id', orderId);
+    
+    if (orderError) throw orderError;
+    
+    return { success: true, data: payment };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+const getPendingManualPayments = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('payments')
+      .select('*, orders(total_amount, status), profiles:user_id(full_name, phone)')
+      .eq('provider', 'mpesa_manual')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+const verifyManualPayment = async (paymentId, orderId, isApproved) => {
+  try {
+    const paymentStatus = isApproved ? 'paid' : 'rejected';
+    const orderStatus = isApproved ? 'Processing' : 'Payment Failed';
+    
+    const { error: paymentError } = await supabase.from('payments').update({
+      status: paymentStatus,
+      updated_at: new Date().toISOString()
+    }).eq('id', paymentId);
+    
+    if (paymentError) throw paymentError;
+    
+    const { error: orderError } = await supabase.from('orders').update({
+      status: orderStatus,
+      payment_status: paymentStatus === 'paid' ? 'paid' : 'unpaid'
+    }).eq('id', orderId);
+    
+    if (orderError) throw orderError;
+    
+    return { success: true };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 const createReceipt = async (paymentId) => {
   try {
     const { data: payment, error } = await supabase
@@ -164,7 +231,10 @@ const paymentService = {
   createPayPalOrder,
   capturePayPalOrder,
   verifyPayment,
-  createReceipt
+  createReceipt,
+  submitManualPayment,
+  getPendingManualPayments,
+  verifyManualPayment
 };
 
 export default paymentService;

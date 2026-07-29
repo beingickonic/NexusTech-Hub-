@@ -11,11 +11,12 @@
     {
       "name": "Workflow 4 (Damaged Stock)",
       "msg": "Damaged stock disposed, Inventory reduced, Finance Write-off logged."
-    },
-    {
-      "name": "Workflow 5 (Warehouse Transfer)",
-      "msg": "Skipped for Phase 1 validation."
     }
   ],
-  "failed": []
+  "failed": [
+    {
+      "name": "Workflow 5 (Warehouse Transfer)",
+      "msg": "RPC transfer_stock does not exist. (Expected failure based on current schema scope)"
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Filter, Eye, CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { Search, Filter, Eye, CheckCircle2, XCircle, Clock, ClipboardCheck } from 'lucide-react';
 import { supabase } from '../../services/supabaseClient';
 import { inventoryService } from '../../services/inventoryService';
 

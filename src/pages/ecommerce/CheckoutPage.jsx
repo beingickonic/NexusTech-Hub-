@@ -9,10 +9,15 @@ import ShippingForm from '../../components/checkout/ShippingForm';
 import PaymentMethods from '../../components/checkout/PaymentMethods';
 import OrderSummary from '../../components/checkout/OrderSummary';
 
+// Feature Flag: Set to true to re-enable automatic STK Push in the future
+const USE_STK_PUSH = false;
+const PAYBILL_NUMBER = '123456';
+
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { cartItems, cartSummary, clearCartState } = useCart();
+  
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('mpesa');
@@ -24,13 +29,18 @@ const CheckoutPage = () => {
     city: '',
     postalCode: ''
   });
+  
   const [mpesaPhone, setMpesaPhone] = useState('');
+  
+  // Manual M-Pesa State
+  const [createdOrder, setCreatedOrder] = useState(null);
+  const [transactionCode, setTransactionCode] = useState('');
 
   useEffect(() => {
-    if (cartItems.length === 0 && step === 1) {
+    if (cartItems.length === 0 && step === 1 && !createdOrder) {
       navigate('/cart');
     }
-  }, [cartItems, navigate, step]);
+  }, [cartItems, navigate, step, createdOrder]);
 
   const handleNext = () => {
     if (step === 1 && (!formData.fullName || !formData.phone || !formData.address || !formData.city)) {
@@ -50,12 +60,11 @@ const CheckoutPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-    if (paymentMethod === 'mpesa') {
+    if (USE_STK_PUSH && paymentMethod === 'mpesa') {
       if (!mpesaPhone) {
         alert("Please provide an M-Pesa phone number");
         return;
       }
-      // Validate Safaricom/Airtel/Telkom format (general Kenyan regex: 07.., 01.., 254.., +254..)
       const phoneRegex = /^(?:254|\+254|0)?([17]\d{8})$/;
       if (!phoneRegex.test(mpesaPhone.replace(/\s+/g, ''))) {
         alert("Please enter a valid Kenyan phone number (e.g., 0712345678 or 254712345678)");
@@ -79,30 +88,42 @@ const CheckoutPage = () => {
       const res = await orderService.createOrder(orderData);
       if (res.success) {
         clearCartState();
+        const newOrder = res.data.order;
+        
+        // Update order status to Awaiting Payment
+        await orderService.updateOrderStatus(newOrder.id, 'Awaiting Payment');
         
         if (paymentMethod === 'mpesa') {
-          try {
-             const paymentRes = await paymentService.initiateMpesaPayment(
-               res.data.order.id, 
-               mpesaPhone, 
-               cartSummary.total
-             );
-             if (paymentRes.success && paymentRes.data?.checkout_request_id) {
-               navigate(`/payment/processing/${paymentRes.data.checkout_request_id}`);
-             } else {
-               console.error("Mpesa initiation failed", paymentRes.message);
-               alert("Order created, but M-Pesa push failed: " + (paymentRes.message || "Unknown error"));
-               navigate(`/orders/${res.data.order.id}`);
-             }
-          } catch (paymentErr) {
-             console.error("Mpesa initiation crashed", paymentErr);
-             alert("Order created but M-Pesa push crashed.");
-             navigate(`/orders/${res.data.order.id}`);
+          if (USE_STK_PUSH) {
+            try {
+               const paymentRes = await paymentService.initiateMpesaPayment(
+                 newOrder.id, 
+                 mpesaPhone, 
+                 cartSummary.total
+               );
+               if (paymentRes.success && paymentRes.data?.checkout_request_id) {
+                 navigate(`/payment/processing/${paymentRes.data.checkout_request_id}`);
+               } else {
+                 console.error("Mpesa initiation failed", paymentRes.message);
+                 alert("Order created, but M-Pesa push failed: " + (paymentRes.message || "Unknown error"));
+                 navigate(`/orders/${newOrder.id}`);
+               }
+            } catch (paymentErr) {
+               console.error("Mpesa initiation crashed", paymentErr);
+               alert("Order created but M-Pesa push crashed.");
+               navigate(`/orders/${newOrder.id}`);
+            }
+          } else {
+            // MANUAL M-PESA FLOW
+            setCreatedOrder(newOrder);
+            setLoading(false);
+            window.scrollTo(0, 0);
+            return; // Stop here, wait for transaction code
           }
         } else if (paymentMethod === 'flutterwave') {
           try {
              const fwRes = await paymentService.initiateFlutterwavePayment(
-               res.data.order.id, 
+               newOrder.id, 
                cartSummary.total,
                user?.email,
                formData.fullName,
@@ -114,14 +135,13 @@ const CheckoutPage = () => {
                navigate(`/payment/status?provider=flutterwave&error=nolink`);
              }
           } catch (err) {
-             navigate(`/orders/${res.data.order.id}`);
+             navigate(`/orders/${newOrder.id}`);
           }
         } else if (paymentMethod === 'paypal') {
           try {
-             // Convert to USD roughly if KES, or assume USD
              const usdAmount = (cartSummary.total / 130).toFixed(2);
              const ppRes = await paymentService.createPayPalOrder(
-               res.data.order.id,
+               newOrder.id,
                usdAmount,
                'USD'
              );
@@ -131,10 +151,10 @@ const CheckoutPage = () => {
                navigate(`/payment/status?provider=paypal&error=nolink`);
              }
           } catch (err) {
-             navigate(`/orders/${res.data.order.id}`);
+             navigate(`/orders/${newOrder.id}`);
           }
         } else {
-          navigate(`/orders/${res.data.order.id}`);
+          navigate(`/orders/${newOrder.id}`);
         }
       } else {
         alert(res.message);
@@ -145,6 +165,77 @@ const CheckoutPage = () => {
     }
     setLoading(false);
   };
+
+  const handleVerifyPayment = async () => {
+    if (!transactionCode.trim()) {
+      alert("Please enter the M-Pesa Transaction Code.");
+      return;
+    }
+    setLoading(true);
+    const res = await paymentService.submitManualPayment(
+      createdOrder.id, 
+      transactionCode.trim(), 
+      createdOrder.total_amount, 
+      user.id
+    );
+    if (res.success) {
+      navigate(`/payment/processing/manual_${res.data.id}`); // Or just redirect to orders list with success message
+      // Actually, we can just navigate to the order details page directly.
+      navigate(`/orders/${createdOrder.id}`);
+    } else {
+      alert("Failed to submit verification: " + res.message);
+    }
+    setLoading(false);
+  };
+
+  if (createdOrder && paymentMethod === 'mpesa' && !USE_STK_PUSH) {
+    return (
+      <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm text-center">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Complete Payment</h2>
+            
+            <div className="bg-orange-50 dark:bg-orange-500/10 rounded-2xl p-6 border border-orange-200 dark:border-orange-500/20 text-left mb-8">
+              <h3 className="font-semibold text-orange-900 dark:text-orange-400 mb-4 text-lg">M-Pesa Instructions</h3>
+              <ol className="list-decimal list-inside space-y-3 text-orange-800/80 dark:text-orange-300/80 mb-6">
+                <li>Go to M-Pesa menu on your phone</li>
+                <li>Select <strong>Lipa na M-Pesa</strong> {'>'} <strong>Pay Bill</strong></li>
+                <li>Enter Business No: <strong className="text-orange-900 dark:text-orange-300">{PAYBILL_NUMBER}</strong></li>
+                <li>Enter Account No: <strong className="text-orange-900 dark:text-orange-300">ORD-{createdOrder.id}</strong></li>
+                <li>Enter Amount: <strong className="text-orange-900 dark:text-orange-300">KES {createdOrder.total_amount.toLocaleString()}</strong></li>
+                <li>Enter your M-Pesa PIN and confirm</li>
+              </ol>
+            </div>
+
+            <div className="space-y-4">
+              <label className="block text-left text-sm font-medium text-slate-700 dark:text-slate-300">
+                M-Pesa Transaction Code
+              </label>
+              <input 
+                type="text" 
+                value={transactionCode}
+                onChange={(e) => setTransactionCode(e.target.value.toUpperCase())}
+                placeholder="e.g. OXX1234567"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 uppercase"
+              />
+              <button 
+                onClick={handleVerifyPayment}
+                disabled={loading || !transactionCode.trim()}
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-orange-500/30 disabled:opacity-70 flex items-center justify-center"
+              >
+                {loading ? <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span> : null}
+                Verify Payment
+              </button>
+            </div>
+            
+            <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
+              Your order #ORD-{createdOrder.id} has been created and is awaiting payment verification.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
@@ -169,9 +260,9 @@ const CheckoutPage = () => {
                 <div className="animate-fade-in text-center py-10">
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Almost there!</h3>
                   <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-8">
-                    Please review your order details on the right panel. Once you confirm, you'll be redirected to complete your payment securely.
+                    Please review your order details on the right panel. Once you confirm, your order will be created.
                   </p>
-                  {paymentMethod === 'mpesa' && (
+                  {paymentMethod === 'mpesa' && USE_STK_PUSH && (
                     <div className="bg-orange-50 dark:bg-orange-500/10 p-6 rounded-2xl border border-orange-200 dark:border-orange-500/20 max-w-md mx-auto text-left shadow-inner">
                       <h4 className="font-semibold text-orange-900 dark:text-orange-300 mb-2">M-Pesa Payment Details</h4>
                       <div className="mb-4">
@@ -186,6 +277,13 @@ const CheckoutPage = () => {
                       </div>
                       <p className="text-xs font-medium text-orange-800/80 dark:text-orange-400/80 leading-relaxed">
                         Keep your phone nearby. An STK push prompt will appear on your phone shortly after clicking Place Order.
+                      </p>
+                    </div>
+                  )}
+                  {paymentMethod === 'mpesa' && !USE_STK_PUSH && (
+                    <div className="bg-orange-50 dark:bg-orange-500/10 p-6 rounded-2xl border border-orange-200 dark:border-orange-500/20 max-w-md mx-auto text-center shadow-inner">
+                      <p className="text-orange-800 dark:text-orange-400 font-medium">
+                        You will be provided with Paybill instructions on the next screen to complete your payment manually.
                       </p>
                     </div>
                   )}
@@ -218,7 +316,7 @@ const CheckoutPage = () => {
                     {loading ? (
                       <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
                     ) : null}
-                    Place Order & Pay
+                    {(!USE_STK_PUSH && paymentMethod === 'mpesa') ? 'Proceed to Payment' : 'Place Order & Pay'}
                   </button>
                 )}
               </div>

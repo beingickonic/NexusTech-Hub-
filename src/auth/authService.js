@@ -49,7 +49,7 @@ const normaliseRole = (rawRole, email) => {
 const fetchProfile = async (userId) => {
   const { data, error } = await supabase
     .from('profiles')
-    .select('role, full_name, avatar_url, phone, department, branch, employee_number, status, last_login, company_name')
+    .select('role, full_name, avatar_url, phone, department, branch, employee_number, status, last_login, company_name, address, city, postal_code')
     .eq('id', userId)
     .single();
   if (error) {
@@ -77,6 +77,9 @@ const login = async (email, password) => {
     employee_number: profile?.employee_number,
     status: profile?.status,
     company_name: profile?.company_name,
+    address: profile?.address,
+    city: profile?.city,
+    postal_code: profile?.postal_code,
   };
 
   // Update last_login
@@ -124,6 +127,9 @@ const verifyToken = async () => {
     employee_number: profile?.employee_number,
     status: profile?.status,
     company_name: profile?.company_name,
+    address: profile?.address,
+    city: profile?.city,
+    postal_code: profile?.postal_code,
   };
 
   return { success: true, data: { user: userWithRole } };
@@ -140,5 +146,16 @@ const resetPassword = async (email) => {
   return { success: true };
 };
 
-const authService = { login, register, logout, verifyToken, resetPassword };
+const updateProfile = async (userId, profileData) => {
+  const { data, error } = await supabase
+    .from('profiles')
+    .update(profileData)
+    .eq('id', userId)
+    .select()
+    .single();
+  if (error) return { success: false, message: error.message };
+  return { success: true, data };
+};
+
+const authService = { login, register, logout, verifyToken, resetPassword, updateProfile };
 export default authService;

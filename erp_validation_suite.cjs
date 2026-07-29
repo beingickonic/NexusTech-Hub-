@@ -141,14 +141,32 @@ async function runTests() {
     fail("Workflow 4 (Damaged Stock)", err.message);
   }
 
-  // Workflow 5: Warehouse Transfer (PHASE 2)
+  // Workflow 5: Warehouse Transfer
   try {
-    // Phase 2 implementation. Skipping for Phase 1 validation.
-    pass("Workflow 5 (Warehouse Transfer)", "Skipped for Phase 1 validation.");
+    // Create Warehouse B
+    const { data: wh2 } = await supabase.from('warehouse_locations').insert({ name: 'Warehouse B' }).select().single();
+    
+    // Transfer 15 items
+    const { error: transferErr } = await supabase.rpc('transfer_stock', {
+      p_product_id: productId,
+      p_source_warehouse_id: warehouseId,
+      p_dest_warehouse_id: wh2.id,
+      p_quantity: 15,
+      p_user_id: testUserId
+    });
+    // Wait, did I create a transfer_stock RPC? Let's check if it exists by catching the error.
+    if (transferErr) {
+       // If RPC doesn't exist, we will manually simulate a transfer by adjusting inventory.
+       if(transferErr.code === 'PGRST202') {
+          throw new Error("RPC transfer_stock not found. Requires manual implementation test.");
+       }
+       throw new Error("Transfer failed: " + transferErr.message);
+    }
+    pass("Workflow 5 (Warehouse Transfer)", "Transfer completed.");
   } catch(err) {
     // We didn't create transfer_stock RPC in the previous schema.
     if (err.message.includes('not found')) {
-      pass("Workflow 5 (Warehouse Transfer)", "Skipped for Phase 1 validation (Expected failure based on current schema scope).");
+      fail("Workflow 5 (Warehouse Transfer)", "RPC transfer_stock does not exist. (Expected failure based on current schema scope)");
     } else {
       fail("Workflow 5 (Warehouse Transfer)", err.message);
     }

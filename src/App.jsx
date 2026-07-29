@@ -57,6 +57,7 @@ const AdminSettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
 const AdminReviewsPage = lazy(() => import('./pages/admin/ReviewsPage'));
 const AdminTicketsPage = lazy(() => import('./pages/admin/TicketsPage'));
 const AdminPaymentsDashboard = lazy(() => import('./pages/admin/PaymentsDashboard'));
+const ManualPaymentsPage = lazy(() => import('./pages/admin/ManualPaymentsPage'));
 const AdminRefundsPage = lazy(() => import('./pages/admin/AdminRefundsPage'));
 // ERP Modules
 const AdminDispatchPage = lazy(() => import('./pages/admin/DispatchPage'));
@@ -187,6 +188,7 @@ function App() {
                   <Route path="customers" element={<AdminRoute><AdminCustomersPage /></AdminRoute>} />
                   <Route path="invoices" element={<AdminRoute><AdminInvoicesPage /></AdminRoute>} />
                   <Route path="payments" element={<AdminRoute><AdminPaymentsDashboard /></AdminRoute>} />
+                  <Route path="payments/manual" element={<AdminRoute><ManualPaymentsPage /></AdminRoute>} />
                   <Route path="reports" element={<AdminRoute><AdminReportsPage /></AdminRoute>} />
                   <Route path="tickets" element={<AdminRoute><AdminTicketsPage /></AdminRoute>} />
                   <Route path="users" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />
@@ -196,7 +198,7 @@ function App() {
                 {/* Catch-all 404 Route and Portals */}
                 <Route path="/403" element={<UnauthorizedPage />} />
                 
-                {/* ── Dispatch Portal ── */}
+                {/* â”€â”€ Dispatch Portal â”€â”€ */}
                 <Route path="/dispatch/login" element={<DispatchLoginPage />} />
                 <Route path="/dispatch" element={
                   <DispatchRoute>
@@ -216,7 +218,7 @@ function App() {
                   <Route path="drivers" element={<AdminDriversPage />} />
                 </Route>
 
-                {/* ── Driver Portal ── */}
+                {/* â”€â”€ Driver Portal â”€â”€ */}
                 <Route path="/driver/login" element={<DriverLoginPage />} />
                 <Route path="/driver" element={
                   <DriverRoute>
@@ -234,7 +236,7 @@ function App() {
                   <Route path="deliveries" element={<DriverMyDeliveries />} />
                 </Route>
 
-                {/* ── Inventory Portal ── */}
+                {/* â”€â”€ Inventory Portal â”€â”€ */}
                 <Route path="/inventory/login" element={<InventoryLoginPage />} />
                 <Route path="/inventory" element={
                   <InventoryRoute>
@@ -264,8 +266,8 @@ function App() {
                   <Route path="products" element={<InventoryProductsPage />} />
                   <Route path="movements" element={<StockMovementsPage />} />
                   <Route path="goods-received" element={<GoodsReceivedPage />} />
+                  <Route path="suppliers" element={<SuppliersPage />} />
                   <Route path="purchase-orders" element={<PurchaseOrdersPage />} />
-                  <Route path="suppliers" element={<InventorySuppliersPage />} />
                   <Route path="transfers" element={<StockTransfersPage />} />
                   <Route path="returns" element={<InventoryReturnsPage />} />
                   <Route path="damaged-stock" element={<DamagedStockPage />} />
@@ -276,7 +278,7 @@ function App() {
                   <Route path="profile" element={<InventoryProfilePage />} />
                 </Route>
 
-                {/* ── Finance Portal ── */}
+                {/* â”€â”€ Finance Portal â”€â”€ */}
                 <Route path="/finance/login" element={<FinanceLoginPage />} />
                 <Route path="/finance" element={
                   <FinanceRoute>
@@ -294,7 +296,7 @@ function App() {
                   <Route path="transactions" element={<AdminFinancePage />} />
                 </Route>
 
-                {/* ── Supplier Portal ── */}
+                {/* â”€â”€ Supplier Portal â”€â”€ */}
                 <Route path="/supplier/login" element={<SupplierLoginPage />} />
                 <Route path="/supplier" element={
                   <SupplierRoute>
@@ -331,3 +333,5 @@ function App() {
 }
 
 export default App;
+
+
