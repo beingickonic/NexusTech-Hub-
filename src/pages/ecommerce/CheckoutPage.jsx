@@ -94,31 +94,32 @@ const CheckoutPage = () => {
         await orderService.updateOrderStatus(newOrder.id, 'Awaiting Payment');
         
         if (paymentMethod === 'mpesa') {
-          if (USE_STK_PUSH) {
-            try {
-               const paymentRes = await paymentService.initiateMpesaPayment(
-                 newOrder.id, 
-                 mpesaPhone, 
-                 cartSummary.total
-               );
-               if (paymentRes.success && paymentRes.data?.checkout_request_id) {
-                 navigate(`/payment/processing/${paymentRes.data.checkout_request_id}`);
-               } else {
-                 console.error("Mpesa initiation failed", paymentRes.message);
-                 alert("Order created, but M-Pesa push failed: " + (paymentRes.message || "Unknown error"));
-                 navigate(`/orders/${newOrder.id}`);
-               }
-            } catch (paymentErr) {
-               console.error("Mpesa initiation crashed", paymentErr);
-               alert("Order created but M-Pesa push crashed.");
-               navigate(`/orders/${newOrder.id}`);
-            }
-          } else {
+          if (!USE_STK_PUSH) {
             // MANUAL M-PESA FLOW
             setCreatedOrder(newOrder);
             setLoading(false);
             window.scrollTo(0, 0);
             return; // Stop here, wait for transaction code
+          }
+          
+          // STK PUSH FLOW
+          try {
+             const paymentRes = await paymentService.initiateMpesaPayment(
+               newOrder.id, 
+               mpesaPhone, 
+               cartSummary.total
+             );
+             if (paymentRes.success && paymentRes.data?.checkout_request_id) {
+               navigate(`/payment/processing/${paymentRes.data.checkout_request_id}`);
+             } else {
+               console.error("Mpesa initiation failed", paymentRes.message);
+               alert("Order created, but M-Pesa push failed: " + (paymentRes.message || "Unknown error"));
+               navigate(`/orders/${newOrder.id}`);
+             }
+          } catch (paymentErr) {
+             console.error("Mpesa initiation crashed", paymentErr);
+             alert("Order created but M-Pesa push crashed.");
+             navigate(`/orders/${newOrder.id}`);
           }
         } else if (paymentMethod === 'flutterwave') {
           try {
