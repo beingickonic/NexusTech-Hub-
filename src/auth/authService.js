@@ -28,10 +28,10 @@ export const PORTAL_ROLES = {
 };
 
 const normaliseRole = (rawRole, email) => {
-  // Hardcoded overrides first
-  if (email === 'admin@gmail.com') return 'Admin';
-  if (email === 'inventory@gmail.com') return 'inventory';
-  if (email === 'finance@gmail.com') return 'Finance Manager'; // Map the seed user
+  const emailLower = email ? email.toLowerCase() : '';
+  if (emailLower === 'admin@gmail.com') return 'Admin';
+  if (emailLower === 'inventory@gmail.com') return 'inventory';
+  if (emailLower === 'finance@gmail.com') return 'Finance Manager'; // Map the seed user
 
   if (!rawRole) return 'Customer';
   const r = rawRole.trim();
