@@ -80,7 +80,7 @@ const Navbar = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search premium tech..."
-                className="w-full bg-slate-100 dark:bg-dark-bg py-2.5 px-4 outline-none text-sm focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-slate-400"
+                className="w-full bg-slate-100 dark:bg-dark-bg py-2.5 px-4 outline-none text-sm focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-nexus-textSecondary"
               />
               <button
                 type="submit"
@@ -135,13 +135,13 @@ const Navbar = () => {
                       >
                         <div className="px-4 py-3 border-b border-slate-200 dark:border-[#1F2937]">
                           <p className="text-sm font-semibold truncate">{user.full_name || 'Customer'}</p>
-                          <p className="text-xs text-slate-500 dark:text-gray-400 truncate">{user.email}</p>
+                          <p className="text-xs text-nexus-textSecondary dark:text-gray-400 truncate">{user.email}</p>
                         </div>
                         <div className="py-1">
-                          <Link to={ROLE_PORTAL_MAP[user?.role] || "/profile/account"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                          <Link to={ROLE_PORTAL_MAP[user?.role] || "/profile/account"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                             My Profile
                           </Link>
-                          <Link to={ROLE_PORTAL_MAP[user?.role] ? `${ROLE_PORTAL_MAP[user?.role].replace('/dashboard', '')}/settings` : "/profile/settings"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                          <Link to={ROLE_PORTAL_MAP[user?.role] ? `${ROLE_PORTAL_MAP[user?.role].replace('/dashboard', '')}/settings` : "/profile/settings"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                             Settings
                           </Link>
                           <button
@@ -223,7 +223,7 @@ const Navbar = () => {
               className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-white dark:bg-dark-surface z-[70] shadow-2xl flex flex-col text-slate-900 dark:text-white overflow-y-auto"
             >
               {/* Drawer Header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-white/10">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-nexus-border">
                 <img
                   src={isDarkMode ? darkLogo : lightLogo}
                   alt="NexusTech Hub"
@@ -247,7 +247,7 @@ const Navbar = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search products..."
-                    className="w-full bg-slate-100 dark:bg-dark-bg py-3 px-4 pl-10 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-slate-400 text-sm"
+                    className="w-full bg-slate-100 dark:bg-dark-bg py-3 px-4 pl-10 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-nexus-textSecondary text-sm"
                   />
                   <Search size={16} className="absolute left-3 top-3.5 text-gray-400" />
                 </form>
@@ -272,7 +272,7 @@ const Navbar = () => {
                           onClick={closeMobile}
                           className="flex items-center gap-3 py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-base"
                         >
-                          <span className="text-slate-500 dark:text-gray-400">{icon}</span>
+                          <span className="text-nexus-textSecondary dark:text-gray-400">{icon}</span>
                           <span>{label}</span>
                         </Link>
                       ))}
@@ -315,7 +315,7 @@ const Navbar = () => {
                           className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-base"
                         >
                           <span>{label}</span>
-                          {icon && <span className="text-slate-400">{icon}</span>}
+                          {icon && <span className="text-nexus-textSecondary">{icon}</span>}
                         </Link>
                       ))}
                     </>
@@ -324,7 +324,7 @@ const Navbar = () => {
               </div>
 
               {/* Drawer Footer */}
-              <div className="px-5 py-4 border-t border-slate-100 dark:border-white/10">
+              <div className="px-5 py-4 border-t border-slate-100 dark:border-nexus-border">
                 <button
                   onClick={toggleTheme}
                   className="w-full flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-sm"

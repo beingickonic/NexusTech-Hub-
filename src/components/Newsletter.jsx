@@ -65,7 +65,7 @@ const Newsletter = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-r from-[#1E293B] to-[#0F172A] p-7 sm:p-10 lg:p-16 text-center shadow-2xl border border-slate-700"
+        className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-r from-[#1E293B] to-[#0F172A] p-7 sm:p-10 lg:p-16 text-center shadow-2xl border border-nexus-border"
       >
         {/* Floating Glows */}
         <div className="absolute top-[-50%] left-[-10%] w-64 h-64 bg-primary/30 rounded-full blur-[100px] pointer-events-none" />
@@ -118,7 +118,7 @@ const Newsletter = () => {
                   }}
                   placeholder="Enter your email address"
                   disabled={loading}
-                  className="w-full h-14 bg-white/5 backdrop-blur-sm border border-white/10 text-white placeholder-slate-400 px-6 rounded-2xl sm:rounded-r-none outline-none focus:bg-white/10 focus:border-primary/50 transition-all shadow-inner text-sm disabled:opacity-60"
+                  className="w-full h-14 bg-white/5 backdrop-blur-sm border border-nexus-border text-white placeholder-slate-400 px-6 rounded-2xl sm:rounded-r-none outline-none focus:bg-white/10 focus:border-primary/50 transition-all shadow-inner text-sm disabled:opacity-60"
                   aria-label="Email address"
                   aria-required="true"
                 />
@@ -126,7 +126,7 @@ const Newsletter = () => {
                   id="newsletter-submit-btn"
                   type="submit"
                   disabled={loading}
-                  className="h-14 shrink-0 sm:w-auto w-full bg-[#FF6B57] hover:bg-[#ff5a2e] disabled:bg-[#FF6B57]/60 text-white px-8 rounded-2xl sm:rounded-l-none font-bold transition-all shadow-[0_0_20px_rgba(255,107,87,0.3)] flex items-center justify-center gap-2 hover:shadow-[0_0_25px_rgba(255,107,87,0.5)] disabled:hover:shadow-[0_0_20px_rgba(255,107,87,0.3)] text-sm whitespace-nowrap"
+                  className="h-14 shrink-0 sm:w-auto w-full bg-nexus-primary hover:bg-[#ff5a2e] disabled:bg-nexus-primary/60 text-white px-8 rounded-2xl sm:rounded-l-none font-bold transition-all shadow-[0_0_20px_rgba(255,107,87,0.3)] flex items-center justify-center gap-2 hover:shadow-[0_0_25px_rgba(255,107,87,0.5)] disabled:hover:shadow-[0_0_20px_rgba(255,107,87,0.3)] text-sm whitespace-nowrap"
                   aria-label="Subscribe to newsletter"
                 >
                   {loading ? (

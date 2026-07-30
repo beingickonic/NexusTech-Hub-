@@ -11,11 +11,11 @@ const STATUS_ICONS = {
   open: { icon: AlertCircle, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
   pending: { icon: Clock, color: 'text-blue-400', bg: 'bg-blue-500/10' },
   resolved: { icon: CheckCircle, color: 'text-green-400', bg: 'bg-green-500/10' },
-  closed: { icon: XCircle, color: 'text-slate-500 dark:text-gray-400', bg: 'bg-gray-500/10' },
+  closed: { icon: XCircle, color: 'text-nexus-textSecondary dark:text-gray-400', bg: 'bg-gray-500/10' },
 };
 
 const PRIORITY_COLORS = {
-  low: 'bg-gray-500/10 text-slate-500 dark:text-gray-400',
+  low: 'bg-gray-500/10 text-nexus-textSecondary dark:text-gray-400',
   normal: 'bg-blue-500/10 text-blue-400',
   high: 'bg-orange-500/10 text-orange-400',
   urgent: 'bg-red-500/10 text-red-400',
@@ -52,9 +52,9 @@ const TicketModal = ({ ticket, onClose, onUpdate }) => {
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white dark:bg-dark-surface border border-slate-200 dark:border-white/10 rounded-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]"
+        className="bg-white dark:bg-dark-surface border border-slate-200 dark:border-nexus-border rounded-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]"
       >
-        <div className="p-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
+        <div className="p-6 border-b border-slate-200 dark:border-nexus-border flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${sc.bg} ${sc.color}`}>
               <StatusIcon size={20} />
@@ -66,38 +66,38 @@ const TicketModal = ({ ticket, onClose, onUpdate }) => {
                   {ticket.priority}
                 </span>
               </h2>
-              <p className="text-sm text-slate-500 dark:text-gray-400">ID: {ticket.id}</p>
+              <p className="text-sm text-nexus-textSecondary dark:text-gray-400">ID: {ticket.id}</p>
             </div>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-colors">
-            <X className="text-slate-500 dark:text-gray-400" size={24} />
+            <X className="text-nexus-textSecondary dark:text-gray-400" size={24} />
           </button>
         </div>
 
         <div className="p-6 overflow-y-auto flex-1 space-y-6">
-          <div className="grid grid-cols-2 gap-6 bg-[#F8FAFC] dark:bg-[#0C1220] p-4 rounded-xl border border-slate-200 dark:border-white/5">
+          <div className="grid grid-cols-2 gap-6 bg-[#F8FAFC] dark:bg-nexus-bg p-4 rounded-xl border border-slate-200 dark:border-nexus-border">
             <div>
-              <p className="text-xs text-slate-500 dark:text-gray-500 uppercase tracking-wider font-semibold mb-1">Customer</p>
+              <p className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-wider font-semibold mb-1">Customer</p>
               <p className="text-slate-900 dark:text-white font-medium">{ticket.name || 'Unknown'}</p>
             </div>
             <div>
-              <p className="text-xs text-slate-500 dark:text-gray-500 uppercase tracking-wider font-semibold mb-1">Email</p>
+              <p className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-wider font-semibold mb-1">Email</p>
               <p className="text-slate-900 dark:text-white font-medium">{ticket.email || 'N/A'}</p>
             </div>
             <div>
-              <p className="text-xs text-slate-500 dark:text-gray-500 uppercase tracking-wider font-semibold mb-1">Date Submitted</p>
+              <p className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-wider font-semibold mb-1">Date Submitted</p>
               <p className="text-slate-900 dark:text-white font-medium">{new Date(ticket.created_at).toLocaleString('en-KE')}</p>
             </div>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{ticket.subject}</h3>
-            <div className="bg-slate-50 dark:bg-black/20 p-4 rounded-xl border border-slate-200 dark:border-white/5 whitespace-pre-wrap text-slate-700 dark:text-gray-300">
+            <div className="bg-slate-50 dark:bg-black/20 p-4 rounded-xl border border-slate-200 dark:border-nexus-border whitespace-pre-wrap text-slate-700 dark:text-gray-300">
               {ticket.message}
             </div>
           </div>
 
-          <div className="border-t border-slate-200 dark:border-white/10 pt-6">
+          <div className="border-t border-slate-200 dark:border-nexus-border pt-6">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
               <Reply size={20} className="text-primary" /> Admin Reply
             </h3>
@@ -107,15 +107,15 @@ const TicketModal = ({ ticket, onClose, onUpdate }) => {
                 onChange={(e) => setReply(e.target.value)}
                 rows={4}
                 placeholder="Write a response to the customer..."
-                className="w-full bg-[#F8FAFC] dark:bg-[#0C1220] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+                className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
               />
               <div className="flex items-center gap-4">
                 <div className="flex-1">
-                  <label className="text-xs text-slate-500 dark:text-gray-500 uppercase tracking-wider font-semibold block mb-1.5">Ticket Status</label>
+                  <label className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-wider font-semibold block mb-1.5">Ticket Status</label>
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className="w-full bg-[#F8FAFC] dark:bg-[#0C1220] border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-primary/50 transition-colors"
+                    className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border text-slate-900 dark:text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-primary/50 transition-colors"
                   >
                     <option value="open">Open</option>
                     <option value="pending">In Progress / Pending</option>
@@ -128,8 +128,8 @@ const TicketModal = ({ ticket, onClose, onUpdate }) => {
           </div>
         </div>
 
-        <div className="p-6 border-t border-slate-200 dark:border-white/10 flex justify-end gap-3 bg-slate-50 dark:bg-dark-surface/50">
-          <button onClick={onClose} className="px-6 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-300 hover:bg-white dark:hover:bg-white/5 transition-colors font-medium">
+        <div className="p-6 border-t border-slate-200 dark:border-nexus-border flex justify-end gap-3 bg-slate-50 dark:bg-dark-surface/50">
+          <button onClick={onClose} className="px-6 py-2.5 rounded-xl border border-slate-200 dark:border-nexus-border text-slate-600 dark:text-gray-300 hover:bg-white dark:hover:bg-white/5 transition-colors font-medium">
             Cancel
           </button>
           <button onClick={handleSave} disabled={saving} className="px-6 py-2.5 rounded-xl bg-primary hover:bg-orange-600 text-white transition-colors font-medium flex items-center gap-2 shadow-glow disabled:opacity-50">
@@ -230,39 +230,39 @@ const TicketsPage = () => {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
             <Headset className="text-primary" /> Support Tickets
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Manage and respond to customer inquiries</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mt-1">Manage and respond to customer inquiries</p>
         </div>
-        <div className="flex items-center gap-3 bg-white dark:bg-dark-surface px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="text-center px-3 border-r border-slate-200 dark:border-slate-700">
+        <div className="flex items-center gap-3 bg-white dark:bg-dark-surface px-4 py-2 rounded-xl border border-slate-200 dark:border-nexus-border shadow-sm">
+          <div className="text-center px-3 border-r border-slate-200 dark:border-nexus-border">
             <p className="text-2xl font-bold text-slate-900 dark:text-white">{tickets.length}</p>
-            <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Total</p>
+            <p className="text-xs text-nexus-textSecondary uppercase tracking-wider font-semibold">Total</p>
           </div>
           <div className="text-center px-3">
             <p className="text-2xl font-bold text-yellow-500">{tickets.filter(t => t.status === 'open' || t.status === 'pending').length}</p>
-            <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Active</p>
+            <p className="text-xs text-nexus-textSecondary uppercase tracking-wider font-semibold">Active</p>
           </div>
         </div>
       </div>
 
       {/* Filters Bar */}
-      <div className="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-4 shadow-sm">
+      <div className="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-slate-200 dark:border-nexus-border flex flex-col md:flex-row gap-4 shadow-sm">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary" size={18} />
           <input
             type="text"
             placeholder="Search by ID, name, email or subject..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-900 dark:text-white transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] dark:bg-[#0F172A] border border-slate-200 dark:border-nexus-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-900 dark:text-white transition-colors"
           />
         </div>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <Filter size={18} className="text-slate-400" />
+            <Filter size={18} className="text-nexus-textSecondary" />
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-[#F8FAFC] dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="bg-[#F8FAFC] dark:bg-[#0F172A] border border-slate-200 dark:border-nexus-border rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <option value="all">All Status</option>
               <option value="open">Open</option>
@@ -274,7 +274,7 @@ const TicketsPage = () => {
           <select
             value={priorityFilter}
             onChange={(e) => setPriorityFilter(e.target.value)}
-            className="bg-[#F8FAFC] dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="bg-[#F8FAFC] dark:bg-[#0F172A] border border-slate-200 dark:border-nexus-border rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
           >
             <option value="all">All Priorities</option>
             <option value="low">Low</option>
@@ -286,22 +286,22 @@ const TicketsPage = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-dark-surface border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+      <div className="bg-white dark:bg-dark-surface border border-slate-200 dark:border-nexus-border rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
-                <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Ticket Details</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Customer</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Priority</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Date</th>
+              <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-nexus-border">
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Ticket Details</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Customer</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Priority</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Status</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider text-right">Date</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
               {paginatedTickets.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-slate-500 dark:text-slate-400">
+                  <td colSpan={5} className="p-8 text-center text-nexus-textSecondary dark:text-nexus-textSecondary">
                     No tickets found matching your criteria.
                   </td>
                 </tr>
@@ -318,11 +318,11 @@ const TicketsPage = () => {
                     >
                       <td className="p-4">
                         <p className="font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors line-clamp-1">{ticket.subject}</p>
-                        <p className="text-xs text-slate-500 dark:text-gray-500 mt-1">ID: {ticket.id.split('-')[0]}</p>
+                        <p className="text-xs text-nexus-textSecondary dark:text-gray-500 mt-1">ID: {ticket.id.split('-')[0]}</p>
                       </td>
                       <td className="p-4">
                         <p className="text-sm font-medium text-slate-900 dark:text-white">{ticket.name || 'Anonymous'}</p>
-                        <p className="text-xs text-slate-500 dark:text-gray-500">{ticket.email || 'N/A'}</p>
+                        <p className="text-xs text-nexus-textSecondary dark:text-gray-500">{ticket.email || 'N/A'}</p>
                       </td>
                       <td className="p-4">
                         <span className={`text-xs px-2 py-1 rounded-full font-medium ${PRIORITY_COLORS[ticket.priority]}`}>
@@ -337,7 +337,7 @@ const TicketsPage = () => {
                       </td>
                       <td className="p-4 text-right">
                         <p className="text-sm text-slate-900 dark:text-white">{new Date(ticket.created_at).toLocaleDateString()}</p>
-                        <p className="text-xs text-slate-500 dark:text-gray-500">{new Date(ticket.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                        <p className="text-xs text-nexus-textSecondary dark:text-gray-500">{new Date(ticket.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                       </td>
                     </tr>
                   );
@@ -349,22 +349,22 @@ const TicketsPage = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="p-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+          <div className="p-4 border-t border-slate-200 dark:border-nexus-border flex items-center justify-between">
+            <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">
               Showing <span className="font-medium text-slate-900 dark:text-white">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-medium text-slate-900 dark:text-white">{Math.min(currentPage * itemsPerPage, filteredTickets.length)}</span> of <span className="font-medium text-slate-900 dark:text-white">{filteredTickets.length}</span> results
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 transition-colors"
+                className="p-2 rounded-lg border border-slate-200 dark:border-nexus-border text-slate-600 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 transition-colors"
               >
                 <ChevronLeft size={18} />
               </button>
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 transition-colors"
+                className="p-2 rounded-lg border border-slate-200 dark:border-nexus-border text-slate-600 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 transition-colors"
               >
                 <ChevronRight size={18} />
               </button>

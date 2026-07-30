@@ -3,12 +3,12 @@ import { Download, FileText, CreditCard, Receipt, TrendingUp, Loader2 } from 'lu
 import { financeService } from '../../services/financeService';
 
 const ReportCard = ({ title, description, icon: Icon, onExport, loading }) => (
-  <div className="bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 p-6 rounded-2xl shadow-xl flex flex-col items-start">
+  <div className="bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-nexus-border/50 p-6 rounded-2xl shadow-xl flex flex-col items-start">
     <div className="p-3 bg-rose-500/20 text-rose-500 rounded-xl mb-4">
       <Icon size={24} />
     </div>
     <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{title}</h3>
-    <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 flex-1">{description}</p>
+    <p className="text-nexus-textSecondary dark:text-nexus-textSecondary text-sm mb-6 flex-1">{description}</p>
     <div className="flex w-full">
       <button 
         onClick={() => onExport('csv')}
@@ -98,7 +98,7 @@ const ReportsPage = () => {
     <div className="p-6 max-w-7xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Reports</h1>
-        <p className="text-slate-500 mt-1">Generate and export financial reports</p>
+        <p className="text-nexus-textSecondary mt-1">Generate and export financial reports</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -132,9 +132,9 @@ const ReportsPage = () => {
         />
       </div>
       
-      <div className="bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 p-8 rounded-2xl shadow-xl text-center">
+      <div className="bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-nexus-border/50 p-8 rounded-2xl shadow-xl text-center">
         <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Advanced Reports</h2>
-        <p className="text-slate-500 max-w-2xl mx-auto">
+        <p className="text-nexus-textSecondary max-w-2xl mx-auto">
           Phase 2 will introduce Profit & Loss, Balance Sheet, Trial Balance, and Cash Flow Statements.
         </p>
       </div>

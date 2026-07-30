@@ -6,12 +6,12 @@ const PaymentFailedPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-32 pb-20 px-4 flex items-center justify-center">
+    <div className="min-h-screen bg-slate-50 dark:bg-nexus-surface pt-32 pb-20 px-4 flex items-center justify-center">
       <div className="max-w-md w-full">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 text-center"
+          className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-nexus-border text-center"
         >
           <motion.div 
             initial={{ scale: 0 }}
@@ -27,11 +27,11 @@ const PaymentFailedPage = () => {
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
             Payment Failed
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-8 leading-relaxed">
             We were unable to process your payment. You might have cancelled the STK push, or there were insufficient funds.
           </p>
 
-          <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-4 mb-8 text-sm text-slate-600 dark:text-slate-400 text-left">
+          <div className="bg-slate-50 dark:bg-nexus-surface/50 rounded-2xl p-4 mb-8 text-sm text-slate-600 dark:text-nexus-textSecondary text-left">
             <p className="mb-2"><strong>Don't worry!</strong> Your order #{orderId} has been saved as pending.</p>
             <p>You can try paying again from your orders dashboard.</p>
           </div>

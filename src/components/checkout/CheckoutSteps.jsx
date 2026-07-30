@@ -19,18 +19,18 @@ const CheckoutSteps = ({ currentStep }) => {
               }`}></div>
             )}
             
-            <div className="flex flex-col items-center w-full gap-2 bg-slate-50 dark:bg-slate-900 relative z-10 px-2">
+            <div className="flex flex-col items-center w-full gap-2 bg-slate-50 dark:bg-nexus-surface relative z-10 px-2">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
                 isActive 
                   ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/40 ring-4 ring-orange-500/20' 
                   : isCompleted
                     ? 'bg-orange-500 text-white'
-                    : 'bg-white dark:bg-slate-800 text-slate-400 border-2 border-slate-200 dark:border-slate-700'
+                    : 'bg-white dark:bg-slate-800 text-nexus-textSecondary border-2 border-slate-200 dark:border-nexus-border'
               }`}>
                 {isCompleted ? <Check size={20} /> : stepNum}
               </div>
               <span className={`text-xs md:text-sm font-medium ${
-                isActive ? 'text-orange-500' : isCompleted ? 'text-slate-900 dark:text-white' : 'text-slate-400'
+                isActive ? 'text-orange-500' : isCompleted ? 'text-slate-900 dark:text-white' : 'text-nexus-textSecondary'
               }`}>
                 {step}
               </span>

@@ -36,7 +36,7 @@ const CategorySection = () => {
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1 sm:mb-2">
               Shop by Category
             </h2>
-            <p className="text-sm sm:text-base text-slate-500 dark:text-gray-400">
+            <p className="text-sm sm:text-base text-nexus-textSecondary dark:text-gray-400">
               Discover the tech that fits your lifestyle.
             </p>
           </div>

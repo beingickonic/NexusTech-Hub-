@@ -33,7 +33,7 @@ const UserAvatar = ({ src, name, size = 'md', className = '' }) => {
       <img
         src={src}
         alt={name || 'User Avatar'}
-        className={`${currentSize} rounded-full object-cover ring-2 ring-[#FF6B57]/30 flex-shrink-0 ${className}`}
+        className={`${currentSize} rounded-full object-cover ring-2 ring-nexus-primary/30 flex-shrink-0 ${className}`}
         onError={() => setImageError(true)}
       />
     );
@@ -41,7 +41,7 @@ const UserAvatar = ({ src, name, size = 'md', className = '' }) => {
 
   return (
     <div
-      className={`${currentSize} rounded-full bg-gradient-to-br from-[#FF6B57] to-[#FF8C42] flex items-center justify-center text-white font-bold flex-shrink-0 ${className}`}
+      className={`${currentSize} rounded-full bg-gradient-to-br from-nexus-primary to-[#FF8C42] flex items-center justify-center text-white font-bold flex-shrink-0 ${className}`}
     >
       {getInitials(name)}
     </div>

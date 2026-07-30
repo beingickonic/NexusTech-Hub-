@@ -95,7 +95,7 @@ const SuppliersPage = () => {
             placeholder="Search by name, company, or email..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-nexus-dark/50 border border-white/10 rounded-lg text-white focus:outline-none focus:border-nexus-blue"
+            className="w-full pl-10 pr-4 py-2 bg-nexus-dark/50 border border-nexus-border rounded-lg text-white focus:outline-none focus:border-nexus-blue"
           />
         </div>
       </div>
@@ -107,7 +107,7 @@ const SuppliersPage = () => {
           <div className="col-span-full p-8 text-center text-gray-400">No suppliers found</div>
         ) : (
           filteredSuppliers.map(supplier => (
-            <motion.div key={supplier.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-nexus-dark border border-white/10 rounded-xl p-5 hover:border-white/20 transition-all">
+            <motion.div key={supplier.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-nexus-dark border border-nexus-border rounded-xl p-5 hover:border-white/20 transition-all">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-lg font-bold text-white">{supplier.name}</h3>
@@ -131,7 +131,7 @@ const SuppliersPage = () => {
                 )}
               </div>
 
-              <div className="flex justify-end gap-2 border-t border-white/5 pt-4">
+              <div className="flex justify-end gap-2 border-t border-nexus-border pt-4">
                 <button onClick={() => handleOpenModal('edit', supplier)} className="p-2 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
                   <Edit2 className="w-4 h-4" />
                 </button>
@@ -147,8 +147,8 @@ const SuppliersPage = () => {
       <AnimatePresence>
         {showModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} className="bg-nexus-dark border border-white/10 rounded-xl w-full max-w-lg overflow-hidden">
-              <div className="p-6 border-b border-white/10 flex justify-between items-center">
+            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} className="bg-nexus-dark border border-nexus-border rounded-xl w-full max-w-lg overflow-hidden">
+              <div className="p-6 border-b border-nexus-border flex justify-between items-center">
                 <h2 className="text-xl font-bold text-white">{modalMode === 'add' ? 'Add Supplier' : 'Edit Supplier'}</h2>
                 <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-white"><X className="w-6 h-6" /></button>
               </div>
@@ -157,31 +157,31 @@ const SuppliersPage = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="col-span-2">
                       <label className="block text-sm text-gray-400 mb-1">Supplier Name *</label>
-                      <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                      <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                     </div>
                     <div>
                       <label className="block text-sm text-gray-400 mb-1">Contact Person</label>
-                      <input type="text" value={formData.contact_person} onChange={e => setFormData({...formData, contact_person: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                      <input type="text" value={formData.contact_person} onChange={e => setFormData({...formData, contact_person: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                     </div>
                     <div>
                       <label className="block text-sm text-gray-400 mb-1">Company</label>
-                      <input type="text" value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                      <input type="text" value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                     </div>
                     <div>
                       <label className="block text-sm text-gray-400 mb-1">Email</label>
-                      <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                      <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                     </div>
                     <div>
                       <label className="block text-sm text-gray-400 mb-1">Phone</label>
-                      <input type="text" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                      <input type="text" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                     </div>
                     <div className="col-span-2">
                       <label className="block text-sm text-gray-400 mb-1">Address</label>
-                      <input type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                      <input type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                     </div>
                     <div className="col-span-2">
                       <label className="block text-sm text-gray-400 mb-1">Status</label>
-                      <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white">
+                      <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white">
                         <option value="active">Active</option>
                         <option value="suspended">Suspended</option>
                         <option value="inactive">Inactive</option>
@@ -189,7 +189,7 @@ const SuppliersPage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="p-6 border-t border-white/10 flex justify-end gap-4">
+                <div className="p-6 border-t border-nexus-border flex justify-end gap-4">
                   <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-gray-400 hover:text-white transition-colors">Cancel</button>
                   <button type="submit" className="px-4 py-2 bg-nexus-blue hover:bg-blue-600 text-white rounded-lg transition-colors">Save Supplier</button>
                 </div>

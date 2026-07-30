@@ -51,14 +51,14 @@ const FinanceNavbar = ({ toggleSidebar }) => {
 
   return (
     <header
-      className="h-14 bg-white/90 dark:bg-[#070B1A]/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 lg:px-6 sticky top-0 z-30"
+      className="h-14 bg-white/90 dark:bg-nexus-bg/90 backdrop-blur-md border-b border-slate-200 dark:border-nexus-border flex items-center justify-between px-4 lg:px-6 sticky top-0 z-30"
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
       <div className="flex items-center gap-3">
         {/* Mobile hamburger */}
         <button
           onClick={toggleSidebar}
-          className="lg:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          className="lg:hidden p-2 rounded-lg text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           <Menu size={18} />
         </button>
@@ -67,7 +67,7 @@ const FinanceNavbar = ({ toggleSidebar }) => {
         {!isHome && (
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-sm font-medium text-nexus-textSecondary hover:text-slate-900 dark:hover:text-white transition-colors"
           >
             <ArrowLeft size={16} /> Back
           </button>
@@ -78,7 +78,7 @@ const FinanceNavbar = ({ toggleSidebar }) => {
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-500">
             FINANCE
           </span>
-          <span className="text-slate-300 dark:text-slate-700">/</span>
+          <span className="text-nexus-textSecondary dark:text-slate-700">/</span>
           <span className="text-sm font-semibold text-slate-900 dark:text-white">{currentPage}</span>
         </div>
       </div>
@@ -89,21 +89,21 @@ const FinanceNavbar = ({ toggleSidebar }) => {
           <input
             type="text"
             placeholder="Search finance..."
-            className="w-44 bg-slate-100 dark:bg-slate-900 border-none rounded-lg py-1.5 pl-8 pr-3 text-sm outline-none focus:ring-2 transition-all placeholder:text-slate-400 focus:ring-emerald-500/50"
+            className="w-44 bg-slate-100 dark:bg-nexus-surface border-none rounded-lg py-1.5 pl-8 pr-3 text-sm outline-none focus:ring-2 transition-all placeholder:text-nexus-textSecondary focus:ring-emerald-500/50"
           />
-          <Search size={14} className="absolute left-2.5 text-slate-400" />
+          <Search size={14} className="absolute left-2.5 text-nexus-textSecondary" />
         </div>
 
         {/* Theme */}
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          className="p-2 rounded-lg text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           {isDarkMode ? <Sun size={17} /> : <Moon size={17} />}
         </button>
 
         {/* Notifications */}
-        <button className="relative p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <button className="relative p-2 rounded-lg text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
           <Bell size={17} />
           {unread > 0 && (
             <span
@@ -115,10 +115,10 @@ const FinanceNavbar = ({ toggleSidebar }) => {
         </button>
 
         {/* User */}
-        <div className="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800">
+        <div className="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-nexus-border">
           <div className="hidden sm:block text-right">
             <p className="text-xs font-semibold text-slate-900 dark:text-white leading-none">{displayName}</p>
-            <p className="text-[10px] text-slate-400 capitalize leading-none mt-0.5">{user?.role?.replace('_', ' ')}</p>
+            <p className="text-[10px] text-nexus-textSecondary capitalize leading-none mt-0.5">{user?.role?.replace('_', ' ')}</p>
           </div>
           <UserAvatar src={user?.avatar_url} name={displayName} size="sm" />
         </div>

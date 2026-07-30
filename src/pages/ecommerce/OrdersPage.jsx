@@ -28,7 +28,7 @@ const OrdersPage = () => {
   }, [user]);
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6 max-w-5xl">
         <div className="flex items-center gap-4 mb-10">
           <Package className="text-orange-500" size={36} />

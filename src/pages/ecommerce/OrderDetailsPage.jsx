@@ -31,7 +31,7 @@ const OrderDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-32 flex justify-center bg-slate-50 dark:bg-slate-900">
+      <div className="min-h-screen pt-32 flex justify-center bg-slate-50 dark:bg-nexus-surface">
         <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -39,7 +39,7 @@ const OrderDetailsPage = () => {
 
   if (!order) {
     return (
-      <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 text-center text-slate-500">
+      <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface text-center text-nexus-textSecondary">
         Order not found.
       </div>
     );
@@ -105,25 +105,25 @@ const OrderDetailsPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6 max-w-5xl">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-500 hover:text-orange-500 mb-4 transition-colors w-max">
+            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-nexus-textSecondary hover:text-orange-500 mb-4 transition-colors w-max">
               <ArrowLeft size={20} /> Back
             </button>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-4">
               Order {order.order_number}
               <OrderStatus status={order.status} />
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-2">Placed on {date}</p>
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mt-2">Placed on {date}</p>
           </div>
           
           <button 
             onClick={handlePrintInvoice}
-            className="flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-xl transition-colors font-medium"
+            className="flex items-center gap-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-nexus-border px-6 py-3 rounded-xl transition-colors font-medium"
           >
             <Download size={18} />
             Download Invoice
@@ -131,7 +131,7 @@ const OrderDetailsPage = () => {
         </div>
 
         {/* Timeline */}
-        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-8 mb-8 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-8 mb-8 border border-slate-200 dark:border-nexus-border shadow-sm">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Tracking</h3>
           <TrackingTimeline status={order.status} />
         </div>
@@ -139,7 +139,7 @@ const OrderDetailsPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Order Items */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-nexus-border shadow-sm">
               <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Items Ordered</h3>
               
               <div className="space-y-6">
@@ -150,8 +150,8 @@ const OrderDetailsPage = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-slate-900 dark:text-white truncate">{item.product_name}</h4>
-                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">SKU: {item.sku}</p>
-                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Qty: {item.quantity}</p>
+                      <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary mt-1">SKU: {item.sku}</p>
+                      <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary mt-1">Qty: {item.quantity}</p>
                     </div>
                     <div className="font-bold text-slate-900 dark:text-white text-right">
                       {formatCurrency(item.line_total)}
@@ -162,8 +162,8 @@ const OrderDetailsPage = () => {
             </div>
 
             {/* Financial Summary */}
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-sm">
-               <div className="space-y-4 text-slate-600 dark:text-slate-300">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-nexus-border shadow-sm">
+               <div className="space-y-4 text-slate-600 dark:text-nexus-textSecondary">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span className="font-semibold">{formatCurrency(order.subtotal)}</span>
@@ -189,24 +189,24 @@ const OrderDetailsPage = () => {
 
           {/* Sidebar */}
           <div className="space-y-8">
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-200 dark:border-nexus-border shadow-sm">
               <div className="flex items-center gap-3 mb-4 text-slate-900 dark:text-white">
                 <MapPin className="text-orange-500" size={24} />
                 <h3 className="font-bold text-lg">Shipping Address</h3>
               </div>
-              <div className="text-slate-600 dark:text-slate-400 space-y-1">
+              <div className="text-slate-600 dark:text-nexus-textSecondary space-y-1">
                 <p className="font-semibold text-slate-900 dark:text-white">{order.shippingName || order.shipping_name}</p>
                 <p>{order.shippingAddress || order.shipping_address || order.shipping_addr}</p>
                 <p>{order.shippingPhone || order.shipping_phone}</p>
               </div>
             </div>
 
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 border border-slate-200 dark:border-nexus-border shadow-sm">
               <div className="flex items-center gap-3 mb-4 text-slate-900 dark:text-white">
                 <CreditCard className="text-orange-500" size={24} />
                 <h3 className="font-bold text-lg">Payment Method</h3>
               </div>
-              <div className="text-slate-600 dark:text-slate-400 space-y-2">
+              <div className="text-slate-600 dark:text-nexus-textSecondary space-y-2">
                 <p className="font-semibold text-slate-900 dark:text-white uppercase">
                   ONLINE PAYMENT
                 </p>
@@ -220,21 +220,21 @@ const OrderDetailsPage = () => {
                 </p>
 
                 {order.payment_status !== 'paid' && (
-                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-nexus-border">
                     <button 
                       onClick={() => navigate('/checkout')}
                       className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-colors"
                     >
                       Pay Now
                     </button>
-                    <p className="text-xs text-slate-500 mt-2 text-center">
+                    <p className="text-xs text-nexus-textSecondary mt-2 text-center">
                       * You will be redirected to checkout to complete payment.
                     </p>
                   </div>
                 )}
 
                 {order.payment_status === 'paid' && (
-                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-nexus-border">
                     <button 
                       onClick={() => {
                         const reason = prompt("Please enter a reason for your refund request:");

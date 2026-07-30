@@ -24,7 +24,7 @@ const WishlistPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center gap-4 mb-10">
           <Heart className="text-orange-500" size={36} />
@@ -36,10 +36,10 @@ const WishlistPage = () => {
             <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : wishlistItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-3xl border border-slate-200 dark:border-slate-700">
-            <Heart size={80} className="text-slate-300 dark:text-slate-600 mb-6" />
+          <div className="flex flex-col items-center justify-center py-20 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-3xl border border-slate-200 dark:border-nexus-border">
+            <Heart size={80} className="text-nexus-textSecondary dark:text-slate-600 mb-6" />
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Wishlist is empty</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-md text-center">
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-8 max-w-md text-center">
               Save items you love to your wishlist and they will show up here.
             </p>
             <Link to="/products" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 px-10 rounded-xl transition-colors shadow-lg shadow-orange-500/30">
@@ -56,7 +56,7 @@ const WishlistPage = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   key={item.product_id}
-                  className="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
+                  className="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-nexus-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
                 >
                   <div className="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-700">
                     <SmartImage 
@@ -67,7 +67,7 @@ const WishlistPage = () => {
                     />
                     <button 
                       onClick={() => removeFromWishlist(item.product_id)}
-                      className="absolute top-4 right-4 w-10 h-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-white dark:hover:bg-slate-800 transition-colors z-10"
+                      className="absolute top-4 right-4 w-10 h-10 bg-white/80 dark:bg-nexus-surface/80 backdrop-blur-md rounded-full flex items-center justify-center text-nexus-textSecondary hover:text-red-500 hover:bg-white dark:hover:bg-slate-800 transition-colors z-10"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -85,7 +85,7 @@ const WishlistPage = () => {
                     
                     <button 
                       onClick={() => handleAddToCart(item.product_id)}
-                      className="w-full flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-700 hover:bg-orange-500 dark:hover:bg-orange-500 text-white font-semibold py-3 rounded-xl transition-colors"
+                      className="w-full flex items-center justify-center gap-2 bg-nexus-surface dark:bg-slate-700 hover:bg-orange-500 dark:hover:bg-orange-500 text-white font-semibold py-3 rounded-xl transition-colors"
                     >
                       <ShoppingCart size={18} />
                       Move to Cart

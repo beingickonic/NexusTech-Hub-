@@ -43,22 +43,22 @@ const AdminRefundsPage = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Refund Management</h1>
-          <p className="text-slate-500 dark:text-slate-400">Review and process customer refund requests</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Review and process customer refund requests</p>
         </div>
         <button 
           onClick={fetchRefunds}
-          className="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm"
+          className="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border px-4 py-2 rounded-lg text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm"
         >
           <RefreshCw size={16} className={loading ? "animate-spin" : ""} /> Refresh
         </button>
       </div>
 
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-slate-200 dark:border-nexus-border flex flex-col sm:flex-row justify-between items-center gap-4">
           <select 
             value={filter} 
             onChange={(e) => setFilter(e.target.value)}
-            className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-500 dark:text-white"
+            className="bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-500 dark:text-white"
           >
             <option value="all">All</option>
             <option value="pending">Pending</option>
@@ -71,23 +71,23 @@ const AdminRefundsPage = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-700">
-                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Order</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Customer</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Amount</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Reason</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+              <tr className="bg-slate-50 dark:bg-nexus-surface/50 border-b border-slate-200 dark:border-nexus-border">
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider">Order</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider">Customer</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider">Amount</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider">Reason</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider">Status</th>
+                <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
               {loading ? (
                 <tr>
-                  <td colSpan="6" className="p-8 text-center text-slate-500">Loading refunds...</td>
+                  <td colSpan="6" className="p-8 text-center text-nexus-textSecondary">Loading refunds...</td>
                 </tr>
               ) : filteredRefunds.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="p-8 text-center text-slate-500">No refund requests found.</td>
+                  <td colSpan="6" className="p-8 text-center text-nexus-textSecondary">No refund requests found.</td>
                 </tr>
               ) : (
                 filteredRefunds.map((refund) => (
@@ -95,13 +95,13 @@ const AdminRefundsPage = () => {
                     <td className="p-4 text-sm font-medium text-slate-900 dark:text-white">
                       #{refund.order_id}
                     </td>
-                    <td className="p-4 text-sm text-slate-600 dark:text-slate-400">
+                    <td className="p-4 text-sm text-slate-600 dark:text-nexus-textSecondary">
                       {refund.profiles?.full_name || 'Guest'}
                     </td>
                     <td className="p-4 text-sm font-bold text-slate-900 dark:text-white">
                       KES {refund.amount?.toLocaleString() || 0}
                     </td>
-                    <td className="p-4 text-sm text-slate-600 dark:text-slate-400 max-w-[200px] truncate">
+                    <td className="p-4 text-sm text-slate-600 dark:text-nexus-textSecondary max-w-[200px] truncate">
                       {refund.reason || 'N/A'}
                     </td>
                     <td className="p-4">

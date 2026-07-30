@@ -8,7 +8,7 @@ const OrderStatus = ({ status }) => {
     shipped: { color: 'bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400', icon: Truck, label: 'Shipped' },
     delivered: { color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400', icon: CheckCircle, label: 'Delivered' },
     cancelled: { color: 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400', icon: XCircle, label: 'Cancelled' },
-    refunded: { color: 'bg-slate-100 text-slate-700 dark:bg-slate-500/20 dark:text-slate-400', icon: RefreshCw, label: 'Refunded' },
+    refunded: { color: 'bg-slate-100 text-slate-700 dark:bg-slate-500/20 dark:text-nexus-textSecondary', icon: RefreshCw, label: 'Refunded' },
   };
 
   const config = configs[status] || configs.pending;

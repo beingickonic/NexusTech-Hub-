@@ -56,14 +56,14 @@ const ReviewsPage = () => {
     <div className="animate-fade-in">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Product Reviews</h1>
-        <p className="text-slate-500 dark:text-slate-400">Manage and moderate customer reviews across all products.</p>
+        <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Manage and moderate customer reviews across all products.</p>
       </div>
 
       {reviews.length === 0 ? (
-        <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
-          <MessageSquare size={48} className="text-slate-300 dark:text-slate-600 mx-auto mb-4" />
+        <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm">
+          <MessageSquare size={48} className="text-nexus-textSecondary dark:text-slate-600 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No Reviews Yet</h2>
-          <p className="text-slate-500 dark:text-slate-400">Customers haven't submitted any reviews.</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Customers haven't submitted any reviews.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -73,7 +73,7 @@ const ReviewsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className={`bg-white dark:bg-slate-800 rounded-2xl border ${review.approved ? 'border-slate-200 dark:border-slate-700' : 'border-amber-300 dark:border-amber-500/30'} shadow-sm p-6 relative overflow-hidden`}
+              className={`bg-white dark:bg-slate-800 rounded-2xl border ${review.approved ? 'border-slate-200 dark:border-nexus-border' : 'border-amber-300 dark:border-amber-500/30'} shadow-sm p-6 relative overflow-hidden`}
             >
               {!review.approved && (
                 <div className="absolute top-0 right-0 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-bold px-3 py-1 rounded-bl-xl border-l border-b border-amber-200 dark:border-amber-800/30 flex items-center gap-1">
@@ -88,7 +88,7 @@ const ReviewsPage = () => {
                   </h3>
                   <div className="flex items-center gap-1 mt-1">
                     {[1, 2, 3, 4, 5].map(star => (
-                      <Star key={star} size={12} className={star <= review.rating ? 'text-yellow-400' : 'text-slate-300 dark:text-slate-600'} fill={star <= review.rating ? 'currentColor' : 'none'} />
+                      <Star key={star} size={12} className={star <= review.rating ? 'text-yellow-400' : 'text-nexus-textSecondary dark:text-slate-600'} fill={star <= review.rating ? 'currentColor' : 'none'} />
                     ))}
                   </div>
                 </div>
@@ -96,10 +96,10 @@ const ReviewsPage = () => {
 
               <div className="mb-4">
                 {review.title && <h4 className="font-semibold text-slate-800 dark:text-slate-200 text-sm mb-1">{review.title}</h4>}
-                <p className="text-slate-600 dark:text-slate-400 text-sm italic line-clamp-3">"{review.body}"</p>
+                <p className="text-slate-600 dark:text-nexus-textSecondary text-sm italic line-clamp-3">"{review.body}"</p>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-500 mb-6 border-t border-slate-100 dark:border-slate-700/50 pt-4">
+              <div className="flex items-center justify-between text-xs text-nexus-textSecondary dark:text-nexus-textSecondary mb-6 border-t border-slate-100 dark:border-nexus-border/50 pt-4">
                 <span>By: {review.profiles?.full_name || 'Anonymous'}</span>
                 <span>{new Date(review.created_at).toLocaleDateString()}</span>
               </div>

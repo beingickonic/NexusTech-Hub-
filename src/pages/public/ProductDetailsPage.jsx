@@ -57,7 +57,7 @@ const ProductDetailsPage = () => {
     return (
       <div className="py-32 flex flex-col items-center justify-center min-h-[60vh] bg-[#F8FAFC] dark:bg-dark-bg">
         <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin mb-4"></div>
-        <p className="text-slate-500 dark:text-gray-400 font-medium">Loading product details...</p>
+        <p className="text-nexus-textSecondary dark:text-gray-400 font-medium">Loading product details...</p>
       </div>
     );
   }
@@ -66,7 +66,7 @@ const ProductDetailsPage = () => {
     return (
       <div className="py-32 flex flex-col items-center justify-center min-h-[60vh] bg-[#F8FAFC] dark:bg-dark-bg">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Oops!</h2>
-        <p className="text-slate-500 dark:text-gray-400 mb-6">{error || "Product not found"}</p>
+        <p className="text-nexus-textSecondary dark:text-gray-400 mb-6">{error || "Product not found"}</p>
         <Link to="/products" className="px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-orange-600 transition-colors">
           Browse All Products
         </Link>
@@ -79,11 +79,11 @@ const ProductDetailsPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb */}
-        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 dark:text-gray-400 mb-8">
+        <div className="flex flex-wrap items-center gap-2 text-sm text-nexus-textSecondary dark:text-gray-400 mb-8">
           <Link to="/" className="hover:text-primary transition-colors whitespace-nowrap">Home</Link>
-          <span className="text-slate-300 dark:text-slate-600">/</span>
+          <span className="text-nexus-textSecondary dark:text-slate-600">/</span>
           <Link to="/products" className="hover:text-primary transition-colors whitespace-nowrap">Products</Link>
-          <span className="text-slate-300 dark:text-slate-600">/</span>
+          <span className="text-nexus-textSecondary dark:text-slate-600">/</span>
           <span className="text-slate-900 dark:text-white font-medium break-words max-w-full">{product.title}</span>
         </div>
 
@@ -95,7 +95,7 @@ const ProductDetailsPage = () => {
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="aspect-square bg-white dark:bg-dark-surface rounded-3xl overflow-hidden flex items-center justify-center p-8 border border-slate-200 dark:border-white/10 shadow-sm relative group"
+              className="aspect-square bg-white dark:bg-dark-surface rounded-3xl overflow-hidden flex items-center justify-center p-8 border border-slate-200 dark:border-nexus-border shadow-sm relative group"
             >
               {(() => {
                 const rawImage = product.image_url || product.image;
@@ -111,7 +111,7 @@ const ProductDetailsPage = () => {
                 );
               })()}
               {product.isSale && (
-                <div className="absolute top-4 left-4 bg-[#FF724C] text-white text-xs font-bold px-3 py-1 rounded-full shadow-glow">
+                <div className="absolute top-4 left-4 bg-nexus-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-glow">
                   SALE
                 </div>
               )}
@@ -137,7 +137,7 @@ const ProductDetailsPage = () => {
                 <Star size={18} fill="currentColor" />
                 <Star size={18} fill="currentColor" className="opacity-50" />
               </div>
-              <span className="text-sm text-slate-500 dark:text-gray-400">({product.reviews} reviews)</span>
+              <span className="text-sm text-nexus-textSecondary dark:text-gray-400">({product.reviews} reviews)</span>
               <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-gray-600"></span>
               <span className={`text-sm font-medium ${product.availability ? 'text-green-500' : 'text-red-500'}`}>
                 {product.availability ? 'In Stock' : 'Out of Stock'}
@@ -147,7 +147,7 @@ const ProductDetailsPage = () => {
             <div className="flex items-end gap-4 mb-8">
               <span className="text-4xl font-bold text-primary">{formatCurrency(product.price)}</span>
               {product.oldPrice && (
-                <span className="text-xl text-slate-400 line-through mb-1">{formatCurrency(product.oldPrice)}</span>
+                <span className="text-xl text-nexus-textSecondary line-through mb-1">{formatCurrency(product.oldPrice)}</span>
               )}
             </div>
 
@@ -157,15 +157,15 @@ const ProductDetailsPage = () => {
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
-              <div className="flex items-center border border-slate-200 dark:border-white/10 rounded-xl bg-white dark:bg-dark-surface overflow-hidden self-start">
+              <div className="flex items-center border border-slate-200 dark:border-nexus-border rounded-xl bg-white dark:bg-dark-surface overflow-hidden self-start">
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 py-3 text-slate-500 hover:text-primary transition-colors hover:bg-slate-50 dark:hover:bg-white/5"
+                  className="px-4 py-3 text-nexus-textSecondary hover:text-primary transition-colors hover:bg-slate-50 dark:hover:bg-white/5"
                 >-</button>
                 <span className="w-12 text-center font-semibold text-slate-900 dark:text-white">{quantity}</span>
                 <button 
                   onClick={() => setQuantity(quantity + 1)}
-                  className="px-4 py-3 text-slate-500 hover:text-primary transition-colors hover:bg-slate-50 dark:hover:bg-white/5"
+                  className="px-4 py-3 text-nexus-textSecondary hover:text-primary transition-colors hover:bg-slate-50 dark:hover:bg-white/5"
                 >+</button>
               </div>
               <button 
@@ -185,7 +185,7 @@ const ProductDetailsPage = () => {
                 className={`p-3 border rounded-xl transition-colors self-start sm:self-auto ${
                   isWishlisted && isWishlisted(product.id) 
                     ? 'border-red-500 bg-red-50 text-red-500 dark:bg-red-500/10' 
-                    : 'border-slate-200 dark:border-white/10 bg-white dark:bg-dark-surface text-slate-600 dark:text-gray-300 hover:text-primary hover:border-primary'
+                    : 'border-slate-200 dark:border-nexus-border bg-white dark:bg-dark-surface text-slate-600 dark:text-gray-300 hover:text-primary hover:border-primary'
                 }`}
               >
                 <Heart size={22} fill={isWishlisted && isWishlisted(product.id) ? "currentColor" : "none"} />
@@ -193,7 +193,7 @@ const ProductDetailsPage = () => {
             </div>
 
             {/* Features/Badges */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-6 border-y border-slate-200 dark:border-white/10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-6 border-y border-slate-200 dark:border-nexus-border">
               <div className="flex items-center gap-3 text-sm text-slate-700 dark:text-gray-300">
                 <ShieldCheck className="text-primary" size={20} /> 1 Year Warranty
               </div>
@@ -205,7 +205,7 @@ const ProductDetailsPage = () => {
               </div>
             </div>
 
-            <div className="mt-6 text-sm text-slate-500 dark:text-gray-400">
+            <div className="mt-6 text-sm text-nexus-textSecondary dark:text-gray-400">
               <p>SKU: <span className="font-medium text-slate-900 dark:text-white">{product.sku}</span></p>
               <p className="mt-1">Category: <span className="font-medium text-slate-900 dark:text-white">{product.category}</span></p>
             </div>
@@ -214,12 +214,12 @@ const ProductDetailsPage = () => {
 
         {/* Tabs */}
         <div className="mb-20">
-          <div className="flex border-b border-slate-200 dark:border-white/10 mb-8 overflow-x-auto no-scrollbar">
+          <div className="flex border-b border-slate-200 dark:border-nexus-border mb-8 overflow-x-auto no-scrollbar">
             {['description', 'specifications', 'reviews'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`py-4 px-8 text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-colors relative ${activeTab === tab ? 'text-primary' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
+                className={`py-4 px-8 text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-colors relative ${activeTab === tab ? 'text-primary' : 'text-nexus-textSecondary hover:text-slate-900 dark:hover:text-white'}`}
               >
                 {tab}
                 {activeTab === tab && (

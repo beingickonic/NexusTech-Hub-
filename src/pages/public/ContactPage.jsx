@@ -80,7 +80,7 @@ const ContactPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-slate-500 dark:text-gray-400"
+            className="text-lg text-nexus-textSecondary dark:text-gray-400"
           >
             Have a question about a product? Need help with an order? We're here to help.
           </motion.p>
@@ -93,13 +93,13 @@ const ContactPage = () => {
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm"
+              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm"
             >
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <Mail size={24} />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Email Us</h3>
-              <p className="text-slate-500 dark:text-gray-400 mb-4">Our friendly team is here to help.</p>
+              <p className="text-nexus-textSecondary dark:text-gray-400 mb-4">Our friendly team is here to help.</p>
               <a href="mailto:muriithiderrick08@gmail.com" className="text-primary font-medium hover:underline">muriithiderrick08@gmail.com</a>
             </motion.div>
 
@@ -107,13 +107,13 @@ const ContactPage = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
-              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm"
+              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm"
             >
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <Phone size={24} />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Call Us</h3>
-              <p className="text-slate-500 dark:text-gray-400 mb-4">Mon-Fri from 8am to 5pm.</p>
+              <p className="text-nexus-textSecondary dark:text-gray-400 mb-4">Mon-Fri from 8am to 5pm.</p>
               <a href="tel:+254728097596" className="text-primary font-medium hover:underline">+254 728 097 596</a>
             </motion.div>
 
@@ -121,13 +121,13 @@ const ContactPage = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm"
+              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm"
             >
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <MapPin size={24} />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Visit Us</h3>
-              <p className="text-slate-500 dark:text-gray-400 mb-4">Visit our tech showroom.</p>
+              <p className="text-nexus-textSecondary dark:text-gray-400 mb-4">Visit our tech showroom.</p>
               <address className="not-italic text-slate-900 dark:text-white font-medium">
                 Meru, 6200
               </address>
@@ -138,7 +138,7 @@ const ContactPage = () => {
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 p-8 md:p-12 shadow-sm relative overflow-hidden"
+            className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border p-8 md:p-12 shadow-sm relative overflow-hidden"
           >
             {/* Success State */}
             {status === 'success' && (
@@ -147,7 +147,7 @@ const ContactPage = () => {
                   <CheckCircle size={40} />
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Message Sent!</h3>
-                <p className="text-slate-500 dark:text-gray-400 mb-6 max-w-sm">
+                <p className="text-nexus-textSecondary dark:text-gray-400 mb-6 max-w-sm">
                   Thank you for reaching out. Our team will review your message and get back to you within 24 hours.
                 </p>
                 <button
@@ -179,7 +179,7 @@ const ContactPage = () => {
                     type="text" id="name" name="name" required
                     value={formData.name} onChange={handleChange}
                     disabled={status === 'loading'}
-                    className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
+                    className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                     placeholder="Mary Ivy"
                   />
                 </div>
@@ -191,7 +191,7 @@ const ContactPage = () => {
                     type="email" id="email" name="email" required
                     value={formData.email} onChange={handleChange}
                     disabled={status === 'loading'}
-                    className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
+                    className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                     placeholder="Ivy@gmail.com"
                   />
                 </div>
@@ -204,7 +204,7 @@ const ContactPage = () => {
                   type="text" id="subject" name="subject" required
                   value={formData.subject} onChange={handleChange}
                   disabled={status === 'loading'}
-                  className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
+                  className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                   placeholder="How can we help you?"
                 />
               </div>
@@ -216,7 +216,7 @@ const ContactPage = () => {
                   id="message" name="message" rows="5" required
                   value={formData.message} onChange={handleChange}
                   disabled={status === 'loading'}
-                  className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none disabled:opacity-60"
+                  className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none disabled:opacity-60"
                   placeholder="Write your message here..."
                 />
               </div>

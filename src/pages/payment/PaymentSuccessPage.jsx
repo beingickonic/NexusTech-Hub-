@@ -25,12 +25,12 @@ const PaymentSuccessPage = () => {
   }, [paymentId]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-32 pb-20 px-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-nexus-surface pt-32 pb-20 px-4">
       <div className="max-w-2xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200 dark:border-slate-700 text-center"
+          className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200 dark:border-nexus-border text-center"
         >
           <motion.div 
             initial={{ scale: 0 }}
@@ -46,27 +46,27 @@ const PaymentSuccessPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
             Payment Successful!
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mb-8 text-lg">
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-8 text-lg">
             Thank you for your purchase. Your order has been placed and payment confirmed.
           </p>
 
           {loading ? (
             <div className="flex flex-col items-center justify-center py-6">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mb-4"></div>
-              <p className="text-slate-500 dark:text-slate-400">Generating digital receipt...</p>
+              <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Generating digital receipt...</p>
             </div>
           ) : receipt ? (
-            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-6 mb-8 text-left border border-slate-200 dark:border-slate-700">
-              <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
-                <span className="text-slate-500 dark:text-slate-400">Receipt Number</span>
+            <div className="bg-slate-50 dark:bg-nexus-surface/50 rounded-2xl p-6 mb-8 text-left border border-slate-200 dark:border-nexus-border">
+              <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200 dark:border-nexus-border">
+                <span className="text-nexus-textSecondary dark:text-nexus-textSecondary">Receipt Number</span>
                 <span className="font-semibold text-slate-900 dark:text-white">{receipt.mpesa_receipt || receipt.payment_id}</span>
               </div>
-              <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
-                <span className="text-slate-500 dark:text-slate-400">Amount Paid</span>
+              <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200 dark:border-nexus-border">
+                <span className="text-nexus-textSecondary dark:text-nexus-textSecondary">Amount Paid</span>
                 <span className="font-semibold text-slate-900 dark:text-white">Ksh {parseFloat(receipt.amount).toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 dark:text-slate-400">Payment Method</span>
+                <span className="text-nexus-textSecondary dark:text-nexus-textSecondary">Payment Method</span>
                 <span className="font-semibold text-slate-900 dark:text-white uppercase">{receipt.provider || 'ONLINE'}</span>
               </div>
             </div>
@@ -76,7 +76,7 @@ const PaymentSuccessPage = () => {
             {receipt && (
               <Link 
                 to={`/payment/receipt/${receipt.id}`}
-                className="px-8 py-3 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-white transition-colors"
+                className="px-8 py-3 bg-nexus-surface dark:bg-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-white transition-colors"
               >
                 View Full Receipt
               </Link>

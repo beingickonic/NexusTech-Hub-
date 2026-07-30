@@ -28,11 +28,11 @@ const ForgotPasswordPage = () => {
           <div className="space-y-2">
             <label className="block text-sm font-medium text-slate-700 dark:text-gray-300">Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-nexus-textSecondary" size={18} />
               <input 
                 type="email" required
                 value={email} onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl pl-11 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl pl-11 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                 placeholder="you@example.com"
               />
             </div>
@@ -56,12 +56,12 @@ const ForgotPasswordPage = () => {
             <CheckCircle size={32} />
           </div>
           <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Check your email</h3>
-          <p className="text-slate-500 dark:text-gray-400 mb-8">
+          <p className="text-nexus-textSecondary dark:text-gray-400 mb-8">
             We've sent a password reset link to <span className="font-medium text-slate-700 dark:text-gray-300">{email}</span>
           </p>
           <button 
             onClick={() => setIsSubmitted(false)}
-            className="w-full py-3.5 border border-slate-200 dark:border-white/10 rounded-xl font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+            className="w-full py-3.5 border border-slate-200 dark:border-nexus-border rounded-xl font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
           >
             Try another email
           </button>

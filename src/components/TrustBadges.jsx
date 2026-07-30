@@ -61,7 +61,7 @@ const TrustBadges = () => {
                 {badge.icon}
               </div>
               <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-0.5 sm:mb-1">{badge.title}</h3>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-gray-400">{badge.desc}</p>
+              <p className="text-xs sm:text-sm text-nexus-textSecondary dark:text-gray-400">{badge.desc}</p>
             </motion.div>
           ))}
         </motion.div>

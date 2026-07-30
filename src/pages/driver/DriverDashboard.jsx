@@ -54,7 +54,7 @@ const DriverDashboard = () => {
     fetchDriverData();
   }, [user]);
 
-  if (loading) return <div className="p-8 text-center text-slate-500">Loading...</div>;
+  if (loading) return <div className="p-8 text-center text-nexus-textSecondary">Loading...</div>;
 
   if (!driver) return (
     <div className="p-12 text-center bg-white dark:bg-dark-surface rounded-2xl border border-red-200 dark:border-red-900/50 text-red-600 dark:text-red-400">
@@ -114,16 +114,16 @@ const DriverDashboard = () => {
 
           <div className="space-y-4 mb-6">
             <div className="flex items-start gap-3 p-4 bg-slate-50 dark:bg-white/5 rounded-xl">
-              <MapPin className="text-slate-400 mt-0.5" />
+              <MapPin className="text-nexus-textSecondary mt-0.5" />
               <div>
-                <p className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Destination</p>
+                <p className="text-xs text-nexus-textSecondary uppercase font-bold tracking-wider mb-1">Destination</p>
                 <p className="font-semibold text-slate-900 dark:text-white">{activeDelivery.delivery_address}</p>
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-             <button className="flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
+             <button className="flex items-center justify-center gap-2 bg-nexus-surface dark:bg-white text-white dark:text-slate-900 py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
                <Navigation size={18} /> Navigate
              </button>
              <button className="flex items-center justify-center gap-2 bg-emerald-500 text-white py-3 rounded-xl font-bold text-sm hover:bg-emerald-600 transition-colors shadow-lg shadow-emerald-500/30">
@@ -132,12 +132,12 @@ const DriverDashboard = () => {
           </div>
         </motion.div>
       ) : (
-        <div className="bg-white dark:bg-dark-surface p-8 rounded-2xl border border-slate-200 dark:border-white/10 text-center">
+        <div className="bg-white dark:bg-dark-surface p-8 rounded-2xl border border-slate-200 dark:border-nexus-border text-center">
           <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
-             <Package className="text-slate-400" size={32} />
+             <Package className="text-nexus-textSecondary" size={32} />
           </div>
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">No active deliveries</h3>
-          <p className="text-slate-500 text-sm mb-6 max-w-sm mx-auto">You don't have any deliveries in transit right now. Check your pending deliveries list.</p>
+          <p className="text-nexus-textSecondary text-sm mb-6 max-w-sm mx-auto">You don't have any deliveries in transit right now. Check your pending deliveries list.</p>
           <Link to="/driver/deliveries" className="inline-flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-emerald-500/30">
             View All Deliveries
           </Link>

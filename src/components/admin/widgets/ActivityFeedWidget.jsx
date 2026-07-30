@@ -80,12 +80,12 @@ const ActivityFeedWidget = () => {
       case 'order': return <div className="p-2 bg-blue-500/10 text-blue-500 rounded-full border border-blue-500/20"><ShoppingCart size={16} /></div>;
       case 'user': return <div className="p-2 bg-purple-500/10 text-purple-500 rounded-full border border-purple-500/20"><UserPlus size={16} /></div>;
       case 'payment': return <div className="p-2 bg-success/10 text-success rounded-full border border-success/20"><CreditCard size={16} /></div>;
-      default: return <div className="p-2 bg-slate-500/10 text-slate-500 rounded-full border border-slate-500/20"><Star size={16} /></div>;
+      default: return <div className="p-2 bg-slate-500/10 text-nexus-textSecondary rounded-full border border-slate-500/20"><Star size={16} /></div>;
     }
   };
 
   return (
-    <div className="bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md p-4 md:p-6 rounded-xl md:rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm h-full max-h-[400px] md:max-h-[500px] overflow-hidden flex flex-col">
+    <div className="bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md p-4 md:p-6 rounded-xl md:rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm h-full max-h-[400px] md:max-h-[500px] overflow-hidden flex flex-col">
       <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white mb-4 md:mb-6">Live Activity Feed</h3>
       <div className="flex-1 overflow-y-auto pr-1 md:pr-2 space-y-4 md:space-y-6">
         {activities.map((activity, idx) => (
@@ -98,8 +98,8 @@ const ActivityFeedWidget = () => {
             </div>
             <div>
               <p className="text-sm font-semibold text-slate-900 dark:text-white">{activity.title}</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{activity.description}</p>
-              <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 mt-2 block">{getRelativeTime(activity.date)}</span>
+              <p className="text-xs text-nexus-textSecondary dark:text-nexus-textSecondary mt-1">{activity.description}</p>
+              <span className="text-[10px] font-medium text-nexus-textSecondary dark:text-nexus-textSecondary mt-2 block">{getRelativeTime(activity.date)}</span>
             </div>
           </div>
         ))}

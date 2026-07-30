@@ -7,9 +7,9 @@ import { getGreeting } from '../../../utils/helpers';
 import toast from 'react-hot-toast';
 
 const StatCard = ({ title, value, icon: Icon, trend, colorClass }) => (
-  <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-start justify-between">
+  <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex items-start justify-between">
     <div>
-      <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">{title}</p>
+      <p className="text-sm font-medium text-nexus-textSecondary dark:text-nexus-textSecondary mb-1">{title}</p>
       <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{value}</h3>
       {trend && (
         <p className="text-xs font-medium text-green-600 dark:text-green-400 mt-2 flex items-center gap-1">
@@ -67,7 +67,7 @@ const OfficeDashboardPage = () => {
           <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
             {getGreeting(user?.full_name?.split(' ')[0] || user?.email?.split('@')[0] || 'Admin')}
           </h1>
-          <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 font-medium">
+          <p className="text-sm md:text-base text-nexus-textSecondary dark:text-nexus-textSecondary font-medium">
             Here's your office administration overview for today.
           </p>
         </div>
@@ -117,7 +117,7 @@ const OfficeDashboardPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Main Panel */}
-        <div className="lg:col-span-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+        <div className="lg:col-span-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border p-6 shadow-sm">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Recent Announcements</h3>
           <div className="space-y-4">
             <div className="p-4 rounded-xl bg-orange-50 dark:bg-orange-500/10 border border-orange-100 dark:border-orange-500/20">
@@ -127,30 +127,30 @@ const OfficeDashboardPage = () => {
               </div>
               <p className="text-sm text-orange-700/80 dark:text-orange-300/80">Please ensure all Q3 reports are submitted to your managers by Friday. The all-hands meeting is scheduled for next Monday.</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-nexus-surface/50 border border-slate-100 dark:border-nexus-border">
               <h4 className="font-semibold text-slate-900 dark:text-white mb-1">Office Maintenance</h4>
-              <p className="text-sm text-slate-500 dark:text-slate-400">The HVAC system on the 3rd floor will be undergoing maintenance this weekend.</p>
+              <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">The HVAC system on the 3rd floor will be undergoing maintenance this weekend.</p>
             </div>
           </div>
         </div>
 
         {/* Side Panel */}
-        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border p-6 shadow-sm">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <button onClick={() => toast('Opening task modal...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-800 transition-colors text-left text-sm font-medium text-slate-700 dark:text-slate-300">
+            <button onClick={() => toast('Opening task modal...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-nexus-surface/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-nexus-border transition-colors text-left text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">
               <div className="p-2 bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-lg">
                 <CheckSquare size={16} />
               </div>
               Create New Task
             </button>
-            <button onClick={() => toast('Opening schedule modal...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-800 transition-colors text-left text-sm font-medium text-slate-700 dark:text-slate-300">
+            <button onClick={() => toast('Opening schedule modal...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-nexus-surface/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-nexus-border transition-colors text-left text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">
               <div className="p-2 bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded-lg">
                 <Calendar size={16} />
               </div>
               Schedule Meeting
             </button>
-            <button onClick={() => toast('Opening document upload...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-800 transition-colors text-left text-sm font-medium text-slate-700 dark:text-slate-300">
+            <button onClick={() => toast('Opening document upload...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-nexus-surface/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-nexus-border transition-colors text-left text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">
               <div className="p-2 bg-orange-100 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 rounded-lg">
                 <FolderOpen size={16} />
               </div>

@@ -74,8 +74,8 @@ const PaymentLoaderPage = () => {
   }, [checkoutRequestId, navigate]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-700 text-center">
+    <div className="min-h-screen bg-slate-50 dark:bg-nexus-surface flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-nexus-border text-center">
         
         {status === 'processing' && (
           <motion.div 
@@ -85,7 +85,7 @@ const PaymentLoaderPage = () => {
           >
             <div className="relative w-24 h-24 mb-6">
               <motion.div 
-                className="absolute inset-0 rounded-full border-4 border-slate-100 dark:border-slate-700"
+                className="absolute inset-0 rounded-full border-4 border-slate-100 dark:border-nexus-border"
               />
               <motion.div 
                 className="absolute inset-0 rounded-full border-4 border-orange-500 border-t-transparent"
@@ -98,7 +98,7 @@ const PaymentLoaderPage = () => {
             </div>
             
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Awaiting Payment</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-6 leading-relaxed">
               Please check your phone. An M-Pesa prompt has been sent to your device. Enter your PIN to complete the transaction.
             </p>
             
@@ -109,7 +109,7 @@ const PaymentLoaderPage = () => {
                 animate={{ width: `${(attempts / 30) * 100}%` }}
               />
             </div>
-            <p className="text-xs text-slate-400">Time remaining: {60 - (attempts * 2)}s</p>
+            <p className="text-xs text-nexus-textSecondary">Time remaining: {60 - (attempts * 2)}s</p>
           </motion.div>
         )}
 
@@ -128,7 +128,7 @@ const PaymentLoaderPage = () => {
               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
             </motion.div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Payment Successful!</h2>
-            <p className="text-slate-500 dark:text-slate-400">Generating your receipt...</p>
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Generating your receipt...</p>
           </motion.div>
         )}
 
@@ -148,10 +148,10 @@ const PaymentLoaderPage = () => {
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               {status === 'timeout' ? 'Payment Timeout' : 'Payment Failed'}
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-6">
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-6">
               We couldn't confirm your payment. You can try again or check your M-Pesa balance.
             </p>
-            <button onClick={() => navigate('/orders')} className="w-full py-3 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl font-bold transition-colors">
+            <button onClick={() => navigate('/orders')} className="w-full py-3 bg-nexus-surface dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl font-bold transition-colors">
               Go to My Orders
             </button>
           </motion.div>

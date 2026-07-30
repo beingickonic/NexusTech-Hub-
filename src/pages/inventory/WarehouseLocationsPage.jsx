@@ -142,7 +142,7 @@ const WarehouseLocationsPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Warehouse Locations</h1>
-          <p className="text-slate-500 text-sm mt-1">Manage multiple warehouses and capacity</p>
+          <p className="text-nexus-textSecondary text-sm mt-1">Manage multiple warehouses and capacity</p>
         </div>
         <button 
           onClick={() => openModal()}
@@ -155,7 +155,7 @@ const WarehouseLocationsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
           [...Array(3)].map((_, i) => (
-            <div key={i} className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm animate-pulse">
+            <div key={i} className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm animate-pulse">
               <div className="h-6 w-32 bg-slate-100 dark:bg-white/5 rounded mb-4"></div>
               <div className="h-4 w-48 bg-slate-100 dark:bg-white/5 rounded mb-6"></div>
               <div className="h-2 w-full bg-slate-100 dark:bg-white/5 rounded-full mb-2"></div>
@@ -168,12 +168,12 @@ const WarehouseLocationsPage = () => {
               key={loc.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col group hover:border-primary/40 dark:hover:border-primary/30 transition-colors"
+              className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex flex-col group hover:border-primary/40 dark:hover:border-primary/30 transition-colors"
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-primary transition-colors">{loc.name}</h3>
-                  <div className="flex items-center gap-1.5 text-slate-500 text-sm mt-1">
+                  <div className="flex items-center gap-1.5 text-nexus-textSecondary text-sm mt-1">
                     <MapPin size={14} /> {loc.location}
                   </div>
                 </div>
@@ -186,7 +186,7 @@ const WarehouseLocationsPage = () => {
               
               <div className="mt-4 flex-1">
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-slate-500 font-medium">Capacity Utilization</span>
+                  <span className="text-nexus-textSecondary font-medium">Capacity Utilization</span>
                   <span className="text-slate-900 dark:text-white font-bold">{Math.round((loc.current / loc.capacity) * 100)}%</span>
                 </div>
                 <div className="w-full h-2.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
@@ -198,14 +198,14 @@ const WarehouseLocationsPage = () => {
                     style={{ width: `${(loc.current / loc.capacity) * 100}%` }}
                   ></div>
                 </div>
-                <div className="flex justify-between text-xs text-slate-500 mt-2">
+                <div className="flex justify-between text-xs text-nexus-textSecondary mt-2">
                   <span>{loc.current.toLocaleString()} used</span>
                   <span>{loc.capacity.toLocaleString()} total</span>
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-nexus-border flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-nexus-textSecondary">
                   <Users size={16} /> {loc.manager}
                 </div>
                 <div className="flex items-center gap-3">
@@ -220,10 +220,10 @@ const WarehouseLocationsPage = () => {
             </motion.div>
           ))
         ) : (
-          <div className="col-span-1 md:col-span-2 lg:col-span-3 p-12 text-center bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col items-center justify-center">
-            <Package size={48} className="text-slate-300 dark:text-slate-600 mb-4" />
+          <div className="col-span-1 md:col-span-2 lg:col-span-3 p-12 text-center bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex flex-col items-center justify-center">
+            <Package size={48} className="text-nexus-textSecondary dark:text-slate-600 mb-4" />
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">No Warehouses Found</h3>
-            <p className="text-slate-500 text-sm max-w-sm mx-auto">You haven't added any warehouse locations yet. Click "Add Warehouse" to get started.</p>
+            <p className="text-nexus-textSecondary text-sm max-w-sm mx-auto">You haven't added any warehouse locations yet. Click "Add Warehouse" to get started.</p>
           </div>
         )}
       </div>
@@ -236,7 +236,7 @@ const WarehouseLocationsPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-nexus-surface/60 backdrop-blur-sm"
               onClick={handleCloseModal}
             />
             
@@ -246,13 +246,13 @@ const WarehouseLocationsPage = () => {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-full max-w-lg bg-white dark:bg-dark-card rounded-2xl shadow-xl overflow-hidden"
             >
-              <div className="px-6 py-4 border-b border-slate-100 dark:border-white/10 flex items-center justify-between">
+              <div className="px-6 py-4 border-b border-slate-100 dark:border-nexus-border flex items-center justify-between">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   {editingWarehouse ? 'Edit Warehouse' : 'Add New Warehouse'}
                 </h3>
                 <button
                   onClick={handleCloseModal}
-                  className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-colors"
+                  className="p-2 text-nexus-textSecondary hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -261,7 +261,7 @@ const WarehouseLocationsPage = () => {
               <form onSubmit={handleSubmit} className="p-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
                       Warehouse Name *
                     </label>
                     <input
@@ -269,13 +269,13 @@ const WarehouseLocationsPage = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
                       placeholder="e.g. Main Distribution Center"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
                       Location / Address *
                     </label>
                     <input
@@ -283,14 +283,14 @@ const WarehouseLocationsPage = () => {
                       required
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
                       placeholder="e.g. London, UK"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
                         Max Capacity (Units) *
                       </label>
                       <input
@@ -299,18 +299,18 @@ const WarehouseLocationsPage = () => {
                          min="1"
                          value={formData.capacity}
                          onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
-                         className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                         className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
                          placeholder="50000"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
                         Status
                       </label>
                       <select
                         value={formData.status}
                         onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                        className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
                       >
                         <option value="active">Active</option>
                         <option value="maintenance">Maintenance</option>
@@ -320,14 +320,14 @@ const WarehouseLocationsPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
                       Manager Name
                     </label>
                     <input
                       type="text"
                       value={formData.manager_name}
                       onChange={(e) => setFormData({ ...formData, manager_name: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
                       placeholder="e.g. John Doe"
                     />
                   </div>
@@ -337,7 +337,7 @@ const WarehouseLocationsPage = () => {
                   <button
                     type="button"
                     onClick={handleCloseModal}
-                    className="px-5 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors"
+                    className="px-5 py-2.5 text-sm font-semibold text-slate-600 dark:text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors"
                   >
                     Cancel
                   </button>

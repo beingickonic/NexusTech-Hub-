@@ -17,10 +17,10 @@ const EmptyState = () => (
       <Heart size={36} className="text-rose-400/60" />
     </div>
     <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-2">Your wishlist is empty</h3>
-    <p className="text-slate-500 dark:text-gray-500 text-sm max-w-xs mb-6">Save products you love to find them later.</p>
+    <p className="text-nexus-textSecondary dark:text-gray-500 text-sm max-w-xs mb-6">Save products you love to find them later.</p>
     <Link
       to="/products"
-      className="px-6 py-2.5 rounded-xl bg-[#FF6B57] hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors"
+      className="px-6 py-2.5 rounded-xl bg-nexus-primary hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors"
     >
       Browse Products
     </Link>
@@ -41,7 +41,7 @@ const WishlistCard = ({ item, onRemove, onAddToCart }) => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      className="bg-white dark:bg-[#0C1220] border border-slate-200 dark:border-[#1F2937] rounded-2xl overflow-hidden hover:border-[#FF6B57]/30 transition-all duration-200 group"
+      className="bg-white dark:bg-nexus-bg border border-slate-200 dark:border-[#1F2937] rounded-2xl overflow-hidden hover:border-nexus-primary/30 transition-all duration-200 group"
     >
       {/* Product image */}
       <div className="relative aspect-square bg-white dark:bg-[#111827] overflow-hidden">
@@ -57,7 +57,7 @@ const WishlistCard = ({ item, onRemove, onAddToCart }) => {
           </div>
         )}
         {discount > 0 && (
-          <span className="absolute top-2 left-2 px-2 py-0.5 bg-[#FF6B57] text-slate-900 dark:text-white text-xs font-bold rounded-full">
+          <span className="absolute top-2 left-2 px-2 py-0.5 bg-nexus-primary text-slate-900 dark:text-white text-xs font-bold rounded-full">
             -{discount}%
           </span>
         )}
@@ -89,11 +89,11 @@ const WishlistCard = ({ item, onRemove, onAddToCart }) => {
       <div className="p-4">
         <p className="text-slate-900 dark:text-white text-sm font-semibold line-clamp-2 mb-2 leading-snug">{product.title}</p>
         <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-[#FF6B57] font-bold text-base">
+          <span className="text-nexus-primary font-bold text-base">
             KES {Number(product.price).toLocaleString()}
           </span>
           {product.old_price && (
-            <span className="text-slate-500 dark:text-gray-500 text-xs line-through">
+            <span className="text-nexus-textSecondary dark:text-gray-500 text-xs line-through">
               KES {Number(product.old_price).toLocaleString()}
             </span>
           )}
@@ -112,13 +112,13 @@ const WishlistCard = ({ item, onRemove, onAddToCart }) => {
           <button
             onClick={() => onAddToCart(product)}
             disabled={!product.availability || product.stock === 0}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-[#FF6B57] hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-xs font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-nexus-primary hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-xs font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ShoppingCart size={13} /> Add to Cart
           </button>
           <button
             onClick={() => onRemove(item.product_id)}
-            className="p-2 rounded-xl border border-slate-200 dark:border-[#1F2937] text-slate-500 dark:text-gray-500 hover:text-red-400 hover:border-red-500/30 transition-all"
+            className="p-2 rounded-xl border border-slate-200 dark:border-[#1F2937] text-nexus-textSecondary dark:text-gray-500 hover:text-red-400 hover:border-red-500/30 transition-all"
           >
             <Trash2 size={14} />
           </button>
@@ -178,10 +178,10 @@ const WishlistSection = () => {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Wish List</h1>
-          <p className="text-slate-500 dark:text-gray-400 text-sm mt-1">{wishlist.length} saved item{wishlist.length !== 1 ? 's' : ''}</p>
+          <p className="text-nexus-textSecondary dark:text-gray-400 text-sm mt-1">{wishlist.length} saved item{wishlist.length !== 1 ? 's' : ''}</p>
         </div>
         {wishlist.length > 0 && (
-          <Link to="/products" className="text-sm text-[#FF6B57] hover:text-[#ff5a2e] font-medium transition-colors">
+          <Link to="/products" className="text-sm text-nexus-primary hover:text-[#ff5a2e] font-medium transition-colors">
             + Add more
           </Link>
         )}
@@ -189,7 +189,7 @@ const WishlistSection = () => {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="w-10 h-10 border-4 border-[#FF6B57] border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-nexus-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : wishlist.length === 0 ? (
         <EmptyState />

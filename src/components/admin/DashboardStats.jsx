@@ -90,13 +90,13 @@ const DashboardStats = ({ stats }) => {
         <motion.div 
           key={index} 
           variants={item}
-          className={`${index === cards.length - 1 && cards.length % 2 !== 0 ? 'col-span-2 sm:col-span-1' : ''} bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md p-4 md:p-6 rounded-xl md:rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group`}
+          className={`${index === cards.length - 1 && cards.length % 2 !== 0 ? 'col-span-2 sm:col-span-1' : ''} bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md p-4 md:p-6 rounded-xl md:rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group`}
         >
           {/* Decorative background blur */}
           <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full ${card.bg} blur-2xl opacity-30 md:opacity-50 group-hover:opacity-100 transition-opacity`}></div>
           
           <div className="flex justify-between items-start mb-3 md:mb-4 relative z-10">
-            <h3 className="text-[10px] md:text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{card.title}</h3>
+            <h3 className="text-[10px] md:text-sm font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">{card.title}</h3>
             <div className={`p-1.5 md:p-2.5 rounded-lg md:rounded-xl border ${card.bg} ${card.color} ${card.border}`}>
               <card.icon size={16} className="md:w-5 md:h-5" />
             </div>
@@ -115,7 +115,7 @@ const DashboardStats = ({ stats }) => {
               <span className={`${
                 card.trend === 'up' ? 'text-success font-medium' :
                 card.trend === 'warning' ? 'text-warning font-medium' :
-                'text-slate-500 dark:text-slate-400 font-medium'
+                'text-nexus-textSecondary dark:text-nexus-textSecondary font-medium'
               } truncate`}>
                 {card.subtitle}
               </span>

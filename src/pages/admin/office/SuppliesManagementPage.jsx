@@ -46,7 +46,7 @@ const SuppliesManagementPage = () => {
   const columns = [
     { header: 'Item Name', accessor: 'item_name', render: (row) => <span className="font-semibold">{row.item_name}</span> },
     { header: 'Stock', accessor: 'current_stock', render: (row) => (
-      <span className={row.current_stock <= row.min_stock ? 'text-red-500 font-bold' : 'text-slate-700 dark:text-slate-300'}>
+      <span className={row.current_stock <= row.min_stock ? 'text-red-500 font-bold' : 'text-slate-700 dark:text-nexus-textSecondary'}>
         {row.current_stock} {row.unit}
       </span>
     )},

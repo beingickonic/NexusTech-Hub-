@@ -22,7 +22,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 // Module-level cache — survives component unmounts within the same browser session
 const globalLoadedUrls = new Set();
 
-const SmartImage = React.memo(({ src, alt, className, imageClassName, iconClassName = 'w-8 h-8 text-slate-400' }) => {
+const SmartImage = React.memo(({ src, alt, className, imageClassName, iconClassName = 'w-8 h-8 text-nexus-textSecondary' }) => {
   const [status, setStatus] = useState(() => {
     if (!src) return 'empty';
     if (globalLoadedUrls.has(src)) return 'success';
@@ -106,7 +106,7 @@ const SmartImage = React.memo(({ src, alt, className, imageClassName, iconClassN
             <circle cx="8.5" cy="8.5" r="1.5" />
             <polyline points="21 15 16 10 5 21" />
           </svg>
-          <span className="text-[10px] text-slate-400 dark:text-slate-500 text-center leading-tight mt-1">
+          <span className="text-[10px] text-nexus-textSecondary dark:text-nexus-textSecondary text-center leading-tight mt-1">
             {status === 'error' ? 'Image unavailable' : 'No image'}
           </span>
         </div>

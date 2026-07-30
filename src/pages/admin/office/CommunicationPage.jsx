@@ -73,7 +73,7 @@ const CommunicationPage = () => {
       <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Internal Communication</h1>
-          <p className="text-slate-500 dark:text-slate-400">Direct messages, department groups, and company announcements.</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Direct messages, department groups, and company announcements.</p>
         </div>
       </div>
 
@@ -86,50 +86,50 @@ const CommunicationPage = () => {
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none text-slate-900 dark:text-white shadow-sm"
+              className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none text-slate-900 dark:text-white shadow-sm"
             />
-            <Search size={18} className="absolute left-3 top-3 text-slate-400" />
+            <Search size={18} className="absolute left-3 top-3 text-nexus-textSecondary" />
           </div>
 
           <button 
             onClick={() => setActiveTab('direct')}
-            className={`flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'direct' ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 font-semibold shadow-sm border border-orange-100 dark:border-orange-500/20' : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm'}`}
+            className={`flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'direct' ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 font-semibold shadow-sm border border-orange-100 dark:border-orange-500/20' : 'bg-transparent text-slate-600 dark:text-nexus-textSecondary hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm'}`}
           >
             <MessageSquare size={18} /> Direct Messages
           </button>
           
           <button 
             onClick={() => setActiveTab('department')}
-            className={`flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'department' ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 font-semibold shadow-sm border border-orange-100 dark:border-orange-500/20' : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm'}`}
+            className={`flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'department' ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 font-semibold shadow-sm border border-orange-100 dark:border-orange-500/20' : 'bg-transparent text-slate-600 dark:text-nexus-textSecondary hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm'}`}
           >
             <Users size={18} /> Department Chat
           </button>
 
           <button 
             onClick={() => setActiveTab('announcements')}
-            className={`flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'announcements' ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 font-semibold shadow-sm border border-orange-100 dark:border-orange-500/20' : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm'}`}
+            className={`flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'announcements' ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 font-semibold shadow-sm border border-orange-100 dark:border-orange-500/20' : 'bg-transparent text-slate-600 dark:text-nexus-textSecondary hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm'}`}
           >
             <Megaphone size={18} /> Announcements
           </button>
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden relative">
+        <div className="flex-1 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex flex-col overflow-hidden relative">
           
           {isLoading && (
-            <div className="absolute inset-0 z-10 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="absolute inset-0 z-10 bg-white/50 dark:bg-nexus-surface/50 backdrop-blur-sm flex items-center justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
             </div>
           )}
 
           {/* Header */}
-          <div className="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/30">
+          <div className="p-4 border-b border-slate-200 dark:border-nexus-border flex justify-between items-center bg-slate-50/50 dark:bg-nexus-surface/30">
             <h2 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
               {activeTab === 'direct' ? <MessageSquare size={18} /> : activeTab === 'department' ? <Users size={18} /> : <Megaphone size={18} />}
               {activeTab === 'direct' ? 'Direct Messages' : activeTab === 'department' ? 'Department Chat' : 'Company Announcements'}
             </h2>
             <div className="flex gap-2">
-              <button className="p-2 text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-colors">
+              <button className="p-2 text-nexus-textSecondary hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-colors">
                 <Archive size={18} />
               </button>
             </div>
@@ -139,21 +139,21 @@ const CommunicationPage = () => {
           <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
             {activeTab === 'announcements' ? (
               filteredAnnouncements.length === 0 ? (
-                <div className="text-center text-slate-500 mt-10">No announcements found.</div>
+                <div className="text-center text-nexus-textSecondary mt-10">No announcements found.</div>
               ) : (
                 filteredAnnouncements.map(ann => (
-                  <div key={ann.id} className={`p-5 rounded-2xl border ${ann.is_pinned ? 'bg-orange-50 border-orange-200 dark:bg-orange-500/10 dark:border-orange-500/30' : 'bg-white border-slate-200 dark:bg-slate-900/50 dark:border-slate-700'} shadow-sm`}>
+                  <div key={ann.id} className={`p-5 rounded-2xl border ${ann.is_pinned ? 'bg-orange-50 border-orange-200 dark:bg-orange-500/10 dark:border-orange-500/30' : 'bg-white border-slate-200 dark:bg-nexus-surface/50 dark:border-nexus-border'} shadow-sm`}>
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex items-center gap-2">
                         {ann.is_pinned && <Pin size={16} className="text-orange-500" />}
                         <h3 className="font-bold text-slate-900 dark:text-white">{ann.title}</h3>
                       </div>
-                      <span className="text-xs text-slate-500 flex items-center gap-1">
+                      <span className="text-xs text-nexus-textSecondary flex items-center gap-1">
                         <Clock size={12} /> {new Date(ann.created_at).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{ann.content}</p>
-                    <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center gap-2 text-xs text-slate-500">
+                    <p className="text-sm text-slate-700 dark:text-nexus-textSecondary whitespace-pre-wrap">{ann.content}</p>
+                    <div className="mt-4 pt-4 border-t border-slate-100 dark:border-nexus-border flex items-center gap-2 text-xs text-nexus-textSecondary">
                       <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold">
                         {ann.created_by?.full_name?.charAt(0) || 'A'}
                       </div>
@@ -164,13 +164,13 @@ const CommunicationPage = () => {
               )
             ) : (
               filteredMessages.length === 0 ? (
-                <div className="text-center text-slate-500 mt-10">No messages found.</div>
+                <div className="text-center text-nexus-textSecondary mt-10">No messages found.</div>
               ) : (
                 filteredMessages.map(msg => {
                   const isMine = msg.sender_id === user?.id;
                   return (
                     <div key={msg.id} className={`flex flex-col ${isMine ? 'items-end' : 'items-start'}`}>
-                      {!isMine && <span className="text-xs text-slate-500 mb-1 ml-1">{msg.sender?.full_name || 'System'}</span>}
+                      {!isMine && <span className="text-xs text-nexus-textSecondary mb-1 ml-1">{msg.sender?.full_name || 'System'}</span>}
                       <div className={`px-4 py-2.5 rounded-2xl max-w-[80%] md:max-w-[70%] ${
                         isMine 
                           ? 'bg-orange-500 text-white rounded-br-sm' 
@@ -179,8 +179,8 @@ const CommunicationPage = () => {
                         <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                       </div>
                       <div className="flex items-center gap-1 mt-1 mr-1">
-                        <span className="text-[10px] text-slate-400">{new Date(msg.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                        {isMine && (msg.is_read ? <CheckCheck size={12} className="text-blue-500" /> : <Check size={12} className="text-slate-400" />)}
+                        <span className="text-[10px] text-nexus-textSecondary">{new Date(msg.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        {isMine && (msg.is_read ? <CheckCheck size={12} className="text-blue-500" /> : <Check size={12} className="text-nexus-textSecondary" />)}
                       </div>
                     </div>
                   );
@@ -190,9 +190,9 @@ const CommunicationPage = () => {
           </div>
 
           {/* Composer */}
-          <div className="p-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700">
-            <form onSubmit={handleSendMessage} className="flex gap-2 items-center bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 focus-within:border-orange-500/50 focus-within:ring-2 focus-within:ring-orange-500/20 transition-all">
-              <button type="button" className="p-2 text-slate-400 hover:text-orange-500 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+          <div className="p-4 bg-slate-50 dark:bg-nexus-surface/50 border-t border-slate-200 dark:border-nexus-border">
+            <form onSubmit={handleSendMessage} className="flex gap-2 items-center bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-nexus-border focus-within:border-orange-500/50 focus-within:ring-2 focus-within:ring-orange-500/20 transition-all">
+              <button type="button" className="p-2 text-nexus-textSecondary hover:text-orange-500 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors">
                 <Paperclip size={18} />
               </button>
               <input 
@@ -200,7 +200,7 @@ const CommunicationPage = () => {
                 placeholder={activeTab === 'announcements' ? "Draft an announcement..." : "Type a message..."}
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                className="flex-1 bg-transparent text-sm outline-none text-slate-900 dark:text-white placeholder:text-slate-400"
+                className="flex-1 bg-transparent text-sm outline-none text-slate-900 dark:text-white placeholder:text-nexus-textSecondary"
               />
               <button 
                 type="submit" 

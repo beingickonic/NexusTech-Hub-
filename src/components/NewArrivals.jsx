@@ -42,7 +42,7 @@ const NewArrivals = () => {
               <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
                 Next-Gen <br/> Gaming Gear
               </h3>
-              <p className="text-slate-500 dark:text-gray-400 mb-6 line-clamp-2">
+              <p className="text-nexus-textSecondary dark:text-gray-400 mb-6 line-clamp-2">
                 Elevate your play with the latest high-performance accessories.
               </p>
               <button className="flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all">
@@ -75,7 +75,7 @@ const NewArrivals = () => {
               <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
                 Trending <br/> Audio
               </h3>
-              <p className="text-slate-500 dark:text-gray-400 mb-6 line-clamp-2">
+              <p className="text-nexus-textSecondary dark:text-gray-400 mb-6 line-clamp-2">
                 Discover the headphones everyone is talking about.
               </p>
               <button className="flex items-center gap-2 text-slate-900 dark:text-white font-bold hover:gap-4 transition-all hover:text-primary dark:hover:text-primary">

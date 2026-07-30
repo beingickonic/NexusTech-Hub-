@@ -8,10 +8,10 @@ const CartSummary = () => {
   if (cartItems.length === 0) return null;
 
   return (
-    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-xl sticky top-24">
+    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-slate-200 dark:border-nexus-border rounded-3xl p-6 shadow-xl sticky top-24">
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">Order Summary</h2>
       
-      <div className="space-y-4 text-slate-600 dark:text-slate-300">
+      <div className="space-y-4 text-slate-600 dark:text-nexus-textSecondary">
         <div className="flex justify-between">
           <span>Subtotal</span>
           <span className="font-semibold">{formatCurrency(cartSummary.subtotal)}</span>

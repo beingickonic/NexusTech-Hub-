@@ -13,7 +13,7 @@ const CartItem = ({ item }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="flex gap-4 p-4 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-sm"
+      className="flex gap-4 p-4 rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-nexus-border shadow-sm"
     >
       <div className="w-24 h-24 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-700 flex-shrink-0">
         <img 
@@ -31,7 +31,7 @@ const CartItem = ({ item }) => {
           </div>
           <button 
             onClick={() => removeFromCart(item.product_id)}
-            className="text-slate-400 hover:text-red-500 transition-colors p-2"
+            className="text-nexus-textSecondary hover:text-red-500 transition-colors p-2"
           >
             <Trash2 size={18} />
           </button>
@@ -44,7 +44,7 @@ const CartItem = ({ item }) => {
             onIncrease={() => updateQuantity(item.product_id, item.quantity + 1)}
           />
           <div className="text-right">
-            <span className="text-sm text-slate-500 dark:text-slate-400 block">Subtotal</span>
+            <span className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary block">Subtotal</span>
             <span className="font-semibold text-slate-900 dark:text-white">
               {formatCurrency(item.subtotal)}
             </span>

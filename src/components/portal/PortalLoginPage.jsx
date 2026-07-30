@@ -64,10 +64,10 @@ const PortalLoginPage = ({ portalConfig }) => {
     }
   };
 
-  const inputCls = 'w-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 transition-all placeholder:text-slate-400 dark:placeholder:text-white/30';
+  const inputCls = 'w-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 transition-all placeholder:text-nexus-textSecondary dark:placeholder:text-white/30';
 
   return (
-    <div className="min-h-screen flex bg-slate-50 dark:bg-[#070B1A] overflow-hidden">
+    <div className="min-h-screen flex bg-slate-50 dark:bg-nexus-bg overflow-hidden">
 
       {/* ── Left panel: branding ── */}
       <motion.div
@@ -153,7 +153,7 @@ const PortalLoginPage = ({ portalConfig }) => {
       {/* ── Right panel: login form ── */}
       <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-12 relative">
         {/* Mobile back link */}
-        <Link to="/" className="lg:hidden absolute top-6 left-6 flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">
+        <Link to="/" className="lg:hidden absolute top-6 left-6 flex items-center gap-1.5 text-sm text-nexus-textSecondary hover:text-slate-900 dark:hover:text-white transition-colors">
           <ArrowLeft size={14} /> Home
         </Link>
 
@@ -176,7 +176,7 @@ const PortalLoginPage = ({ portalConfig }) => {
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
               Sign in to <span style={{ color: accentHex }}>{name}</span>
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-sm mt-1.5">
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary text-sm mt-1.5">
               Enter your credentials to access the {name} portal
             </p>
           </div>
@@ -195,7 +195,7 @@ const PortalLoginPage = ({ portalConfig }) => {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div className="space-y-1.5">
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <label className="block text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">
                 Work Email
               </label>
               <input
@@ -211,7 +211,7 @@ const PortalLoginPage = ({ portalConfig }) => {
 
             {/* Password */}
             <div className="space-y-1.5">
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <label className="block text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">
                 Password
               </label>
               <div className="relative">
@@ -227,7 +227,7 @@ const PortalLoginPage = ({ portalConfig }) => {
                 <button
                   type="button"
                   onClick={() => setShowPw(!showPw)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary hover:text-slate-600 dark:hover:text-white transition-colors"
                 >
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -251,14 +251,14 @@ const PortalLoginPage = ({ portalConfig }) => {
           </form>
 
           {/* Footer */}
-          <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/10 text-center">
-            <p className="text-xs text-slate-400">
+          <div className="mt-8 pt-6 border-t border-slate-200 dark:border-nexus-border text-center">
+            <p className="text-xs text-nexus-textSecondary">
               Not your portal?{' '}
               <Link to="/login" className="font-semibold hover:underline" style={{ color: accentHex }}>
                 Go to main login
               </Link>
             </p>
-            <p className="text-[11px] text-slate-300 dark:text-slate-600 mt-3">
+            <p className="text-[11px] text-nexus-textSecondary dark:text-slate-600 mt-3">
               NexusTech Hub Enterprise ERP · Secure Portal Access
             </p>
           </div>

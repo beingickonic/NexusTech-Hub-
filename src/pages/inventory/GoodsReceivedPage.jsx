@@ -84,7 +84,7 @@ const GoodsReceivedPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Goods Received Notes (GRN)</h1>
-          <p className="text-slate-500 text-sm mt-1">Inspect, accept, or reject incoming supplier deliveries</p>
+          <p className="text-nexus-textSecondary text-sm mt-1">Inspect, accept, or reject incoming supplier deliveries</p>
         </div>
         <div className="flex items-center gap-3">
           <button className="inline-flex items-center gap-2 bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25">
@@ -93,20 +93,20 @@ const GoodsReceivedPage = () => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden flex flex-col">
         {/* Toolbar */}
-        <div className="p-4 border-b border-slate-200 dark:border-white/10 flex flex-col sm:flex-row gap-4 items-center justify-between bg-slate-50/50 dark:bg-white/[0.02]">
+        <div className="p-4 border-b border-slate-200 dark:border-nexus-border flex flex-col sm:flex-row gap-4 items-center justify-between bg-slate-50/50 dark:bg-white/[0.02]">
           <div className="relative w-full sm:max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary" size={20} />
             <input 
               type="text" 
               placeholder="Search GRN, Supplier, or PO..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white placeholder-slate-400"
+              className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-nexus-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white placeholder-slate-400"
             />
           </div>
-          <button className="inline-flex items-center gap-2 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 px-4 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/10 transition-colors w-full sm:w-auto justify-center">
+          <button className="inline-flex items-center gap-2 bg-white dark:bg-white/5 border border-slate-200 dark:border-nexus-border px-4 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-white/10 transition-colors w-full sm:w-auto justify-center">
             <Filter size={18} /> Filters
           </button>
         </div>
@@ -115,11 +115,11 @@ const GoodsReceivedPage = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-white/[0.02] border-b border-slate-200 dark:border-white/10">
-                <th className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">GRN Details</th>
-                <th className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Supplier & PO</th>
-                <th className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+              <tr className="bg-slate-50 dark:bg-white/[0.02] border-b border-slate-200 dark:border-nexus-border">
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">GRN Details</th>
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Supplier & PO</th>
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Status</th>
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-white/10">
@@ -142,16 +142,16 @@ const GoodsReceivedPage = () => {
                   >
                     <td className="px-6 py-4">
                       <p className="font-bold text-slate-900 dark:text-white">{grn.id}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">{new Date(grn.date).toLocaleDateString()} • {grn.items} items</p>
+                      <p className="text-xs text-nexus-textSecondary mt-0.5">{new Date(grn.date).toLocaleDateString()} • {grn.items} items</p>
                     </td>
                     <td className="px-6 py-4">
                       <p className="font-medium text-slate-900 dark:text-white">{grn.supplier}</p>
-                      <p className="text-xs font-mono text-slate-500 mt-0.5">{grn.poReference}</p>
+                      <p className="text-xs font-mono text-nexus-textSecondary mt-0.5">{grn.poReference}</p>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col items-start gap-1">
                         {getStatusBadge(grn.status)}
-                        {grn.receivedBy && <span className="text-[10px] text-slate-400">By {grn.receivedBy}</span>}
+                        {grn.receivedBy && <span className="text-[10px] text-nexus-textSecondary">By {grn.receivedBy}</span>}
                       </div>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -166,7 +166,7 @@ const GoodsReceivedPage = () => {
                            <button className="px-3 py-1.5 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white rounded-lg text-sm font-medium transition-colors">Review</button>
                          </div>
                       ) : (
-                        <button className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/10 rounded-lg transition-colors">
+                        <button className="p-2 text-nexus-textSecondary hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/10 rounded-lg transition-colors">
                           <Eye size={18} />
                         </button>
                       )}
@@ -175,8 +175,8 @@ const GoodsReceivedPage = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="px-6 py-12 text-center text-slate-500">
-                    <ClipboardCheck size={48} className="mx-auto text-slate-300 dark:text-slate-600 mb-3" />
+                  <td colSpan="4" className="px-6 py-12 text-center text-nexus-textSecondary">
+                    <ClipboardCheck size={48} className="mx-auto text-nexus-textSecondary dark:text-slate-600 mb-3" />
                     <p className="text-base font-medium">No GRNs found</p>
                   </td>
                 </tr>

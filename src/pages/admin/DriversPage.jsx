@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 const STATUS_CONFIG = {
   available: { label: 'Available', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-100 dark:bg-emerald-500/15', dot: 'bg-emerald-500' },
   busy:      { label: 'On Delivery', color: 'text-blue-600 dark:text-blue-400',     bg: 'bg-blue-100 dark:bg-blue-500/15',     dot: 'bg-blue-500' },
-  offline:   { label: 'Offline',    color: 'text-slate-500 dark:text-slate-400',   bg: 'bg-slate-100 dark:bg-slate-800',      dot: 'bg-slate-400' },
+  offline:   { label: 'Offline',    color: 'text-nexus-textSecondary dark:text-nexus-textSecondary',   bg: 'bg-slate-100 dark:bg-slate-800',      dot: 'bg-slate-400' },
   suspended: { label: 'Suspended',  color: 'text-red-600 dark:text-red-400',       bg: 'bg-red-100 dark:bg-red-500/15',       dot: 'bg-red-500' }
 };
 
@@ -84,21 +84,21 @@ const DriverFormModal = ({ driver, onClose, onSaved }) => {
   });
 
   const inputCls = 'w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm border-0 outline-none focus:ring-2 focus:ring-orange-500/40 text-slate-900 dark:text-white placeholder-slate-400';
-  const labelCls = 'block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide';
+  const labelCls = 'block text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary mb-1.5 uppercase tracking-wide';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-        className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg border border-slate-200 dark:border-slate-700 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-5 border-b border-slate-200 dark:border-slate-700">
+        className="bg-white dark:bg-nexus-surface rounded-2xl shadow-2xl w-full max-w-lg border border-slate-200 dark:border-nexus-border max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-5 border-b border-slate-200 dark:border-nexus-border">
           <h2 className="font-bold text-slate-900 dark:text-white">{isEdit ? 'Edit Driver' : 'Add New Driver'}</h2>
-          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"><X size={18} /></button>
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-nexus-textSecondary"><X size={18} /></button>
         </div>
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
           {/* Photo */}
           <div className="flex justify-center">
             <label className="relative cursor-pointer group">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center text-white text-3xl font-bold overflow-hidden border-4 border-white dark:border-slate-800 shadow-lg">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center text-white text-3xl font-bold overflow-hidden border-4 border-white dark:border-nexus-border shadow-lg">
                 {photoPreview ? <img src={photoPreview} alt="" className="w-full h-full object-cover" /> : (form.full_name?.[0] || <Camera size={28} />)}
               </div>
               <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -153,7 +153,7 @@ const DriverFormModal = ({ driver, onClose, onSaved }) => {
             <textarea {...f('notes')} placeholder="Notes..." rows={2} className={inputCls + ' resize-none'} />
           </div>
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-600 dark:text-slate-400">Cancel</button>
+            <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-nexus-border text-sm font-medium text-slate-600 dark:text-nexus-textSecondary">Cancel</button>
             <button type="submit" disabled={loading} className="flex-1 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold disabled:opacity-50">
               {loading ? 'Saving...' : isEdit ? 'Update Driver' : 'Add Driver'}
             </button>
@@ -198,11 +198,11 @@ const DriverProfileDrawer = ({ driver, onClose, onStatusChange }) => {
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end bg-black/50 backdrop-blur-sm" onClick={onClose}>
       <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25 }}
         onClick={e => e.stopPropagation()}
-        className="bg-white dark:bg-slate-900 w-full sm:w-96 h-full overflow-y-auto border-l border-slate-200 dark:border-slate-700 shadow-2xl">
+        className="bg-white dark:bg-nexus-surface w-full sm:w-96 h-full overflow-y-auto border-l border-slate-200 dark:border-nexus-border shadow-2xl">
         {/* Header */}
-        <div className="sticky top-0 bg-white dark:bg-slate-900 z-10 p-5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+        <div className="sticky top-0 bg-white dark:bg-nexus-surface z-10 p-5 border-b border-slate-200 dark:border-nexus-border flex items-center justify-between">
           <h2 className="font-bold text-slate-900 dark:text-white">Driver Profile</h2>
-          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"><X size={18} /></button>
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-nexus-textSecondary"><X size={18} /></button>
         </div>
 
         <div className="p-5 space-y-5">
@@ -219,7 +219,7 @@ const DriverProfileDrawer = ({ driver, onClose, onStatusChange }) => {
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} size={14} fill={i < Math.round(driver.rating || 5) ? 'currentColor' : 'none'} />
               ))}
-              <span className="text-xs text-slate-500 ml-1">{(driver.rating || 5).toFixed(1)}</span>
+              <span className="text-xs text-nexus-textSecondary ml-1">{(driver.rating || 5).toFixed(1)}</span>
             </div>
           </div>
 
@@ -239,7 +239,7 @@ const DriverProfileDrawer = ({ driver, onClose, onStatusChange }) => {
                 <s.icon size={18} className={s.color} />
                 <div>
                   <p className="text-lg font-bold text-slate-900 dark:text-white">{s.value}</p>
-                  <p className="text-xs text-slate-500">{s.label}</p>
+                  <p className="text-xs text-nexus-textSecondary">{s.label}</p>
                 </div>
               </div>
             ))}
@@ -247,7 +247,7 @@ const DriverProfileDrawer = ({ driver, onClose, onStatusChange }) => {
 
           {/* Contact */}
           <div className="space-y-2">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Contact</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-nexus-textSecondary">Contact</h4>
             <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-3 space-y-2">
               {[
                 { icon: Phone, value: driver.phone },
@@ -255,8 +255,8 @@ const DriverProfileDrawer = ({ driver, onClose, onStatusChange }) => {
                 { icon: Car, value: `${driver.vehicle_type || ''} • ${driver.vehicle_number || ''}` },
                 { icon: Shield, value: driver.license_number ? `License: ${driver.license_number}` : null },
               ].filter(r => r.value).map((row, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                  <row.icon size={14} className="text-slate-400 flex-shrink-0" />
+                <div key={i} className="flex items-center gap-2 text-sm text-slate-700 dark:text-nexus-textSecondary">
+                  <row.icon size={14} className="text-nexus-textSecondary flex-shrink-0" />
                   {row.value}
                 </div>
               ))}
@@ -265,12 +265,12 @@ const DriverProfileDrawer = ({ driver, onClose, onStatusChange }) => {
 
           {/* Status Change */}
           <div className="space-y-2">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Change Status</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-nexus-textSecondary">Change Status</h4>
             <div className="grid grid-cols-2 gap-2">
               {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
                 <button key={key} onClick={() => handleStatusChange(key)} disabled={driver.status === key}
                   className={`flex items-center gap-2 p-2.5 rounded-xl text-xs font-semibold border transition-all disabled:opacity-40 ${
-                    driver.status === key ? `${cfg.bg} ${cfg.color} border-current` : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                    driver.status === key ? `${cfg.bg} ${cfg.color} border-current` : 'border-slate-200 dark:border-nexus-border text-slate-600 dark:text-nexus-textSecondary hover:border-slate-300'
                   }`}>
                   <span className={`w-2 h-2 rounded-full ${cfg.dot}`} />{cfg.label}
                 </button>
@@ -281,13 +281,13 @@ const DriverProfileDrawer = ({ driver, onClose, onStatusChange }) => {
           {/* Recent Deliveries */}
           {history.length > 0 && (
             <div className="space-y-2">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Recent Deliveries</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-nexus-textSecondary">Recent Deliveries</h4>
               <div className="space-y-2">
                 {history.slice(0, 5).map(h => (
                   <div key={h.id} className="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-xl px-3 py-2.5">
                     <div>
                       <p className="text-xs font-semibold text-slate-900 dark:text-white">{h.dispatch_number}</p>
-                      <p className="text-xs text-slate-500">{h.customer_name}</p>
+                      <p className="text-xs text-nexus-textSecondary">{h.customer_name}</p>
                     </div>
                     <StatusBadge status={h.status} />
                   </div>
@@ -342,10 +342,10 @@ const DriversPage = () => {
   };
 
   const statCards = [
-    { label: 'Total Drivers',  value: globalStats.total || 0,     icon: UserCheck, color: 'text-slate-700 dark:text-slate-300', bg: 'bg-slate-100 dark:bg-slate-800' },
+    { label: 'Total Drivers',  value: globalStats.total || 0,     icon: UserCheck, color: 'text-slate-700 dark:text-nexus-textSecondary', bg: 'bg-slate-100 dark:bg-slate-800' },
     { label: 'Available',      value: globalStats.available || 0,  icon: Wifi,      color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-100 dark:bg-emerald-500/20' },
     { label: 'On Delivery',    value: globalStats.busy || 0,       icon: Truck,     color: 'text-blue-600 dark:text-blue-400',   bg: 'bg-blue-100 dark:bg-blue-500/20' },
-    { label: 'Offline',        value: globalStats.offline || 0,    icon: WifiOff,   color: 'text-slate-500',                     bg: 'bg-slate-100 dark:bg-slate-800' },
+    { label: 'Offline',        value: globalStats.offline || 0,    icon: WifiOff,   color: 'text-nexus-textSecondary',                     bg: 'bg-slate-100 dark:bg-slate-800' },
     { label: 'Today\'s Trips', value: globalStats.today_deliveries || 0, icon: Package, color: 'text-orange-600 dark:text-orange-400', bg: 'bg-orange-100 dark:bg-orange-500/20' },
     { label: 'Suspended',      value: globalStats.suspended || 0,  icon: AlertTriangle, color: 'text-red-600 dark:text-red-400', bg: 'bg-red-100 dark:bg-red-500/20' },
   ];
@@ -356,10 +356,10 @@ const DriversPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">Driver Management</h1>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Manage your delivery fleet and track performance</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary text-sm mt-1">Manage your delivery fleet and track performance</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={fetchData} className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-orange-500 transition-colors">
+          <button onClick={fetchData} className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border text-slate-600 dark:text-nexus-textSecondary hover:text-orange-500 transition-colors">
             <RefreshCw size={16} />
           </button>
           <button onClick={() => setFormModal({})}
@@ -373,10 +373,10 @@ const DriversPage = () => {
       <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
         {statCards.map((s, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-            className="bg-white dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700/50 p-4">
+            className="bg-white dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-nexus-border/50 p-4">
             <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${s.bg} ${s.color}`}><s.icon size={18} /></div>
             <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{s.value}</p>
-            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">{s.label}</p>
+            <p className="text-xs font-medium text-nexus-textSecondary dark:text-nexus-textSecondary mt-0.5">{s.label}</p>
           </motion.div>
         ))}
       </div>
@@ -384,16 +384,16 @@ const DriversPage = () => {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-xs">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary" />
           <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }}
             placeholder="Search drivers..."
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:ring-2 focus:ring-orange-500/40" />
+            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border text-sm outline-none focus:ring-2 focus:ring-orange-500/40" />
         </div>
         <div className="flex gap-2 flex-wrap">
           {[['all','All'], ['available','Available'], ['busy','On Delivery'], ['offline','Offline'], ['suspended','Suspended']].map(([key, label]) => (
             <button key={key} onClick={() => { setStatusFilter(key); setPage(1); }}
               className={`px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                statusFilter === key ? 'bg-orange-500 text-white' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
+                statusFilter === key ? 'bg-orange-500 text-white' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border text-slate-600 dark:text-nexus-textSecondary'
               }`}>{label}</button>
           ))}
         </div>
@@ -403,7 +403,7 @@ const DriversPage = () => {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 animate-pulse">
+            <div key={i} className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-nexus-border p-5 animate-pulse">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-14 h-14 rounded-full bg-slate-200 dark:bg-slate-700" />
                 <div className="flex-1 space-y-2">
@@ -415,7 +415,7 @@ const DriversPage = () => {
           ))}
         </div>
       ) : drivers.length === 0 ? (
-        <div className="text-center py-20 text-slate-400">
+        <div className="text-center py-20 text-nexus-textSecondary">
           <UserCheck size={48} className="mx-auto mb-3 opacity-30" />
           <p className="font-medium">No drivers found</p>
         </div>
@@ -425,7 +425,7 @@ const DriversPage = () => {
             const cfg = STATUS_CONFIG[driver.status] || STATUS_CONFIG.offline;
             return (
               <motion.div key={driver.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
-                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 hover:shadow-lg dark:hover:shadow-slate-900/50 transition-all group">
+                className="bg-white dark:bg-nexus-surface rounded-2xl border border-slate-200 dark:border-nexus-border p-5 hover:shadow-lg dark:hover:shadow-slate-900/50 transition-all group">
                 {/* Avatar + Status */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="relative">
@@ -440,39 +440,39 @@ const DriversPage = () => {
                 {/* Info */}
                 <h3 className="font-bold text-slate-900 dark:text-white mb-1 truncate">{driver.full_name}</h3>
                 <div className="space-y-1 mb-4">
-                  <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                  <div className="flex items-center gap-1.5 text-xs text-nexus-textSecondary">
                     <Phone size={11} />{driver.phone}
                   </div>
                   {driver.vehicle_number && (
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                    <div className="flex items-center gap-1.5 text-xs text-nexus-textSecondary">
                       <Car size={11} />{driver.vehicle_type} · {driver.vehicle_number}
                     </div>
                   )}
                 </div>
 
                 {/* Rating + Deliveries */}
-                <div className="flex items-center justify-between mb-4 py-3 border-y border-slate-100 dark:border-slate-800">
+                <div className="flex items-center justify-between mb-4 py-3 border-y border-slate-100 dark:border-nexus-border">
                   <div className="flex items-center gap-1 text-amber-500">
                     {Array.from({ length: 5 }).map((_, j) => (
                       <Star key={j} size={11} fill={j < Math.round(driver.rating || 5) ? 'currentColor' : 'none'} />
                     ))}
-                    <span className="text-xs text-slate-400 ml-0.5">{(driver.rating || 5).toFixed(1)}</span>
+                    <span className="text-xs text-nexus-textSecondary ml-0.5">{(driver.rating || 5).toFixed(1)}</span>
                   </div>
-                  <span className="text-xs text-slate-500">{driver.total_deliveries || 0} trips</span>
+                  <span className="text-xs text-nexus-textSecondary">{driver.total_deliveries || 0} trips</span>
                 </div>
 
                 {/* Actions */}
                 <div className="flex items-center gap-2">
                   <button onClick={() => setProfileDrawer(driver)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-orange-500/10 hover:text-orange-600 transition-colors">
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-nexus-textSecondary hover:bg-orange-500/10 hover:text-orange-600 transition-colors">
                     <BarChart3 size={13} /> Profile
                   </button>
                   <button onClick={() => setFormModal(driver)} title="Edit"
-                    className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-500/10 transition-colors">
+                    className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-nexus-textSecondary hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-500/10 transition-colors">
                     <Edit3 size={14} />
                   </button>
                   <button onClick={() => handleDelete(driver)} title="Delete"
-                    className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 transition-colors">
+                    className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-nexus-textSecondary hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 transition-colors">
                     <Trash2 size={14} />
                   </button>
                 </div>
@@ -486,10 +486,10 @@ const DriversPage = () => {
       {meta.totalPages > 1 && (
         <div className="flex justify-center gap-2">
           <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={meta.page <= 1}
-            className="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 disabled:opacity-40">Prev</button>
-          <span className="px-4 py-2 text-sm text-slate-600 dark:text-slate-400">Page {meta.page} / {meta.totalPages}</span>
+            className="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border disabled:opacity-40">Prev</button>
+          <span className="px-4 py-2 text-sm text-slate-600 dark:text-nexus-textSecondary">Page {meta.page} / {meta.totalPages}</span>
           <button onClick={() => setPage(p => Math.min(meta.totalPages, p + 1))} disabled={meta.page >= meta.totalPages}
-            className="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 disabled:opacity-40">Next</button>
+            className="px-4 py-2 rounded-xl text-sm font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border disabled:opacity-40">Next</button>
         </div>
       )}
 

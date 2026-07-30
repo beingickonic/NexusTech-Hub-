@@ -141,15 +141,15 @@ const PurchaseOrdersPage = () => {
             placeholder="Search by PO number, product, or supplier..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-nexus-dark/50 border border-white/10 rounded-lg text-white focus:outline-none focus:border-nexus-blue"
+            className="w-full pl-10 pr-4 py-2 bg-nexus-dark/50 border border-nexus-border rounded-lg text-white focus:outline-none focus:border-nexus-blue"
           />
         </div>
       </div>
 
-      <div className="bg-nexus-dark/50 border border-white/10 rounded-xl overflow-hidden">
+      <div className="bg-nexus-dark/50 border border-nexus-border rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-white/5 border-b border-white/10">
+            <thead className="bg-white/5 border-b border-nexus-border">
               <tr>
                 <th className="p-4 text-gray-400 font-medium">PO Number</th>
                 <th className="p-4 text-gray-400 font-medium">Date</th>
@@ -198,8 +198,8 @@ const PurchaseOrdersPage = () => {
       <AnimatePresence>
         {showCreateModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} className="bg-nexus-dark border border-white/10 rounded-xl w-full max-w-xl overflow-hidden">
-              <div className="p-6 border-b border-white/10 flex justify-between items-center">
+            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} className="bg-nexus-dark border border-nexus-border rounded-xl w-full max-w-xl overflow-hidden">
+              <div className="p-6 border-b border-nexus-border flex justify-between items-center">
                 <h2 className="text-xl font-bold text-white">Create Purchase Order</h2>
                 <button onClick={() => setShowCreateModal(false)} className="text-gray-400 hover:text-white"><X className="w-6 h-6" /></button>
               </div>
@@ -210,48 +210,48 @@ const PurchaseOrdersPage = () => {
                     <select required value={formData.product_id} onChange={e => {
                       const prod = products.find(p => p.id == e.target.value);
                       setFormData({...formData, product_id: e.target.value, unit_cost: prod ? prod.price * 0.7 : 0}); // mock cost as 70% of price
-                    }} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white">
+                    }} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white">
                       <option value="">Select Product...</option>
                       {products.map(p => <option key={p.id} value={p.id}>{p.title}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm text-gray-400 mb-1">Supplier</label>
-                    <select required value={formData.supplier_id} onChange={e => setFormData({...formData, supplier_id: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white">
+                    <select required value={formData.supplier_id} onChange={e => setFormData({...formData, supplier_id: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white">
                       <option value="">Select Supplier...</option>
                       {suppliers.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm text-gray-400 mb-1">Warehouse</label>
-                    <select required value={formData.warehouse_id} onChange={e => setFormData({...formData, warehouse_id: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white">
+                    <select required value={formData.warehouse_id} onChange={e => setFormData({...formData, warehouse_id: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white">
                       <option value="">Select Warehouse...</option>
                       {warehouses.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm text-gray-400 mb-1">Expected Delivery</label>
-                    <input type="date" value={formData.expected_delivery} onChange={e => setFormData({...formData, expected_delivery: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                    <input type="date" value={formData.expected_delivery} onChange={e => setFormData({...formData, expected_delivery: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                   </div>
                   <div>
                     <label className="block text-sm text-gray-400 mb-1">Quantity</label>
-                    <input type="number" min="1" value={formData.quantity} onChange={e => setFormData({...formData, quantity: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                    <input type="number" min="1" value={formData.quantity} onChange={e => setFormData({...formData, quantity: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                   </div>
                   <div>
                     <label className="block text-sm text-gray-400 mb-1">Unit Cost (KES)</label>
-                    <input type="number" min="0" value={formData.unit_cost} onChange={e => setFormData({...formData, unit_cost: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white" />
+                    <input type="number" min="0" value={formData.unit_cost} onChange={e => setFormData({...formData, unit_cost: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm text-gray-400 mb-1">Notes</label>
-                  <textarea value={formData.notes} onChange={e => setFormData({...formData, notes: e.target.value})} className="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-white h-24" placeholder="Any special instructions..."></textarea>
+                  <textarea value={formData.notes} onChange={e => setFormData({...formData, notes: e.target.value})} className="w-full p-2 bg-white/5 border border-nexus-border rounded-lg text-white h-24" placeholder="Any special instructions..."></textarea>
                 </div>
                 <div className="p-4 bg-white/5 rounded-lg flex justify-between items-center">
                   <span className="text-gray-400">Total Cost</span>
                   <span className="text-xl font-bold text-white">KES {(Number(formData.quantity) * Number(formData.unit_cost)).toLocaleString()}</span>
                 </div>
               </div>
-              <div className="p-6 border-t border-white/10 flex justify-end gap-4">
+              <div className="p-6 border-t border-nexus-border flex justify-end gap-4">
                 <button onClick={() => setShowCreateModal(false)} className="px-4 py-2 text-gray-400 hover:text-white transition-colors">Cancel</button>
                 <button onClick={() => handleCreate('draft')} disabled={!formData.product_id || !formData.supplier_id || !formData.warehouse_id} className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors">Save as Draft</button>
                 <button onClick={() => handleCreate('pending')} disabled={!formData.product_id || !formData.supplier_id || !formData.warehouse_id} className="px-4 py-2 bg-nexus-blue hover:bg-blue-600 text-white rounded-lg transition-colors">Submit PO</button>
@@ -265,8 +265,8 @@ const PurchaseOrdersPage = () => {
       <AnimatePresence>
         {selectedOrder && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} className="bg-nexus-dark border border-white/10 rounded-xl w-full max-w-lg overflow-hidden">
-              <div className="p-6 border-b border-white/10 flex justify-between items-center">
+            <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }} className="bg-nexus-dark border border-nexus-border rounded-xl w-full max-w-lg overflow-hidden">
+              <div className="p-6 border-b border-nexus-border flex justify-between items-center">
                 <h2 className="text-xl font-bold text-white">PO-{String(selectedOrder.id).padStart(5, '0')} Details</h2>
                 <button onClick={() => setSelectedOrder(null)} className="text-gray-400 hover:text-white"><X className="w-6 h-6" /></button>
               </div>
@@ -308,7 +308,7 @@ const PurchaseOrdersPage = () => {
                   </div>
                 )}
               </div>
-              <div className="p-6 border-t border-white/10 flex flex-wrap justify-end gap-3">
+              <div className="p-6 border-t border-nexus-border flex flex-wrap justify-end gap-3">
                 {selectedOrder.status === 'Draft' && (
                   <button onClick={() => handleUpdateStatus(selectedOrder.id, 'Pending')} className="px-4 py-2 bg-nexus-blue text-white rounded-lg hover:bg-blue-600 transition-colors">Submit to Pending</button>
                 )}

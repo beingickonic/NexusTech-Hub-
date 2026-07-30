@@ -47,7 +47,7 @@ const DailyTasksPage = () => {
     { header: 'Title', accessor: 'title', render: (row) => (
       <div>
         <div className="font-semibold">{row.title}</div>
-        <div className="text-xs text-slate-500">{row.description?.substring(0, 50)}...</div>
+        <div className="text-xs text-nexus-textSecondary">{row.description?.substring(0, 50)}...</div>
       </div>
     )},
     { header: 'Priority', accessor: 'priority', render: (row) => (

@@ -31,7 +31,7 @@ const SchedulingPage = () => {
       case 'Ongoing': return 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-500 border-blue-200 dark:border-blue-500/20';
       case 'Completed': return 'bg-green-50 text-green-600 dark:bg-green-500/10 dark:text-green-500 border-green-200 dark:border-green-500/20';
       case 'Cancelled': return 'bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-500 border-red-200 dark:border-red-500/20';
-      default: return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700'; // Scheduled
+      default: return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-nexus-textSecondary border-slate-200 dark:border-nexus-border'; // Scheduled
     }
   };
 
@@ -44,7 +44,7 @@ const SchedulingPage = () => {
   const upcomingMeetings = filteredMeetings.filter(m => m.date > today);
 
   const renderMeetingCard = (meeting) => (
-    <div key={meeting.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col hover:border-orange-500/30 transition-colors">
+    <div key={meeting.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-5 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex flex-col hover:border-orange-500/30 transition-colors">
       <div className="flex justify-between items-start mb-3">
         <h3 className="font-bold text-slate-900 dark:text-white line-clamp-1">{meeting.title}</h3>
         <span className={`px-2 py-1 text-[10px] font-bold rounded-md border uppercase tracking-wider ${getStatusColor(meeting.status)}`}>
@@ -52,11 +52,11 @@ const SchedulingPage = () => {
         </span>
       </div>
       <div className="space-y-2 mb-4 flex-1">
-        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-nexus-textSecondary">
           <Clock size={16} className="text-orange-500" />
           {new Date(meeting.date).toLocaleDateString()} at {meeting.start_time?.substring(0, 5)} - {meeting.end_time?.substring(0, 5)}
         </div>
-        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-nexus-textSecondary">
           {meeting.location?.toLowerCase().includes('http') || meeting.location?.toLowerCase().includes('zoom') || meeting.location?.toLowerCase().includes('meet') ? (
             <Video size={16} className="text-blue-500" />
           ) : (
@@ -65,8 +65,8 @@ const SchedulingPage = () => {
           <span className="truncate">{meeting.location || 'TBA'}</span>
         </div>
       </div>
-      <div className="pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center">
-        <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+      <div className="pt-4 border-t border-slate-100 dark:border-nexus-border flex justify-between items-center">
+        <div className="flex items-center gap-1.5 text-xs font-medium text-nexus-textSecondary">
           <Users size={14} /> Participants
         </div>
         <button onClick={() => toast('Edit meeting modal')} className="text-orange-600 hover:text-orange-700 font-semibold text-xs">Manage</button>
@@ -79,20 +79,20 @@ const SchedulingPage = () => {
       <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Scheduling & Meetings</h1>
-          <p className="text-slate-500 dark:text-slate-400">Manage office schedules, book rooms, and coordinate teams.</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Manage office schedules, book rooms, and coordinate teams.</p>
         </div>
         <div className="flex gap-2">
           <div className="bg-slate-100 dark:bg-slate-800 p-1 rounded-xl flex">
             <button 
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-lg flex items-center justify-center transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-700 shadow-sm text-orange-500' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+              className={`p-2 rounded-lg flex items-center justify-center transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-700 shadow-sm text-orange-500' : 'text-nexus-textSecondary hover:text-slate-700 dark:hover:text-nexus-textSecondary'}`}
               title="List View"
             >
               <List size={18} />
             </button>
             <button 
               onClick={() => setViewMode('calendar')}
-              className={`p-2 rounded-lg flex items-center justify-center transition-all ${viewMode === 'calendar' ? 'bg-white dark:bg-slate-700 shadow-sm text-orange-500' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+              className={`p-2 rounded-lg flex items-center justify-center transition-all ${viewMode === 'calendar' ? 'bg-white dark:bg-slate-700 shadow-sm text-orange-500' : 'text-nexus-textSecondary hover:text-slate-700 dark:hover:text-nexus-textSecondary'}`}
               title="Calendar View"
             >
               <CalendarIcon size={18} />
@@ -105,11 +105,11 @@ const SchedulingPage = () => {
       </div>
 
       {viewMode === 'calendar' ? (
-        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 p-8 shadow-sm text-center">
-          <CalendarIcon size={48} className="mx-auto text-slate-300 dark:text-slate-600 mb-4" />
+        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border p-8 shadow-sm text-center">
+          <CalendarIcon size={48} className="mx-auto text-nexus-textSecondary dark:text-slate-600 mb-4" />
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Calendar View</h3>
-          <p className="text-slate-500 mb-6 max-w-md mx-auto">The full calendar grid is currently being integrated with Google Calendar and Outlook APIs. Please use the list view in the meantime.</p>
-          <button onClick={() => setViewMode('list')} className="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium rounded-lg">Return to List View</button>
+          <p className="text-nexus-textSecondary mb-6 max-w-md mx-auto">The full calendar grid is currently being integrated with Google Calendar and Outlook APIs. Please use the list view in the meantime.</p>
+          <button onClick={() => setViewMode('list')} className="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-nexus-textSecondary font-medium rounded-lg">Return to List View</button>
         </div>
       ) : (
         <div className="space-y-8">
@@ -119,9 +119,9 @@ const SchedulingPage = () => {
               placeholder="Search meetings..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none text-slate-900 dark:text-white shadow-sm"
+              className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none text-slate-900 dark:text-white shadow-sm"
             />
-            <Search size={18} className="absolute left-3 top-3 text-slate-400" />
+            <Search size={18} className="absolute left-3 top-3 text-nexus-textSecondary" />
           </div>
 
           {isLoading ? (
@@ -135,7 +135,7 @@ const SchedulingPage = () => {
                   <span className="w-2 h-2 rounded-full bg-orange-500"></span> Today's Schedule
                 </h2>
                 {todaysMeetings.length === 0 ? (
-                  <div className="p-6 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-center text-slate-500">No meetings scheduled for today.</div>
+                  <div className="p-6 rounded-2xl border border-dashed border-slate-300 dark:border-nexus-border text-center text-nexus-textSecondary">No meetings scheduled for today.</div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {todaysMeetings.map(renderMeetingCard)}
@@ -148,7 +148,7 @@ const SchedulingPage = () => {
                   <span className="w-2 h-2 rounded-full bg-blue-500"></span> Upcoming Meetings
                 </h2>
                 {upcomingMeetings.length === 0 ? (
-                  <div className="p-6 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-center text-slate-500">No upcoming meetings scheduled.</div>
+                  <div className="p-6 rounded-2xl border border-dashed border-slate-300 dark:border-nexus-border text-center text-nexus-textSecondary">No upcoming meetings scheduled.</div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {upcomingMeetings.map(renderMeetingCard)}

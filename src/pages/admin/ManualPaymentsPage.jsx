@@ -63,24 +63,24 @@ const ManualPaymentsPage = () => {
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Manual Payment Verification</h1>
       </div>
 
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700 flex flex-col md:flex-row gap-4 justify-between items-center bg-slate-50 dark:bg-slate-800/50">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-nexus-border overflow-hidden">
+        <div className="p-4 border-b border-slate-200 dark:border-nexus-border flex flex-col md:flex-row gap-4 justify-between items-center bg-slate-50 dark:bg-slate-800/50">
           <div className="relative w-full md:w-96">
-            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary" />
             <input 
               type="text" 
               placeholder="Search by Txn Code or Name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 outline-none"
+              className="w-full pl-10 pr-4 py-2 bg-white dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 outline-none"
             />
           </div>
           <div className="flex items-center gap-2 w-full md:w-auto">
-            <FiFilter className="text-slate-400" />
+            <FiFilter className="text-nexus-textSecondary" />
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500"
+              className="bg-white dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg px-4 py-2 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500"
             >
               <option value="pending">Pending</option>
               <option value="paid">Approved (Paid)</option>
@@ -91,8 +91,8 @@ const ManualPaymentsPage = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-600 dark:text-slate-400">
-            <thead className="bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white text-xs uppercase font-semibold">
+          <table className="w-full text-left text-sm text-slate-600 dark:text-nexus-textSecondary">
+            <thead className="bg-slate-50 dark:bg-nexus-surface/50 text-slate-900 dark:text-white text-xs uppercase font-semibold">
               <tr>
                 <th className="px-6 py-4">Order / Date</th>
                 <th className="px-6 py-4">Customer</th>
@@ -107,11 +107,11 @@ const ManualPaymentsPage = () => {
                 <tr key={payment.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <td className="px-6 py-4">
                     <div className="font-medium text-slate-900 dark:text-white">ORD-{payment.order_id}</div>
-                    <div className="text-xs text-slate-500 mt-1">{new Date(payment.created_at).toLocaleString()}</div>
+                    <div className="text-xs text-nexus-textSecondary mt-1">{new Date(payment.created_at).toLocaleString()}</div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="font-medium text-slate-900 dark:text-white">{payment.profiles?.full_name || 'Unknown'}</div>
-                    <div className="text-xs text-slate-500 mt-1">{payment.profiles?.phone || 'No Phone'}</div>
+                    <div className="text-xs text-nexus-textSecondary mt-1">{payment.profiles?.phone || 'No Phone'}</div>
                   </td>
                   <td className="px-6 py-4">
                     <span className="inline-block px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded font-mono text-xs font-bold text-slate-800 dark:text-slate-200 uppercase">
@@ -153,7 +153,7 @@ const ManualPaymentsPage = () => {
               
               {filteredPayments.length === 0 && (
                 <tr>
-                  <td colSpan="6" className="px-6 py-10 text-center text-slate-500 dark:text-slate-400">
+                  <td colSpan="6" className="px-6 py-10 text-center text-nexus-textSecondary dark:text-nexus-textSecondary">
                     No manual payments found matching your filters.
                   </td>
                 </tr>

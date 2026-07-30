@@ -160,7 +160,7 @@ const FAQ_CATEGORIES = [
 ];
 
 const AccordionItem = ({ question, answer, isOpen, onToggle }) => (
-  <div className="border-b border-slate-200 dark:border-white/10 last:border-0">
+  <div className="border-b border-slate-200 dark:border-nexus-border last:border-0">
     <button
       onClick={onToggle}
       className="w-full flex items-center justify-between py-5 text-left group"
@@ -170,7 +170,7 @@ const AccordionItem = ({ question, answer, isOpen, onToggle }) => (
       </span>
       {isOpen
         ? <ChevronUp size={18} className="text-primary flex-shrink-0 ml-4" />
-        : <ChevronDown size={18} className="text-slate-400 flex-shrink-0 ml-4" />
+        : <ChevronDown size={18} className="text-nexus-textSecondary flex-shrink-0 ml-4" />
       }
     </button>
     <AnimatePresence initial={false}>
@@ -183,7 +183,7 @@ const AccordionItem = ({ question, answer, isOpen, onToggle }) => (
           transition={{ duration: 0.25, ease: 'easeInOut' }}
           className="overflow-hidden"
         >
-          <p className="pb-5 text-slate-500 dark:text-gray-400 text-sm leading-relaxed">
+          <p className="pb-5 text-nexus-textSecondary dark:text-gray-400 text-sm leading-relaxed">
             {answer}
           </p>
         </motion.div>
@@ -310,7 +310,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-slate-400 mb-8 text-lg"
+            className="text-nexus-textSecondary mb-8 text-lg"
           >
             Search our help centre or browse by category below.
           </motion.p>
@@ -318,13 +318,13 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
             className="relative max-w-xl mx-auto"
           >
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-nexus-textSecondary" size={20} />
             <input
               type="text"
               value={searchQuery}
               onChange={e => { setSearchQuery(e.target.value); setOpenQuestion(null); }}
               placeholder="Search help articles..."
-              className="w-full bg-white dark:bg-slate-800 border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-xl"
+              className="w-full bg-white dark:bg-slate-800 border border-nexus-border rounded-2xl pl-12 pr-4 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-xl"
             />
           </motion.div>
         </div>
@@ -343,7 +343,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
             </h2>
             {filteredResults.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-slate-500 dark:text-gray-400 mb-6">Try different keywords or browse categories below.</p>
+                <p className="text-nexus-textSecondary dark:text-gray-400 mb-6">Try different keywords or browse categories below.</p>
                 <Link to="/contact" className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-orange-600 transition-colors">
                   <MessageCircle size={18} /> Contact Support
                 </Link>
@@ -351,10 +351,10 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
             ) : (
               <div className="space-y-4">
                 {filteredResults.map((item, idx) => (
-                  <div key={idx} className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-white/10 p-6 shadow-sm">
+                  <div key={idx} className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border p-6 shadow-sm">
                     <span className="text-xs font-bold uppercase tracking-wider text-primary mb-2 block">{item.category}</span>
                     <h3 className="font-semibold text-slate-900 dark:text-white mb-2">{item.q}</h3>
-                    <p className="text-slate-500 dark:text-gray-400 text-sm">{item.a}</p>
+                    <p className="text-nexus-textSecondary dark:text-gray-400 text-sm">{item.a}</p>
                   </div>
                 ))}
               </div>
@@ -376,7 +376,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all ${
                       isActive
                         ? 'bg-primary text-white shadow-glow'
-                        : 'bg-white dark:bg-dark-surface text-slate-600 dark:text-gray-400 border border-slate-200 dark:border-white/10 hover:text-primary hover:border-primary'
+                        : 'bg-white dark:bg-dark-surface text-slate-600 dark:text-gray-400 border border-slate-200 dark:border-nexus-border hover:text-primary hover:border-primary'
                     }`}
                   >
                     <Icon size={16} />
@@ -390,7 +390,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
             {activeData && (
               <div className="grid lg:grid-cols-3 gap-10 mb-20">
                 <div className="lg:col-span-2">
-                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm p-8">
+                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-8">
                     <div className={`w-12 h-12 rounded-2xl ${activeData.bg} flex items-center justify-center mb-6`}>
                       <activeData.icon size={24} className={activeData.color} />
                     </div>
@@ -409,12 +409,12 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
 
                 {/* Sidebar */}
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm p-6">
+                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-6">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                       <MessageCircle size={20} className="text-primary" />
                     </div>
                     <h3 className="font-bold text-slate-900 dark:text-white mb-2">Still need help?</h3>
-                    <p className="text-sm text-slate-500 dark:text-gray-400 mb-4">
+                    <p className="text-sm text-nexus-textSecondary dark:text-gray-400 mb-4">
                       Can't find your answer? Our support team is ready to help.
                     </p>
                     <Link
@@ -425,7 +425,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
                     </Link>
                   </div>
 
-                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm p-6">
+                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-6">
                     <h3 className="font-bold text-slate-900 dark:text-white mb-4">Other Categories</h3>
                     <div className="space-y-2">
                       {FAQ_CATEGORIES.filter(c => c.id !== activeCategory).map(cat => {
@@ -457,13 +457,13 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
                     <button
                       key={guide.id}
                       onClick={() => setActiveGuide(activeGuide === guide.id ? null : guide.id)}
-                      className="text-left bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm p-6 hover:border-primary/40 hover:shadow-md transition-all"
+                      className="text-left bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-6 hover:border-primary/40 hover:shadow-md transition-all"
                     >
                       <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                         <Icon size={24} className="text-primary" />
                       </div>
                       <h3 className="font-bold text-slate-900 dark:text-white mb-2">{guide.title}</h3>
-                      <p className="text-sm text-slate-500 dark:text-gray-400">{guide.desc}</p>
+                      <p className="text-sm text-nexus-textSecondary dark:text-gray-400">{guide.desc}</p>
                     </button>
                   );
                 })}
@@ -475,14 +475,14 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="mt-6 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-white/10 shadow-sm p-8"
+                    className="mt-6 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-8"
                   >
                     <pre className="whitespace-pre-wrap text-sm text-slate-600 dark:text-gray-300 leading-relaxed font-sans">
                       {guideContent[activeGuide]}
                     </pre>
                     <button
                       onClick={() => setActiveGuide(null)}
-                      className="mt-6 text-sm text-slate-400 hover:text-primary transition-colors"
+                      className="mt-6 text-sm text-nexus-textSecondary hover:text-primary transition-colors"
                     >
                       Close ↑
                     </button>

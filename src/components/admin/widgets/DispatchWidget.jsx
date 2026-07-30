@@ -26,12 +26,12 @@ const DispatchWidget = () => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm"
+      className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border p-5 shadow-sm"
     >
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="font-bold text-slate-900 dark:text-white text-sm">Today's Dispatches</h3>
-          <p className="text-xs text-slate-500 mt-0.5">{stats.today_delivered || 0} delivered today</p>
+          <p className="text-xs text-nexus-textSecondary mt-0.5">{stats.today_delivered || 0} delivered today</p>
         </div>
         <Link to="/admin/dispatch"
           className="text-xs text-orange-500 hover:text-orange-600 font-semibold transition-colors">
@@ -52,7 +52,7 @@ const DispatchWidget = () => {
               <item.icon size={16} className={item.color} />
               <div>
                 <p className="text-lg font-extrabold text-slate-900 dark:text-white leading-none">{item.value}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{item.label}</p>
+                <p className="text-xs text-nexus-textSecondary mt-0.5">{item.label}</p>
               </div>
             </div>
           ))}

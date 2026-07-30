@@ -78,7 +78,7 @@ const DashboardPage = () => {
           <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
             {getGreeting(user?.full_name?.split(' ')[0] || user?.email?.split('@')[0] || 'Admin')}
           </h1>
-          <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 font-medium">Here's what's happening with your store today.</p>
+          <p className="text-sm md:text-base text-nexus-textSecondary dark:text-nexus-textSecondary font-medium">Here's what's happening with your store today.</p>
         </div>
       </div>
 

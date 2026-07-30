@@ -4,12 +4,12 @@ import { ArrowLeft } from 'lucide-react';
 
 const AuthLayout = ({ children, title, subtitle, illustration }) => {
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#F8FAFC] dark:bg-[#020617] transition-colors duration-300">
+    <div className="min-h-screen flex flex-col md:flex-row bg-[#F8FAFC] dark:bg-nexus-bg transition-colors duration-300">
       
       {/* Form Section */}
       <div className="w-full md:w-1/2 lg:w-5/12 flex flex-col p-6 sm:p-12 justify-center relative z-10">
         <div className="absolute top-8 left-8">
-          <Link to="/" className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors">
+          <Link to="/" className="flex items-center gap-2 text-nexus-textSecondary hover:text-primary transition-colors">
             <ArrowLeft size={18} /> Back to Home
           </Link>
         </div>
@@ -21,10 +21,10 @@ const AuthLayout = ({ children, title, subtitle, illustration }) => {
         >
           <div className="mb-10 text-center md:text-left mt-16 md:mt-0">
             <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">{title}</h1>
-            <p className="text-slate-500 dark:text-gray-400">{subtitle}</p>
+            <p className="text-nexus-textSecondary dark:text-gray-400">{subtitle}</p>
           </div>
           
-          <div className="bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-white/5 p-8 shadow-xl">
+          <div className="bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-nexus-border p-8 shadow-xl">
             {children}
           </div>
         </motion.div>

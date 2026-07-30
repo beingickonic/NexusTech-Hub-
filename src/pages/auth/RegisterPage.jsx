@@ -73,7 +73,7 @@ const RegisterPage = () => {
           <input 
             type="text" name="full_name" required
             value={formData.full_name} onChange={handleChange}
-            className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             placeholder="Mary Ivy"
           />
         </div>
@@ -83,7 +83,7 @@ const RegisterPage = () => {
           <input 
             type="email" name="email" required
             value={formData.email} onChange={handleChange}
-            className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             placeholder="you@example.com"
           />
         </div>
@@ -94,12 +94,12 @@ const RegisterPage = () => {
             <input 
               type={showPassword ? "text" : "password"} name="password" required
               value={formData.password} onChange={handleChange}
-              className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl pl-4 pr-12 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+              className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl pl-4 pr-12 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
               placeholder="••••••••"
             />
             <button 
               type="button" onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-[30px] text-slate-400 hover:text-slate-600 dark:hover:text-gray-200 transition-colors"
+              className="absolute right-3 top-[30px] text-nexus-textSecondary hover:text-slate-600 dark:hover:text-gray-200 transition-colors"
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
@@ -111,7 +111,7 @@ const RegisterPage = () => {
           <input 
             type={showPassword ? "text" : "password"} name="confirm_password" required
             value={formData.confirm_password} onChange={handleChange}
-            className="w-full bg-[#F8FAFC] dark:bg-[#020617] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             placeholder="••••••••"
           />
         </div>

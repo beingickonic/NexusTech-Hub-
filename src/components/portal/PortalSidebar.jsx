@@ -7,7 +7,7 @@ const PortalSidebar = ({ config, isOpen, setIsOpen }) => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
 
-  const { name, accentHex, nav, icon: PortalIcon, bgClass = 'bg-slate-900 dark:bg-[#0a0e1a]' } = config;
+  const { name, accentHex, nav, icon: PortalIcon, bgClass = 'bg-nexus-surface dark:bg-nexus-bg' } = config;
 
   const handleSignOut = async () => {
     await logout();
@@ -30,10 +30,10 @@ const PortalSidebar = ({ config, isOpen, setIsOpen }) => {
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-60 flex flex-col transform transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } ${bgClass} border-r border-white/5`}
+        } ${bgClass} border-r border-nexus-border`}
       >
         {/* Logo / Portal Header */}
-        <div className="h-16 flex items-center justify-between px-4 flex-shrink-0 border-b border-white/10">
+        <div className="h-16 flex items-center justify-between px-4 flex-shrink-0 border-b border-nexus-border">
           <div className="flex items-center gap-2.5">
             <div
               className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg"
@@ -82,7 +82,7 @@ const PortalSidebar = ({ config, isOpen, setIsOpen }) => {
         </nav>
 
         {/* User Footer */}
-        <div className="p-3 border-t border-white/10 flex-shrink-0 space-y-2">
+        <div className="p-3 border-t border-nexus-border flex-shrink-0 space-y-2">
           <div className="flex items-center gap-2.5 px-2 py-1.5">
             <UserAvatar src={user?.avatar_url} name={displayName} size="sm" />
             <div className="flex-1 min-w-0">

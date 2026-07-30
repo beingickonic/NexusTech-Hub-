@@ -33,7 +33,7 @@ const FeaturedProducts = () => {
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Featured Products</h2>
-          <p className="text-slate-500 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-nexus-textSecondary dark:text-gray-400 max-w-2xl mx-auto">
             Handpicked premium gadgets that blend cutting-edge technology with stunning design aesthetics.
           </p>
         </div>

@@ -16,7 +16,7 @@ const StockBadge = ({ status }) => {
     low_stock:    { label: 'Low Stock',   color: 'text-amber-600 dark:text-amber-400',     bg: 'bg-amber-100 dark:bg-amber-500/15' },
     out_of_stock: { label: 'Out of Stock',color: 'text-red-600 dark:text-red-400',         bg: 'bg-red-100 dark:bg-red-500/15' },
     overstock:    { label: 'Overstock',   color: 'text-blue-600 dark:text-blue-400',       bg: 'bg-blue-100 dark:bg-blue-500/15' }
-  }[status] || { label: 'Unknown', color: 'text-slate-500', bg: 'bg-slate-100' };
+  }[status] || { label: 'Unknown', color: 'text-nexus-textSecondary', bg: 'bg-slate-100' };
   return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${cfg.color} ${cfg.bg}`}>{cfg.label}</span>;
 };
 
@@ -68,18 +68,18 @@ const StockActionModal = ({ product, action, onClose, onDone }) => {
   };
 
   const inputCls = 'w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm border-0 outline-none focus:ring-2 focus:ring-orange-500/40 text-slate-900 dark:text-white';
-  const labelCls = 'block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide';
+  const labelCls = 'block text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary mb-1.5 uppercase tracking-wide';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-        className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-sm border border-slate-200 dark:border-slate-700">
-        <div className="flex items-center justify-between p-5 border-b border-slate-200 dark:border-slate-700">
+        className="bg-white dark:bg-nexus-surface rounded-2xl shadow-2xl w-full max-w-sm border border-slate-200 dark:border-nexus-border">
+        <div className="flex items-center justify-between p-5 border-b border-slate-200 dark:border-nexus-border">
           <div>
             <h2 className="font-bold text-slate-900 dark:text-white">{cfg.title}</h2>
-            <p className="text-xs text-slate-500 mt-0.5 truncate max-w-[220px]">{product.title}</p>
+            <p className="text-xs text-nexus-textSecondary mt-0.5 truncate max-w-[220px]">{product.title}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"><X size={18} /></button>
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-nexus-textSecondary"><X size={18} /></button>
         </div>
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <div>
@@ -120,7 +120,7 @@ const StockActionModal = ({ product, action, onClose, onDone }) => {
               className={inputCls + ' resize-none'} />
           </div>
           <div className="flex gap-3 pt-1">
-            <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-600 dark:text-slate-400">Cancel</button>
+            <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-nexus-border text-sm font-medium text-slate-600 dark:text-nexus-textSecondary">Cancel</button>
             <button type="submit" disabled={loading} className={`flex-1 py-2.5 rounded-xl text-white text-sm font-semibold transition-colors disabled:opacity-50 ${cfg.color}`}>
               {loading ? 'Processing...' : cfg.title}
             </button>
@@ -152,20 +152,20 @@ const MovementHistoryDrawer = ({ product, onClose }) => {
     return:     { color: 'text-violet-500',  bg: 'bg-violet-50 dark:bg-violet-500/10',   label: 'Return' },
     damage:     { color: 'text-red-500',     bg: 'bg-red-50 dark:bg-red-500/10',         label: 'Damage' },
     adjustment: { color: 'text-orange-500',  bg: 'bg-orange-50 dark:bg-orange-500/10',   label: 'Adjustment' },
-    transfer:   { color: 'text-slate-500',   bg: 'bg-slate-50 dark:bg-slate-800',        label: 'Transfer' }
+    transfer:   { color: 'text-nexus-textSecondary',   bg: 'bg-slate-50 dark:bg-slate-800',        label: 'Transfer' }
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 backdrop-blur-sm" onClick={onClose}>
       <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25 }}
         onClick={e => e.stopPropagation()}
-        className="bg-white dark:bg-slate-900 w-full sm:w-96 h-full overflow-y-auto border-l border-slate-200 dark:border-slate-700 shadow-2xl">
-        <div className="sticky top-0 bg-white dark:bg-slate-900 p-5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between z-10">
+        className="bg-white dark:bg-nexus-surface w-full sm:w-96 h-full overflow-y-auto border-l border-slate-200 dark:border-nexus-border shadow-2xl">
+        <div className="sticky top-0 bg-white dark:bg-nexus-surface p-5 border-b border-slate-200 dark:border-nexus-border flex items-center justify-between z-10">
           <div>
             <h2 className="font-bold text-slate-900 dark:text-white">Stock History</h2>
-            <p className="text-xs text-slate-500 truncate max-w-[220px]">{product?.title}</p>
+            <p className="text-xs text-nexus-textSecondary truncate max-w-[220px]">{product?.title}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"><X size={18} /></button>
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-nexus-textSecondary"><X size={18} /></button>
         </div>
         <div className="p-5 space-y-3">
           {loading ? (
@@ -173,7 +173,7 @@ const MovementHistoryDrawer = ({ product, onClose }) => {
               <div key={i} className="h-14 bg-slate-100 dark:bg-slate-800 rounded-xl animate-pulse" />
             ))
           ) : movements.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
+            <div className="text-center py-12 text-nexus-textSecondary">
               <History size={36} className="mx-auto mb-2 opacity-30" />
               <p className="text-sm">No movements recorded</p>
             </div>
@@ -185,17 +185,17 @@ const MovementHistoryDrawer = ({ product, onClose }) => {
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-slate-900 dark:text-white">
                     {m.quantity > 0 ? `+${m.quantity}` : m.quantity} units
-                    <span className="text-slate-400 font-normal"> ({m.quantity_before} → {m.quantity_after})</span>
+                    <span className="text-nexus-textSecondary font-normal"> ({m.quantity_before} → {m.quantity_after})</span>
                   </p>
-                  <p className="text-xs text-slate-400 truncate">{m.notes || m.suppliers?.name || m.profiles?.full_name || '—'}</p>
+                  <p className="text-xs text-nexus-textSecondary truncate">{m.notes || m.suppliers?.name || m.profiles?.full_name || '—'}</p>
                 </div>
-                <p className="text-xs text-slate-400 flex-shrink-0">{new Date(m.created_at).toLocaleDateString()}</p>
+                <p className="text-xs text-nexus-textSecondary flex-shrink-0">{new Date(m.created_at).toLocaleDateString()}</p>
               </div>
             );
           })}
         </div>
         {meta.totalPages > 1 && (
-          <div className="flex justify-center gap-2 p-5 border-t border-slate-200 dark:border-slate-700">
+          <div className="flex justify-center gap-2 p-5 border-t border-slate-200 dark:border-nexus-border">
             <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page <= 1}
               className="px-3 py-1.5 rounded-lg text-xs bg-slate-100 dark:bg-slate-800 disabled:opacity-40">Prev</button>
             <button onClick={() => setPage(p => p + 1)} disabled={page >= meta.totalPages}
@@ -245,7 +245,7 @@ const InventoryPage = () => {
   }, []);
 
   const statCards = [
-    { label: 'Total Items',    value: meta.total || 0,               icon: Layers,        color: 'text-slate-700 dark:text-slate-300', bg: 'bg-slate-100 dark:bg-slate-800' },
+    { label: 'Total Items',    value: meta.total || 0,               icon: Layers,        color: 'text-slate-700 dark:text-nexus-textSecondary', bg: 'bg-slate-100 dark:bg-slate-800' },
     { label: 'Low Stock',      value: stats.low_stock || 0,          icon: AlertTriangle, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-100 dark:bg-amber-500/20' },
     { label: 'Out of Stock',   value: stats.out_of_stock || 0,       icon: TrendingDown,  color: 'text-red-600 dark:text-red-400',     bg: 'bg-red-100 dark:bg-red-500/20' },
     { label: 'Overstock',      value: stats.overstock || 0,          icon: TrendingUp,    color: 'text-blue-600 dark:text-blue-400',   bg: 'bg-blue-100 dark:bg-blue-500/20' },
@@ -265,10 +265,10 @@ const InventoryPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">Inventory Management</h1>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Track stock levels, movements, and reorder alerts</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary text-sm mt-1">Track stock levels, movements, and reorder alerts</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={fetchData} className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 hover:text-orange-500 transition-colors">
+          <button onClick={fetchData} className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-nexus-border text-slate-600 hover:text-orange-500 transition-colors">
             <RefreshCw size={16} />
           </button>
         </div>
@@ -291,20 +291,20 @@ const InventoryPage = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {statCards.map((s, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-            className="bg-white dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700/50 p-4">
+            className="bg-white dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-nexus-border/50 p-4">
             <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${s.bg} ${s.color}`}><s.icon size={18} /></div>
             <p className="text-xl font-extrabold text-slate-900 dark:text-white">{s.value}</p>
-            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">{s.label}</p>
+            <p className="text-xs font-medium text-nexus-textSecondary dark:text-nexus-textSecondary mt-0.5">{s.label}</p>
           </motion.div>
         ))}
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 border-b border-slate-200 dark:border-slate-800">
+      <div className="bg-white dark:bg-nexus-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 border-b border-slate-200 dark:border-nexus-border">
           <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <div className="relative w-full sm:w-56">
-              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary" />
               <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }}
                 placeholder="Search products..."
                 className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm border-0 outline-none focus:ring-2 focus:ring-orange-500/40" />
@@ -313,40 +313,40 @@ const InventoryPage = () => {
               {filterBtns.map(btn => (
                 <button key={btn.key} onClick={() => { setFilter(btn.key); setPage(1); }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors whitespace-nowrap ${
-                    filter === btn.key ? 'bg-orange-500 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    filter === btn.key ? 'bg-orange-500 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-nexus-textSecondary hover:bg-slate-200 dark:hover:bg-slate-700'
                   }`}>{btn.label}</button>
               ))}
             </div>
           </div>
-          <p className="text-xs text-slate-500 whitespace-nowrap">{meta.total || 0} products</p>
+          <p className="text-xs text-nexus-textSecondary whitespace-nowrap">{meta.total || 0} products</p>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800">
+              <tr className="border-b border-slate-100 dark:border-nexus-border">
                 {['Product', 'SKU', 'Category', 'On Hand', 'Reserved', 'Available', 'Reorder At', 'Supplier', 'Status', 'Actions'].map(h => (
-                  <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 whitespace-nowrap">{h}</th>
+                  <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-nexus-textSecondary dark:text-nexus-textSecondary whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 Array.from({ length: 8 }).map((_, i) => (
-                  <tr key={i} className="border-b border-slate-100 dark:border-slate-800/50">
+                  <tr key={i} className="border-b border-slate-100 dark:border-nexus-border">
                     {Array.from({ length: 10 }).map((_, j) => (
                       <td key={j} className="px-4 py-3"><div className="h-4 bg-slate-100 dark:bg-slate-800 rounded animate-pulse" /></td>
                     ))}
                   </tr>
                 ))
               ) : items.length === 0 ? (
-                <tr><td colSpan={10} className="text-center py-16 text-slate-400">
+                <tr><td colSpan={10} className="text-center py-16 text-nexus-textSecondary">
                   <Warehouse size={40} className="mx-auto mb-3 opacity-30" />
                   <p>No inventory items found</p>
                 </td></tr>
               ) : items.map((item, i) => (
                 <motion.tr key={item.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.02 }}
-                  className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  className="border-b border-slate-100 dark:border-nexus-border hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
                       {item.image_url && (
@@ -355,17 +355,17 @@ const InventoryPage = () => {
                       <span className="font-medium text-slate-900 dark:text-white max-w-[180px] truncate">{item.title}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3"><span className="font-mono text-xs text-slate-500">{item.sku || '—'}</span></td>
-                  <td className="px-4 py-3"><span className="text-xs text-slate-500">{item.category_name || '—'}</span></td>
+                  <td className="px-4 py-3"><span className="font-mono text-xs text-nexus-textSecondary">{item.sku || '—'}</span></td>
+                  <td className="px-4 py-3"><span className="text-xs text-nexus-textSecondary">{item.category_name || '—'}</span></td>
                   <td className="px-4 py-3">
                     <span className={`font-bold text-sm ${item.quantity_on_hand === 0 ? 'text-red-600' : item.quantity_on_hand <= item.reorder_level ? 'text-amber-600' : 'text-slate-900 dark:text-white'}`}>
                       {item.quantity_on_hand}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-xs text-slate-500">{item.quantity_reserved || 0}</td>
+                  <td className="px-4 py-3 text-xs text-nexus-textSecondary">{item.quantity_reserved || 0}</td>
                   <td className="px-4 py-3 font-semibold text-emerald-600 dark:text-emerald-400 text-sm">{item.quantity_available}</td>
-                  <td className="px-4 py-3 text-xs text-slate-500">{item.reorder_level}</td>
-                  <td className="px-4 py-3 text-xs text-slate-500 max-w-[100px] truncate">{item.supplier_name || '—'}</td>
+                  <td className="px-4 py-3 text-xs text-nexus-textSecondary">{item.reorder_level}</td>
+                  <td className="px-4 py-3 text-xs text-nexus-textSecondary max-w-[100px] truncate">{item.supplier_name || '—'}</td>
                   <td className="px-4 py-3"><StockBadge status={item.stock_status} /></td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
@@ -382,7 +382,7 @@ const InventoryPage = () => {
                         <Edit3 size={13} />
                       </button>
                       <button onClick={() => setHistoryDrawer(item)} title="View History"
-                        className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        className="p-1.5 rounded-lg text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                         <History size={13} />
                       </button>
                     </div>
@@ -394,8 +394,8 @@ const InventoryPage = () => {
         </div>
 
         {meta.totalPages > 1 && (
-          <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 dark:border-slate-800">
-            <p className="text-xs text-slate-500">Page {meta.page} of {meta.totalPages}</p>
+          <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 dark:border-nexus-border">
+            <p className="text-xs text-nexus-textSecondary">Page {meta.page} of {meta.totalPages}</p>
             <div className="flex gap-2">
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={meta.page <= 1}
                 className="px-3 py-1.5 rounded-lg text-xs bg-slate-100 dark:bg-slate-800 disabled:opacity-40">Prev</button>

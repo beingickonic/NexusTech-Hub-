@@ -8,15 +8,15 @@ const KPICard = ({ label, value, sub, icon: Icon, color, trend }) => (
   <motion.div
     initial={{ opacity: 0, y: 16 }}
     animate={{ opacity: 1, y: 0 }}
-    className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-[#1F2937] rounded-2xl p-6 flex items-start gap-4 hover:border-white/10 transition-colors"
+    className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-[#1F2937] rounded-2xl p-6 flex items-start gap-4 hover:border-nexus-border transition-colors"
   >
     <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${color}`}>
       <Icon size={22} className="text-slate-900 dark:text-white" />
     </div>
     <div className="flex-1 min-w-0">
-      <p className="text-slate-500 dark:text-gray-400 text-sm mb-1">{label}</p>
+      <p className="text-nexus-textSecondary dark:text-gray-400 text-sm mb-1">{label}</p>
       <p className="text-slate-900 dark:text-white font-bold text-2xl">{value}</p>
-      {sub && <p className="text-slate-500 dark:text-gray-500 text-xs mt-0.5">{sub}</p>}
+      {sub && <p className="text-nexus-textSecondary dark:text-gray-500 text-xs mt-0.5">{sub}</p>}
     </div>
     {trend !== undefined && (
       <div className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${
@@ -77,7 +77,7 @@ const BusinessSection = () => {
 
   if (loading) return (
     <div className="flex justify-center py-32">
-      <div className="w-10 h-10 border-4 border-[#FF6B57] border-t-transparent rounded-full animate-spin" />
+      <div className="w-10 h-10 border-4 border-nexus-primary border-t-transparent rounded-full animate-spin" />
     </div>
   );
 
@@ -85,23 +85,23 @@ const BusinessSection = () => {
     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Business Overview</h1>
-        <p className="text-slate-500 dark:text-gray-400 text-sm mt-1">Your shopping activity and loyalty status</p>
+        <p className="text-nexus-textSecondary dark:text-gray-400 text-sm mt-1">Your shopping activity and loyalty status</p>
       </div>
 
       {/* Loyalty tier banner */}
-      <div className="bg-gradient-to-r from-orange-50 to-white dark:from-[#1a0f0a] dark:to-[#111827] border border-[#FF6B57]/20 rounded-2xl p-6 mb-6 flex items-center gap-5">
-        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#FF6B57] to-[#FF8C42] flex items-center justify-center text-slate-900 dark:text-white font-bold text-2xl flex-shrink-0">
+      <div className="bg-gradient-to-r from-orange-50 to-white dark:from-[#1a0f0a] dark:to-[#111827] border border-nexus-primary/20 rounded-2xl p-6 mb-6 flex items-center gap-5">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-nexus-primary to-[#FF8C42] flex items-center justify-center text-slate-900 dark:text-white font-bold text-2xl flex-shrink-0">
           <Star size={28} />
         </div>
         <div>
-          <p className="text-slate-500 dark:text-gray-400 text-xs uppercase tracking-wider font-semibold mb-1">Loyalty Status</p>
+          <p className="text-nexus-textSecondary dark:text-gray-400 text-xs uppercase tracking-wider font-semibold mb-1">Loyalty Status</p>
           <p className={`text-2xl font-bold ${tierColors[loyaltyTier]}`}>{loyaltyTier} Member</p>
-          <p className="text-slate-500 dark:text-gray-400 text-sm mt-0.5">
+          <p className="text-nexus-textSecondary dark:text-gray-400 text-sm mt-0.5">
             <span className="text-slate-900 dark:text-white font-semibold">{loyaltyPoints.toLocaleString()}</span> reward points earned
           </p>
         </div>
         <div className="ml-auto text-right hidden sm:block">
-          <p className="text-slate-500 dark:text-gray-500 text-xs mb-1">Next tier</p>
+          <p className="text-nexus-textSecondary dark:text-gray-500 text-xs mb-1">Next tier</p>
           {loyaltyTier === 'Bronze' && <p className="text-slate-600 dark:text-gray-300 text-sm font-semibold">{200 - loyaltyPoints} pts to Silver</p>}
           {loyaltyTier === 'Silver' && <p className="text-slate-600 dark:text-gray-300 text-sm font-semibold">{500 - loyaltyPoints} pts to Gold</p>}
           {loyaltyTier === 'Gold' && <p className="text-yellow-400 text-sm font-semibold">Max tier reached! 🎉</p>}
@@ -122,7 +122,7 @@ const BusinessSection = () => {
           value={`KES ${stats.totalSpent.toLocaleString()}`}
           sub="Across all orders"
           icon={Wallet}
-          color="bg-[#FF6B57]/20"
+          color="bg-nexus-primary/20"
         />
         <KPICard
           label="Wishlist Items"
@@ -158,14 +158,14 @@ const BusinessSection = () => {
       {recentOrders.length > 0 && (
         <div className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-[#1F2937] rounded-2xl p-6">
           <h3 className="text-slate-900 dark:text-white font-semibold mb-4 flex items-center gap-2">
-            <BarChart2 size={16} className="text-[#FF6B57]" /> Recent Activity
+            <BarChart2 size={16} className="text-nexus-primary" /> Recent Activity
           </h3>
           <div className="space-y-3">
             {recentOrders.map(order => (
               <div key={order.id} className="flex items-center justify-between py-2 border-b border-slate-200 dark:border-[#1F2937] last:border-0">
                 <div>
                   <p className="text-slate-900 dark:text-white text-sm font-medium">Order #{order.id}</p>
-                  <p className="text-slate-500 dark:text-gray-500 text-xs">{new Date(order.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' })}</p>
+                  <p className="text-nexus-textSecondary dark:text-gray-500 text-xs">{new Date(order.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' })}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-slate-900 dark:text-white text-sm font-semibold">KES {Number(order.total_amount).toLocaleString()}</p>

@@ -72,7 +72,7 @@ const InventoryDashboard = () => {
     { label: 'Out of Stock', value: stats.outOfStock || 0, color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-500/10', icon: AlertTriangle },
     { label: 'Pending POs', value: stats.pendingRequests || 0, color: 'text-violet-500', bg: 'bg-violet-50 dark:bg-violet-500/10', icon: ShoppingCart },
     { label: 'Received Today', value: stats.receivedToday || 0, color: 'text-teal-500', bg: 'bg-teal-50 dark:bg-teal-500/10', icon: Warehouse },
-    { label: 'Warehouse Capacity', value: `${stats.warehouseCapacity || 0}%`, color: 'text-slate-500', bg: 'bg-slate-50 dark:bg-slate-500/10', icon: Database },
+    { label: 'Warehouse Capacity', value: `${stats.warehouseCapacity || 0}%`, color: 'text-nexus-textSecondary', bg: 'bg-slate-50 dark:bg-slate-500/10', icon: Database },
     { label: 'Inventory Health', value: `${stats.inventoryHealthScore || 0}%`, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: Activity },
   ];
 
@@ -82,11 +82,11 @@ const InventoryDashboard = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Warehouse Overview</h1>
-          <p className="text-slate-500 text-sm mt-1">Real-time inventory metrics and stock health</p>
+          <p className="text-nexus-textSecondary text-sm mt-1">Real-time inventory metrics and stock health</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={fetchData} className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 transition-colors">
-            <RefreshCw size={16} className="text-slate-600 dark:text-slate-300" />
+          <button onClick={fetchData} className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-nexus-border transition-colors">
+            <RefreshCw size={16} className="text-slate-600 dark:text-nexus-textSecondary" />
           </button>
           <Link to="/inventory/goods-received" className="inline-flex items-center gap-2 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white px-4 py-2.5 rounded-xl font-medium text-sm transition-colors">
             <ClipboardCheck size={18} /> Receive GRN
@@ -105,13 +105,13 @@ const InventoryDashboard = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.05 }}
-            className="bg-white dark:bg-dark-surface p-5 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex items-center gap-4 group hover:border-primary/40 dark:hover:border-primary/30 transition-colors"
+            className="bg-white dark:bg-dark-surface p-5 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex items-center gap-4 group hover:border-primary/40 dark:hover:border-primary/30 transition-colors"
           >
             <div className={`p-4 rounded-xl ${kpi.bg} transition-transform group-hover:scale-110`}>
               <kpi.icon size={24} className={kpi.color} />
             </div>
             <div>
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">{kpi.label}</p>
+              <p className="text-xs font-medium text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">{kpi.label}</p>
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
                 {loading ? <div className="h-8 w-16 bg-slate-100 dark:bg-white/5 rounded animate-pulse" /> : kpi.value}
               </h3>
@@ -121,33 +121,33 @@ const InventoryDashboard = () => {
       </div>
 
       {/* Procurement Overview */}
-      <div className="mb-6 bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+      <div className="mb-6 bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm">
         <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4"><ShoppingCart className="text-primary" size={20} /> Procurement Overview</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-between">
+          <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-nexus-border flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Total Suppliers</p>
+              <p className="text-xs font-medium text-nexus-textSecondary uppercase tracking-wide">Total Suppliers</p>
               <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{loading ? '-' : stats.totalSuppliers || 0}</p>
             </div>
             <div className="p-3 bg-blue-500/10 text-blue-500 rounded-lg"><Box size={20} /></div>
           </div>
-          <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-between">
+          <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-nexus-border flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Open POs</p>
+              <p className="text-xs font-medium text-nexus-textSecondary uppercase tracking-wide">Open POs</p>
               <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{loading ? '-' : stats.openPOs || 0}</p>
             </div>
             <div className="p-3 bg-orange-500/10 text-orange-500 rounded-lg"><Clock size={20} /></div>
           </div>
-          <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-between">
+          <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-nexus-border flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Approved POs</p>
+              <p className="text-xs font-medium text-nexus-textSecondary uppercase tracking-wide">Approved POs</p>
               <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{loading ? '-' : stats.approvedPOs || 0}</p>
             </div>
             <div className="p-3 bg-emerald-500/10 text-emerald-500 rounded-lg"><CheckCircle2 size={20} /></div>
           </div>
-          <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-between">
+          <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-nexus-border flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Received POs</p>
+              <p className="text-xs font-medium text-nexus-textSecondary uppercase tracking-wide">Received POs</p>
               <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{loading ? '-' : stats.receivedPOs || 0}</p>
             </div>
             <div className="p-3 bg-indigo-500/10 text-indigo-500 rounded-lg"><Warehouse size={20} /></div>
@@ -157,11 +157,11 @@ const InventoryDashboard = () => {
       {/* Inventory Health + Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Health Breakdown */}
-        <div className="lg:col-span-2 bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+        <div className="lg:col-span-2 bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm">
           <div className="flex items-center justify-between mb-5">
             <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2"><Activity className="text-primary" size={20} /> Inventory Health Breakdown</h3>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-slate-500">Score:</span>
+              <span className="text-sm text-nexus-textSecondary">Score:</span>
               <span className={`font-bold text-lg ${health.healthScore >= 80 ? 'text-emerald-600' : health.healthScore >= 50 ? 'text-amber-600' : 'text-red-600'}`}>{loading ? 'â€”' : `${health.healthScore}%`}</span>
             </div>
           </div>
@@ -171,13 +171,13 @@ const InventoryDashboard = () => {
               const Icon = cfg.icon;
               return (
                 <motion.div key={key} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                  className={`${cfg.bg} rounded-xl p-4 border border-transparent hover:border-slate-200 dark:hover:border-white/10 transition-all group`}>
+                  className={`${cfg.bg} rounded-xl p-4 border border-transparent hover:border-slate-200 dark:hover:border-nexus-border transition-all group`}>
                   <div className="flex items-center gap-2 mb-2">
                     <Icon size={16} className={cfg.textColor} />
-                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{cfg.label}</span>
+                    <span className="text-xs font-semibold text-nexus-textSecondary uppercase tracking-wide">{cfg.label}</span>
                   </div>
                   <p className={`text-3xl font-bold ${cfg.textColor}`}>{loading ? 'â€”' : count}</p>
-                  <p className="text-xs text-slate-400 mt-1">{loading || !stats.totalProducts ? '' : `${Math.round((count / stats.totalProducts) * 100)}% of total`}</p>
+                  <p className="text-xs text-nexus-textSecondary mt-1">{loading || !stats.totalProducts ? '' : `${Math.round((count / stats.totalProducts) * 100)}% of total`}</p>
                 </motion.div>
               );
             })}
@@ -191,7 +191,7 @@ const InventoryDashboard = () => {
               </div>
               <div className="flex items-center gap-4 mt-2 flex-wrap">
                 {Object.entries(HEALTH_CONFIG).map(([key, cfg]) => (health.summary?.[key] || 0) > 0 && (
-                  <div key={key} className="flex items-center gap-1.5 text-xs text-slate-500"><span className={`w-2.5 h-2.5 rounded-full ${cfg.color}`} />{cfg.label}: {health.summary[key]}</div>
+                  <div key={key} className="flex items-center gap-1.5 text-xs text-nexus-textSecondary"><span className={`w-2.5 h-2.5 rounded-full ${cfg.color}`} />{cfg.label}: {health.summary[key]}</div>
                 ))}
               </div>
             </div>
@@ -199,7 +199,7 @@ const InventoryDashboard = () => {
         </div>
 
         {/* Active Alerts Panel */}
-        <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+        <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm">
           <div className="flex items-center justify-between mb-5">
             <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2"><Bell className="text-primary" size={20} /> Active Alerts
               {stats.activeAlerts > 0 && <span className="ml-1 px-1.5 py-0.5 bg-red-500 text-white text-xs rounded-full font-bold">{stats.activeAlerts}</span>}
@@ -217,7 +217,7 @@ const InventoryDashboard = () => {
                 return (
                   <div key={alert.id} className={`rounded-xl p-3 border ${sevBg[alert.severity] || sevBg.warning} transition-colors`}>
                     <div className={`flex items-center gap-1.5 text-xs font-semibold ${sevTxt[alert.severity] || sevTxt.warning} mb-1`}>{icon}{alert.title}</div>
-                    <p className="text-xs text-slate-500 line-clamp-2">{alert.message}</p>
+                    <p className="text-xs text-nexus-textSecondary line-clamp-2">{alert.message}</p>
                   </div>
                 );
               })}
@@ -225,15 +225,15 @@ const InventoryDashboard = () => {
           ) : (
             <div className="text-center py-8">
               <CheckCircle2 size={40} className="mx-auto text-emerald-400 mb-3" />
-              <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">All Clear</p>
-              <p className="text-xs text-slate-400 mt-1">No active stock alerts</p>
+              <p className="text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">All Clear</p>
+              <p className="text-xs text-nexus-textSecondary mt-1">No active stock alerts</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm">
+      <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm">
          <div className="flex items-center justify-between mb-6">
            <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
              <Calendar className="text-primary" size={20} /> Recent Activity
@@ -250,7 +250,7 @@ const InventoryDashboard = () => {
              </div>
            ) : activity.length > 0 ? (
              activity.map(act => (
-               <div key={act.id} className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-transparent hover:border-slate-200 dark:hover:border-white/10 transition-colors">
+               <div key={act.id} className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-transparent hover:border-slate-200 dark:hover:border-nexus-border transition-colors">
                  <div className="p-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary rounded-lg">
                    <Package size={20} />
                  </div>
@@ -258,14 +258,14 @@ const InventoryDashboard = () => {
                    <h4 className="text-sm font-medium text-slate-900 dark:text-white">
                      {act.type === 'IN' || act.type === 'RECEIPT' ? 'Stock Received' : act.type === 'OUT' ? 'Stock Dispatched' : 'Stock Adjustment'} - {act.product}
                    </h4>
-                   <p className="text-xs text-slate-500 mt-1">{act.quantity} units â€¢ {act.reason} â€¢ By {act.user}</p>
+                   <p className="text-xs text-nexus-textSecondary mt-1">{act.quantity} units â€¢ {act.reason} â€¢ By {act.user}</p>
                  </div>
-                 <div className="text-xs text-slate-400">{new Date(act.date).toLocaleString()}</div>
+                 <div className="text-xs text-nexus-textSecondary">{new Date(act.date).toLocaleString()}</div>
                </div>
              ))
            ) : (
-             <div className="p-8 text-center text-slate-500 bg-slate-50/50 dark:bg-white/[0.02] rounded-xl border border-dashed border-slate-200 dark:border-white/10">
-               <Calendar size={32} className="mx-auto mb-3 text-slate-400" />
+             <div className="p-8 text-center text-nexus-textSecondary bg-slate-50/50 dark:bg-white/[0.02] rounded-xl border border-dashed border-slate-200 dark:border-nexus-border">
+               <Calendar size={32} className="mx-auto mb-3 text-nexus-textSecondary" />
                <p className="text-sm font-medium">No recent warehouse activity</p>
              </div>
            )}

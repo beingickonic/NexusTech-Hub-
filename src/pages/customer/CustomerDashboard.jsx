@@ -44,7 +44,7 @@ const LogoutModal = ({ onConfirm, onCancel }) => (
           <LogOut className="text-red-400" size={28} />
         </div>
         <h3 className="text-xl font-bold text-slate-900 dark:text-white text-center mb-2">Sign Out?</h3>
-        <p className="text-slate-500 dark:text-gray-400 text-center text-sm mb-8">
+        <p className="text-nexus-textSecondary dark:text-gray-400 text-center text-sm mb-8">
           You'll be redirected to the homepage and will need to sign in again.
         </p>
         <div className="flex gap-3">
@@ -74,8 +74,8 @@ const SideNavItem = ({ item, onClick }) => (
     className={({ isActive }) =>
       `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative ${
         isActive
-          ? 'bg-[#FF6B57]/10 text-[#FF6B57] border border-[#FF6B57]/20'
-          : 'text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5'
+          ? 'bg-nexus-primary/10 text-nexus-primary border border-nexus-primary/20'
+          : 'text-nexus-textSecondary dark:text-gray-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5'
       }`
     }
   >
@@ -84,12 +84,12 @@ const SideNavItem = ({ item, onClick }) => (
         {isActive && (
           <motion.div
             layoutId="activeIndicator"
-            className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-[#FF6B57] rounded-full"
+            className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-nexus-primary rounded-full"
           />
         )}
-        <item.icon size={18} className={`flex-shrink-0 transition-colors ${isActive ? 'text-[#FF6B57]' : 'text-slate-500 dark:text-gray-500 group-hover:text-slate-600 dark:text-gray-300'}`} />
+        <item.icon size={18} className={`flex-shrink-0 transition-colors ${isActive ? 'text-nexus-primary' : 'text-nexus-textSecondary dark:text-gray-500 group-hover:text-slate-600 dark:text-gray-300'}`} />
         <span>{item.label}</span>
-        {isActive && <ChevronRight size={14} className="ml-auto text-[#FF6B57]/60" />}
+        {isActive && <ChevronRight size={14} className="ml-auto text-nexus-primary/60" />}
       </>
     )}
   </NavLink>
@@ -127,10 +127,10 @@ const CustomerDashboard = () => {
   };
 
   const Sidebar = ({ mobile = false }) => (
-    <aside className={`${mobile ? 'w-full' : 'w-64 hidden lg:flex'} flex-col h-full bg-white dark:bg-[#0C1220] border-r border-slate-200 dark:border-[#1F2937]`}>
+    <aside className={`${mobile ? 'w-full' : 'w-64 hidden lg:flex'} flex-col h-full bg-white dark:bg-nexus-bg border-r border-slate-200 dark:border-[#1F2937]`}>
       {/* Logo area */}
       <div className="p-6 border-b border-slate-200 dark:border-[#1F2937]">
-        <p className="text-xs text-slate-500 dark:text-gray-500 uppercase tracking-widest font-semibold mb-4">Customer Portal</p>
+        <p className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-widest font-semibold mb-4">Customer Portal</p>
 
         {/* Avatar + name */}
         <div className="flex items-center gap-3">
@@ -141,8 +141,8 @@ const CustomerDashboard = () => {
           <div className="min-w-0">
             <p className="text-slate-900 dark:text-white font-semibold text-sm truncate">{user?.full_name || 'Customer'}</p>
             <div className="flex items-center gap-1 mt-0.5">
-              <ShieldCheck size={11} className="text-[#FF6B57]" />
-              <p className="text-[#FF6B57] text-xs font-medium">{user?.role || 'Customer'}</p>
+              <ShieldCheck size={11} className="text-nexus-primary" />
+              <p className="text-nexus-primary text-xs font-medium">{user?.role || 'Customer'}</p>
             </div>
           </div>
         </div>
@@ -160,15 +160,15 @@ const CustomerDashboard = () => {
         {orderCount > 0 && (
           <NavLink
             to="orders"
-            className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#FF6B57]/10 border border-[#FF6B57]/20 text-sm"
+            className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-nexus-primary/10 border border-nexus-primary/20 text-sm"
           >
             <span className="text-slate-600 dark:text-gray-300">Active Orders</span>
-            <span className="bg-[#FF6B57] text-slate-900 dark:text-white text-xs font-bold px-2 py-0.5 rounded-full">{orderCount}</span>
+            <span className="bg-nexus-primary text-slate-900 dark:text-white text-xs font-bold px-2 py-0.5 rounded-full">{orderCount}</span>
           </NavLink>
         )}
         <button
           onClick={() => setShowLogout(true)}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-500 dark:text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-nexus-textSecondary dark:text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
         >
           <LogOut size={18} className="flex-shrink-0" />
           <span>Logout</span>
@@ -178,7 +178,7 @@ const CustomerDashboard = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#070B1A] flex flex-col">      <div className="flex flex-1 overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-nexus-bg flex flex-col">      <div className="flex flex-1 overflow-hidden">
         {/* Desktop Sidebar */}
         <Sidebar />
 

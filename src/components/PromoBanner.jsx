@@ -8,7 +8,7 @@ const PromoBanner = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="relative w-full rounded-3xl overflow-hidden bg-[#0F172A] h-[400px] sm:h-[500px] flex items-center shadow-2xl border border-slate-800"
+        className="relative w-full rounded-3xl overflow-hidden bg-[#0F172A] h-[400px] sm:h-[500px] flex items-center shadow-2xl border border-nexus-border"
       >
         {/* Background Image & Overlay */}
         <div className="absolute inset-0 z-0">
@@ -40,7 +40,7 @@ const PromoBanner = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-lg text-slate-300 mb-8 max-w-md"
+            className="text-lg text-nexus-textSecondary mb-8 max-w-md"
           >
             Upgrade your workspace with our premium selection of ergonomic keyboards, high-res monitors, and precise mice.
           </motion.p>

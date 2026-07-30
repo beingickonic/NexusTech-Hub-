@@ -87,7 +87,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
         `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 font-medium text-sm ${
           isActive
             ? 'bg-orange-500/10 text-orange-600 dark:text-orange-500 font-semibold'
-            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+            : 'text-slate-600 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
         }`
       }
     >
@@ -101,19 +101,19 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
       {/* Mobile Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-nexus-surface/50 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-60 bg-white dark:bg-[#0F172A] border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col ${
+        className={`fixed inset-y-0 left-0 z-50 w-60 bg-white dark:bg-[#0F172A] border-r border-slate-200 dark:border-nexus-border transform transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Logo */}
-        <div className="h-14 flex items-center px-5 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
+        <div className="h-14 flex items-center px-5 border-b border-slate-200 dark:border-nexus-border flex-shrink-0">
           <img src={darkLogo}  alt="NexusTech Admin" className="h-7 object-contain dark:block hidden" />
           <img src={lightLogo} alt="NexusTech Admin" className="h-7 object-contain block dark:hidden" />
         </div>
@@ -122,7 +122,7 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-5">
           {NAV_SECTIONS.map((section) => (
             <div key={section.label}>
-              <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-600">
+              <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-widest text-nexus-textSecondary dark:text-slate-600">
                 {section.label}
               </p>
               <div className="space-y-0.5">
@@ -133,10 +133,10 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
         </nav>
 
         {/* Footer */}
-        <div className="p-3 border-t border-slate-200 dark:border-slate-800 flex-shrink-0">
+        <div className="p-3 border-t border-slate-200 dark:border-nexus-border flex-shrink-0">
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-slate-600 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-500 transition-all duration-200 font-medium text-sm"
+            className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-slate-600 dark:text-nexus-textSecondary hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-500 transition-all duration-200 font-medium text-sm"
           >
             <LogOut size={17} />
             Sign Out

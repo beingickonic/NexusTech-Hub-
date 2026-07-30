@@ -36,11 +36,11 @@ const TrackingTimeline = ({ status }) => {
             <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-colors duration-300 ${
               isCompleted 
                 ? 'bg-orange-500 border-orange-500 text-white shadow-lg shadow-orange-500/30' 
-                : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-400'
+                : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-nexus-textSecondary'
             }`}>
               {isCompleted ? <Check size={16} strokeWidth={3} /> : <Circle size={10} fill="currentColor" />}
             </div>
-            <span className={`text-sm font-medium ${isCurrent ? 'text-orange-500' : (isCompleted ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400')}`}>
+            <span className={`text-sm font-medium ${isCurrent ? 'text-orange-500' : (isCompleted ? 'text-slate-900 dark:text-white' : 'text-nexus-textSecondary dark:text-nexus-textSecondary')}`}>
               {step.label}
             </span>
           </div>

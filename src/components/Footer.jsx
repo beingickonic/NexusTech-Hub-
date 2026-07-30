@@ -4,7 +4,7 @@ import darkLogo from '../assets/logo/logo-dark.png';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0F172A] text-slate-300 pt-14 sm:pt-20 pb-8 sm:pb-10 border-t border-white/10 relative overflow-hidden">
+    <footer className="bg-[#0F172A] text-nexus-textSecondary pt-14 sm:pt-20 pb-8 sm:pb-10 border-t border-nexus-border relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[400px] sm:w-[800px] h-[200px] sm:h-[300px] bg-primary/10 blur-[100px] sm:blur-[150px] pointer-events-none rounded-full" />
 
@@ -33,7 +33,7 @@ const Footer = () => {
             <ul className="flex flex-col gap-4 text-sm">
               {['Shop All', 'New Arrivals', 'Best Sellers', 'Deals & Promotions', 'About Us'].map((label) => (
                 <li key={label}>
-                  <Link to={label === 'About Us' ? '/about' : '/products'} className="text-slate-400 hover:text-primary transition-colors">{label}</Link>
+                  <Link to={label === 'About Us' ? '/about' : '/products'} className="text-nexus-textSecondary hover:text-primary transition-colors">{label}</Link>
                 </li>
               ))}
             </ul>
@@ -47,7 +47,7 @@ const Footer = () => {
                 const route = label === 'Help Center' ? '/help' : '/contact';
                 return (
                   <li key={label}>
-                    <Link to={route} className="text-slate-400 hover:text-primary transition-colors">{label}</Link>
+                    <Link to={route} className="text-nexus-textSecondary hover:text-primary transition-colors">{label}</Link>
                   </li>
                 );
               })}
@@ -64,7 +64,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-white font-medium mb-1">Location</span>
-                  <span className="text-slate-400 leading-relaxed">Meru, Kenya</span>
+                  <span className="text-nexus-textSecondary leading-relaxed">Meru, Kenya</span>
                 </div>
               </li>
               <li className="flex items-start gap-4">
@@ -73,7 +73,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-white font-medium mb-1">Phone</span>
-                  <a href="tel:+254728097596" className="text-slate-400 hover:text-primary transition-colors">+254 728 097 596</a>
+                  <a href="tel:+254728097596" className="text-nexus-textSecondary hover:text-primary transition-colors">+254 728 097 596</a>
                 </div>
               </li>
               <li className="flex items-start gap-4">
@@ -82,7 +82,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-white font-medium mb-1">Email</span>
-                  <a href="mailto:muriithiderrick08@gmail.com" className="text-slate-400 hover:text-primary transition-colors break-all">muriithiderrick08@gmail.com</a>
+                  <a href="mailto:muriithiderrick08@gmail.com" className="text-nexus-textSecondary hover:text-primary transition-colors break-all">muriithiderrick08@gmail.com</a>
                 </div>
               </li>
             </ul>
@@ -90,12 +90,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-400">
+        <div className="pt-8 border-t border-nexus-border flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-nexus-textSecondary">
           <p className="text-center md:text-left">&copy; {new Date().getFullYear()} NexusTech Hub. All rights reserved.</p>
           
           <div className="flex flex-col sm:flex-row items-center gap-4">
-            <span className="text-slate-500 text-xs uppercase tracking-wider font-semibold">Accepted Payments</span>
-            <div className="flex items-center gap-2 bg-white/5 p-2.5 rounded-xl border border-white/10 backdrop-blur-md">
+            <span className="text-nexus-textSecondary text-xs uppercase tracking-wider font-semibold">Accepted Payments</span>
+            <div className="flex items-center gap-2 bg-white/5 p-2.5 rounded-xl border border-nexus-border backdrop-blur-md">
               <div className="bg-white rounded-md flex items-center justify-center h-9 w-[60px] p-1.5 shadow-sm">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/M-PESA.png" alt="M-Pesa" className="max-h-full max-w-full object-contain" />
               </div>

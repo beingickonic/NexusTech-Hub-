@@ -54,16 +54,39 @@ const normaliseRole = (rawRole, email) => {
   return r; // return as-is for unknown roles
 };
 
-const fetchProfile = async (userId) => {
-  const { data, error } = await supabase
+const fetchProfile = async (userId, email = '') => {
+  let { data, error } = await supabase
     .from('profiles')
     .select('role, full_name, avatar_url, phone, department, branch, employee_number, status, last_login, company_name, address, city, postal_code')
     .eq('id', userId)
-    .single();
+    .maybeSingle();
+    
   if (error) {
     console.error("fetchProfile error:", error);
-    // Non-fatal — user may not have a profile yet or RLS blocked read
   }
+
+  // If a profile row does not exist, automatically create a default profile
+  if (!data) {
+    console.log("No profile found, creating default profile for:", email);
+    const defaultProfile = {
+      id: userId,
+      email: email,
+      role: 'Customer',
+      full_name: email?.split('@')[0] || 'New User',
+      status: 'Active'
+    };
+    
+    const { error: insertError } = await supabase
+      .from('profiles')
+      .insert([defaultProfile]);
+      
+    if (insertError) {
+      console.error("Error creating default profile:", insertError);
+    } else {
+      data = defaultProfile;
+    }
+  }
+
   return data;
 };
 
@@ -71,7 +94,7 @@ const login = async (email, password) => {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { success: false, message: error.message };
 
-  const profile = await fetchProfile(data.user.id);
+  const profile = await fetchProfile(data.user.id, email);
   const role = normaliseRole(profile?.role, email);
 
   const userWithRole = {

@@ -16,7 +16,7 @@ const getFileIcon = (mimeType) => {
   if (mimeType?.includes('image/')) return <ImageIcon size={24} className="text-blue-500" />;
   if (mimeType?.includes('pdf')) return <FileText size={24} className="text-red-500" />;
   if (mimeType?.includes('sheet') || mimeType?.includes('excel')) return <File size={24} className="text-green-500" />;
-  return <File size={24} className="text-slate-500" />;
+  return <File size={24} className="text-nexus-textSecondary" />;
 };
 
 const RecordKeepingPage = () => {
@@ -87,7 +87,7 @@ const RecordKeepingPage = () => {
       <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Record Keeping</h1>
-          <p className="text-slate-500 dark:text-slate-400">Manage company documents securely with version control and visibility settings.</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Manage company documents securely with version control and visibility settings.</p>
         </div>
         <div className="relative">
           <input 
@@ -108,18 +108,18 @@ const RecordKeepingPage = () => {
         </div>
       </div>
 
-      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden flex flex-col">
         {/* Toolbar */}
-        <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-slate-700">
+        <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-nexus-border">
           <div className="relative w-full sm:max-w-md">
             <input 
               type="text"
               placeholder="Search documents..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white"
+              className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-nexus-textSecondary text-slate-900 dark:text-white"
             />
-            <Search size={18} className="absolute left-3 top-3 text-slate-400" />
+            <Search size={18} className="absolute left-3 top-3 text-nexus-textSecondary" />
           </div>
           <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm font-medium transition-colors border border-slate-200 dark:border-slate-600 w-full sm:w-auto">
             <Filter size={16} /> Filters
@@ -130,7 +130,7 @@ const RecordKeepingPage = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-700">
+              <tr className="bg-slate-50 dark:bg-nexus-surface/50 text-nexus-textSecondary dark:text-nexus-textSecondary text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-nexus-border">
                 <th className="px-6 py-4">Name</th>
                 <th className="px-6 py-4 hidden md:table-cell">Category</th>
                 <th className="px-6 py-4 hidden sm:table-cell">Size</th>
@@ -148,9 +148,9 @@ const RecordKeepingPage = () => {
                 </tr>
               ) : filteredDocs.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-16 text-center text-slate-500">
-                    <FolderOpen size={48} className="mx-auto text-slate-300 dark:text-slate-600 mb-4" />
-                    <p className="text-lg font-medium text-slate-700 dark:text-slate-300">No documents found</p>
+                  <td colSpan="6" className="px-6 py-16 text-center text-nexus-textSecondary">
+                    <FolderOpen size={48} className="mx-auto text-nexus-textSecondary dark:text-slate-600 mb-4" />
+                    <p className="text-lg font-medium text-slate-700 dark:text-nexus-textSecondary">No documents found</p>
                     <p className="text-sm mt-1">Upload a file to get started.</p>
                   </td>
                 </tr>
@@ -164,7 +164,7 @@ const RecordKeepingPage = () => {
                         </div>
                         <div>
                           <div className="font-semibold text-slate-900 dark:text-white line-clamp-1">{doc.title}</div>
-                          <div className="text-xs text-slate-500 mt-0.5 flex gap-2">
+                          <div className="text-xs text-nexus-textSecondary mt-0.5 flex gap-2">
                             <span>v{doc.version}</span>
                             <span>•</span>
                             <span>{new Date(doc.created_at).toLocaleDateString()}</span>
@@ -172,12 +172,12 @@ const RecordKeepingPage = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 hidden md:table-cell text-slate-600 dark:text-slate-400">
+                    <td className="px-6 py-4 hidden md:table-cell text-slate-600 dark:text-nexus-textSecondary">
                       <span className="bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md text-xs font-medium">
                         {doc.category || 'General'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 hidden sm:table-cell text-slate-600 dark:text-slate-400">
+                    <td className="px-6 py-4 hidden sm:table-cell text-slate-600 dark:text-nexus-textSecondary">
                       {formatBytes(doc.file_size)}
                     </td>
                     <td className="px-6 py-4 hidden lg:table-cell">
@@ -189,18 +189,18 @@ const RecordKeepingPage = () => {
                         {doc.visibility}
                       </span>
                     </td>
-                    <td className="px-6 py-4 hidden xl:table-cell text-slate-600 dark:text-slate-400">
+                    <td className="px-6 py-4 hidden xl:table-cell text-slate-600 dark:text-nexus-textSecondary">
                       {doc.uploader?.full_name || 'System'}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button className="p-2 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-lg transition-colors" title="Preview">
+                        <button className="p-2 text-nexus-textSecondary hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-lg transition-colors" title="Preview">
                           <Eye size={16} />
                         </button>
-                        <button className="p-2 text-slate-400 hover:text-green-500 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-lg transition-colors" title="Download">
+                        <button className="p-2 text-nexus-textSecondary hover:text-green-500 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-lg transition-colors" title="Download">
                           <Download size={16} />
                         </button>
-                        <button onClick={() => handleDelete(doc.id, doc.file_path)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors" title="Delete">
+                        <button onClick={() => handleDelete(doc.id, doc.file_path)} className="p-2 text-nexus-textSecondary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors" title="Delete">
                           <Trash2 size={16} />
                         </button>
                       </div>

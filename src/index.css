@@ -66,7 +66,7 @@
     @apply bg-white/70 backdrop-blur-xl border border-slate-200/50;
   }
   .dark .glass {
-    @apply bg-dark-surface/70 backdrop-blur-md border border-white/10;
+    @apply bg-dark-surface/70 backdrop-blur-md border border-nexus-border;
   }
   .glass-card {
     @apply glass shadow-xl shadow-black/5 dark:shadow-soft rounded-md;

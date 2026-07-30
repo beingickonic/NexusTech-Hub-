@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
   return (
     <motion.div
       whileHover={{ y: -8 }}
-      className="group relative bg-white dark:bg-dark-surface rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-none border border-slate-200 dark:border-white/5 transition-all duration-300 hover:shadow-glow hover:border-primary/50 flex flex-col h-full"
+      className="group relative bg-white dark:bg-dark-surface rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-none border border-slate-200 dark:border-nexus-border transition-all duration-300 hover:shadow-glow hover:border-primary/50 flex flex-col h-full"
     >
       {/* Badges */}
       <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
@@ -81,14 +81,14 @@ const ProductCard = ({ product }) => {
               <Star key={i} size={14} fill={i < Math.floor(product.rating) ? "currentColor" : "none"} />
             ))}
           </div>
-          <span className="text-xs text-slate-500 dark:text-gray-400">({product.reviews})</span>
+          <span className="text-xs text-nexus-textSecondary dark:text-gray-400">({product.reviews})</span>
         </div>
         
         <Link to={`/products/${product.id}`} className="font-semibold text-slate-900 dark:text-white mb-1 line-clamp-2 leading-snug hover:text-primary transition-colors">
           {product.title}
         </Link>
         
-        <p className="text-sm text-slate-500 dark:text-gray-400 mb-4 line-clamp-1">
+        <p className="text-sm text-nexus-textSecondary dark:text-gray-400 mb-4 line-clamp-1">
           {product.category}
         </p>
 
@@ -111,7 +111,7 @@ const ProductCard = ({ product }) => {
               e.stopPropagation();
               await addToCart(product.id, 1);
             }}
-            className="w-10 h-10 rounded-full bg-slate-100 dark:bg-dark-bg flex items-center justify-center text-slate-900 dark:text-white hover:bg-[#FF724C] hover:text-white dark:hover:bg-primary transition-colors z-20 relative"
+            className="w-10 h-10 rounded-full bg-slate-100 dark:bg-dark-bg flex items-center justify-center text-slate-900 dark:text-white hover:bg-nexus-primary hover:text-white dark:hover:bg-primary transition-colors z-20 relative"
           >
             <ShoppingCart size={18} />
           </button>

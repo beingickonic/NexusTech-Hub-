@@ -10,8 +10,8 @@ const ProfilePage = () => {
       <div className="max-w-4xl mx-auto px-4 lg:px-8">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">My Profile</h1>
         
-        <div className="bg-white dark:bg-dark-surface rounded-3xl p-8 border border-slate-200 dark:border-white/5 shadow-sm">
-          <div className="flex items-center gap-6 mb-8 border-b border-slate-100 dark:border-white/5 pb-8">
+        <div className="bg-white dark:bg-dark-surface rounded-3xl p-8 border border-slate-200 dark:border-nexus-border shadow-sm">
+          <div className="flex items-center gap-6 mb-8 border-b border-slate-100 dark:border-nexus-border pb-8">
             <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center text-primary text-4xl font-bold">
               {user?.full_name?.charAt(0) || 'U'}
             </div>
@@ -22,29 +22,29 @@ const ProfilePage = () => {
 
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <div className="flex items-start gap-4">
-              <div className="p-3 bg-slate-50 dark:bg-[#020617] rounded-xl text-slate-400">
+              <div className="p-3 bg-slate-50 dark:bg-nexus-bg rounded-xl text-nexus-textSecondary">
                 <User size={20} />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-gray-400">Full Name</p>
+                <p className="text-sm text-nexus-textSecondary dark:text-gray-400">Full Name</p>
                 <p className="font-medium text-slate-900 dark:text-white">{user?.full_name}</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="p-3 bg-slate-50 dark:bg-[#020617] rounded-xl text-slate-400">
+              <div className="p-3 bg-slate-50 dark:bg-nexus-bg rounded-xl text-nexus-textSecondary">
                 <Mail size={20} />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-gray-400">Email Address</p>
+                <p className="text-sm text-nexus-textSecondary dark:text-gray-400">Email Address</p>
                 <p className="font-medium text-slate-900 dark:text-white">{user?.email}</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="p-3 bg-slate-50 dark:bg-[#020617] rounded-xl text-slate-400">
+              <div className="p-3 bg-slate-50 dark:bg-nexus-bg rounded-xl text-nexus-textSecondary">
                 <Shield size={20} />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-gray-400">Account Type</p>
+                <p className="text-sm text-nexus-textSecondary dark:text-gray-400">Account Type</p>
                 <p className="font-medium text-slate-900 dark:text-white capitalize">{user?.role}</p>
               </div>
             </div>
@@ -53,7 +53,7 @@ const ProfilePage = () => {
           <div className="flex gap-4">
             <Link 
               to="/orders"
-              className="flex items-center gap-2 px-6 py-3 bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 rounded-xl font-medium transition-colors shadow-lg"
+              className="flex items-center gap-2 px-6 py-3 bg-nexus-surface hover:bg-slate-800 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 rounded-xl font-medium transition-colors shadow-lg"
             >
               <Package size={18} /> My Orders
             </Link>

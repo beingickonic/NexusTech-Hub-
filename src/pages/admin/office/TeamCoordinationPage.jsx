@@ -13,11 +13,11 @@ const DepartmentCard = ({ dept, tasks, members }) => {
   const progress = totalTasks === 0 ? 0 : Math.round((completed / totalTasks) * 100);
 
   return (
-    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm flex flex-col hover:border-orange-500/30 transition-colors">
+    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border p-6 shadow-sm flex flex-col hover:border-orange-500/30 transition-colors">
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="text-xl font-bold text-slate-900 dark:text-white">{dept.name}</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Head: {dept.head_id ? members.find(m => m.id === dept.head_id)?.full_name : 'Unassigned'}</p>
+          <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">Head: {dept.head_id ? members.find(m => m.id === dept.head_id)?.full_name : 'Unassigned'}</p>
         </div>
         <div className="p-2 bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500 rounded-xl">
           <Users size={20} />
@@ -25,14 +25,14 @@ const DepartmentCard = ({ dept, tasks, members }) => {
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-6 flex-1">
-        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+        <div className="bg-slate-50 dark:bg-nexus-surface/50 p-3 rounded-xl border border-slate-100 dark:border-nexus-border">
+          <div className="flex items-center gap-2 text-nexus-textSecondary dark:text-nexus-textSecondary text-xs font-medium mb-1">
             <Users size={14} /> Total Staff
           </div>
           <div className="text-xl font-bold text-slate-900 dark:text-white">{deptMembers.length}</div>
         </div>
-        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-          <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+        <div className="bg-slate-50 dark:bg-nexus-surface/50 p-3 rounded-xl border border-slate-100 dark:border-nexus-border">
+          <div className="flex items-center gap-2 text-nexus-textSecondary dark:text-nexus-textSecondary text-xs font-medium mb-1">
             <CheckSquare size={14} /> Total Tasks
           </div>
           <div className="text-xl font-bold text-slate-900 dark:text-white">{totalTasks}</div>
@@ -52,7 +52,7 @@ const DepartmentCard = ({ dept, tasks, members }) => {
       </div>
 
       <div className="mb-4">
-        <div className="flex justify-between text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">
+        <div className="flex justify-between text-xs font-medium text-nexus-textSecondary dark:text-nexus-textSecondary mb-1">
           <span>Task Progress</span>
           <span>{progress}%</span>
         </div>
@@ -61,10 +61,10 @@ const DepartmentCard = ({ dept, tasks, members }) => {
         </div>
       </div>
 
-      <div className="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700">
+      <div className="mt-auto pt-4 border-t border-slate-100 dark:border-nexus-border">
         <button 
           onClick={() => toast('Opening task assignment modal...')} 
-          className="w-full flex items-center justify-center gap-2 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-nexus-textSecondary rounded-lg text-sm font-medium transition-colors"
         >
           <Plus size={16} /> Assign Task
         </button>
@@ -107,7 +107,7 @@ const TeamCoordinationPage = () => {
       <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Team Coordination</h1>
-          <p className="text-slate-500 dark:text-slate-400">Monitor department progress, staffing, and assign tasks directly to teams.</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Monitor department progress, staffing, and assign tasks directly to teams.</p>
         </div>
         <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-semibold transition-all shadow-lg shadow-orange-500/30">
           <Plus size={18} /> New Department
@@ -119,10 +119,10 @@ const TeamCoordinationPage = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
         </div>
       ) : departments.length === 0 ? (
-        <div className="text-center py-20 bg-white/50 dark:bg-slate-800/50 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
-          <Users size={48} className="mx-auto text-slate-400 mb-4" />
+        <div className="text-center py-20 bg-white/50 dark:bg-slate-800/50 rounded-2xl border border-dashed border-slate-300 dark:border-nexus-border">
+          <Users size={48} className="mx-auto text-nexus-textSecondary mb-4" />
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">No departments found</h3>
-          <p className="text-slate-500">Seed the database or create a new department.</p>
+          <p className="text-nexus-textSecondary">Seed the database or create a new department.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

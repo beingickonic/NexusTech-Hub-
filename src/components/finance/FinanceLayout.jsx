@@ -8,7 +8,7 @@ const FinanceLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-nexus-bg text-slate-900 dark:text-white font-sans">
       <FinanceSidebar
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
 
 const StatCard = ({ title, value, icon: Icon, trend }) => (
-  <div className="bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 p-6 rounded-2xl shadow-xl">
+  <div className="bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-nexus-border/50 p-6 rounded-2xl shadow-xl">
     <div className="flex items-center justify-between mb-4">
       <div className="p-3 bg-rose-500/20 text-rose-500 rounded-xl">
         <Icon size={24} />
@@ -17,7 +17,7 @@ const StatCard = ({ title, value, icon: Icon, trend }) => (
         </span>
       )}
     </div>
-    <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium">{title}</h3>
+    <h3 className="text-nexus-textSecondary dark:text-nexus-textSecondary text-sm font-medium">{title}</h3>
     <p className="text-2xl font-bold text-slate-800 dark:text-white mt-1">KSh {Number(value).toLocaleString()}</p>
   </div>
 );
@@ -54,7 +54,7 @@ const FinanceDashboard = () => {
   };
 
   if (loading) {
-    return <div className="p-8 text-center text-slate-500">Loading Dashboard...</div>;
+    return <div className="p-8 text-center text-nexus-textSecondary">Loading Dashboard...</div>;
   }
 
   return (
@@ -63,14 +63,14 @@ const FinanceDashboard = () => {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Finance Dashboard</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Overview of financial performance</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mt-1">Overview of financial performance</p>
         </div>
         {canEdit && (
           <div className="flex gap-3">
             <Link to="/finance/invoices" className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-xl flex items-center transition-colors">
               <Plus size={18} className="mr-2" /> New Invoice
             </Link>
-            <Link to="/finance/expenses" className="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 px-4 py-2 rounded-xl flex items-center transition-colors">
+            <Link to="/finance/expenses" className="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-nexus-border hover:bg-slate-50 dark:hover:bg-slate-700 px-4 py-2 rounded-xl flex items-center transition-colors">
               <Plus size={18} className="mr-2" /> Add Expense
             </Link>
           </div>
@@ -99,23 +99,23 @@ const FinanceDashboard = () => {
             ] : []),
             { title: 'Generate Report', desc: 'View financial reports', icon: TrendingUp, to: '/finance/reports' },
           ].map((action, i) => (
-            <Link key={i} to={action.to} className="group flex items-center justify-between p-4 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md border border-white/20 dark:border-slate-700/50 rounded-2xl hover:bg-white/80 dark:hover:bg-slate-700/80 transition-all cursor-pointer">
+            <Link key={i} to={action.to} className="group flex items-center justify-between p-4 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md border border-white/20 dark:border-nexus-border/50 rounded-2xl hover:bg-white/80 dark:hover:bg-slate-700/80 transition-all cursor-pointer">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-rose-100 dark:bg-rose-500/20 text-rose-500 rounded-xl group-hover:scale-110 transition-transform">
                   <action.icon size={20} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-800 dark:text-white">{action.title}</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{action.desc}</p>
+                  <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">{action.desc}</p>
                 </div>
               </div>
-              <ArrowRight size={20} className="text-slate-400 group-hover:text-rose-500 group-hover:translate-x-1 transition-all" />
+              <ArrowRight size={20} className="text-nexus-textSecondary group-hover:text-rose-500 group-hover:translate-x-1 transition-all" />
             </Link>
           ))}
         </div>
 
         {/* Recent Activity Placeholder for Phase 1 */}
-        <div className="lg:col-span-2 bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-slate-700/50 p-6 rounded-2xl shadow-xl">
+        <div className="lg:col-span-2 bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-nexus-border/50 p-6 rounded-2xl shadow-xl">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold text-slate-800 dark:text-white">Recent Activity</h2>
             <Link to="/finance/reports" className="text-rose-500 hover:text-rose-600 text-sm font-medium flex items-center">
@@ -123,7 +123,7 @@ const FinanceDashboard = () => {
             </Link>
           </div>
           
-          <div className="flex flex-col items-center justify-center h-64 text-slate-500">
+          <div className="flex flex-col items-center justify-center h-64 text-nexus-textSecondary">
             <FileText size={48} className="mb-4 opacity-20" />
             <p>Activity logs will populate as transactions are recorded.</p>
           </div>

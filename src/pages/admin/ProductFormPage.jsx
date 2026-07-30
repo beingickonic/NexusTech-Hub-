@@ -265,14 +265,14 @@ const ProductFormPage = () => {
     <div className="animate-fade-in max-w-7xl mx-auto pb-12">
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <button onClick={() => navigate('/admin/products')} className="p-2 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors">
+          <button onClick={() => navigate('/admin/products')} className="p-2 text-nexus-textSecondary hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors">
             <ArrowLeft size={20} />
           </button>
           <div>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
               {isEditMode ? 'Edit Product' : 'Add New Product'}
             </h1>
-            <p className="text-slate-500 dark:text-slate-400">Fill in the product details, features, and imagery.</p>
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Fill in the product details, features, and imagery.</p>
           </div>
         </div>
       </div>
@@ -282,63 +282,63 @@ const ProductFormPage = () => {
           
           {/* Main Info Column */}
           <div className="xl:col-span-2 space-y-8">
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 sm:p-8">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm p-6 sm:p-8">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Basic Information</h2>
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Product Name *</label>
-                  <input required type="text" name="title" value={formData.title} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Product Name *</label>
+                  <input required type="text" name="title" value={formData.title} onChange={handleChange} className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Category *</label>
-                    <select required name="category_id" value={formData.category_id} onChange={handleChange} disabled={categoriesLoading} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all disabled:opacity-60">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Category *</label>
+                    <select required name="category_id" value={formData.category_id} onChange={handleChange} disabled={categoriesLoading} className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all disabled:opacity-60">
                       {categories.map(cat => (
                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Brand</label>
-                    <input type="text" name="brand" value={formData.brand} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
+                    <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Brand</label>
+                    <input type="text" name="brand" value={formData.brand} onChange={handleChange} className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Short Description</label>
-                  <textarea name="short_desc" value={formData.short_desc} onChange={handleChange} rows="2" className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all"></textarea>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Short Description</label>
+                  <textarea name="short_desc" value={formData.short_desc} onChange={handleChange} rows="2" className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all"></textarea>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Full Description</label>
-                  <textarea name="description" value={formData.description} onChange={handleChange} rows="5" className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all"></textarea>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Full Description</label>
+                  <textarea name="description" value={formData.description} onChange={handleChange} rows="5" className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all"></textarea>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Features (comma or newline separated)</label>
-                  <textarea name="features" value={formData.features} onChange={handleChange} rows="4" placeholder="e.g. 4K Resolution, 120Hz Refresh Rate, HDR10" className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all"></textarea>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Features (comma or newline separated)</label>
+                  <textarea name="features" value={formData.features} onChange={handleChange} rows="4" placeholder="e.g. 4K Resolution, 120Hz Refresh Rate, HDR10" className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all"></textarea>
                 </div>
               </div>
             </div>
 
             {/* Media Upload */}
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 sm:p-8">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm p-6 sm:p-8">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Product Image Source</h2>
               
               <div className="flex gap-4 mb-6">
-                <label className={`flex items-center gap-2 cursor-pointer p-4 border rounded-xl flex-1 transition-all ${imageSourceType === 'upload' ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-500/10' : 'border-slate-200 dark:border-slate-700'}`}>
+                <label className={`flex items-center gap-2 cursor-pointer p-4 border rounded-xl flex-1 transition-all ${imageSourceType === 'upload' ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-500/10' : 'border-slate-200 dark:border-nexus-border'}`}>
                   <input type="radio" name="imageSource" checked={imageSourceType === 'upload'} onChange={() => setImageSourceType('upload')} className="hidden" />
-                  <UploadCloud size={20} className={imageSourceType === 'upload' ? 'text-orange-500' : 'text-slate-400'} />
-                  <span className={`font-medium ${imageSourceType === 'upload' ? 'text-orange-700 dark:text-orange-400' : 'text-slate-700 dark:text-slate-300'}`}>Upload File</span>
+                  <UploadCloud size={20} className={imageSourceType === 'upload' ? 'text-orange-500' : 'text-nexus-textSecondary'} />
+                  <span className={`font-medium ${imageSourceType === 'upload' ? 'text-orange-700 dark:text-orange-400' : 'text-slate-700 dark:text-nexus-textSecondary'}`}>Upload File</span>
                 </label>
-                <label className={`flex items-center gap-2 cursor-pointer p-4 border rounded-xl flex-1 transition-all ${imageSourceType === 'url' ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-500/10' : 'border-slate-200 dark:border-slate-700'}`}>
+                <label className={`flex items-center gap-2 cursor-pointer p-4 border rounded-xl flex-1 transition-all ${imageSourceType === 'url' ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-500/10' : 'border-slate-200 dark:border-nexus-border'}`}>
                   <input type="radio" name="imageSource" checked={imageSourceType === 'url'} onChange={() => setImageSourceType('url')} className="hidden" />
-                  <Link size={20} className={imageSourceType === 'url' ? 'text-orange-500' : 'text-slate-400'} />
-                  <span className={`font-medium ${imageSourceType === 'url' ? 'text-orange-700 dark:text-orange-400' : 'text-slate-700 dark:text-slate-300'}`}>Image URL</span>
+                  <Link size={20} className={imageSourceType === 'url' ? 'text-orange-500' : 'text-nexus-textSecondary'} />
+                  <span className={`font-medium ${imageSourceType === 'url' ? 'text-orange-700 dark:text-orange-400' : 'text-slate-700 dark:text-nexus-textSecondary'}`}>Image URL</span>
                 </label>
               </div>
 
               {imageSourceType === 'upload' ? (
                 <>
                   <div 
-                    className={`relative flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-xl transition-colors cursor-pointer ${isDragOver ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-500/10' : 'border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                    className={`relative flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-xl transition-colors cursor-pointer ${isDragOver ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-500/10' : 'border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-nexus-surface/50 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
@@ -356,21 +356,21 @@ const ProductFormPage = () => {
                       <UploadCloud size={28} />
                     </div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">Click to upload or drag and drop</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">SVG, PNG, JPG or GIF</p>
+                    <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">SVG, PNG, JPG or GIF</p>
                   </div>
 
                   {(imageFiles.length > 0 || existingImages.length > 0) && (
                     <div className="mt-6">
-                      <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Preview</h4>
+                      <h4 className="text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-3">Preview</h4>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         {existingImages.map((src, index) => (
-                          <div key={`existing-${index}`} className="relative aspect-square rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden group">
+                          <div key={`existing-${index}`} className="relative aspect-square rounded-xl border border-slate-200 dark:border-nexus-border overflow-hidden group">
                             <SmartImage src={src} className="w-full h-full" iconClassName="w-4 h-4" />
                             <div className="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded z-20">Existing</div>
                           </div>
                         ))}
                         {imageFiles.map((file, index) => (
-                          <div key={`new-${index}`} className="relative aspect-square rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden group">
+                          <div key={`new-${index}`} className="relative aspect-square rounded-xl border border-slate-200 dark:border-nexus-border overflow-hidden group">
                             <SmartImage src={file.preview} className="w-full h-full" iconClassName="w-4 h-4" />
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
                               <button type="button" onClick={(e) => { e.stopPropagation(); removeFile(index); }} className="w-8 h-8 bg-white text-red-500 rounded-full flex items-center justify-center hover:bg-red-50 transition-colors">
@@ -385,20 +385,20 @@ const ProductFormPage = () => {
                 </>
               ) : (
                 <div className="space-y-4">
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Direct Image URL</label>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">Direct Image URL</label>
                   <input 
                     type="url" 
                     name="image_url" 
                     placeholder="https://example.com/image.jpg"
                     value={formData.image_url} 
                     onChange={handleChange} 
-                    className={`w-full bg-slate-50 dark:bg-slate-900 border ${urlError ? 'border-red-500 focus:ring-red-500/50' : 'border-slate-200 dark:border-slate-700 focus:ring-orange-500/50'} rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 outline-none transition-all`}
+                    className={`w-full bg-slate-50 dark:bg-nexus-surface border ${urlError ? 'border-red-500 focus:ring-red-500/50' : 'border-slate-200 dark:border-nexus-border focus:ring-orange-500/50'} rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 outline-none transition-all`}
                   />
                   {urlError && <p className="text-red-500 text-sm mt-1">{urlError}</p>}
                   {formData.image_url && !urlError && (
-                    <div className="mt-4 p-4 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900/50">
-                      <p className="text-xs text-slate-500 mb-2">URL Preview:</p>
-                      <div className="h-40 relative rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
+                    <div className="mt-4 p-4 border border-slate-200 dark:border-nexus-border rounded-xl bg-slate-50 dark:bg-nexus-surface/50">
+                      <p className="text-xs text-nexus-textSecondary mb-2">URL Preview:</p>
+                      <div className="h-40 relative rounded-lg overflow-hidden border border-slate-200 dark:border-nexus-border">
                         <SmartImage src={formData.image_url} className="w-full h-full" />
                       </div>
                     </div>
@@ -411,7 +411,7 @@ const ProductFormPage = () => {
           {/* Sidebar Column */}
           <div className="space-y-8">
             {/* Live Preview Card */}
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-6">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm p-6">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <ImageIcon size={18} className="text-orange-500" />
                 Live Preview
@@ -421,52 +421,52 @@ const ProductFormPage = () => {
               </div>
             </div>
 
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 sm:p-8">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm p-6 sm:p-8">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Pricing & Inventory</h2>
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Regular Price (Ksh) *</label>
-                  <input required type="number" step="0.01" name="price" value={formData.price} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Regular Price (Ksh) *</label>
+                  <input required type="number" step="0.01" name="price" value={formData.price} onChange={handleChange} className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Sale Price (Ksh)</label>
-                  <input type="number" step="0.01" name="old_price" value={formData.old_price} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Sale Price (Ksh)</label>
+                  <input type="number" step="0.01" name="old_price" value={formData.old_price} onChange={handleChange} className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">SKU (Stock Keeping Unit)</label>
-                  <input type="text" name="sku" value={formData.sku} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">SKU (Stock Keeping Unit)</label>
+                  <input type="text" name="sku" value={formData.sku} onChange={handleChange} className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Stock Quantity *</label>
-                  <input required type="number" name="stock" value={formData.stock} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Stock Quantity *</label>
+                  <input required type="number" name="stock" value={formData.stock} onChange={handleChange} className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all" />
                 </div>
               </div>
             </div>
 
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 sm:p-8">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm p-6 sm:p-8">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Status & Visibility</h2>
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Product Status</label>
-                  <select name="availability" value={formData.availability} onChange={handleChange} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-2">Product Status</label>
+                  <select name="availability" value={formData.availability} onChange={handleChange} className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500/50 outline-none transition-all">
                     <option value={true}>Active</option>
                     <option value={false}>Draft</option>
                   </select>
                 </div>
                 
-                <label className="flex items-center gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                <label className="flex items-center gap-3 p-3 border border-slate-200 dark:border-nexus-border rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                   <input type="checkbox" name="featured" checked={!!formData.featured} onChange={handleChange} className="w-5 h-5 rounded text-orange-500 focus:ring-orange-500 border-slate-300" />
                   <div>
                     <p className="font-medium text-slate-900 dark:text-white text-sm">Featured Product</p>
-                    <p className="text-xs text-slate-500">Show on homepage featured section</p>
+                    <p className="text-xs text-nexus-textSecondary">Show on homepage featured section</p>
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                <label className="flex items-center gap-3 p-3 border border-slate-200 dark:border-nexus-border rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                   <input type="checkbox" name="new_arrival" checked={!!formData.new_arrival} onChange={handleChange} className="w-5 h-5 rounded text-orange-500 focus:ring-orange-500 border-slate-300" />
                   <div>
                     <p className="font-medium text-slate-900 dark:text-white text-sm">New Arrival</p>
-                    <p className="text-xs text-slate-500">Show "New" badge and in arrivals section</p>
+                    <p className="text-xs text-nexus-textSecondary">Show "New" badge and in arrivals section</p>
                   </div>
                 </label>
               </div>
@@ -475,7 +475,7 @@ const ProductFormPage = () => {
 
         </div>
 
-        <div className="flex justify-end gap-4 sticky bottom-6 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg">
+        <div className="flex justify-end gap-4 sticky bottom-6 z-10 bg-white/80 dark:bg-nexus-surface/80 backdrop-blur-md p-4 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-lg">
           <button type="button" onClick={() => navigate('/admin/products')} className="px-6 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-900 dark:text-white font-medium rounded-xl transition-colors">
             Cancel
           </button>

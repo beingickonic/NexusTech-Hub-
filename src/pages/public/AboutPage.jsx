@@ -42,7 +42,7 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-base text-slate-500 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed"
+            className="text-base text-nexus-textSecondary dark:text-gray-400 max-w-3xl mx-auto leading-relaxed"
           >
             At NexusTech Hub, we believe that cutting-edge technology should be accessible, beautiful, and seamlessly integrated into your everyday life.
           </motion.p>
@@ -50,7 +50,7 @@ const AboutPage = () => {
       </section>
 
       {/* Stats */}
-      <section className="py-12 border-y border-slate-200 dark:border-white/10 bg-white dark:bg-dark-surface transition-colors duration-300">
+      <section className="py-12 border-y border-slate-200 dark:border-nexus-border bg-white dark:bg-dark-surface transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             { label: 'Happy Customers', value: '10,000+' },
@@ -66,7 +66,7 @@ const AboutPage = () => {
               transition={{ delay: i * 0.1 }}
             >
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
-              <div className="text-sm font-medium text-slate-500 dark:text-gray-400 uppercase tracking-wider">{stat.label}</div>
+              <div className="text-sm font-medium text-nexus-textSecondary dark:text-gray-400 uppercase tracking-wider">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -105,11 +105,11 @@ const AboutPage = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-24 bg-white dark:bg-dark-surface border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
+      <section className="py-24 bg-white dark:bg-dark-surface border-t border-slate-200 dark:border-nexus-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Why Choose NexusTech</h2>
-            <p className="text-slate-500 dark:text-gray-400">The core values that drive our business forward.</p>
+            <p className="text-nexus-textSecondary dark:text-gray-400">The core values that drive our business forward.</p>
           </div>
           <motion.div
             variants={stagger}
@@ -130,13 +130,13 @@ const AboutPage = () => {
                 key={item.title}
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-2xl bg-[#F8FAFC] dark:bg-dark-bg border border-slate-200 dark:border-white/5 hover:border-primary/30 transition-all group"
+                className="p-8 rounded-2xl bg-[#F8FAFC] dark:bg-dark-bg border border-slate-200 dark:border-nexus-border hover:border-primary/30 transition-all group"
               >
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
                   <item.icon size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{item.title}</h3>
-                <p className="text-slate-500 dark:text-gray-400 leading-relaxed">{item.desc}</p>
+                <p className="text-nexus-textSecondary dark:text-gray-400 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -148,7 +148,7 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Our Core Values</h2>
-            <p className="text-slate-500 dark:text-gray-400">The principles that guide everything we do.</p>
+            <p className="text-nexus-textSecondary dark:text-gray-400">The principles that guide everything we do.</p>
           </div>
           <motion.div
             variants={stagger}
@@ -168,7 +168,7 @@ const AboutPage = () => {
                 key={item.title}
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl bg-white dark:bg-dark-surface border border-slate-200 dark:border-white/5 hover:border-primary/30 transition-all text-center"
+                className="p-6 rounded-2xl bg-white dark:bg-dark-surface border border-slate-200 dark:border-nexus-border hover:border-primary/30 transition-all text-center"
               >
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
                   <item.icon size={24} />
@@ -181,11 +181,11 @@ const AboutPage = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-24 bg-white dark:bg-dark-surface border-t border-slate-200 dark:border-white/10 transition-colors duration-300">
+      <section className="py-24 bg-white dark:bg-dark-surface border-t border-slate-200 dark:border-nexus-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Meet Our Leadership</h2>
-            <p className="text-slate-500 dark:text-gray-400">The people behind NexusTech Hub.</p>
+            <p className="text-nexus-textSecondary dark:text-gray-400">The people behind NexusTech Hub.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -200,13 +200,13 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl bg-[#F8FAFC] dark:bg-dark-bg border border-slate-200 dark:border-white/5 text-center"
+                className="p-6 rounded-2xl bg-[#F8FAFC] dark:bg-dark-bg border border-slate-200 dark:border-nexus-border text-center"
               >
                 <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
                   <UserRound size={32} />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{member.role}</h3>
-                <p className="text-sm text-slate-500 dark:text-gray-400">{member.desc}</p>
+                <p className="text-sm text-nexus-textSecondary dark:text-gray-400">{member.desc}</p>
               </motion.div>
             ))}
           </div>

@@ -18,16 +18,30 @@ export default {
       },
 
       colors: {
-        primary: '#FF6B57',
+        primary: '#FF6B57', // Legacy, keeping for fallback
         success: '#22C55E',
         warning: '#F59E0B',
         danger: '#EF4444',
-        accent: '#FDBF50',
+        accent: '#FDBF50', // Legacy
         'off-white': '#F4F4F8',
         'dark-navy': '#111827',
         'dark-bg': '#070B1A',
         'dark-surface': '#111827',
         'muted-text': '#64748B',
+        
+        // Official Nexus Design Tokens
+        nexus: {
+          primary: '#FF724C',
+          secondary: '#FDBF50',
+          bg: '#2A2C41',
+          surface: '#353756',
+          text: '#F4F4F8',
+          textSecondary: '#B8BBC7',
+          success: '#22C55E',
+          warning: '#F59E0B',
+          error: '#EF4444',
+          border: 'rgba(255,255,255,0.08)'
+        }
       },
 
       fontFamily: {
@@ -35,15 +49,15 @@ export default {
       },
 
       borderRadius: {
-        'sm': '12px',
-        'md': '18px', // Updated to 18px per requirements
-        'lg': '24px',
+        'sm': '10px',
+        'md': '14px',
+        'lg': '18px',
       },
 
       boxShadow: {
         'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
         'glow': '0 0 20px rgba(255, 107, 87, 0.4)',
-        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+        'glass': '0 8px 32px rgba(0,0,0,.35)',
       },
 
       backgroundImage: {

@@ -62,7 +62,7 @@ const HeroSection = () => {
               </Link>
               <Link
                 to="/products"
-                className="bg-white hover:bg-slate-50 dark:bg-white/10 dark:hover:bg-white/20 text-slate-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl dark:shadow-none backdrop-blur-sm border border-slate-200 dark:border-white/10 hover:-translate-y-1 text-sm sm:text-base"
+                className="bg-white hover:bg-slate-50 dark:bg-white/10 dark:hover:bg-white/20 text-slate-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl dark:shadow-none backdrop-blur-sm border border-slate-200 dark:border-nexus-border hover:-translate-y-1 text-sm sm:text-base"
               >
                 Explore Deals
               </Link>
@@ -100,7 +100,7 @@ const HeroSection = () => {
                 ✓
               </div>
               <div>
-                <p className="text-[10px] sm:text-xs text-slate-500 dark:text-gray-400 font-medium">Just Purchased</p>
+                <p className="text-[10px] sm:text-xs text-nexus-textSecondary dark:text-gray-400 font-medium">Just Purchased</p>
                 <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">Sony WH-1000XM5</p>
               </div>
             </motion.div>

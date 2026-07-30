@@ -20,7 +20,7 @@ const UnauthorizedPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-nexus-bg flex items-center justify-center p-6">
       {/* Glow */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="w-96 h-96 rounded-full bg-red-500/10 blur-3xl" />
@@ -44,7 +44,7 @@ const UnauthorizedPage = () => {
 
         <h1 className="text-5xl font-extrabold text-white mb-2">403</h1>
         <h2 className="text-xl font-bold text-white mb-3">Access Denied</h2>
-        <p className="text-slate-400 text-sm mb-8 leading-relaxed">
+        <p className="text-nexus-textSecondary text-sm mb-8 leading-relaxed">
           You don't have permission to access this portal.
           {user && (
             <span className="block mt-1">
@@ -63,7 +63,7 @@ const UnauthorizedPage = () => {
           </button>
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-slate-700 text-slate-400 hover:text-white hover:border-slate-600 font-semibold text-sm transition-colors"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-nexus-border text-nexus-textSecondary hover:text-white hover:border-slate-600 font-semibold text-sm transition-colors"
           >
             <ArrowLeft size={16} />
             Go Back
@@ -72,7 +72,7 @@ const UnauthorizedPage = () => {
 
         <Link
           to="/login"
-          className="block mt-6 text-xs text-slate-500 hover:text-slate-300 transition-colors"
+          className="block mt-6 text-xs text-nexus-textSecondary hover:text-nexus-textSecondary transition-colors"
         >
           Sign in with a different account
         </Link>

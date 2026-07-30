@@ -59,14 +59,14 @@ const PaymentStatusPage = () => {
   }, [provider, error, token, status, tx_ref, transaction_id]);
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 flex items-center justify-center px-4">
-      <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 max-w-lg w-full text-center shadow-xl border border-slate-200 dark:border-slate-700">
+    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface flex items-center justify-center px-4">
+      <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 max-w-lg w-full text-center shadow-xl border border-slate-200 dark:border-nexus-border">
         
         {paymentState === 'processing' && (
           <div className="flex flex-col items-center">
             <Loader2 size={64} className="text-orange-500 animate-spin mb-6" />
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Processing Payment...</h2>
-            <p className="text-slate-500 dark:text-slate-400">Please wait while we verify your transaction.</p>
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Please wait while we verify your transaction.</p>
           </div>
         )}
 
@@ -74,7 +74,7 @@ const PaymentStatusPage = () => {
           <div className="flex flex-col items-center animate-fade-in">
             <CheckCircle size={80} className="text-green-500 mb-6" />
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Payment Successful!</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8">
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-8">
               Thank you for your purchase. Your order is now being processed.
             </p>
             <div className="flex gap-4 w-full">
@@ -97,10 +97,10 @@ const PaymentStatusPage = () => {
               </div>
             </div>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Awaiting M-Pesa PIN</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-4">
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-4">
               Please check your phone and enter your M-Pesa PIN to complete the transaction.
             </p>
-            <p className="text-sm text-slate-400 dark:text-slate-500 mb-8">
+            <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary mb-8">
               Once you've paid, your order status will update automatically.
             </p>
             <Link to="/orders" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors shadow-lg shadow-orange-500/30">
@@ -113,7 +113,7 @@ const PaymentStatusPage = () => {
           <div className="flex flex-col items-center animate-fade-in">
             <XCircle size={80} className="text-red-500 mb-6" />
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Payment Failed</h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8">
+            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-8">
               {errorMessage || "We couldn't process your payment. No charges were made."}
             </p>
             <div className="flex flex-col gap-3 w-full">
@@ -123,7 +123,7 @@ const PaymentStatusPage = () => {
               >
                 Try Again
               </button>
-              <Link to="/support" className="text-sm text-slate-500 hover:text-orange-500 transition-colors mt-2">
+              <Link to="/support" className="text-sm text-nexus-textSecondary hover:text-orange-500 transition-colors mt-2">
                 Contact Support
               </Link>
             </div>

@@ -191,9 +191,9 @@ const CheckoutPage = () => {
 
   if (createdOrder && paymentMethod === 'mpesa' && !USE_STK_PUSH) {
     return (
-      <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+      <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
         <div className="container mx-auto px-4 max-w-2xl">
-          <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm text-center">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-nexus-border shadow-sm text-center">
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Complete Payment</h2>
             
             <div className="bg-orange-50 dark:bg-orange-500/10 rounded-2xl p-6 border border-orange-200 dark:border-orange-500/20 text-left mb-8">
@@ -209,7 +209,7 @@ const CheckoutPage = () => {
             </div>
 
             <div className="space-y-4">
-              <label className="block text-left text-sm font-medium text-slate-700 dark:text-slate-300">
+              <label className="block text-left text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">
                 M-Pesa Transaction Code
               </label>
               <input 
@@ -217,7 +217,7 @@ const CheckoutPage = () => {
                 value={transactionCode}
                 onChange={(e) => setTransactionCode(e.target.value.toUpperCase())}
                 placeholder="e.g. OXX1234567"
-                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 uppercase"
+                className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 uppercase"
               />
               <button 
                 onClick={handleVerifyPayment}
@@ -229,7 +229,7 @@ const CheckoutPage = () => {
               </button>
             </div>
             
-            <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-6 text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">
               Your order #ORD-{createdOrder.id} has been created and is awaiting payment verification.
             </p>
           </div>
@@ -239,7 +239,7 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6 max-w-6xl">
         <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-10">Checkout</h1>
         
@@ -247,7 +247,7 @@ const CheckoutPage = () => {
 
         <div className="flex flex-col lg:flex-row gap-10 mt-12">
           <div className="flex-1">
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-slate-200 dark:border-nexus-border shadow-sm">
               
               {step === 1 && (
                 <ShippingForm formData={formData} setFormData={setFormData} />
@@ -260,7 +260,7 @@ const CheckoutPage = () => {
               {step === 3 && (
                 <div className="animate-fade-in text-center py-10">
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Almost there!</h3>
-                  <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-8">
+                  <p className="text-nexus-textSecondary dark:text-nexus-textSecondary max-w-md mx-auto mb-8">
                     Please review your order details on the right panel. Once you confirm, your order will be created.
                   </p>
                   {paymentMethod === 'mpesa' && USE_STK_PUSH && (
@@ -273,7 +273,7 @@ const CheckoutPage = () => {
                           value={mpesaPhone}
                           onChange={(e) => setMpesaPhone(e.target.value)}
                           placeholder="e.g. 0712345678"
-                          className="w-full bg-white dark:bg-slate-900 border border-orange-200 dark:border-orange-500/30 rounded-lg px-4 py-2 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500/50"
+                          className="w-full bg-white dark:bg-nexus-surface border border-orange-200 dark:border-orange-500/30 rounded-lg px-4 py-2 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500/50"
                         />
                       </div>
                       <p className="text-xs font-medium text-orange-800/80 dark:text-orange-400/80 leading-relaxed">
@@ -291,11 +291,11 @@ const CheckoutPage = () => {
                 </div>
               )}
 
-              <div className="flex justify-between mt-10 pt-6 border-t border-slate-200 dark:border-slate-700">
+              <div className="flex justify-between mt-10 pt-6 border-t border-slate-200 dark:border-nexus-border">
                 {step > 1 ? (
                   <button 
                     onClick={handleBack}
-                    className="px-6 py-3 rounded-xl font-semibold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    className="px-6 py-3 rounded-xl font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   >
                     Back
                   </button>
@@ -304,7 +304,7 @@ const CheckoutPage = () => {
                 {step < 3 ? (
                   <button 
                     onClick={handleNext}
-                    className="bg-slate-900 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg"
+                    className="bg-nexus-surface dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg"
                   >
                     Continue
                   </button>

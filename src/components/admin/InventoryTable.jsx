@@ -60,17 +60,17 @@ const InventoryTable = () => {
   };
 
   return (
-    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
-      <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-slate-700">
+    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden flex flex-col">
+      <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-nexus-border">
         <div className="relative w-full sm:max-w-md flex items-center">
           <input 
             type="text" 
             placeholder="Search by SKU or Name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white"
+            className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-nexus-textSecondary text-slate-900 dark:text-white"
           />
-          <Search size={18} className="absolute left-3 text-slate-400" />
+          <Search size={18} className="absolute left-3 text-nexus-textSecondary" />
         </div>
         
         <div className="flex w-full sm:w-auto items-center gap-3">
@@ -92,7 +92,7 @@ const InventoryTable = () => {
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-700">
+            <tr className="bg-slate-50 dark:bg-nexus-surface/50 text-nexus-textSecondary dark:text-nexus-textSecondary text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-nexus-border">
               <th className="px-6 py-4">SKU</th>
               <th className="px-6 py-4">Product Name</th>
               <th className="px-6 py-4">Current Stock</th>
@@ -103,7 +103,7 @@ const InventoryTable = () => {
           <tbody className="divide-y divide-slate-200 dark:divide-slate-700/50 text-sm">
             {isLoading ? (
               <tr>
-                <td colSpan="5" className="px-6 py-12 text-center text-slate-500">
+                <td colSpan="5" className="px-6 py-12 text-center text-nexus-textSecondary">
                   <div className="flex justify-center">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
                   </div>
@@ -111,7 +111,7 @@ const InventoryTable = () => {
               </tr>
             ) : inventory.length === 0 ? (
               <tr>
-                <td colSpan="5" className="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
+                <td colSpan="5" className="px-6 py-12 text-center text-nexus-textSecondary dark:text-nexus-textSecondary">
                   No inventory records found.
                 </td>
               </tr>
@@ -143,10 +143,10 @@ const InventoryTable = () => {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <button onClick={() => handleAdjustStock(item.id, parseInt(item.stock), 1)} className="flex items-center gap-1 px-3 py-1.5 text-slate-600 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400 bg-slate-100 dark:bg-slate-700 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-lg transition-colors border border-slate-200 dark:border-slate-600 hover:border-green-200 dark:hover:border-green-500/30">
+                      <button onClick={() => handleAdjustStock(item.id, parseInt(item.stock), 1)} className="flex items-center gap-1 px-3 py-1.5 text-slate-600 dark:text-nexus-textSecondary hover:text-green-600 dark:hover:text-green-400 bg-slate-100 dark:bg-slate-700 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-lg transition-colors border border-slate-200 dark:border-slate-600 hover:border-green-200 dark:hover:border-green-500/30">
                         +1
                       </button>
-                      <button onClick={() => handleAdjustStock(item.id, parseInt(item.stock), -1)} className="flex items-center gap-1 px-3 py-1.5 text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-400 bg-slate-100 dark:bg-slate-700 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors border border-slate-200 dark:border-slate-600 hover:border-red-200 dark:hover:border-red-500/30">
+                      <button onClick={() => handleAdjustStock(item.id, parseInt(item.stock), -1)} className="flex items-center gap-1 px-3 py-1.5 text-slate-600 dark:text-nexus-textSecondary hover:text-red-600 dark:hover:text-red-400 bg-slate-100 dark:bg-slate-700 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors border border-slate-200 dark:border-slate-600 hover:border-red-200 dark:hover:border-red-500/30">
                         -1
                       </button>
                     </div>
@@ -158,7 +158,7 @@ const InventoryTable = () => {
         </table>
       </div>
       
-      <div className="p-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
+      <div className="p-4 border-t border-slate-200 dark:border-nexus-border flex items-center justify-between text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">
         <div>Showing page {meta.page} of {meta.totalPages || 1} ({meta.total} total items)</div>
         <div className="flex gap-2">
           <button 

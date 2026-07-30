@@ -9,11 +9,11 @@ const STATUS_ICONS = {
   open:     { icon: AlertCircle, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
   pending:  { icon: Clock,       color: 'text-blue-400',   bg: 'bg-blue-500/10' },
   resolved: { icon: CheckCircle, color: 'text-green-400',  bg: 'bg-green-500/10' },
-  closed:   { icon: XCircle,     color: 'text-slate-500 dark:text-gray-400',   bg: 'bg-gray-500/10' },
+  closed:   { icon: XCircle,     color: 'text-nexus-textSecondary dark:text-gray-400',   bg: 'bg-gray-500/10' },
 };
 
 const PRIORITY_COLORS = {
-  low:    'bg-gray-500/10 text-slate-500 dark:text-gray-400',
+  low:    'bg-gray-500/10 text-nexus-textSecondary dark:text-gray-400',
   normal: 'bg-blue-500/10 text-blue-400',
   high:   'bg-orange-500/10 text-orange-400',
   urgent: 'bg-red-500/10 text-red-400',
@@ -22,13 +22,13 @@ const PRIORITY_COLORS = {
 const EmptyState = ({ onNew }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
     className="flex flex-col items-center justify-center py-20 text-center">
-    <div className="w-20 h-20 rounded-full bg-[#FF6B57]/10 flex items-center justify-center mb-5">
-      <MessageSquare size={36} className="text-[#FF6B57]/60" />
+    <div className="w-20 h-20 rounded-full bg-nexus-primary/10 flex items-center justify-center mb-5">
+      <MessageSquare size={36} className="text-nexus-primary/60" />
     </div>
     <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-2">No messages yet</h3>
-    <p className="text-slate-500 dark:text-gray-500 text-sm max-w-xs mb-6">Open a support ticket and our team will get back to you.</p>
+    <p className="text-nexus-textSecondary dark:text-gray-500 text-sm max-w-xs mb-6">Open a support ticket and our team will get back to you.</p>
     <button onClick={onNew}
-      className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#FF6B57] hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors">
+      className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-nexus-primary hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors">
       <Plus size={16} /> New Ticket
     </button>
   </motion.div>
@@ -74,21 +74,21 @@ const NewTicketModal = ({ onClose, onCreated }) => {
         <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-5">Open Support Ticket</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-xs text-slate-500 dark:text-gray-500 uppercase tracking-wider font-semibold block mb-1.5">Subject</label>
+            <label className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-wider font-semibold block mb-1.5">Subject</label>
             <input
               type="text" required
               value={form.subject}
               onChange={e => setForm(p => ({ ...p, subject: e.target.value }))}
               placeholder="What do you need help with?"
-              className="w-full bg-white dark:bg-[#0C1220] border border-slate-200 dark:border-[#1F2937] text-slate-900 dark:text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF6B57] transition-colors placeholder-gray-600"
+              className="w-full bg-white dark:bg-nexus-bg border border-slate-200 dark:border-[#1F2937] text-slate-900 dark:text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-nexus-primary transition-colors placeholder-gray-600"
             />
           </div>
           <div>
-            <label className="text-xs text-slate-500 dark:text-gray-500 uppercase tracking-wider font-semibold block mb-1.5">Priority</label>
+            <label className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-wider font-semibold block mb-1.5">Priority</label>
             <select
               value={form.priority}
               onChange={e => setForm(p => ({ ...p, priority: e.target.value }))}
-              className="w-full bg-white dark:bg-[#0C1220] border border-slate-200 dark:border-[#1F2937] text-slate-900 dark:text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF6B57] transition-colors"
+              className="w-full bg-white dark:bg-nexus-bg border border-slate-200 dark:border-[#1F2937] text-slate-900 dark:text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-nexus-primary transition-colors"
             >
               <option value="low">Low</option>
               <option value="normal">Normal</option>
@@ -97,13 +97,13 @@ const NewTicketModal = ({ onClose, onCreated }) => {
             </select>
           </div>
           <div>
-            <label className="text-xs text-slate-500 dark:text-gray-500 uppercase tracking-wider font-semibold block mb-1.5">Message</label>
+            <label className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-wider font-semibold block mb-1.5">Message</label>
             <textarea
               required rows={4}
               value={form.message}
               onChange={e => setForm(p => ({ ...p, message: e.target.value }))}
               placeholder="Describe your issue in detail..."
-              className="w-full bg-white dark:bg-[#0C1220] border border-slate-200 dark:border-[#1F2937] text-slate-900 dark:text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF6B57] transition-colors placeholder-gray-600 resize-none"
+              className="w-full bg-white dark:bg-nexus-bg border border-slate-200 dark:border-[#1F2937] text-slate-900 dark:text-white rounded-xl px-4 py-3 text-sm outline-none focus:border-nexus-primary transition-colors placeholder-gray-600 resize-none"
             />
           </div>
           <div className="flex gap-3 pt-1">
@@ -112,7 +112,7 @@ const NewTicketModal = ({ onClose, onCreated }) => {
               Cancel
             </button>
             <button type="submit" disabled={loading}
-              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#FF6B57] hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors disabled:opacity-60">
+              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-nexus-primary hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors disabled:opacity-60">
               {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />} Submit
             </button>
           </div>
@@ -166,16 +166,16 @@ const MessagesSection = () => {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Messages</h1>
-          <p className="text-slate-500 dark:text-gray-400 text-sm mt-1">Support tickets and order updates</p>
+          <p className="text-nexus-textSecondary dark:text-gray-400 text-sm mt-1">Support tickets and order updates</p>
         </div>
         <button onClick={() => setShowNew(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF6B57] hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors">
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-nexus-primary hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors">
           <Plus size={15} /> New Ticket
         </button>
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-10 h-10 border-4 border-[#FF6B57] border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-20"><div className="w-10 h-10 border-4 border-nexus-primary border-t-transparent rounded-full animate-spin" /></div>
       ) : tickets.length === 0 ? (
         <EmptyState onNew={() => setShowNew(true)} />
       ) : (
@@ -189,8 +189,8 @@ const MessagesSection = () => {
                 <button key={ticket.id} onClick={() => openTicket(ticket)}
                   className={`w-full text-left p-4 rounded-xl border transition-all ${
                     selected?.id === ticket.id
-                      ? 'bg-[#FF6B57]/10 border-[#FF6B57]/30'
-                      : 'bg-white dark:bg-[#0C1220] border-slate-200 dark:border-[#1F2937] hover:border-white/10'
+                      ? 'bg-nexus-primary/10 border-nexus-primary/30'
+                      : 'bg-white dark:bg-nexus-bg border-slate-200 dark:border-[#1F2937] hover:border-nexus-border'
                   }`}>
                   <div className="flex items-start gap-3">
                     <div className={`p-2 rounded-lg ${sc.bg} flex-shrink-0 mt-0.5`}>
@@ -200,10 +200,10 @@ const MessagesSection = () => {
                       <p className="text-slate-900 dark:text-white text-sm font-semibold truncate">{ticket.subject}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${PRIORITY_COLORS[ticket.priority]}`}>{ticket.priority}</span>
-                        <span className="text-slate-400 dark:text-gray-600 text-xs">{new Date(ticket.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' })}</span>
+                        <span className="text-nexus-textSecondary dark:text-gray-600 text-xs">{new Date(ticket.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' })}</span>
                       </div>
                     </div>
-                    <ChevronRight size={14} className="text-slate-400 dark:text-gray-600 flex-shrink-0 mt-1" />
+                    <ChevronRight size={14} className="text-nexus-textSecondary dark:text-gray-600 flex-shrink-0 mt-1" />
                   </div>
                 </button>
               );
@@ -224,10 +224,10 @@ const MessagesSection = () => {
                     return (
                       <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm ${
-                          isMe ? 'bg-[#FF6B57] text-slate-900 dark:text-white rounded-br-sm' : 'bg-white dark:bg-[#0C1220] text-gray-200 rounded-bl-sm'
+                          isMe ? 'bg-nexus-primary text-slate-900 dark:text-white rounded-br-sm' : 'bg-white dark:bg-nexus-bg text-gray-200 rounded-bl-sm'
                         }`}>
                           <p>{msg.message}</p>
-                          <p className={`text-xs mt-1 ${isMe ? 'text-slate-900 dark:text-white/60' : 'text-slate-500 dark:text-gray-500'}`}>
+                          <p className={`text-xs mt-1 ${isMe ? 'text-slate-900 dark:text-white/60' : 'text-nexus-textSecondary dark:text-gray-500'}`}>
                             {new Date(msg.created_at).toLocaleTimeString('en-KE', { hour: '2-digit', minute: '2-digit' })}
                           </p>
                         </div>
@@ -238,7 +238,7 @@ const MessagesSection = () => {
                 {/* Reply Form Removed as per single-message schema */}
               </>
             ) : (
-              <div className="flex-1 flex items-center justify-center text-slate-400 dark:text-gray-600">
+              <div className="flex-1 flex items-center justify-center text-nexus-textSecondary dark:text-gray-600">
                 <p className="text-sm">Select a ticket to view messages</p>
               </div>
             )}

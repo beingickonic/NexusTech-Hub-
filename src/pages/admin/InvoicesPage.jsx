@@ -46,28 +46,28 @@ const InvoicesPage = () => {
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Invoices</h1>
-          <p className="text-slate-500 dark:text-slate-400">View customer invoices and download generated PDF receipts.</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">View customer invoices and download generated PDF receipts.</p>
         </div>
       </div>
 
-      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div className="p-4 md:p-6 border-b border-slate-200 dark:border-slate-700">
+      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden">
+        <div className="p-4 md:p-6 border-b border-slate-200 dark:border-nexus-border">
           <div className="relative w-full sm:max-w-md flex items-center">
             <input
               type="text"
               placeholder="Search invoice number..."
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white"
+              className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-nexus-textSecondary text-slate-900 dark:text-white"
             />
-            <Search size={18} className="absolute left-3 text-slate-400" />
+            <Search size={18} className="absolute left-3 text-nexus-textSecondary" />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-700">
+              <tr className="bg-slate-50 dark:bg-nexus-surface/50 text-nexus-textSecondary dark:text-nexus-textSecondary text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-nexus-border">
                 <th className="px-6 py-4">Invoice</th>
                 <th className="px-6 py-4">Customer</th>
                 <th className="px-6 py-4">Order</th>
@@ -80,7 +80,7 @@ const InvoicesPage = () => {
             <tbody className="divide-y divide-slate-200 dark:divide-slate-700/50 text-sm">
               {isLoading ? (
                 <tr>
-                  <td colSpan="7" className="px-6 py-12 text-center text-slate-500">
+                  <td colSpan="7" className="px-6 py-12 text-center text-nexus-textSecondary">
                     <div className="flex justify-center">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
                     </div>
@@ -88,7 +88,7 @@ const InvoicesPage = () => {
                 </tr>
               ) : invoices.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
+                  <td colSpan="7" className="px-6 py-12 text-center text-nexus-textSecondary dark:text-nexus-textSecondary">
                     No invoices found.
                   </td>
                 </tr>
@@ -105,21 +105,21 @@ const InvoicesPage = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-slate-700 dark:text-slate-300">{invoice.customer}</td>
-                    <td className="px-6 py-4 text-slate-500 dark:text-slate-400">{String(invoice.order_id).slice(0, 8)}</td>
+                    <td className="px-6 py-4 text-slate-700 dark:text-nexus-textSecondary">{invoice.customer}</td>
+                    <td className="px-6 py-4 text-nexus-textSecondary dark:text-nexus-textSecondary">{String(invoice.order_id).slice(0, 8)}</td>
                     <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">{formatCurrency(invoice.total_amount)}</td>
                     <td className="px-6 py-4">
                       <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium capitalize bg-green-50 text-green-700 border border-green-200 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20">
                         {invoice.payment_status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-slate-500 dark:text-slate-400">
+                    <td className="px-6 py-4 text-nexus-textSecondary dark:text-nexus-textSecondary">
                       {new Date(invoice.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button
                         onClick={() => handleDownload(invoice)}
-                        className="inline-flex items-center justify-center p-2 text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-colors"
+                        className="inline-flex items-center justify-center p-2 text-nexus-textSecondary hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-colors"
                         title="Download invoice"
                       >
                         <Download size={16} />
@@ -132,7 +132,7 @@ const InvoicesPage = () => {
           </table>
         </div>
 
-        <div className="p-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
+        <div className="p-4 border-t border-slate-200 dark:border-nexus-border flex items-center justify-between text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">
           <div>Showing page {meta.page} of {meta.totalPages || 1} ({meta.total} total items)</div>
           <div className="flex gap-2">
             <button

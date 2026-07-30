@@ -27,20 +27,20 @@ const OfficeDataTable = ({
     <div className="animate-fade-in">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{title}</h1>
-        <p className="text-slate-500 dark:text-slate-400">{description}</p>
+        <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">{description}</p>
       </div>
 
-      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
-        <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-slate-700">
+      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden flex flex-col">
+        <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-nexus-border">
           <div className="relative w-full sm:max-w-md flex items-center">
             <input 
               type="text"
               placeholder={searchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-slate-400 text-slate-900 dark:text-white"
+              className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-nexus-textSecondary text-slate-900 dark:text-white"
             />
-            <Search size={18} className="absolute left-3 text-slate-400" />
+            <Search size={18} className="absolute left-3 text-nexus-textSecondary" />
           </div>
           
           <div className="flex w-full sm:w-auto items-center gap-3">
@@ -61,7 +61,7 @@ const OfficeDataTable = ({
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-700">
+              <tr className="bg-slate-50 dark:bg-nexus-surface/50 text-nexus-textSecondary dark:text-nexus-textSecondary text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-nexus-border">
                 {columns.map((col, idx) => (
                   <th key={idx} className="px-6 py-4">{col.header}</th>
                 ))}
@@ -73,7 +73,7 @@ const OfficeDataTable = ({
             <tbody className="divide-y divide-slate-200 dark:divide-slate-700/50 text-sm">
               {isLoading ? (
                 <tr>
-                  <td colSpan={columns.length + 1} className="px-6 py-12 text-center text-slate-500">
+                  <td colSpan={columns.length + 1} className="px-6 py-12 text-center text-nexus-textSecondary">
                     <div className="flex justify-center">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
                     </div>
@@ -81,7 +81,7 @@ const OfficeDataTable = ({
                 </tr>
               ) : filteredData.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length + 1} className="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
+                  <td colSpan={columns.length + 1} className="px-6 py-12 text-center text-nexus-textSecondary dark:text-nexus-textSecondary">
                     No records found.
                   </td>
                 </tr>
@@ -99,7 +99,7 @@ const OfficeDataTable = ({
                           {onEdit && (
                             <button 
                               onClick={() => onEdit(row)} 
-                              className="p-2 text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-colors"
+                              className="p-2 text-nexus-textSecondary hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-colors"
                             >
                               <Edit size={16} />
                             </button>
@@ -111,7 +111,7 @@ const OfficeDataTable = ({
                                   onDelete(row.id);
                                 }
                               }} 
-                              className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
+                              className="p-2 text-nexus-textSecondary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
                             >
                               <Trash2 size={16} />
                             </button>
@@ -126,7 +126,7 @@ const OfficeDataTable = ({
           </table>
         </div>
 
-        <div className="p-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
+        <div className="p-4 border-t border-slate-200 dark:border-nexus-border flex items-center justify-between text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">
           <div>Showing {filteredData.length} records</div>
           <div className="flex gap-2">
             <button className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors" disabled>

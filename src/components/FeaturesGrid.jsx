@@ -26,7 +26,7 @@ const features = [
 
 const FeaturesGrid = () => {
   return (
-    <section className="py-16 bg-white dark:bg-dark-bg transition-colors duration-300 border-t border-gray-100 dark:border-white/5">
+    <section className="py-16 bg-white dark:bg-dark-bg transition-colors duration-300 border-t border-gray-100 dark:border-nexus-border">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, idx) => (
@@ -44,7 +44,7 @@ const FeaturesGrid = () => {
               </div>
               <div>
                 <h3 className="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
-                <p className="text-sm text-slate-500 dark:text-gray-400">{feature.desc}</p>
+                <p className="text-sm text-nexus-textSecondary dark:text-gray-400">{feature.desc}</p>
               </div>
             </motion.div>
           ))}
