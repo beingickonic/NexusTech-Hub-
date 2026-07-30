@@ -6,10 +6,11 @@ export const dispatchService = {
   // ── Stats ──────────────────────────────────────────────────────
   getDispatchStats: async () => {
     try {
-      const statuses = ['Pending', 'Packed', 'Ready', 'Out For Delivery', 'Delivered', 'Failed'];
+      // Statuses match the DB schema (lowercase)
+      const statuses = ['pending', 'assigned', 'picked_up', 'in_transit', 'delivered', 'failed', 'returned'];
       const results = await Promise.all(
         statuses.map(s =>
-          supabase.from('dispatch_orders').select('*', { count: 'exact', head: true }).eq('status', s)
+          supabase.from('dispatches').select('*', { count: 'exact', head: true }).eq('status', s)
         )
       );
       const stats = {};
@@ -19,12 +20,22 @@ export const dispatchService = {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const { count: todayCount } = await supabase
-        .from('dispatch_orders')
+        .from('dispatches')
         .select('*', { count: 'exact', head: true })
-        .eq('status', 'Delivered')
+        .eq('status', 'delivered')
         .gte('delivered_at', today.toISOString());
 
-      return { success: true, stats: { ...stats, today_delivered: todayCount || 0 } };
+      // pending field used by DispatchDashboard KPI card
+      return {
+        success: true,
+        stats: {
+          ...stats,
+          today_delivered: todayCount || 0,
+          // Convenience aliases used by DispatchDashboard
+          in_transit: stats.in_transit || 0,
+          Pending: stats.pending || 0, // backward compat shim
+        }
+      };
     } catch (error) {
       console.error('Dispatch stats error:', error);
       return { success: false, stats: {} };
@@ -35,18 +46,16 @@ export const dispatchService = {
   getDispatches: async ({ page = 1, limit = DEFAULT_LIMIT, status = 'all', search = '' } = {}) => {
     const { from, to } = pageRange(page, limit);
     let query = supabase
-      .from('dispatch_orders')
+      .from('dispatches')
       .select(`
         *,
         orders(id, total_amount, status),
-        drivers(id, vehicle_info)
+        drivers(id, full_name, phone, vehicle_number, vehicle_type, photo_url)
       `, { count: 'exact' })
       .order('created_at', { ascending: false });
 
-    if (status && status !== 'all') query = query.ilike('status', status);
-    
-    // Simplistic search for now, could search by order ID
-    if (search) query = query.or(`notes.ilike.%${search}%`);
+    if (status && status !== 'all') query = query.eq('status', status);
+    if (search) query = query.or(`customer_name.ilike.%${search}%,dispatch_number.ilike.%${search}%,customer_phone.ilike.%${search}%`);
 
     const { data, count, error } = await query.range(from, to);
     if (error) throw error;
@@ -57,7 +66,7 @@ export const dispatchService = {
   // ── Get Single Dispatch ────────────────────────────────────────
   getDispatch: async (id) => {
     const { data, error } = await supabase
-      .from('dispatch_orders')
+      .from('dispatches')
       .select(`*, orders(*, order_items(*, products(title, image_url))), drivers(*)`)
       .eq('id', id)
       .single();
@@ -67,9 +76,11 @@ export const dispatchService = {
 
   // ── Create Dispatch from Order ─────────────────────────────────
   createDispatch: async (dispatchData) => {
+    // Ensure status is lowercase
+    const payload = { ...dispatchData, status: dispatchData.status || 'pending' };
     const { data, error } = await supabase
-      .from('dispatch_orders')
-      .insert([dispatchData])
+      .from('dispatches')
+      .insert([payload])
       .select()
       .single();
     if (error) throw error;
@@ -79,51 +90,72 @@ export const dispatchService = {
   // ── Assign Driver ──────────────────────────────────────────────
   assignDriver: async (dispatchId, driverId) => {
     const { data, error } = await supabase
-      .from('dispatch_orders')
-      .update({ 
-        driver_id: driverId, 
-        status: 'Out For Delivery', 
-        updated_at: new Date().toISOString() 
+      .from('dispatches')
+      .update({
+        driver_id: driverId,
+        status: 'assigned',
+        updated_at: new Date().toISOString()
       })
       .eq('id', dispatchId)
       .select()
       .single();
-      
+
     if (error) throw error;
     return { success: true, data };
   },
 
   // ── Update Status ──────────────────────────────────────────────
-  updateStatus: async (dispatchId, status, { notes } = {}) => {
+  updateStatus: async (dispatchId, status, { notes, failed_reason } = {}) => {
     const updateData = { status, updated_at: new Date().toISOString() };
     if (notes) updateData.notes = notes;
-    if (status === 'Out For Delivery') updateData.dispatched_at = new Date().toISOString();
-    if (status === 'Delivered') updateData.delivered_at = new Date().toISOString();
+    if (failed_reason) updateData.failed_reason = failed_reason;
+    if (status === 'in_transit') updateData.dispatched_at = new Date().toISOString();
+    if (status === 'delivered') updateData.delivered_at = new Date().toISOString();
 
     const { data, error } = await supabase
-      .from('dispatch_orders')
+      .from('dispatches')
       .update(updateData)
       .eq('id', dispatchId)
       .select()
       .single();
-      
+
     if (error) throw error;
 
-    // Trigger Order status sync if Delivered
-    if (status === 'Delivered' && data.order_id) {
-       await supabase.from('orders').update({ status: 'Delivered' }).eq('id', data.order_id);
+    // Sync order status when delivered
+    if (status === 'delivered' && data.order_id) {
+      await supabase.from('orders').update({ status: 'Delivered' }).eq('id', data.order_id);
     }
 
     return { success: true, data };
   },
 
-  // ── Get Drivers ────────────────────────────────────────────────
+  // ── Delete Dispatch ────────────────────────────────────────────
+  deleteDispatch: async (id) => {
+    const { error } = await supabase.from('dispatches').delete().eq('id', id);
+    if (error) throw error;
+    return { success: true };
+  },
+
+  // ── Get Available Drivers (for assign modal) ───────────────────
   getDrivers: async () => {
     const { data, error } = await supabase
       .from('drivers')
-      .select('*, profiles:user_id(full_name, phone, photo_url)')
-      .eq('status', 'Available');
+      .select('id, full_name, phone, vehicle_number, vehicle_type, rating, photo_url')
+      .eq('status', 'available')
+      .order('full_name');
     if (error) throw error;
     return { success: true, data: data || [] };
+  },
+
+  // ── Realtime subscription ──────────────────────────────────────
+  // Previously missing — caused TypeError crash in DispatchPage
+  subscribeToDispatches: (callback) => {
+    const channel = supabase
+      .channel('dispatches_realtime')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'dispatches' }, callback)
+      .subscribe();
+
+    // Return unsubscribe function
+    return () => supabase.removeChannel(channel);
   }
 };
