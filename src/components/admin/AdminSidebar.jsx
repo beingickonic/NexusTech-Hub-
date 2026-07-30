@@ -10,6 +10,7 @@ import {
   MessageSquare,
   Users,
   BarChart3,
+  Wallet,
   Settings,
   LogOut
 } from 'lucide-react';
@@ -18,6 +19,16 @@ import darkLogo from '../../assets/logo/logo-dark.png';
 import lightLogo from '../../assets/logo/logo-light.png';
 
 const NAV_SECTIONS = [
+  {
+    label: 'Finance',
+    items: [
+      { name: 'Finance Dashboard', path: '/admin/finance', icon: Wallet },
+      { name: 'Invoices', path: '/admin/finance/invoices', icon: FolderOpen },
+      { name: 'Payments', path: '/admin/finance/payments', icon: CheckSquare },
+      { name: 'Expenses', path: '/admin/finance/expenses', icon: Paperclip },
+      { name: 'Finance Reports', path: '/admin/finance/reports', icon: BarChart3 }
+    ]
+  },
   {
     label: 'Overview',
     items: [

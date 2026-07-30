@@ -71,7 +71,6 @@ const AdminRefundsPage = lazy(() => import('./pages/admin/AdminRefundsPage'));
 // ERP Modules
 const AdminDispatchPage = lazy(() => import('./pages/admin/DispatchPage'));
 const AdminDriversPage  = lazy(() => import('./pages/admin/DriversPage'));
-const AdminFinancePage  = lazy(() => import('./pages/admin/FinancePage'));
 const AdminSuppliersPage = lazy(() => import('./pages/admin/SuppliersPage'));
 const AdminUsersPage = lazy(() => import('./pages/admin/UsersPage'));
 
@@ -110,10 +109,6 @@ const InventoryProfilePage = lazy(() => import('./pages/inventory/InventoryProfi
 // Finance Portal
 const FinanceLoginPage = lazy(() => import('./pages/finance/FinanceLoginPage'));
 const FinanceDashboard = lazy(() => import('./pages/finance/FinanceDashboard'));
-const ChartOfAccountsPage = lazy(() => import('./pages/finance/ChartOfAccountsPage'));
-const GeneralLedgerPage = lazy(() => import('./pages/finance/GeneralLedgerPage'));
-const AccountsReceivablePage = lazy(() => import('./pages/finance/AccountsReceivablePage'));
-const AccountsPayablePage = lazy(() => import('./pages/finance/AccountsPayablePage'));
 const FinanceInvoicesPage = lazy(() => import('./pages/finance/FinanceInvoicesPage'));
 const CustomerPaymentsPage = lazy(() => import('./pages/finance/CustomerPaymentsPage'));
 const ExpensesPage = lazy(() => import('./pages/finance/ExpensesPage'));
@@ -203,6 +198,11 @@ function App() {
                   <Route path="coordination" element={<TeamCoordinationPage />} />
                   <Route path="communication" element={<CommunicationPage />} />
                   <Route path="employees" element={<EmployeesPage />} />
+                  <Route path="finance" element={<FinanceDashboard />} />
+                  <Route path="finance/invoices" element={<FinanceInvoicesPage />} />
+                  <Route path="finance/payments" element={<CustomerPaymentsPage />} />
+                  <Route path="finance/expenses" element={<ExpensesPage />} />
+                  <Route path="finance/reports" element={<FinanceReportsPage />} />
                   <Route path="reports" element={<AdminReportsPage />} />
                   <Route path="settings" element={<AdminSettingsPage />} />
                 </Route>
@@ -300,14 +300,8 @@ function App() {
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<FinanceDashboard />} />
                   <Route path="invoices" element={<FinanceInvoicesPage />} />
-                  <Route path="customer-payments" element={<CustomerPaymentsPage />} />
-                  <Route path="payments" element={<Navigate to="/finance/customer-payments" replace />} />
+                  <Route path="payments" element={<CustomerPaymentsPage />} />
                   <Route path="expenses" element={<ExpensesPage />} />
-                  <Route path="chart-of-accounts" element={<ChartOfAccountsPage />} />
-                  <Route path="general-ledger" element={<GeneralLedgerPage />} />
-                  <Route path="accounts-receivable" element={<AccountsReceivablePage />} />
-                  <Route path="accounts-payable" element={<AccountsPayablePage />} />
-                  <Route path="transactions" element={<AdminFinancePage />} />
                   <Route path="reports" element={<FinanceReportsPage />} />
                   <Route path="settings" element={<FinanceSettingsPage />} />
                 </Route>

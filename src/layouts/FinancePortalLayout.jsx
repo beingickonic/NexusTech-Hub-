@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  BarChart3, BookOpen, CreditCard, FileText, Landmark, ReceiptText,
+  BarChart3, CreditCard, FileText, Landmark, ReceiptText,
   Settings, TrendingUp, Wallet
 } from 'lucide-react';
 import PortalNavbar from '../components/portal/PortalNavbar';
@@ -15,12 +15,8 @@ const financeConfig = {
   icon: Landmark,
   nav: [
     { name: 'Dashboard', path: '/finance/dashboard', icon: TrendingUp },
-    { name: 'Chart of Accounts', path: '/finance/chart-of-accounts', icon: FileText },
-    { name: 'General Ledger', path: '/finance/general-ledger', icon: BookOpen },
-    { name: 'Accounts Receivable', path: '/finance/accounts-receivable', icon: CreditCard },
-    { name: 'Accounts Payable', path: '/finance/accounts-payable', icon: Wallet },
-    { name: 'Finance Invoices', path: '/finance/invoices', icon: ReceiptText },
-    { name: 'Customer Payments', path: '/finance/customer-payments', icon: CreditCard },
+    { name: 'Invoices', path: '/finance/invoices', icon: ReceiptText },
+    { name: 'Payments', path: '/finance/payments', icon: CreditCard },
     { name: 'Expenses', path: '/finance/expenses', icon: Wallet },
     { name: 'Reports', path: '/finance/reports', icon: BarChart3 },
     { name: 'Settings', path: '/finance/settings', icon: Settings }
