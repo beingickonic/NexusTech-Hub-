@@ -1,9 +1,18 @@
 import { defineConfig } from 'vite';
+import { execSync } from 'node:child_process';
+import process from 'node:process';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const buildCommit = process.env.GITHUB_SHA?.slice(0, 7) || execSync('git rev-parse --short HEAD').toString().trim();
+const buildTimestamp = new Date().toISOString();
+
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    __BUILD_COMMIT__: JSON.stringify(buildCommit),
+    __BUILD_TIMESTAMP__: JSON.stringify(buildTimestamp),
+  },
   plugins: [
     react(),
     VitePWA({

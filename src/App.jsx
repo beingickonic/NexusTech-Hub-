@@ -1,6 +1,6 @@
-import { Suspense, lazy, useState, useEffect } from 'react';
-import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './auth/AuthContext';
+import { Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter, HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AuthProvider, useAuth } from './auth/AuthContext';
 import { 
   ProtectedRoute, 
   AdminRoute, 
@@ -18,6 +18,8 @@ import AdminLayout from './components/admin/AdminLayout';
 import NetworkStatusBanner from './components/common/NetworkStatusBanner';
 import DeepLinkHandler from './components/common/DeepLinkHandler';
 import { Toaster } from 'react-hot-toast';
+
+/* global __BUILD_COMMIT__, __BUILD_TIMESTAMP__ */
 
 // Lazy load pages for code splitting
 const HomePage = lazy(() => import('./pages/public/HomePage'));
@@ -138,6 +140,24 @@ const LoadingFallback = () => (
 // Capacitor loads from file://, where hash routing remains necessary.
 const Router = window.location.protocol === 'file:' ? HashRouter : BrowserRouter;
 
+const BuildDiagnostics = () => {
+  const { user } = useAuth();
+  const location = useLocation();
+  useEffect(() => {
+    const layout = location.pathname.startsWith('/finance') ? 'FinancePortalLayout'
+      : location.pathname.startsWith('/profile') ? 'CustomerDashboard'
+        : location.pathname.startsWith('/admin') ? 'AdminLayout' : 'PublicLayout';
+    console.info('[NexusTech build]', {
+      commit: __BUILD_COMMIT__,
+      builtAt: __BUILD_TIMESTAMP__,
+      route: location.pathname,
+      role: user?.role || 'anonymous',
+      layout,
+    });
+  }, [location.pathname, user?.role]);
+  return null;
+};
+
 function App() {
   return (
     <AuthProvider>
@@ -145,6 +165,7 @@ function App() {
         <WishlistProvider>
           <Router>
             <DeepLinkHandler />
+            <BuildDiagnostics />
             <NetworkStatusBanner />
             <Toaster position="bottom-right" />
             <Suspense fallback={<LoadingFallback />}>
