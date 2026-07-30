@@ -46,6 +46,15 @@ const OrdersPage = lazy(() => import('./pages/ecommerce/OrdersPage'));
 const OrderDetailsPage = lazy(() => import('./pages/ecommerce/OrderDetailsPage'));
 
 const AdminDashboardPage = lazy(() => import('./pages/admin/DashboardPage'));
+const OfficeDashboardPage = lazy(() => import('./pages/admin/office/OfficeDashboardPage'));
+const DailyTasksPage = lazy(() => import('./pages/admin/office/DailyTasksPage'));
+const OfficeSupportPage = lazy(() => import('./pages/admin/office/OfficeSupportPage'));
+const RecordKeepingPage = lazy(() => import('./pages/admin/office/RecordKeepingPage'));
+const SuppliesManagementPage = lazy(() => import('./pages/admin/office/SuppliesManagementPage'));
+const SchedulingPage = lazy(() => import('./pages/admin/office/SchedulingPage'));
+const TeamCoordinationPage = lazy(() => import('./pages/admin/office/TeamCoordinationPage'));
+const CommunicationPage = lazy(() => import('./pages/admin/office/CommunicationPage'));
+const EmployeesPage = lazy(() => import('./pages/admin/office/EmployeesPage'));
 const AdminProductsPage = lazy(() => import('./pages/admin/ProductsPage'));
 const ProductFormPage = lazy(() => import('./pages/admin/ProductFormPage'));
 const AdminOrdersPage = lazy(() => import('./pages/admin/OrdersPage'));
@@ -171,28 +180,17 @@ function App() {
                 {/* Manager & Admin Routes */}
                 <Route path="/admin" element={<ManagerRoute><AdminLayout /></ManagerRoute>}>
                   <Route index element={<Navigate to="dashboard" replace />} />
-                  <Route path="dashboard" element={<AdminDashboardPage />} />
-                  <Route path="products" element={<AdminProductsPage />} />
-                  <Route path="products/add" element={<ProductFormPage />} />
-                  <Route path="products/edit/:id" element={<ProductFormPage />} />
-                  <Route path="orders" element={<AdminOrdersPage />} />
-                  <Route path="inventory" element={<AdminInventoryPage />} />
-                  <Route path="reviews" element={<AdminReviewsPage />} />
-                  <Route path="refunds" element={<AdminRefundsPage />} />
-                  {/* ERP Modules */}
-                  <Route path="dispatch"  element={<AdminDispatchPage />} />
-                  <Route path="drivers"   element={<AdminDriversPage />} />
-                  <Route path="finance"   element={<AdminFinancePage />} />
-                  <Route path="suppliers" element={<AdminSuppliersPage />} />
-                  {/* Strict Admin-only Routes nested */}
-                  <Route path="customers" element={<AdminRoute><AdminCustomersPage /></AdminRoute>} />
-                  <Route path="invoices" element={<AdminRoute><AdminInvoicesPage /></AdminRoute>} />
-                  <Route path="payments" element={<AdminRoute><AdminPaymentsDashboard /></AdminRoute>} />
-                  <Route path="payments/manual" element={<AdminRoute><ManualPaymentsPage /></AdminRoute>} />
-                  <Route path="reports" element={<AdminRoute><AdminReportsPage /></AdminRoute>} />
-                  <Route path="tickets" element={<AdminRoute><AdminTicketsPage /></AdminRoute>} />
-                  <Route path="users" element={<AdminRoute><AdminUsersPage /></AdminRoute>} />
-                  <Route path="settings" element={<AdminRoute><AdminSettingsPage /></AdminRoute>} />
+                  <Route path="dashboard" element={<OfficeDashboardPage />} />
+                  <Route path="tasks" element={<DailyTasksPage />} />
+                  <Route path="support" element={<OfficeSupportPage />} />
+                  <Route path="records" element={<RecordKeepingPage />} />
+                  <Route path="supplies" element={<SuppliesManagementPage />} />
+                  <Route path="scheduling" element={<SchedulingPage />} />
+                  <Route path="coordination" element={<TeamCoordinationPage />} />
+                  <Route path="communication" element={<CommunicationPage />} />
+                  <Route path="employees" element={<EmployeesPage />} />
+                  <Route path="reports" element={<AdminReportsPage />} />
+                  <Route path="settings" element={<AdminSettingsPage />} />
                 </Route>
 
                 {/* Catch-all 404 Route and Portals */}

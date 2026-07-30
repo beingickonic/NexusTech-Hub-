@@ -1,80 +1,57 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
-  Package,
-  ShoppingCart,
+  CheckSquare,
+  Headset,
+  FolderOpen,
+  Paperclip,
+  Calendar,
+  Network,
+  MessageSquare,
   Users,
   BarChart3,
   Settings,
-  LogOut,
-  Boxes,
-  ReceiptText,
-  MessageSquare,
-  Headset,
-  Truck,
-  UserCheck,
-  Building2,
-  TrendingUp,
-  Warehouse,
-  Tag,
-  Star,
-  Bell,
-  FileText,
-  Ticket
+  LogOut
 } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
-import { RoleGate } from '../../auth/ProtectedRoute';
 import darkLogo from '../../assets/logo/logo-dark.png';
 import lightLogo from '../../assets/logo/logo-light.png';
-
-const ADMIN_ONLY  = ['Admin', 'super_admin'];
-const STAFF       = ['Admin', 'super_admin', 'Manager'];
-const DISPATCH    = ['Admin', 'super_admin', 'Manager', 'Dispatch_Officer'];
-const WAREHOUSE   = ['Admin', 'super_admin', 'Manager', 'Warehouse_Staff'];
-const FINANCE     = ['Admin', 'super_admin', 'Finance_Officer'];
 
 const NAV_SECTIONS = [
   {
     label: 'Overview',
     items: [
-      { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard, roles: null }
+      { name: 'Dashboard',   path: '/admin/dashboard', icon: LayoutDashboard },
+      { name: 'Daily Tasks', path: '/admin/tasks',     icon: CheckSquare }
     ]
   },
   {
-    label: 'Sales',
+    label: 'Office Management',
     items: [
-      { name: 'Orders',     path: '/admin/orders',    icon: ShoppingCart, roles: null },
-      { name: 'Customers',  path: '/admin/customers', icon: Users,        roles: ADMIN_ONLY },
-      { name: 'Products',   path: '/admin/products',  icon: Package,      roles: null },
-      { name: 'Inventory',  path: '/admin/inventory', icon: Warehouse,    roles: WAREHOUSE },
+      { name: 'Office Support', path: '/admin/support',  icon: Headset },
+      { name: 'Record Keeping', path: '/admin/records',  icon: FolderOpen },
+      { name: 'Supplies',       path: '/admin/supplies', icon: Paperclip }
     ]
   },
   {
-    label: 'Operations',
+    label: 'Organization',
     items: [
-      { name: 'Dispatch',  path: '/admin/dispatch', icon: Truck,     roles: DISPATCH },
-      { name: 'Drivers',   path: '/admin/drivers',  icon: UserCheck, roles: DISPATCH },
-      { name: 'Suppliers', path: '/admin/suppliers',icon: Building2, roles: STAFF },
+      { name: 'Scheduling',         path: '/admin/scheduling',   icon: Calendar },
+      { name: 'Team Coordination',  path: '/admin/coordination', icon: Network }
     ]
   },
   {
-    label: 'Finance',
+    label: 'People',
     items: [
-      { name: 'Finance',  path: '/admin/finance',   icon: TrendingUp,  roles: FINANCE },
-      { name: 'Payments', path: '/admin/payments',  icon: ReceiptText, roles: ADMIN_ONLY },
-      { name: 'Manual Pymts', path: '/admin/payments/manual', icon: ReceiptText, roles: ADMIN_ONLY },
-      { name: 'Invoices', path: '/admin/invoices',  icon: FileText,    roles: ADMIN_ONLY },
+      { name: 'Communication', path: '/admin/communication', icon: MessageSquare },
+      { name: 'Employees',     path: '/admin/employees',     icon: Users }
     ]
   },
   {
-    label: 'Reports & Tools',
+    label: 'System',
     items: [
-      { name: 'Reviews',   path: '/admin/reviews',   icon: Star,        roles: null },
-      { name: 'Reports',   path: '/admin/reports',   icon: BarChart3,   roles: ADMIN_ONLY },
-      { name: 'Refunds',   path: '/admin/refunds',   icon: ReceiptText, roles: STAFF },
-      { name: 'Support',   path: '/admin/tickets',   icon: Headset,     roles: ADMIN_ONLY },
-      { name: 'User Mgmt', path: '/admin/users',     icon: Users,       roles: ADMIN_ONLY },
-      { name: 'Settings',  path: '/admin/settings',  icon: Settings,    roles: ADMIN_ONLY },
+      { name: 'Reports',  path: '/admin/reports',  icon: BarChart3 },
+      { name: 'Settings', path: '/admin/settings', icon: Settings }
     ]
   }
 ];
@@ -130,24 +107,16 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-5">
-          {NAV_SECTIONS.map((section) => {
-            const visibleItems = section.items.filter(item => {
-              if (!item.roles) return true;
-              return item.roles.includes(user?.role);
-            });
-            if (visibleItems.length === 0) return null;
-
-            return (
-              <div key={section.label}>
-                <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-600">
-                  {section.label}
-                </p>
-                <div className="space-y-0.5">
-                  {visibleItems.map(item => renderNavLink(item))}
-                </div>
+          {NAV_SECTIONS.map((section) => (
+            <div key={section.label}>
+              <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-600">
+                {section.label}
+              </p>
+              <div className="space-y-0.5">
+                {section.items.map(item => renderNavLink(item))}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </nav>
 
         {/* Footer */}
