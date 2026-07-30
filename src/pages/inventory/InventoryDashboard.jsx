@@ -4,7 +4,7 @@ import {
   Warehouse, Package, AlertTriangle, ArrowRightLeft, 
   TrendingUp, TrendingDown, ClipboardCheck, DollarSign,
   ShoppingCart, Box, BarChart2, Calendar, Truck, Database, Activity,
-  CheckCircle2, AlertCircle, Bell, RefreshCw, ZapOff, Snail, Archive
+  CheckCircle2, AlertCircle, Bell, RefreshCw, ZapOff, Snail, Archive, Clock
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';

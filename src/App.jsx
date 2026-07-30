@@ -3,13 +3,12 @@ import { BrowserRouter, HashRouter, Routes, Route, Navigate, useLocation } from 
 import { AuthProvider, useAuth } from './auth/AuthContext';
 import { 
   ProtectedRoute, 
-  AdminRoute, 
   ManagerRoute,
   DispatchRoute,
   DriverRoute,
   InventoryRoute,
-  FinanceRoute,
-  SupplierRoute
+  SupplierRoute,
+  FinanceRoute
 } from './auth/ProtectedRoute';
 import PublicLayout from './layouts/PublicLayout';
 import { CartProvider } from './context/CartContext';
@@ -78,9 +77,16 @@ const AdminUsersPage = lazy(() => import('./pages/admin/UsersPage'));
 
 // New ERP Portals
 import PortalLayout from './components/portal/PortalLayout';
-import FinancePortalLayout from './layouts/FinancePortalLayout';
-import PortalLoginPage from './components/portal/PortalLoginPage';
+import FinanceLayout from './components/finance/FinanceLayout';
 const UnauthorizedPage = lazy(() => import('./pages/portal/UnauthorizedPage'));
+
+// Finance Portal
+const FinanceDashboard = lazy(() => import('./pages/finance/FinanceDashboard'));
+const FinanceInvoices = lazy(() => import('./pages/finance/InvoicesPage'));
+const FinancePayments = lazy(() => import('./pages/finance/PaymentsPage'));
+const FinanceExpenses = lazy(() => import('./pages/finance/ExpensesPage'));
+const FinanceReports = lazy(() => import('./pages/finance/ReportsPage'));
+const FinanceSettings = lazy(() => import('./pages/finance/SettingsPage'));
 
 // Dispatch Portal
 const DispatchLoginPage = lazy(() => import('./pages/dispatch/DispatchLoginPage'));
@@ -108,20 +114,11 @@ const InventoryNotificationsPage = lazy(() => import('./pages/inventory/Inventor
 const InventorySettingsPage = lazy(() => import('./pages/inventory/InventorySettingsPage'));
 const InventoryProfilePage = lazy(() => import('./pages/inventory/InventoryProfilePage'));
 
-// Finance Portal
-const FinanceLoginPage = lazy(() => import('./pages/finance/FinanceLoginPage'));
-const FinanceDashboard = lazy(() => import('./pages/finance/FinanceDashboard'));
-const FinanceInvoicesPage = lazy(() => import('./pages/finance/FinanceInvoicesPage'));
-const CustomerPaymentsPage = lazy(() => import('./pages/finance/CustomerPaymentsPage'));
-const ExpensesPage = lazy(() => import('./pages/finance/ExpensesPage'));
-const FinanceReportsPage = lazy(() => import('./pages/finance/FinanceReportsPage'));
-const FinanceSettingsPage = lazy(() => import('./pages/finance/FinanceSettingsPage'));
-
 // Supplier Portal
 const SupplierLoginPage = lazy(() => import('./pages/supplier/SupplierLoginPage'));
 const SupplierDashboard = lazy(() => import('./pages/supplier/SupplierDashboard'));
 
-import { Truck, MapPin, Warehouse, TrendingUp, Building2, Package, Search, ListTodo, ShieldAlert, Box, ClipboardCheck, ShoppingCart, Users, ArrowLeftRight, Undo2, AlertTriangle, BarChart2, Bell, Settings, User, FileText, BookOpen, CreditCard, Wallet } from 'lucide-react';
+import { Truck, MapPin, Warehouse, Building2, Package, Search, ListTodo, Box, ClipboardCheck, ShoppingCart, Users, ArrowLeftRight, Undo2, AlertTriangle, BarChart2, Bell, Settings, User, PieChart, FileText, CreditCard, Receipt } from 'lucide-react';
 
 const PaymentLoaderPage = lazy(() => import('./pages/payment/PaymentLoaderPage'));
 const PaymentSuccessPage = lazy(() => import('./pages/payment/PaymentSuccessPage'));
@@ -144,8 +141,7 @@ const BuildDiagnostics = () => {
   const { user } = useAuth();
   const location = useLocation();
   useEffect(() => {
-    const layout = location.pathname.startsWith('/finance') ? 'FinancePortalLayout'
-      : location.pathname.startsWith('/profile') ? 'CustomerDashboard'
+    const layout = location.pathname.startsWith('/profile') ? 'CustomerDashboard'
         : location.pathname.startsWith('/admin') ? 'AdminLayout' : 'PublicLayout';
     console.info('[NexusTech build]', {
       commit: __BUILD_COMMIT__,
@@ -219,13 +215,16 @@ function App() {
                   <Route path="coordination" element={<TeamCoordinationPage />} />
                   <Route path="communication" element={<CommunicationPage />} />
                   <Route path="employees" element={<EmployeesPage />} />
-                  <Route path="finance" element={<FinanceDashboard />} />
-                  <Route path="finance/invoices" element={<FinanceInvoicesPage />} />
-                  <Route path="finance/payments" element={<CustomerPaymentsPage />} />
-                  <Route path="finance/expenses" element={<ExpensesPage />} />
-                  <Route path="finance/reports" element={<FinanceReportsPage />} />
                   <Route path="reports" element={<AdminReportsPage />} />
                   <Route path="settings" element={<AdminSettingsPage />} />
+                  <Route path="finance">
+                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route path="dashboard" element={<FinanceDashboard />} />
+                    <Route path="invoices" element={<FinanceInvoices />} />
+                    <Route path="payments" element={<FinancePayments />} />
+                    <Route path="expenses" element={<FinanceExpenses />} />
+                    <Route path="reports" element={<FinanceReports />} />
+                  </Route>
                 </Route>
 
                 {/* Catch-all 404 Route and Portals */}
@@ -311,22 +310,6 @@ function App() {
                   <Route path="profile" element={<InventoryProfilePage />} />
                 </Route>
 
-                {/* ── Finance Portal ── */}
-                <Route path="/finance/login" element={<FinanceLoginPage />} />
-                <Route path="/finance" element={
-                  <FinanceRoute>
-                    <FinancePortalLayout />
-                  </FinanceRoute>
-                }>
-                  <Route index element={<Navigate to="dashboard" replace />} />
-                  <Route path="dashboard" element={<FinanceDashboard />} />
-                  <Route path="invoices" element={<FinanceInvoicesPage />} />
-                  <Route path="payments" element={<CustomerPaymentsPage />} />
-                  <Route path="expenses" element={<ExpensesPage />} />
-                  <Route path="reports" element={<FinanceReportsPage />} />
-                  <Route path="settings" element={<FinanceSettingsPage />} />
-                </Route>
-
                 {/* ── Supplier Portal ── */}
                 <Route path="/supplier/login" element={<SupplierLoginPage />} />
                 <Route path="/supplier" element={
@@ -343,6 +326,21 @@ function App() {
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<SupplierDashboard />} />
                   <Route path="orders" element={<AdminSuppliersPage />} />
+                </Route>
+
+                {/* ── Finance Portal ── */}
+                <Route path="/finance" element={
+                  <FinanceRoute>
+                    <FinanceLayout />
+                  </FinanceRoute>
+                }>
+                  <Route index element={<Navigate to="dashboard" replace />} />
+                  <Route path="dashboard" element={<FinanceDashboard />} />
+                  <Route path="invoices" element={<FinanceInvoices />} />
+                  <Route path="payments" element={<FinancePayments />} />
+                  <Route path="expenses" element={<FinanceExpenses />} />
+                  <Route path="reports" element={<FinanceReports />} />
+                  <Route path="settings" element={<FinanceSettings />} />
                 </Route>
 
                 {/* Catch-all 404 Route */}

@@ -1,35 +1,21 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import PortalSidebar from './PortalSidebar';
-import PortalNavbar from './PortalNavbar';
+import FinanceSidebar from './FinanceSidebar';
+import FinanceNavbar from './FinanceNavbar';
 
-/**
- * Generic portal layout reused by Dispatch, Driver, Inventory, and Supplier portals.
- *
- * @param {Object} config
- * @param {string} config.name          - Portal name e.g. "Dispatch"
- * @param {string} config.accent        - Tailwind color name e.g. "amber"
- * @param {string} config.accentHex     - Raw hex e.g. "#f59e0b"
- * @param {string} config.homeRoute     - Default dashboard path
- * @param {Array}  config.nav           - Array of { name, path, icon }
- * @param {React.Component} config.icon - Portal icon component
- * @param {string} config.bgClass       - Sidebar background class
- */
-const PortalLayout = ({ config }) => {
+const FinanceLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white font-sans">
-      <PortalSidebar
-        config={config}
+      <FinanceSidebar
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
       />
 
       <div className="lg:ml-60 flex flex-col min-h-screen transition-all duration-300">
-        <PortalNavbar
-          config={config}
+        <FinanceNavbar
           toggleSidebar={() => setIsSidebarOpen(true)}
         />
 
@@ -51,4 +37,4 @@ const PortalLayout = ({ config }) => {
   );
 };
 
-export default PortalLayout;
+export default FinanceLayout;

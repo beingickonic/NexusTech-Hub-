@@ -24,7 +24,6 @@ const SEED_ACCOUNTS = [
   { email: 'dispatch@gmail.com',  password: 'derrick1', role: 'dispatch',  department: 'Dispatch' },
   { email: 'driver@gmail.com',    password: 'derrick1', role: 'driver',    department: 'Driver' },
   { email: 'inventory@gmail.com', password: 'derrick1', role: 'inventory', department: 'Inventory' },
-  { email: 'finance@gmail.com',   password: 'derrick1', role: 'finance',   department: 'Finance' },
   { email: 'supplier@gmail.com',  password: 'derrick1', role: 'supplier',  department: 'Supplier' },
 ];
 

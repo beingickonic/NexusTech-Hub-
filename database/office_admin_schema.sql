@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.office_departments (
 
 -- Pre-seed departments
 INSERT INTO public.office_departments (name) VALUES 
-  ('Administration'), ('Finance'), ('ICT'), ('Human Resources'), 
+  ('Administration'), ('ICT'), ('Human Resources'), 
   ('Marketing'), ('Sales'), ('Customer Support'), ('Operations')
 ON CONFLICT (name) DO NOTHING;
 

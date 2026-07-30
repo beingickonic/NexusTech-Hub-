@@ -9,11 +9,12 @@ export const ROLE_PORTAL_MAP = {
   Driver:           '/driver/dashboard',
   Warehouse_Staff:  '/inventory/dashboard',
   inventory:        '/inventory/dashboard',
-  'Finance Director': '/finance/dashboard',
-  'Finance Manager': '/finance/dashboard',
-  'Accountant':     '/finance/dashboard',
-  'Auditor':        '/finance/dashboard',
   Supplier:         '/supplier/dashboard',
+  Finance_Director: '/finance/dashboard',
+  Finance_Manager:  '/finance/dashboard',
+  Accountant:       '/finance/dashboard',
+  Finance_Officer:  '/finance/dashboard',
+  Auditor:          '/finance/dashboard',
   Customer:         '/profile',
 };
 
@@ -23,15 +24,15 @@ export const PORTAL_ROLES = {
   dispatch:  ['Dispatch_Officer'],
   driver:    ['Driver'],
   inventory: ['Warehouse_Staff', 'inventory'],
-  finance:   ['Finance Director', 'Finance Manager', 'Accountant', 'Auditor'],
   supplier:  ['Supplier'],
+  finance:   ['Finance_Director', 'Finance_Manager', 'Accountant', 'Finance_Officer', 'Auditor'],
 };
 
 const normaliseRole = (rawRole, email) => {
   const emailLower = email ? email.toLowerCase() : '';
   if (emailLower === 'admin@gmail.com') return 'Admin';
   if (emailLower === 'inventory@gmail.com') return 'inventory';
-  if (emailLower === 'finance@gmail.com') return 'Finance Manager'; // Map the seed user
+  if (emailLower === 'financem@gmail.com') return 'Finance_Manager';
 
   if (!rawRole) return 'Customer';
   const r = rawRole.trim();
@@ -43,12 +44,12 @@ const normaliseRole = (rawRole, email) => {
   if (lower === 'driver')          return 'Driver';
   if (lower === 'warehouse_staff') return 'inventory';
   if (lower === 'inventory')       return 'inventory';
-  if (lower === 'finance_officer') return 'Finance Manager';
-  if (lower === 'finance director') return 'Finance Director';
-  if (lower === 'finance manager') return 'Finance Manager';
-  if (lower === 'accountant')      return 'Accountant';
-  if (lower === 'auditor')         return 'Auditor';
   if (lower === 'supplier')        return 'Supplier';
+  if (lower === 'finance_director')return 'Finance_Director';
+  if (lower === 'finance_manager') return 'Finance_Manager';
+  if (lower === 'accountant')      return 'Accountant';
+  if (lower === 'finance_officer') return 'Finance_Officer';
+  if (lower === 'auditor')         return 'Auditor';
   if (lower === 'customer')        return 'Customer';
   return r; // return as-is for unknown roles
 };

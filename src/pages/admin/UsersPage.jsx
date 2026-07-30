@@ -265,7 +265,6 @@ const AdminUsersPage = () => {
                     <option value="dispatch">Dispatch</option>
                     <option value="driver">Driver</option>
                     <option value="inventory">Inventory</option>
-                    <option value="finance">Finance</option>
                     <option value="supplier">Supplier</option>
                     <option value="admin">Admin</option>
                   </select>

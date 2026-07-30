@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { officeService } from '../../../services/officeService';
-import { Search, Filter, Mail, Phone, MapPin, Briefcase, Building2, User } from 'lucide-react';
+import { Search, Filter, Mail, Phone, MapPin, Briefcase, Building2, User, Users } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const EmployeeCard = ({ employee }) => {

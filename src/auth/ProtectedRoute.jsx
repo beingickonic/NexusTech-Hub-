@@ -71,23 +71,23 @@ export const InventoryRoute = ({ children }) => {
   return children || <Outlet />;
 };
 
-// ── Finance ────────────────────────────────────────────────────
-export const FinanceRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-  if (loading) return <Spinner />;
-  if (!user) return <Navigate to="/finance/login" replace />;
-  if (!['Super Admin', 'Finance Director', 'Finance Manager', 'Accountant', 'Auditor'].includes(user.role))
-    return <Navigate to="/403" replace />;
-  return children || <Outlet />;
-};
-
-
 // ── Supplier ──────────────────────────────────────────────────
 export const SupplierRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/supplier/login" replace />;
   if (!['Admin', 'super_admin', 'Supplier'].includes(user.role))
+    return <Navigate to="/403" replace />;
+  return children || <Outlet />;
+};
+
+// ── Finance ───────────────────────────────────────────────────
+export const FinanceRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return <Spinner />;
+  if (!user) return <Navigate to="/login" replace />;
+  const allowedRoles = ['Admin', 'super_admin', 'Finance_Director', 'Finance_Manager', 'Accountant', 'Finance_Officer', 'Auditor'];
+  if (!allowedRoles.includes(user.role))
     return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };

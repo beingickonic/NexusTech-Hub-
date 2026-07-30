@@ -10,25 +10,18 @@ import {
   MessageSquare,
   Users,
   BarChart3,
-  Wallet,
   Settings,
-  LogOut
+  LogOut,
+  PieChart,
+  FileText,
+  CreditCard,
+  Receipt
 } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
 import darkLogo from '../../assets/logo/logo-dark.png';
 import lightLogo from '../../assets/logo/logo-light.png';
 
 const NAV_SECTIONS = [
-  {
-    label: 'Finance',
-    items: [
-      { name: 'Finance Dashboard', path: '/admin/finance', icon: Wallet },
-      { name: 'Invoices', path: '/admin/finance/invoices', icon: FolderOpen },
-      { name: 'Payments', path: '/admin/finance/payments', icon: CheckSquare },
-      { name: 'Expenses', path: '/admin/finance/expenses', icon: Paperclip },
-      { name: 'Finance Reports', path: '/admin/finance/reports', icon: BarChart3 }
-    ]
-  },
   {
     label: 'Overview',
     items: [
@@ -56,6 +49,15 @@ const NAV_SECTIONS = [
     items: [
       { name: 'Communication', path: '/admin/communication', icon: MessageSquare },
       { name: 'Employees',     path: '/admin/employees',     icon: Users }
+    ]
+  },
+  {
+    label: 'Finance',
+    items: [
+      { name: 'Dashboard', path: '/admin/finance/dashboard', icon: PieChart },
+      { name: 'Invoices',  path: '/admin/finance/invoices',  icon: FileText },
+      { name: 'Payments',  path: '/admin/finance/payments',  icon: CreditCard },
+      { name: 'Expenses',  path: '/admin/finance/expenses',  icon: Receipt }
     ]
   },
   {

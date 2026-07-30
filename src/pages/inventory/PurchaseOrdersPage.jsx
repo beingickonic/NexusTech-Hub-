@@ -40,7 +40,7 @@ const PurchaseOrdersPage = () => {
     if (session?.user) {
       setCurrentUser(session.user);
       const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).single();
-      setIsAdmin(profile?.role === 'admin' || profile?.role === 'inventory'); // Granting inventory officer approval rights for testing, ideally only admin. Let's allow admin for approval, but inventory officer can create. We'll set isAdmin to true if admin or finance. For simplicity, allow inventory to approve if needed or check strict admin. The prompt says "Admin can approve/reject".
+      setIsAdmin(profile?.role === 'admin' || profile?.role === 'inventory'); // Inventory officers can approve during testing; production should tighten this to admin approval.
       setIsAdmin(profile?.role === 'admin'); 
     }
   };

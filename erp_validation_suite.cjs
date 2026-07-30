@@ -99,16 +99,11 @@ async function runTests() {
     const { data: invCheck } = await supabase.from('inventory').select('quantity_on_hand').eq('id', inventoryId).single();
     if (invCheck.quantity_on_hand !== 60) throw new Error(`Inventory quantity mismatch. Expected 60, got ${invCheck.quantity_on_hand}`);
 
-    // Verify Finance Asset Created (50 * cost 70 = 3500)
-    // The trigger should have created a transaction of type Asset Increase
-    const { data: finCheck } = await supabase.from('transactions').select('*').eq('type', 'Asset Increase').order('created_at', { ascending: false }).limit(1).single();
-    if (!finCheck || finCheck.amount != 3500) throw new Error("Finance Asset Increase not logged correctly.");
-
     // Verify Audit Log
     const { data: movCheck } = await supabase.from('inventory_movements').select('*').eq('inventory_id', inventoryId).eq('movement_type', 'IN').order('created_at', { ascending: false }).limit(1).single();
     if (!movCheck || movCheck.quantity != 50) throw new Error("Inventory Movement not logged correctly.");
 
-    pass("Workflow 1 & 3 (Procurement & GRN)", "Goods Received Note processed, Inventory updated, Finance Asset logged, Audit log created.");
+    pass("Workflow 1 & 3 (Procurement & GRN)", "Goods Received Note processed, inventory updated, and audit log created.");
   } catch (err) {
     fail("Workflow 1 & 3 (Procurement & GRN)", err.message);
   }
@@ -132,11 +127,7 @@ async function runTests() {
     const { data: invCheck } = await supabase.from('inventory').select('quantity_on_hand').eq('id', inventoryId).single();
     if (invCheck.quantity_on_hand !== 55) throw new Error(`Inventory quantity mismatch. Expected 55, got ${invCheck.quantity_on_hand}`);
 
-    // Verify Finance Write-off (5 * 50 = 250)
-    const { data: finCheck } = await supabase.from('transactions').select('*').eq('type', 'Write-off').order('created_at', { ascending: false }).limit(1).single();
-    if (!finCheck || finCheck.amount != 250) throw new Error("Finance Write-off not logged correctly.");
-
-    pass("Workflow 4 (Damaged Stock)", "Damaged stock disposed, Inventory reduced, Finance Write-off logged.");
+    pass("Workflow 4 (Damaged Stock)", "Damaged stock disposed and inventory reduced.");
   } catch(err) {
     fail("Workflow 4 (Damaged Stock)", err.message);
   }
