@@ -138,10 +138,10 @@ const Navbar = () => {
                           <p className="text-xs text-slate-500 dark:text-gray-400 truncate">{user.email}</p>
                         </div>
                         <div className="py-1">
-                          <Link to="/profile/account" onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                          <Link to={ROLE_PORTAL_MAP[user?.role] || "/profile/account"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                             My Profile
                           </Link>
-                          <Link to="/profile/settings" onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                          <Link to={ROLE_PORTAL_MAP[user?.role] ? `${ROLE_PORTAL_MAP[user?.role].replace('/dashboard', '')}/settings` : "/profile/settings"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                             Settings
                           </Link>
                           <button
@@ -257,15 +257,15 @@ const Navbar = () => {
                   {user ? (
                     <>
                       {[
-                        { to: '/profile/account', label: 'My Account', icon: <User size={18} /> },
-                        { to: '/profile/assets', label: 'My Assets', icon: <FolderOpen size={18} /> },
-                        { to: '/profile/business', label: 'Business', icon: <BarChart2 size={18} /> },
-                        { to: '/profile/orders', label: 'My Orders', icon: <Package size={18} /> },
-                        { to: '/wishlist', label: 'Wish List', icon: <Heart size={18} /> },
-                        { to: '/profile/messages', label: 'Messages', icon: <MessageSquare size={18} /> },
-                        { to: '/profile/chats', label: 'Chats with Sellers', icon: <MessageCircle size={18} /> },
-                        { to: '/profile/settings', label: 'Settings', icon: <Settings size={18} /> },
-                      ].map(({ to, label, icon }) => (
+                        { to: ROLE_PORTAL_MAP[user?.role] || '/profile/account', label: 'My Account', icon: <User size={18} /> },
+                        { to: '/profile/assets', label: 'My Assets', icon: <FolderOpen size={18} />, customerOnly: true },
+                        { to: '/profile/business', label: 'Business', icon: <BarChart2 size={18} />, customerOnly: true },
+                        { to: '/profile/orders', label: 'My Orders', icon: <Package size={18} />, customerOnly: true },
+                        { to: '/wishlist', label: 'Wish List', icon: <Heart size={18} />, customerOnly: true },
+                        { to: '/profile/messages', label: 'Messages', icon: <MessageSquare size={18} />, customerOnly: true },
+                        { to: '/profile/chats', label: 'Chats with Sellers', icon: <MessageCircle size={18} />, customerOnly: true },
+                        { to: ROLE_PORTAL_MAP[user?.role] ? `${ROLE_PORTAL_MAP[user?.role].replace('/dashboard', '')}/settings` : '/profile/settings', label: 'Settings', icon: <Settings size={18} /> },
+                      ].filter(item => !item.customerOnly || !user?.role || user?.role === 'Customer').map(({ to, label, icon }) => (
                         <Link
                           key={to}
                           to={to}

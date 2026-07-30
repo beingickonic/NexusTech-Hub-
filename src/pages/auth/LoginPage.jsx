@@ -25,6 +25,8 @@ const LoginPage = () => {
       if (res.success) {
         const role = res.data.user.role;
         const dest = ROLE_PORTAL_MAP[role] || '/profile';
+        console.log("[DEBUG LOGIN] Role:", role);
+        console.log("[DEBUG LOGIN] Redirecting to:", dest);
         navigate(dest);
       } else {
         setError(res.message || 'Invalid credentials');

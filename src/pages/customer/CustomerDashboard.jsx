@@ -9,6 +9,7 @@ import {
 import { useAuth } from '../../auth/AuthContext';
 import { supabase } from '../../services/supabaseClient';
 import UserAvatar from '../../components/common/UserAvatar';
+import { ROLE_PORTAL_MAP } from '../../auth/authService';
 
 const NAV_ITEMS = [
   { label: 'My Account',       path: 'account',   icon: User },
@@ -100,6 +101,14 @@ const CustomerDashboard = () => {
   const navigate = useNavigate();
   const [showLogout, setShowLogout] = useState(false);
   const [orderCount, setOrderCount] = useState(0);
+
+  // Role Guard
+  if (user && user.role && user.role !== 'Customer') {
+    const dest = ROLE_PORTAL_MAP[user.role] || '/403';
+    console.log("[DEBUG CUSTOMER DASHBOARD] Role:", user.role);
+    console.log("[DEBUG CUSTOMER DASHBOARD] Redirecting to:", dest);
+    return <Navigate to={dest} replace />;
+  }
 
   useEffect(() => {
     if (!user) return;

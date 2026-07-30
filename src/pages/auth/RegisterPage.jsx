@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
+import { ROLE_PORTAL_MAP } from '../../auth/authService';
 import AuthLayout from '../../components/auth/AuthLayout';
 
 const RegisterPage = () => {
@@ -40,7 +41,10 @@ const RegisterPage = () => {
     try {
       const res = await register(formData);
       if (res.success) {
-        navigate('/profile');
+        const dest = ROLE_PORTAL_MAP[res.data.user.role] || '/profile';
+        console.log("[DEBUG REGISTER] Role:", res.data.user.role);
+        console.log("[DEBUG REGISTER] Redirecting to:", dest);
+        navigate(dest);
       } else {
         setError(res.message || 'Registration failed');
       }

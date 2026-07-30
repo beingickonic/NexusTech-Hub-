@@ -3,6 +3,7 @@ import { BrowserRouter, HashRouter, Routes, Route, Navigate, useLocation } from 
 import { AuthProvider, useAuth } from './auth/AuthContext';
 import { 
   ProtectedRoute, 
+  CustomerRoute,
   ManagerRoute,
   DispatchRoute,
   DriverRoute,
@@ -175,7 +176,11 @@ function App() {
                   <Route path="help" element={<HelpPage />} />
 
                   <Route element={<ProtectedRoute />}>
-                    <Route path="profile" element={<CustomerDashboard />}>
+                    <Route path="profile" element={
+                      <CustomerRoute>
+                        <CustomerDashboard />
+                      </CustomerRoute>
+                    }>
                       <Route index element={<Navigate to="account" replace />} />
                       <Route path="account"  element={<AccountSection />} />
                       <Route path="orders"   element={<OrdersSection />} />

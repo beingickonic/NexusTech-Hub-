@@ -15,11 +15,19 @@ export const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
-  
-  if (user.role && user.role !== 'Customer') {
-    return <Navigate to={ROLE_PORTAL_MAP[user.role] || "/403"} replace />;
-  }
+  return children || <Outlet />;
+};
 
+export const CustomerRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return <Spinner />;
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role && user.role !== 'Customer') {
+    const dest = ROLE_PORTAL_MAP[user.role] || '/403';
+    console.log("[DEBUG CUSTOMER ROUTE] Role:", user.role);
+    console.log("[DEBUG CUSTOMER ROUTE] Redirecting to:", dest);
+    return <Navigate to={dest} replace />;
+  }
   return children || <Outlet />;
 };
 

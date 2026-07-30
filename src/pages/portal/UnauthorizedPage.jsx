@@ -10,7 +10,10 @@ const UnauthorizedPage = () => {
 
   const goToMyPortal = () => {
     if (user) {
-      navigate(ROLE_PORTAL_MAP[user.role] || '/profile');
+      const dest = ROLE_PORTAL_MAP[user.role] || '/profile';
+      console.log("[DEBUG UNAUTHORIZED] Role:", user.role);
+      console.log("[DEBUG UNAUTHORIZED] Redirecting to:", dest);
+      navigate(dest);
     } else {
       navigate('/login');
     }

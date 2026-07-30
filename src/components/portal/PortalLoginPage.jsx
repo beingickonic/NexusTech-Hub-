@@ -37,6 +37,8 @@ const PortalLoginPage = ({ portalConfig }) => {
   useEffect(() => {
     if (user) {
       const dest = ROLE_PORTAL_MAP[user.role] || '/profile';
+      console.log("[DEBUG PORTAL LOGIN - Effect] Role:", user.role);
+      console.log("[DEBUG PORTAL LOGIN - Effect] Redirecting to:", dest);
       navigate(dest, { replace: true });
     }
   }, [user, navigate]);
@@ -49,6 +51,8 @@ const PortalLoginPage = ({ portalConfig }) => {
       const res = await login(email, password);
       if (res.success) {
         const dest = ROLE_PORTAL_MAP[res.data.user.role] || '/profile';
+        console.log("[DEBUG PORTAL LOGIN - Submit] Role:", res.data.user.role);
+        console.log("[DEBUG PORTAL LOGIN - Submit] Redirecting to:", dest);
         navigate(dest, { replace: true });
       } else {
         setError(res.message || 'Invalid credentials');
