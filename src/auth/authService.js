@@ -9,7 +9,10 @@ export const ROLE_PORTAL_MAP = {
   Driver:           '/driver/dashboard',
   Warehouse_Staff:  '/inventory/dashboard',
   inventory:        '/inventory/dashboard',
-  Finance_Officer:  '/finance/dashboard',
+  'Finance Director': '/finance/dashboard',
+  'Finance Manager': '/finance/dashboard',
+  'Accountant':     '/finance/dashboard',
+  'Auditor':        '/finance/dashboard',
   Supplier:         '/supplier/dashboard',
   Customer:         '/profile',
 };
@@ -20,15 +23,15 @@ export const PORTAL_ROLES = {
   dispatch:  ['Dispatch_Officer'],
   driver:    ['Driver'],
   inventory: ['Warehouse_Staff', 'inventory'],
-  finance:   ['Finance_Officer'],
+  finance:   ['Finance Director', 'Finance Manager', 'Accountant', 'Auditor'],
   supplier:  ['Supplier'],
 };
 
-// Normalise a raw role string from the DB
 const normaliseRole = (rawRole, email) => {
   // Hardcoded overrides first
   if (email === 'admin@gmail.com') return 'Admin';
   if (email === 'inventory@gmail.com') return 'inventory';
+  if (email === 'finance@gmail.com') return 'Finance Manager'; // Map the seed user
 
   if (!rawRole) return 'Customer';
   const r = rawRole.trim();
@@ -40,7 +43,11 @@ const normaliseRole = (rawRole, email) => {
   if (lower === 'driver')          return 'Driver';
   if (lower === 'warehouse_staff') return 'inventory';
   if (lower === 'inventory')       return 'inventory';
-  if (lower === 'finance_officer') return 'Finance_Officer';
+  if (lower === 'finance_officer') return 'Finance Manager';
+  if (lower === 'finance director') return 'Finance Director';
+  if (lower === 'finance manager') return 'Finance Manager';
+  if (lower === 'accountant')      return 'Accountant';
+  if (lower === 'auditor')         return 'Auditor';
   if (lower === 'supplier')        return 'Supplier';
   if (lower === 'customer')        return 'Customer';
   return r; // return as-is for unknown roles

@@ -109,12 +109,19 @@ const InventoryProfilePage = lazy(() => import('./pages/inventory/InventoryProfi
 // Finance Portal
 const FinanceLoginPage = lazy(() => import('./pages/finance/FinanceLoginPage'));
 const FinanceDashboard = lazy(() => import('./pages/finance/FinanceDashboard'));
+const ChartOfAccountsPage = lazy(() => import('./pages/finance/ChartOfAccountsPage'));
+const GeneralLedgerPage = lazy(() => import('./pages/finance/GeneralLedgerPage'));
+const AccountsReceivablePage = lazy(() => import('./pages/finance/AccountsReceivablePage'));
+const AccountsPayablePage = lazy(() => import('./pages/finance/AccountsPayablePage'));
+const FinanceInvoicesPage = lazy(() => import('./pages/finance/FinanceInvoicesPage'));
+const CustomerPaymentsPage = lazy(() => import('./pages/finance/CustomerPaymentsPage'));
+const ExpensesPage = lazy(() => import('./pages/finance/ExpensesPage'));
 
 // Supplier Portal
 const SupplierLoginPage = lazy(() => import('./pages/supplier/SupplierLoginPage'));
 const SupplierDashboard = lazy(() => import('./pages/supplier/SupplierDashboard'));
 
-import { Truck, MapPin, Warehouse, TrendingUp, Building2, Package, Search, ListTodo, ShieldAlert, Box, ClipboardCheck, ShoppingCart, Users, ArrowLeftRight, Undo2, AlertTriangle, BarChart2, Bell, Settings, User } from 'lucide-react';
+import { Truck, MapPin, Warehouse, TrendingUp, Building2, Package, Search, ListTodo, ShieldAlert, Box, ClipboardCheck, ShoppingCart, Users, ArrowLeftRight, Undo2, AlertTriangle, BarChart2, Bell, Settings, User, FileText, BookOpen, CreditCard, Wallet } from 'lucide-react';
 
 const PaymentLoaderPage = lazy(() => import('./pages/payment/PaymentLoaderPage'));
 const PaymentSuccessPage = lazy(() => import('./pages/payment/PaymentSuccessPage'));
@@ -276,7 +283,7 @@ function App() {
                   <Route path="profile" element={<InventoryProfilePage />} />
                 </Route>
 
-                {/* â”€â”€ Finance Portal â”€â”€ */}
+                {/* ── Finance Portal ── */}
                 <Route path="/finance/login" element={<FinanceLoginPage />} />
                 <Route path="/finance" element={
                   <FinanceRoute>
@@ -284,6 +291,13 @@ function App() {
                       name: 'Finance', accentHex: '#3b82f6', homeRoute: '/finance/dashboard', icon: TrendingUp,
                       nav: [
                         { name: 'Dashboard', path: '/finance/dashboard', icon: TrendingUp },
+                        { name: 'Invoices', path: '/finance/invoices', icon: FileText },
+                        { name: 'Customer Payments', path: '/finance/payments', icon: CreditCard },
+                        { name: 'Expenses', path: '/finance/expenses', icon: Wallet },
+                        { name: 'Chart of Accounts', path: '/finance/chart-of-accounts', icon: FileText },
+                        { name: 'General Ledger', path: '/finance/general-ledger', icon: BookOpen },
+                        { name: 'Accounts Receivable', path: '/finance/accounts-receivable', icon: CreditCard },
+                        { name: 'Accounts Payable', path: '/finance/accounts-payable', icon: Wallet },
                         { name: 'Transactions', path: '/finance/transactions', icon: ShieldAlert }
                       ]
                     }} />
@@ -291,10 +305,17 @@ function App() {
                 }>
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<FinanceDashboard />} />
+                  <Route path="invoices" element={<FinanceInvoicesPage />} />
+                  <Route path="payments" element={<CustomerPaymentsPage />} />
+                  <Route path="expenses" element={<ExpensesPage />} />
+                  <Route path="chart-of-accounts" element={<ChartOfAccountsPage />} />
+                  <Route path="general-ledger" element={<GeneralLedgerPage />} />
+                  <Route path="accounts-receivable" element={<AccountsReceivablePage />} />
+                  <Route path="accounts-payable" element={<AccountsPayablePage />} />
                   <Route path="transactions" element={<AdminFinancePage />} />
                 </Route>
 
-                {/* â”€â”€ Supplier Portal â”€â”€ */}
+                {/* ── Supplier Portal ── */}
                 <Route path="/supplier/login" element={<SupplierLoginPage />} />
                 <Route path="/supplier" element={
                   <SupplierRoute>

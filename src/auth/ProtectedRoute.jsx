@@ -76,10 +76,11 @@ export const FinanceRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return <Spinner />;
   if (!user) return <Navigate to="/finance/login" replace />;
-  if (!['Admin', 'super_admin', 'Finance_Officer'].includes(user.role))
+  if (!['Super Admin', 'Finance Director', 'Finance Manager', 'Accountant', 'Auditor'].includes(user.role))
     return <Navigate to="/403" replace />;
   return children || <Outlet />;
 };
+
 
 // ── Supplier ──────────────────────────────────────────────────
 export const SupplierRoute = ({ children }) => {
