@@ -46,8 +46,7 @@ async function seedFinanceUser() {
   console.log('Updating profiles table...');
   const { error: profileError } = await supabase.from('profiles').upsert({
     id: user.id,
-    email: email,
-    full_name: 'Finance Manager',
+        full_name: 'Finance Manager',
     role: 'Finance Manager',
     updated_at: new Date().toISOString()
   });
