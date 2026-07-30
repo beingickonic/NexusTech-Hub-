@@ -10,7 +10,6 @@ import { dispatchService } from '../../services/dispatchService';
 import { driverService } from '../../services/driverService';
 import { adminService } from '../../services/adminService';
 import toast from 'react-hot-toast';
-import jsPDF from 'jspdf';
 
 // ── Status config ──────────────────────────────────────────────
 const STATUS_CONFIG = {
@@ -324,7 +323,8 @@ const CreateDispatchModal = ({ onClose, onCreated }) => {
 };
 
 // ── Print delivery note ────────────────────────────────────────
-const printDeliveryNote = (dispatch) => {
+const printDeliveryNote = async (dispatch) => {
+  const { default: jsPDF } = await import('jspdf');
   const doc = new jsPDF();
   doc.setFontSize(20);
   doc.setFont('helvetica', 'bold');

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { FiCheck, FiX, FiSearch, FiFilter } from 'react-icons/fi';
+import { Check as FiCheck, X as FiX, Search as FiSearch, Filter as FiFilter } from 'lucide-react';
 import paymentService from '../../services/paymentService';
 
 const ManualPaymentsPage = () => {

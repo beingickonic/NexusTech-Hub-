@@ -21,20 +21,16 @@
     "@sentry/react": "10.43.0",
     "@supabase/supabase-js": "^2.108.1",
     "autoprefixer": "^10.5.0",
-    "axios": "^1.16.1",
     "framer-motion": "^12.40.0",
     "jspdf": "^4.2.1",
-    "jspdf-autotable": "^5.0.8",
     "lucide-react": "^1.16.0",
-    "pg": "^8.22.0",
     "postcss": "^8.5.15",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.15.1",
     "recharts": "^3.8.1",
-    "tailwindcss": "^3.4.19",
-    "xlsx": "^0.18.5"
+    "tailwindcss": "^3.4.19"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

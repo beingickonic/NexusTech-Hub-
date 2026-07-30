@@ -12,7 +12,6 @@ import {
 } from 'recharts';
 import { financeService } from '../../services/financeService';
 import toast from 'react-hot-toast';
-import jsPDF from 'jspdf';
 
 // ── Payment Method badge ───────────────────────────────────────
 const PaymentBadge = ({ method }) => {
