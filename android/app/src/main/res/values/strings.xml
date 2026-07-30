@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NexusTech Hub</string>
+    <string name="title_activity_main">NexusTech Hub</string>
+    <string name="package_name">com.nexustechhub.app</string>
+    <string name="custom_url_scheme">com.nexustechhub.app</string>
+</resources>

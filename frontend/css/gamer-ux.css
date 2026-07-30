@@ -1,0 +1,68 @@
+/* gamer-ux.css - Premium Tech Aesthetics */
+
+:root {
+    --accent-cyan: #79d1ff;
+    --accent-cyan-glow: rgba(121, 209, 255, 0.4);
+    --bg-skeleton: #2a2a2a;
+}
+
+/* --- ELECTRIC GLOW BORDER --- */
+.product-card, .stat-card, .admin-card {
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px var(--accent-cyan-glow);
+}
+
+/* --- SKELETON LOADERS --- */
+.pulse {
+    animation: pulse-bg 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-bg {
+    0% { background-color: rgba(255, 255, 255, 0.05); }
+    50% { background-color: rgba(255, 255, 255, 0.1); }
+    100% { background-color: rgba(255, 255, 255, 0.05); }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* --- MOUSE TRACKING GLOW (Applied via effects.js) --- */
+.glow-border {
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+}
+
+.glow-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: radial-gradient(
+        400px circle at var(--mouse-x) var(--mouse-y),
+        rgba(0, 242, 255, 0.15),
+        transparent 40%
+    );
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.glow-border:hover::before {
+    opacity: 1;
+}

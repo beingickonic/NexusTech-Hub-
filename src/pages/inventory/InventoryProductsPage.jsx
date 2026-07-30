@@ -1,0 +1,197 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Search, Filter, Plus, Edit, Image as ImageIcon, Barcode, Package, ArrowRightLeft } from 'lucide-react';
+import { supabase } from '../../services/supabaseClient';
+import { inventoryService } from '../../services/inventoryService';
+
+const InventoryProductsPage = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const { success, data } = await inventoryService.getInventoryItems({ search: searchQuery });
+        if (success) {
+          // map to UI expected format
+          const mapped = data.map(p => ({
+            id: p.id,
+            title: p.title,
+            sku: p.sku || 'N/A',
+            barcode: p.barcode || 'N/A',
+            category: p.category_name || 'Uncategorized',
+            price: p.price || 0,
+            cost_price: p.cost_price || 0,
+            quantity: p.quantity_on_hand || 0,
+            reserved: p.quantity_reserved || 0,
+            available: p.quantity_available || 0,
+            image_url: p.image_url
+          }));
+          setProducts(mapped);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [searchQuery]);
+
+  const filteredProducts = products;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Products Inventory</h1>
+          <p className="text-nexus-textSecondary text-sm mt-1">Manage stock levels, SKUs, and barcodes</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button className="inline-flex items-center gap-2 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white px-4 py-2.5 rounded-xl font-medium text-sm transition-colors">
+            <Barcode size={18} /> Scan Barcode
+          </button>
+          <button className="inline-flex items-center gap-2 bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25">
+            <ArrowRightLeft size={18} /> Adjust Stock
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden flex flex-col">
+        {/* Toolbar */}
+        <div className="p-4 border-b border-slate-200 dark:border-nexus-border flex flex-col sm:flex-row gap-4 items-center justify-between bg-slate-50/50 dark:bg-white/[0.02]">
+          <div className="relative w-full sm:max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary" size={20} />
+            <input 
+              type="text" 
+              placeholder="Search by name, SKU, or Barcode..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-nexus-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white placeholder-slate-400"
+            />
+          </div>
+          <button className="inline-flex items-center gap-2 bg-white dark:bg-white/5 border border-slate-200 dark:border-nexus-border px-4 py-2 rounded-xl text-sm font-medium text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-white/10 transition-colors w-full sm:w-auto justify-center">
+            <Filter size={18} /> Filters
+          </button>
+        </div>
+
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50 dark:bg-white/[0.02] border-b border-slate-200 dark:border-nexus-border">
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Product</th>
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Identifiers</th>
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">Pricing</th>
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider text-center">Stock Levels</th>
+                <th className="px-6 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 dark:divide-white/10">
+              {loading ? (
+                [...Array(5)].map((_, i) => (
+                  <tr key={i}>
+                    <td className="px-6 py-5"><div className="h-10 w-48 bg-slate-100 dark:bg-white/5 rounded-lg animate-pulse"></div></td>
+                    <td className="px-6 py-5"><div className="h-8 w-32 bg-slate-100 dark:bg-white/5 rounded-lg animate-pulse"></div></td>
+                    <td className="px-6 py-5"><div className="h-8 w-24 bg-slate-100 dark:bg-white/5 rounded-lg animate-pulse"></div></td>
+                    <td className="px-6 py-5"><div className="h-8 w-32 bg-slate-100 dark:bg-white/5 rounded-lg animate-pulse mx-auto"></div></td>
+                    <td className="px-6 py-5"><div className="h-8 w-8 bg-slate-100 dark:bg-white/5 rounded-lg animate-pulse ml-auto"></div></td>
+                  </tr>
+                ))
+              ) : filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <motion.tr 
+                    key={product.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors group"
+                  >
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center border border-slate-200 dark:border-nexus-border flex-shrink-0">
+                          {product.image_url ? (
+                            <img src={product.image_url} alt={product.title} className="w-full h-full object-cover rounded-xl" />
+                          ) : (
+                            <ImageIcon className="text-nexus-textSecondary" size={20} />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-slate-900 dark:text-white">{product.title}</p>
+                          <p className="text-xs text-nexus-textSecondary mt-0.5">{product.category}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-medium text-nexus-textSecondary uppercase w-8">SKU:</span>
+                          <span className="text-sm font-medium text-slate-700 dark:text-nexus-textSecondary font-mono bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded">{product.sku}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-medium text-nexus-textSecondary uppercase w-8">UPC:</span>
+                          <span className="text-sm text-slate-600 dark:text-nexus-textSecondary font-mono">{product.barcode}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-medium text-nexus-textSecondary uppercase w-10">Sell:</span>
+                          <span className="text-sm font-bold text-slate-900 dark:text-white">${product.price.toFixed(2)}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-medium text-nexus-textSecondary uppercase w-10">Cost:</span>
+                          <span className="text-sm font-medium text-nexus-textSecondary">${product.cost_price.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-center gap-4">
+                        <div className="text-center">
+                          <p className="text-xs text-nexus-textSecondary mb-1">Total</p>
+                          <span className="text-sm font-bold text-slate-900 dark:text-white">{product.quantity}</span>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-xs text-nexus-textSecondary mb-1">Rsrvd</p>
+                          <span className="text-sm font-bold text-amber-500">{product.reserved}</span>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-xs text-nexus-textSecondary mb-1">Avail</p>
+                          <span className={`text-sm font-bold px-2 py-1 rounded-md ${
+                            product.available > 10 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400' :
+                            product.available > 0 ? 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400' :
+                            'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400'
+                          }`}>
+                            {product.available}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="p-2 text-nexus-textSecondary hover:text-primary hover:bg-primary/10 dark:hover:bg-primary/10 rounded-lg transition-colors">
+                        <Edit size={18} />
+                      </button>
+                    </td>
+                  </motion.tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="px-6 py-12 text-center text-nexus-textSecondary">
+                    <Package size={48} className="mx-auto text-nexus-textSecondary dark:text-slate-600 mb-3" />
+                    <p className="text-base font-medium">No products found</p>
+                    <p className="text-sm mt-1">Try adjusting your search filters.</p>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InventoryProductsPage;
