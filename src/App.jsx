@@ -1,5 +1,5 @@
 import { Suspense, lazy, useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthContext';
 import { 
   ProtectedRoute, 
@@ -77,6 +77,7 @@ const AdminUsersPage = lazy(() => import('./pages/admin/UsersPage'));
 
 // New ERP Portals
 import PortalLayout from './components/portal/PortalLayout';
+import FinancePortalLayout from './layouts/FinancePortalLayout';
 import PortalLoginPage from './components/portal/PortalLoginPage';
 const UnauthorizedPage = lazy(() => import('./pages/portal/UnauthorizedPage'));
 
@@ -116,6 +117,8 @@ const AccountsPayablePage = lazy(() => import('./pages/finance/AccountsPayablePa
 const FinanceInvoicesPage = lazy(() => import('./pages/finance/FinanceInvoicesPage'));
 const CustomerPaymentsPage = lazy(() => import('./pages/finance/CustomerPaymentsPage'));
 const ExpensesPage = lazy(() => import('./pages/finance/ExpensesPage'));
+const FinanceReportsPage = lazy(() => import('./pages/finance/FinanceReportsPage'));
+const FinanceSettingsPage = lazy(() => import('./pages/finance/FinanceSettingsPage'));
 
 // Supplier Portal
 const SupplierLoginPage = lazy(() => import('./pages/supplier/SupplierLoginPage'));
@@ -135,6 +138,10 @@ const LoadingFallback = () => (
     <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
+
+// Web deployments support clean, refresh-safe URLs through the configured SPA rewrite.
+// Capacitor loads from file://, where hash routing remains necessary.
+const Router = window.location.protocol === 'file:' ? HashRouter : BrowserRouter;
 
 function App() {
   return (
@@ -271,7 +278,7 @@ function App() {
                   <Route path="products" element={<InventoryProductsPage />} />
                   <Route path="movements" element={<StockMovementsPage />} />
                   <Route path="goods-received" element={<GoodsReceivedPage />} />
-                  <Route path="suppliers" element={<SuppliersPage />} />
+                  <Route path="suppliers" element={<InventorySuppliersPage />} />
                   <Route path="purchase-orders" element={<PurchaseOrdersPage />} />
                   <Route path="transfers" element={<StockTransfersPage />} />
                   <Route path="returns" element={<InventoryReturnsPage />} />
@@ -287,32 +294,22 @@ function App() {
                 <Route path="/finance/login" element={<FinanceLoginPage />} />
                 <Route path="/finance" element={
                   <FinanceRoute>
-                    <PortalLayout config={{
-                      name: 'Finance', accentHex: '#3b82f6', homeRoute: '/finance/dashboard', icon: TrendingUp,
-                      nav: [
-                        { name: 'Dashboard', path: '/finance/dashboard', icon: TrendingUp },
-                        { name: 'Invoices', path: '/finance/invoices', icon: FileText },
-                        { name: 'Customer Payments', path: '/finance/payments', icon: CreditCard },
-                        { name: 'Expenses', path: '/finance/expenses', icon: Wallet },
-                        { name: 'Chart of Accounts', path: '/finance/chart-of-accounts', icon: FileText },
-                        { name: 'General Ledger', path: '/finance/general-ledger', icon: BookOpen },
-                        { name: 'Accounts Receivable', path: '/finance/accounts-receivable', icon: CreditCard },
-                        { name: 'Accounts Payable', path: '/finance/accounts-payable', icon: Wallet },
-                        { name: 'Transactions', path: '/finance/transactions', icon: ShieldAlert }
-                      ]
-                    }} />
+                    <FinancePortalLayout />
                   </FinanceRoute>
                 }>
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<FinanceDashboard />} />
                   <Route path="invoices" element={<FinanceInvoicesPage />} />
-                  <Route path="payments" element={<CustomerPaymentsPage />} />
+                  <Route path="customer-payments" element={<CustomerPaymentsPage />} />
+                  <Route path="payments" element={<Navigate to="/finance/customer-payments" replace />} />
                   <Route path="expenses" element={<ExpensesPage />} />
                   <Route path="chart-of-accounts" element={<ChartOfAccountsPage />} />
                   <Route path="general-ledger" element={<GeneralLedgerPage />} />
                   <Route path="accounts-receivable" element={<AccountsReceivablePage />} />
                   <Route path="accounts-payable" element={<AccountsPayablePage />} />
                   <Route path="transactions" element={<AdminFinancePage />} />
+                  <Route path="reports" element={<FinanceReportsPage />} />
+                  <Route path="settings" element={<FinanceSettingsPage />} />
                 </Route>
 
                 {/* ── Supplier Portal ── */}

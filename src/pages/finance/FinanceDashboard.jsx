@@ -4,6 +4,7 @@ import { TrendingUp, DollarSign, Activity, CreditCard, Wallet, BookOpen, Clock }
 import { financeErpService } from '../../services/finance';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const FinanceDashboard = () => {
   const [stats, setStats] = useState({
@@ -17,25 +18,31 @@ const FinanceDashboard = () => {
     pendingJournals: 0
   });
   const [loading, setLoading] = useState(true);
+  const [activity, setActivity] = useState({ monthly: [], transactions: [] });
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
-  const fetchStats = async () => {
+  async function fetchStats() {
     setLoading(true);
-    const { data, error } = await financeErpService.dashboard.getDashboardKpis();
+    const [{ data, error }, activityResult] = await Promise.all([
+      financeErpService.dashboard.getDashboardKpis(),
+      financeErpService.dashboard.getDashboardActivity()
+    ]);
     if (error) {
       toast.error('Failed to load dashboard metrics');
     } else if (data) {
       setStats(data);
     }
+    if (activityResult.data) setActivity(activityResult.data);
     setLoading(false);
-  };
+  }
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
 
   const kpis = [
     { label: 'Revenue This Month', value: `${stats.revenueThisMonth.toLocaleString()}`, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-500/10', icon: TrendingUp },
-    { label: 'Cash Balance', value: `${stats.cashBalance.toLocaleString()}`, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: DollarSign },
+    { label: 'Expenses', value: `${activity.monthly.reduce((total, item) => total + item.expenses, 0).toLocaleString()}`, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-500/10', icon: Wallet },
+    { label: 'Outstanding Invoices', value: stats.outstandingInvoices.toLocaleString(), color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10', icon: Clock, suffix: '' },
     { label: 'Accounts Receivable', value: `${stats.arBalance.toLocaleString()}`, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-500/10', icon: CreditCard },
     { label: 'Accounts Payable', value: `${stats.apBalance.toLocaleString()}`, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-500/10', icon: Wallet },
     { label: 'Gross Profit', value: `${stats.grossProfit.toLocaleString()}`, color: 'text-green-500', bg: 'bg-green-50 dark:bg-green-500/10', icon: Activity },
@@ -69,12 +76,28 @@ const FinanceDashboard = () => {
             <div>
               <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{kpi.label}</p>
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
-                {loading ? '...' : kpi.value} <span className="text-sm text-slate-400 font-normal">KES</span>
+                {loading ? '...' : kpi.value} {kpi.suffix !== '' && <span className="text-sm text-slate-400 font-normal">KES</span>}
               </h3>
             </div>
           </motion.div>
         ))}
       </div>
+
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <h2 className="mb-5 font-bold">Revenue trend</h2>
+          <div className="h-64"><ResponsiveContainer width="100%" height="100%"><AreaChart data={activity.monthly}><defs><linearGradient id="revenueFill" x1="0" x2="0" y1="0" y2="1"><stop offset="5%" stopColor="#2563eb" stopOpacity={0.35}/><stop offset="95%" stopColor="#2563eb" stopOpacity={0}/></linearGradient></defs><CartesianGrid strokeDasharray="3 3" vertical={false}/><XAxis dataKey="month"/><YAxis/><Tooltip formatter={(value) => [`KES ${Number(value).toLocaleString()}`, 'Revenue']}/><Area type="monotone" dataKey="revenue" stroke="#2563eb" fill="url(#revenueFill)" strokeWidth={3}/></AreaChart></ResponsiveContainer></div>
+        </section>
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <h2 className="mb-5 font-bold">Expenses</h2>
+          <div className="h-64"><ResponsiveContainer width="100%" height="100%"><BarChart data={activity.monthly}><CartesianGrid strokeDasharray="3 3" vertical={false}/><XAxis dataKey="month"/><YAxis/><Tooltip formatter={(value) => [`KES ${Number(value).toLocaleString()}`, 'Expenses']}/><Bar dataKey="expenses" fill="#f43f5e" radius={[6, 6, 0, 0]}/></BarChart></ResponsiveContainer></div>
+        </section>
+      </div>
+
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="flex items-center justify-between p-6"><h2 className="font-bold">Recent Transactions</h2><Link to="/finance/transactions" className="text-sm font-semibold text-blue-600">View ledger</Link></div>
+        <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead className="bg-slate-50 text-xs uppercase text-slate-500 dark:bg-slate-900/50"><tr><th className="px-6 py-3">Date</th><th className="px-6 py-3">Description</th><th className="px-6 py-3">Type</th><th className="px-6 py-3 text-right">Amount</th></tr></thead><tbody className="divide-y divide-slate-100 dark:divide-slate-700">{activity.transactions.length ? activity.transactions.map((transaction) => <tr key={transaction.id}><td className="px-6 py-4">{new Date(transaction.transaction_date).toLocaleDateString()}</td><td className="px-6 py-4 font-medium">{transaction.description}</td><td className="px-6 py-4 capitalize">{transaction.type}</td><td className="px-6 py-4 text-right font-semibold">KES {Number(transaction.amount).toLocaleString()}</td></tr>) : <tr><td colSpan="4" className="px-6 py-10 text-center text-slate-500">No transactions recorded yet.</td></tr>}</tbody></table></div>
+      </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Action Required Widget */}

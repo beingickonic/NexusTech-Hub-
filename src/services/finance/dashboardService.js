@@ -86,4 +86,36 @@ export const dashboardService = {
       return { data: null, error };
     }
   }
+  ,
+  getDashboardActivity: async () => {
+    try {
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+      sixMonthsAgo.setDate(1);
+      const [ordersResult, expensesResult, transactionsResult] = await Promise.all([
+        supabase.from('orders').select('total_amount, created_at').gte('created_at', sixMonthsAgo.toISOString()),
+        supabase.from('expenses').select('amount, expense_date').gte('expense_date', sixMonthsAgo.toISOString()),
+        supabase.from('transactions').select('id, type, category, description, amount, currency, transaction_date, status').order('transaction_date', { ascending: false }).limit(8)
+      ]);
+      if (ordersResult.error) throw ordersResult.error;
+      if (expensesResult.error) throw expensesResult.error;
+      if (transactionsResult.error) throw transactionsResult.error;
+
+      const monthly = Array.from({ length: 6 }, (_, index) => {
+        const date = new Date(); date.setMonth(date.getMonth() - (5 - index));
+        return { key: `${date.getFullYear()}-${date.getMonth()}`, month: date.toLocaleDateString(undefined, { month: 'short' }), revenue: 0, expenses: 0 };
+      });
+      const addToMonth = (rows, valueField, target) => rows?.forEach((row) => {
+        const date = new Date(row.created_at || row.expense_date);
+        const item = monthly.find((entry) => entry.key === `${date.getFullYear()}-${date.getMonth()}`);
+        if (item) item[target] += Number(row[valueField] || 0);
+      });
+      addToMonth(ordersResult.data, 'total_amount', 'revenue');
+      addToMonth(expensesResult.data, 'amount', 'expenses');
+      return { data: { monthly, transactions: transactionsResult.data || [] }, error: null };
+    } catch (error) {
+      console.error('Error fetching finance dashboard activity:', error);
+      return { data: { monthly: [], transactions: [] }, error };
+    }
+  }
 };
