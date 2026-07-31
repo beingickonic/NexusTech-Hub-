@@ -37,26 +37,26 @@ const LogoutModal = ({ onConfirm, onCancel }) => (
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-        className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-[#1F2937] rounded-2xl p-8 max-w-sm w-full shadow-2xl"
+        className="bg-white dark:bg-nexus-card border border-nexus-border dark:border-nexus-card rounded-2xl p-8 max-w-sm w-full shadow-2xl"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-500/10 mx-auto mb-5">
-          <LogOut className="text-red-400" size={28} />
+        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-nexus-error/10 mx-auto mb-5">
+          <LogOut className="text-nexus-error" size={28} />
         </div>
-        <h3 className="text-xl font-bold text-slate-900 dark:text-white text-center mb-2">Sign Out?</h3>
-        <p className="text-nexus-textSecondary dark:text-gray-400 text-center text-sm mb-8">
+        <h3 className="text-xl font-bold text-nexus-heading text-center mb-2">Sign Out?</h3>
+        <p className="text-nexus-textSecondary dark:text-nexus-muted text-center text-sm mb-8">
           You'll be redirected to the homepage and will need to sign in again.
         </p>
         <div className="flex gap-3">
           <button
             onClick={onCancel}
-            className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-[#1F2937] text-slate-600 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors font-medium"
+            className="flex-1 py-3 rounded-xl border border-nexus-border dark:border-nexus-card text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors font-medium"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-slate-900 dark:text-white transition-colors font-medium"
+            className="flex-1 py-3 rounded-xl bg-nexus-error hover:bg-nexus-error text-nexus-heading transition-colors font-medium"
           >
             Sign Out
           </button>
@@ -75,7 +75,7 @@ const SideNavItem = ({ item, onClick }) => (
       `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative ${
         isActive
           ? 'bg-nexus-primary/10 text-nexus-primary border border-nexus-primary/20'
-          : 'text-nexus-textSecondary dark:text-gray-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5'
+          : 'text-nexus-textSecondary dark:text-nexus-muted hover:text-nexus-heading hover:bg-nexus-surface dark:hover:bg-nexus-hover'
       }`
     }
   >
@@ -87,7 +87,7 @@ const SideNavItem = ({ item, onClick }) => (
             className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-6 bg-nexus-primary rounded-full"
           />
         )}
-        <item.icon size={18} className={`flex-shrink-0 transition-colors ${isActive ? 'text-nexus-primary' : 'text-nexus-textSecondary dark:text-gray-500 group-hover:text-slate-600 dark:text-gray-300'}`} />
+        <item.icon size={18} className={`flex-shrink-0 transition-colors ${isActive ? 'text-nexus-primary' : 'text-nexus-textSecondary dark:text-nexus-muted group-hover:text-nexus-muted'}`} />
         <span>{item.label}</span>
         {isActive && <ChevronRight size={14} className="ml-auto text-nexus-primary/60" />}
       </>
@@ -127,19 +127,19 @@ const CustomerDashboard = () => {
   };
 
   const Sidebar = ({ mobile = false }) => (
-    <aside className={`${mobile ? 'w-full' : 'w-64 hidden lg:flex'} flex-col h-full bg-white dark:bg-nexus-bg border-r border-slate-200 dark:border-[#1F2937]`}>
+    <aside className={`${mobile ? 'w-full' : 'w-64 hidden lg:flex'} flex-col h-full bg-white dark:bg-nexus-bg border-r border-nexus-border dark:border-nexus-card`}>
       {/* Logo area */}
-      <div className="p-6 border-b border-slate-200 dark:border-[#1F2937]">
-        <p className="text-xs text-nexus-textSecondary dark:text-gray-500 uppercase tracking-widest font-semibold mb-4">Customer Portal</p>
+      <div className="p-6 border-b border-nexus-border dark:border-nexus-card">
+        <p className="text-xs text-nexus-textSecondary dark:text-nexus-muted uppercase tracking-widest font-semibold mb-4">Customer Portal</p>
 
         {/* Avatar + name */}
         <div className="flex items-center gap-3">
           <div className="relative flex-shrink-0">
             <UserAvatar src={user?.avatar_url} name={user?.full_name || user?.email} size="lg" />
-            <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-400 border-2 border-white dark:border-[#0C1220]" />
+            <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-nexus-success border-2 border-white dark:border-nexus-bg" />
           </div>
           <div className="min-w-0">
-            <p className="text-slate-900 dark:text-white font-semibold text-sm truncate">{user?.full_name || 'Customer'}</p>
+            <p className="text-nexus-heading font-semibold text-sm truncate">{user?.full_name || 'Customer'}</p>
             <div className="flex items-center gap-1 mt-0.5">
               <ShieldCheck size={11} className="text-nexus-primary" />
               <p className="text-nexus-primary text-xs font-medium">{user?.role || 'Customer'}</p>
@@ -156,19 +156,19 @@ const CustomerDashboard = () => {
       </nav>
 
       {/* Bottom: order badge + logout */}
-      <div className="p-4 border-t border-slate-200 dark:border-[#1F2937] space-y-2">
+      <div className="p-4 border-t border-nexus-border dark:border-nexus-card space-y-2">
         {orderCount > 0 && (
           <NavLink
             to="orders"
             className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-nexus-primary/10 border border-nexus-primary/20 text-sm"
           >
-            <span className="text-slate-600 dark:text-gray-300">Active Orders</span>
-            <span className="bg-nexus-primary text-slate-900 dark:text-white text-xs font-bold px-2 py-0.5 rounded-full">{orderCount}</span>
+            <span className="text-nexus-muted">Active Orders</span>
+            <span className="bg-nexus-primary text-nexus-heading text-xs font-bold px-2 py-0.5 rounded-full">{orderCount}</span>
           </NavLink>
         )}
         <button
           onClick={() => setShowLogout(true)}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-nexus-textSecondary dark:text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-nexus-textSecondary dark:text-nexus-muted hover:text-nexus-error hover:bg-nexus-error/10 transition-all duration-200"
         >
           <LogOut size={18} className="flex-shrink-0" />
           <span>Logout</span>
@@ -178,7 +178,7 @@ const CustomerDashboard = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-nexus-bg flex flex-col">      <div className="flex flex-1 overflow-hidden">
+    <div className="min-h-screen bg-nexus-surface dark:bg-nexus-bg flex flex-col">      <div className="flex flex-1 overflow-hidden">
         {/* Desktop Sidebar */}
         <Sidebar />
 

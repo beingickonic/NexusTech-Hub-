@@ -156,23 +156,29 @@ const getPendingManualPayments = async () => {
 
 const verifyManualPayment = async (paymentId, orderId, isApproved) => {
   try {
-    const paymentStatus = isApproved ? 'paid' : 'rejected';
-    const orderStatus = isApproved ? 'Processing' : 'Payment Failed';
-    
-    const { error: paymentError } = await supabase.from('payments').update({
-      status: paymentStatus,
-      updated_at: new Date().toISOString()
-    }).eq('id', paymentId);
-    
-    if (paymentError) throw paymentError;
-    
-    const { error: orderError } = await supabase.from('orders').update({
-      status: orderStatus,
-      payment_status: paymentStatus === 'paid' ? 'paid' : 'unpaid'
-    }).eq('id', orderId);
-    
-    if (orderError) throw orderError;
-    
+    if (isApproved) {
+      const { data: { user } } = await supabase.auth.getUser();
+      const { error: rpcError } = await supabase.rpc('verify_manual_payment', {
+        p_payment_id: paymentId,
+        p_order_id: orderId,
+        p_officer_id: user?.id,
+        p_approved: true,
+      });
+      if (rpcError) throw rpcError;
+    } else {
+      const { error: paymentError } = await supabase.from('payments').update({
+        status: 'rejected',
+        updated_at: new Date().toISOString()
+      }).eq('id', paymentId);
+      if (paymentError) throw paymentError;
+
+      const { error: orderError } = await supabase.from('orders').update({
+        status: 'Payment Failed',
+        payment_status: 'unpaid'
+      }).eq('id', orderId);
+      if (orderError) throw orderError;
+    }
+
     return { success: true };
   } catch (error) {
     return { success: false, message: error.message };
@@ -223,6 +229,31 @@ const createReceipt = async (paymentId) => {
   }
 };
 
+const verifyMockPayment = async (orderId, verificationCode) => {
+  try {
+    const { data, error } = await supabase.rpc('verify_mock_payment', {
+      p_order_id: orderId,
+      p_verification_code: verificationCode
+    });
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+const getOrderInvoice = async (orderId) => {
+  try {
+    const { data, error } = await supabase.rpc('get_order_invoice', {
+      p_order_id: orderId
+    });
+    if (error) throw error;
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 const paymentService = {
   createPayment,
   updatePaymentStatus,
@@ -234,7 +265,9 @@ const paymentService = {
   createReceipt,
   submitManualPayment,
   getPendingManualPayments,
-  verifyManualPayment
+  verifyManualPayment,
+  verifyMockPayment,
+  getOrderInvoice
 };
 
 export default paymentService;

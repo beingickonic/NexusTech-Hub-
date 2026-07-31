@@ -44,16 +44,13 @@ const getProfilesById = async (ids) => {
 const getFunctionErrorMessage = async (error) => {
   if (!error) return null;
 
-  // error.context is a Response object from the fetch; try to parse its body
   if (error.context && typeof error.context.json === 'function') {
     try {
-      // Clone first so the body stream isn't consumed if we need to fallback
       const cloned = error.context.clone ? error.context.clone() : error.context;
       const body = await cloned.json();
       if (body?.error) return body.error;
       if (body?.message) return body.message;
     } catch {
-      // JSON parse failed; try plain text
       try {
         const cloned2 = error.context.clone ? error.context.clone() : error.context;
         const text = await cloned2.text();
@@ -73,6 +70,30 @@ const assertFunctionSuccess = async (data, error) => {
   if (data?.error) throw new Error(data.error);
   if (data?.message && !data?.success && !data?.product) throw new Error(data.message);
 };
+
+const ALL_STATUSES = [
+  'all',
+  'pending',
+  'awaiting payment',
+  'paid',
+  'pending payment verification',
+  'payment failed',
+  'pending finance approval',
+  'finance approved',
+  'waiting for stock',
+  'reserved',
+  'picking',
+  'packing',
+  'ready for dispatch',
+  'assigned',
+  'out for delivery',
+  'delivered',
+  'completed',
+  'cancelled',
+  'refunded',
+];
+
+const PENDING_STATUSES = ['pending', 'awaiting payment', 'pending payment verification', 'paid', 'pending finance approval'];
 
 export const adminService = {
   getDashboardStats: async () => {
@@ -110,9 +131,16 @@ export const adminService = {
           .from("orders")
           .select("*", { count: "exact", head: true })
           .in("status", [
-            "pending",
-            "processing",
-            "awaiting_payment"
+            "Pending",
+            "Awaiting Payment",
+            "Pending Payment Verification",
+            "Paid",
+            "Reserved",
+            "Picking",
+            "Packing",
+            "Ready for Dispatch",
+            "Assigned",
+            "Out for Delivery"
           ]),
 
         supabase
@@ -209,7 +237,6 @@ export const adminService = {
 
   updateSettings: async (settings) => {
     try {
-      // Convert FormData or plain object to array of {key, value} upserts
       const entries = settings instanceof FormData
         ? Array.from(settings.entries())
         : Object.entries(settings);
@@ -229,7 +256,13 @@ export const adminService = {
     }
   },
 
-  getCustomers: async ({ page = 1, limit = DEFAULT_LIMIT, search = '' } = {}) => {
+  getUsersWithAuth: async () => {
+    const { data, error } = await supabase.functions.invoke('admin-users');
+    await assertFunctionSuccess(data, error);
+    return data?.customers || [];
+  },
+
+  getCustomers: async ({ page = 1, limit = DEFAULT_LIMIT, search = '', loginFilter = 'all' } = {}) => {
     const { data, error } = await supabase.functions.invoke('admin-users');
     await assertFunctionSuccess(data, error);
 
@@ -242,6 +275,12 @@ export const adminService = {
         (c.email || '').toLowerCase().includes(s) || 
         (c.phone || '').toLowerCase().includes(s)
       );
+    }
+
+    if (loginFilter === 'logged_in') {
+      allCustomers = allCustomers.filter(c => !!c.last_sign_in_at);
+    } else if (loginFilter === 'never') {
+      allCustomers = allCustomers.filter(c => !c.last_sign_in_at);
     }
 
     const count = allCustomers.length;
@@ -409,7 +448,9 @@ export const adminService = {
     const { from, to } = pageRange(page, limit);
     let query = supabase.from('orders').select('*, order_items(*, products(title, image_url))', { count: 'exact' }).order('created_at', { ascending: false });
 
-    if (status && status !== 'all') query = query.eq('status', status);
+    if (status && status !== 'all') {
+      query = query.eq('status', status.charAt(0).toUpperCase() + status.slice(1));
+    }
     if (search) query = query.or(`status.ilike.%${search}%,payment_status.ilike.%${search}%,shipping_name.ilike.%${search}%`);
 
     const { data, count, error } = await query.range(from, to);
@@ -428,7 +469,9 @@ export const adminService = {
         items: order.order_items?.reduce((sum, item) => sum + Number(item.quantity || 0), 0) || order.order_items?.length || 0,
         total: Number(order.total_amount || 0),
         status: normalizeStatus(order.status),
-        payment_status: order.payment_status || 'unpaid'
+        payment_status: order.payment_status || 'unpaid',
+        order_number: order.order_number || `#ORD-${order.id.toString().padStart(5, '0')}`,
+        priority: order.priority || 'normal',
       };
     });
 

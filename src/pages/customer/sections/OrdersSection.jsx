@@ -8,22 +8,34 @@ import { Link } from 'react-router-dom';
 const TABS = [
   { label: 'All',         value: null,              icon: Package },
   { label: 'Unpaid',      value: 'Awaiting Payment', icon: CreditCard },
-  { label: 'Processing',  value: 'Processing',       icon: Clock },
-  { label: 'Shipped',     value: 'Shipped',          icon: Truck },
+  { label: 'Pending Approval', value: 'Pending Finance Approval', icon: Clock },
+  { label: 'Processing',  value: 'Picking',          icon: Clock },
+  { label: 'Shipped',     value: 'Out for Delivery', icon: Truck },
   { label: 'Delivered',   value: 'Delivered',        icon: CheckCircle },
+  { label: 'Completed',   value: 'Completed',        icon: CheckCircle },
   { label: 'Cancelled',   value: 'Cancelled',        icon: XCircle },
   { label: 'Refunded',    value: 'Refunded',         icon: RefreshCw },
 ];
 
 const STATUS_STYLES = {
-  'Pending':          'bg-orange-500/10 text-orange-400 border-orange-500/20',
-  'Awaiting Payment': 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-  'Paid':             'bg-green-500/10 text-green-400 border-green-500/20',
-  'Processing':       'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  'Shipped':          'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  'Delivered':        'bg-green-500/10 text-green-400 border-green-500/20',
-  'Cancelled':        'bg-red-500/10 text-red-400 border-red-500/20',
-  'Refunded':         'bg-gray-500/10 text-nexus-textSecondary dark:text-gray-400 border-gray-500/20',
+  'Pending':                'bg-nexus-primary/10 text-nexus-primary border-nexus-primary/20',
+  'Awaiting Payment':       'bg-nexus-primary/10 text-nexus-primary border-nexus-primary/20',
+  'Paid':                   'bg-nexus-success/10 text-nexus-success border-nexus-success/20',
+  'Pending Payment Verification': 'bg-nexus-gold/10 text-nexus-gold border-nexus-gold/20',
+  'Payment Failed':         'bg-nexus-error/10 text-nexus-error border-nexus-error/20',
+  'Pending Finance Approval': 'bg-nexus-gold/10 text-nexus-gold border-nexus-gold/20',
+  'Finance Approved':       'bg-nexus-success/10 text-nexus-success border-nexus-success/20',
+  'Waiting for Stock':      'bg-nexus-gold/10 text-nexus-gold border-nexus-gold/20',
+  'Reserved':               'bg-nexus-info/10 text-nexus-info border-nexus-info/20',
+  'Picking':                'bg-info/100/10 text-info border-info/20',
+  'Packing':                'bg-info/100/10 text-info border-info/20',
+  'Ready for Dispatch':     'bg-info/100/10 text-info border-info/20',
+  'Assigned':               'bg-success/100/10 text-success border-success/20',
+  'Out for Delivery':       'bg-info/100/10 text-info border-info/20',
+  'Delivered':              'bg-nexus-success/10 text-nexus-success border-nexus-success/20',
+  'Completed':              'bg-nexus-success/10 text-nexus-success border-nexus-success/20',
+  'Cancelled':              'bg-nexus-error/10 text-nexus-error border-nexus-error/20',
+  'Refunded':               'bg-nexus-muted/10 text-nexus-textSecondary dark:text-nexus-muted border-nexus-border/20',
 };
 
 const EmptyState = ({ tab }) => (
@@ -35,13 +47,13 @@ const EmptyState = ({ tab }) => (
     <div className="w-20 h-20 rounded-full bg-nexus-primary/10 flex items-center justify-center mb-5">
       <ShoppingBag size={36} className="text-nexus-primary/60" />
     </div>
-    <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-2">No {tab} orders</h3>
-    <p className="text-nexus-textSecondary dark:text-gray-500 text-sm max-w-xs mb-6">
+    <h3 className="text-nexus-heading font-semibold text-lg mb-2">No {tab} orders</h3>
+    <p className="text-nexus-textSecondary dark:text-nexus-muted text-sm max-w-xs mb-6">
       {tab === 'All' ? "You haven't placed any orders yet." : `You have no ${tab.toLowerCase()} orders.`}
     </p>
     <Link
       to="/products"
-      className="px-6 py-2.5 rounded-xl bg-nexus-primary hover:bg-[#ff5a2e] text-slate-900 dark:text-white text-sm font-medium transition-colors"
+      className="px-6 py-2.5 rounded-xl bg-nexus-primary hover:bg-nexus-primary-hover text-nexus-heading text-sm font-medium transition-colors"
     >
       Start Shopping
     </Link>
@@ -49,14 +61,14 @@ const EmptyState = ({ tab }) => (
 );
 
 const OrderRow = ({ order }) => {
-  const statusStyle = STATUS_STYLES[order.status] || 'bg-gray-500/10 text-nexus-textSecondary dark:text-gray-400 border-gray-500/20';
+  const statusStyle = STATUS_STYLES[order.status] || 'bg-nexus-muted/10 text-nexus-textSecondary dark:text-nexus-muted border-nexus-border/20';
   const date = new Date(order.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' });
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white dark:bg-nexus-bg border border-slate-200 dark:border-[#1F2937] rounded-xl p-5 hover:border-nexus-primary/30 transition-all duration-200 group"
+      className="bg-white dark:bg-nexus-bg border border-nexus-border dark:border-nexus-card rounded-xl p-5 hover:border-nexus-primary/30 transition-all duration-200 group"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-4">
@@ -64,10 +76,10 @@ const OrderRow = ({ order }) => {
             <Package size={20} className="text-nexus-primary" />
           </div>
           <div>
-            <p className="text-slate-900 dark:text-white font-semibold text-sm">Order #{order.id}</p>
-            <p className="text-nexus-textSecondary dark:text-gray-500 text-xs mt-0.5">{date}</p>
+            <p className="text-nexus-heading font-semibold text-sm">Order #{order.id}</p>
+            <p className="text-nexus-textSecondary dark:text-nexus-muted text-xs mt-0.5">{date}</p>
             {order.order_items && order.order_items.length > 0 && (
-              <p className="text-nexus-textSecondary dark:text-gray-400 text-xs mt-1">
+              <p className="text-nexus-textSecondary dark:text-nexus-muted text-xs mt-1">
                 {order.order_items.length} item{order.order_items.length > 1 ? 's' : ''}
               </p>
             )}
@@ -76,8 +88,8 @@ const OrderRow = ({ order }) => {
 
         <div className="flex items-center gap-4 flex-shrink-0">
           <div className="text-right hidden sm:block">
-            <p className="text-nexus-textSecondary dark:text-gray-500 text-xs mb-1">Total</p>
-            <p className="text-slate-900 dark:text-white font-bold text-sm">
+            <p className="text-nexus-textSecondary dark:text-nexus-muted text-xs mb-1">Total</p>
+            <p className="text-nexus-heading font-bold text-sm">
               KES {Number(order.total_amount).toLocaleString()}
             </p>
           </div>
@@ -88,7 +100,7 @@ const OrderRow = ({ order }) => {
 
           <Link
             to={`/orders/${order.id}`}
-            className="p-2 rounded-lg text-nexus-textSecondary dark:text-gray-500 hover:text-nexus-primary hover:bg-nexus-primary/10 transition-all"
+            className="p-2 rounded-lg text-nexus-textSecondary dark:text-nexus-muted hover:text-nexus-primary hover:bg-nexus-primary/10 transition-all"
           >
             <ChevronRight size={16} />
           </Link>
@@ -96,9 +108,9 @@ const OrderRow = ({ order }) => {
       </div>
 
       {/* Mobile total */}
-      <div className="flex items-center justify-between mt-3 sm:hidden pt-3 border-t border-slate-200 dark:border-[#1F2937]">
-        <p className="text-nexus-textSecondary dark:text-gray-500 text-xs">Total</p>
-        <p className="text-slate-900 dark:text-white font-bold text-sm">KES {Number(order.total_amount).toLocaleString()}</p>
+      <div className="flex items-center justify-between mt-3 sm:hidden pt-3 border-t border-nexus-border dark:border-nexus-card">
+        <p className="text-nexus-textSecondary dark:text-nexus-muted text-xs">Total</p>
+        <p className="text-nexus-heading font-bold text-sm">KES {Number(order.total_amount).toLocaleString()}</p>
       </div>
     </motion.div>
   );
@@ -148,27 +160,27 @@ const OrdersSection = () => {
   return (
     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">My Orders</h1>
-        <p className="text-nexus-textSecondary dark:text-gray-400 text-sm mt-1">Track and manage all your orders</p>
+        <h1 className="text-2xl font-bold text-nexus-heading">My Orders</h1>
+        <p className="text-nexus-textSecondary dark:text-nexus-muted text-sm mt-1">Track and manage all your orders</p>
       </div>
 
       {/* Tab bar */}
-      <div className="flex gap-1 overflow-x-auto no-scrollbar mb-6 bg-white dark:bg-[#111827] border border-slate-200 dark:border-[#1F2937] rounded-xl p-1">
+      <div className="flex gap-1 overflow-x-auto no-scrollbar mb-6 bg-white dark:bg-nexus-card border border-nexus-border dark:border-nexus-card rounded-xl p-1">
         {TABS.map((tab, i) => (
           <button
             key={tab.label}
             onClick={() => setActiveTab(i)}
             className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-200 flex-shrink-0 ${
               activeTab === i
-                ? 'bg-nexus-primary text-slate-900 dark:text-white shadow-lg'
-                : 'text-nexus-textSecondary dark:text-gray-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5'
+                ? 'bg-nexus-primary text-nexus-heading shadow-lg'
+                : 'text-nexus-textSecondary dark:text-nexus-muted hover:text-nexus-heading hover:bg-nexus-surface dark:hover:bg-nexus-hover'
             }`}
           >
             <tab.icon size={13} />
             {tab.label}
             {tabCounts[i] > 0 && (
               <span className={`ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
-                activeTab === i ? 'bg-white/20 text-slate-900 dark:text-white' : 'bg-[#1F2937] text-nexus-textSecondary dark:text-gray-400'
+                activeTab === i ? 'bg-white/20 text-nexus-heading' : 'bg-nexus-dark-navy text-nexus-textSecondary dark:text-nexus-muted'
               }`}>
                 {tabCounts[i]}
               </span>

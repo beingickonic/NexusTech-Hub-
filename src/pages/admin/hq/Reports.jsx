@@ -17,24 +17,24 @@ const Reports = () => {
     <div className="animate-fade-in space-y-6 pb-10">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Executive Reporting Centre</h1>
+          <h1 className="text-2xl font-bold text-nexus-heading">Executive Reporting Centre</h1>
           <p className="text-sm text-nexus-textSecondary">Access high-level management reports across all departments.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {reports.map((report, idx) => (
-          <div key={idx} className="bg-white dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow group">
+          <div key={idx} className="bg-white dark:bg-nexus-bg border border-nexus-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow group">
             <div className="flex justify-between items-start mb-4">
-               <div className="p-3 bg-slate-100 text-slate-600 dark:bg-white/5 dark:text-nexus-textSecondary rounded-xl group-hover:bg-orange-50 group-hover:text-orange-500 transition-colors">
+               <div className="p-3 bg-nexus-surface text-nexus-muted dark:bg-nexus-hover dark:text-nexus-textSecondary rounded-xl group-hover:bg-nexus-primary/10 group-hover:text-nexus-primary transition-colors">
                   <report.icon size={20} />
                </div>
-               <button className="text-nexus-textSecondary hover:text-orange-500 transition-colors" title="Export">
+               <button className="text-nexus-textSecondary hover:text-nexus-primary transition-colors" title="Export">
                   <Download size={18} />
                </button>
             </div>
-            <h3 className="font-bold text-slate-900 dark:text-white mb-1">{report.title}</h3>
-            <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">{report.desc}</p>
+            <h3 className="font-bold text-nexus-heading mb-1">{report.title}</h3>
+            <p className="text-sm text-nexus-muted">{report.desc}</p>
           </div>
         ))}
       </div>

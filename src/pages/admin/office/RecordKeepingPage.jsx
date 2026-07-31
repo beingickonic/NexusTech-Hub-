@@ -13,9 +13,9 @@ const formatBytes = (bytes, decimals = 2) => {
 };
 
 const getFileIcon = (mimeType) => {
-  if (mimeType?.includes('image/')) return <ImageIcon size={24} className="text-blue-500" />;
-  if (mimeType?.includes('pdf')) return <FileText size={24} className="text-red-500" />;
-  if (mimeType?.includes('sheet') || mimeType?.includes('excel')) return <File size={24} className="text-green-500" />;
+  if (mimeType?.includes('image/')) return <ImageIcon size={24} className="text-nexus-info" />;
+  if (mimeType?.includes('pdf')) return <FileText size={24} className="text-nexus-error" />;
+  if (mimeType?.includes('sheet') || mimeType?.includes('excel')) return <File size={24} className="text-nexus-success" />;
   return <File size={24} className="text-nexus-textSecondary" />;
 };
 
@@ -86,8 +86,8 @@ const RecordKeepingPage = () => {
     <div className="animate-fade-in pb-10">
       <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Record Keeping</h1>
-          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Manage company documents securely with version control and visibility settings.</p>
+          <h1 className="text-3xl font-extrabold text-nexus-heading mb-2">Record Keeping</h1>
+          <p className="text-nexus-muted">Manage company documents securely with version control and visibility settings.</p>
         </div>
         <div className="relative">
           <input 
@@ -100,7 +100,7 @@ const RecordKeepingPage = () => {
           />
           <label 
             htmlFor="file-upload"
-            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-semibold transition-all shadow-lg shadow-orange-500/30 cursor-pointer disabled:opacity-50"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-nexus-primary hover:bg-nexus-primary-hover text-white rounded-xl text-sm font-semibold transition-all shadow-lg shadow-primary/30 cursor-pointer disabled:opacity-50"
           >
             {isUploading ? <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div> : <UploadCloud size={18} />}
             {isUploading ? 'Uploading...' : 'Upload Document'}
@@ -108,20 +108,20 @@ const RecordKeepingPage = () => {
         </div>
       </div>
 
-      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-white/80 dark:bg-nexus-card/80 backdrop-blur-md rounded-2xl border border-nexus-border shadow-sm overflow-hidden flex flex-col">
         {/* Toolbar */}
-        <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-nexus-border">
+        <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-nexus-border">
           <div className="relative w-full sm:max-w-md">
             <input 
               type="text"
               placeholder="Search documents..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-nexus-textSecondary text-slate-900 dark:text-white"
+              className="w-full bg-nexus-surface border border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-nexus-primary/50 outline-none transition-all placeholder:text-nexus-textSecondary text-nexus-heading"
             />
             <Search size={18} className="absolute left-3 top-3 text-nexus-textSecondary" />
           </div>
-          <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm font-medium transition-colors border border-slate-200 dark:border-slate-600 w-full sm:w-auto">
+          <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-nexus-surface hover:bg-nexus-surface dark:hover:bg-nexus-hover text-nexus-text rounded-lg text-sm font-medium transition-colors border border-nexus-border dark:border-nexus-border w-full sm:w-auto">
             <Filter size={16} /> Filters
           </button>
         </div>
@@ -130,7 +130,7 @@ const RecordKeepingPage = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-nexus-surface/50 text-nexus-textSecondary dark:text-nexus-textSecondary text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-nexus-border">
+              <tr className="bg-nexus-surface/50 text-nexus-muted text-xs uppercase tracking-wider font-semibold border-b border-nexus-border">
                 <th className="px-6 py-4">Name</th>
                 <th className="px-6 py-4 hidden md:table-cell">Category</th>
                 <th className="px-6 py-4 hidden sm:table-cell">Size</th>
@@ -139,31 +139,31 @@ const RecordKeepingPage = () => {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-slate-700/50 text-sm">
+            <tbody className="divide-y divide-nexus-border dark:divide-nexus-card/50 text-sm">
               {isLoading ? (
                 <tr>
                   <td colSpan="6" className="px-6 py-12 text-center">
-                    <div className="flex justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div></div>
+                    <div className="flex justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-nexus-primary"></div></div>
                   </td>
                 </tr>
               ) : filteredDocs.length === 0 ? (
                 <tr>
                   <td colSpan="6" className="px-6 py-16 text-center text-nexus-textSecondary">
-                    <FolderOpen size={48} className="mx-auto text-nexus-textSecondary dark:text-slate-600 mb-4" />
-                    <p className="text-lg font-medium text-slate-700 dark:text-nexus-textSecondary">No documents found</p>
+                    <FolderOpen size={48} className="mx-auto text-nexus-textSecondary dark:text-nexus-muted mb-4" />
+                    <p className="text-lg font-medium text-nexus-muted">No documents found</p>
                     <p className="text-sm mt-1">Upload a file to get started.</p>
                   </td>
                 </tr>
               ) : (
                 filteredDocs.map((doc) => (
-                  <tr key={doc.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors group">
+                  <tr key={doc.id} className="hover:bg-nexus-surface/50 dark:hover:bg-nexus-hover/30 transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
-                        <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                        <div className="p-2 bg-nexus-surface rounded-lg">
                           {getFileIcon(doc.mime_type)}
                         </div>
                         <div>
-                          <div className="font-semibold text-slate-900 dark:text-white line-clamp-1">{doc.title}</div>
+                          <div className="font-semibold text-nexus-heading line-clamp-1">{doc.title}</div>
                           <div className="text-xs text-nexus-textSecondary mt-0.5 flex gap-2">
                             <span>v{doc.version}</span>
                             <span>•</span>
@@ -172,35 +172,35 @@ const RecordKeepingPage = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 hidden md:table-cell text-slate-600 dark:text-nexus-textSecondary">
-                      <span className="bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md text-xs font-medium">
+                    <td className="px-6 py-4 hidden md:table-cell text-nexus-muted">
+                      <span className="bg-nexus-surface px-2.5 py-1 rounded-md text-xs font-medium">
                         {doc.category || 'General'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 hidden sm:table-cell text-slate-600 dark:text-nexus-textSecondary">
+                    <td className="px-6 py-4 hidden sm:table-cell text-nexus-muted">
                       {formatBytes(doc.file_size)}
                     </td>
                     <td className="px-6 py-4 hidden lg:table-cell">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium border ${
-                        doc.visibility === 'Public' ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20' :
-                        doc.visibility === 'Confidential' ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20' :
-                        'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20'
+                        doc.visibility === 'Public' ? 'bg-nexus-success/5 text-nexus-success border-nexus-success/20 dark:bg-nexus-success/10 dark:text-nexus-success dark:border-nexus-success/20' :
+                        doc.visibility === 'Confidential' ? 'bg-nexus-error/5 text-nexus-error border-nexus-error/20 dark:bg-nexus-error/10 dark:text-nexus-error dark:border-nexus-error/20' :
+                        'bg-nexus-info/10 text-nexus-info border-nexus-info/20 dark:bg-nexus-info/10 dark:text-nexus-info dark:border-nexus-info/20'
                       }`}>
                         {doc.visibility}
                       </span>
                     </td>
-                    <td className="px-6 py-4 hidden xl:table-cell text-slate-600 dark:text-nexus-textSecondary">
+                    <td className="px-6 py-4 hidden xl:table-cell text-nexus-muted">
                       {doc.uploader?.full_name || 'System'}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button className="p-2 text-nexus-textSecondary hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-lg transition-colors" title="Preview">
+                        <button className="p-2 text-nexus-textSecondary hover:text-nexus-info hover:bg-nexus-info/10 dark:hover:bg-nexus-info/10 rounded-lg transition-colors" title="Preview">
                           <Eye size={16} />
                         </button>
-                        <button className="p-2 text-nexus-textSecondary hover:text-green-500 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-lg transition-colors" title="Download">
+                        <button className="p-2 text-nexus-textSecondary hover:text-nexus-success hover:bg-nexus-success/5 dark:hover:bg-nexus-success/10 rounded-lg transition-colors" title="Download">
                           <Download size={16} />
                         </button>
-                        <button onClick={() => handleDelete(doc.id, doc.file_path)} className="p-2 text-nexus-textSecondary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors" title="Delete">
+                        <button onClick={() => handleDelete(doc.id, doc.file_path)} className="p-2 text-nexus-textSecondary hover:text-nexus-error hover:bg-nexus-error/5 dark:hover:bg-nexus-error/10 rounded-lg transition-colors" title="Delete">
                           <Trash2 size={16} />
                         </button>
                       </div>

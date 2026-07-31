@@ -5,18 +5,18 @@ const RouteStopCard = ({ stop, onNavigate, onMarkArrived, onComplete }) => {
   return (
     <div className={`relative pl-8 pb-8 ${stop.isLast ? '' : 'border-l-2 border-nexus-border/50 ml-4'}`}>
       {/* Timeline Node */}
-      <div className={`absolute top-0 -left-1.5 w-4 h-4 rounded-full border-4 border-[#0a0e1a] ${
+      <div className={`absolute top-0 -left-1.5 w-4 h-4 rounded-full border-4 border-nexus-dark-navy ${
         stop.status === 'completed' ? 'bg-nexus-success' :
         stop.status === 'arrived' ? 'bg-nexus-warning' :
-        'bg-slate-500'
+        'bg-nexus-muted'
       } ${!stop.isLast && 'ml-4'}`} style={stop.isLast ? { left: '10px' } : {}} />
       
       {/* If it's the last item, we need a custom marker positioning since there's no border-l-2 */}
       {stop.isLast && (
-        <div className={`absolute top-0 left-3 w-4 h-4 rounded-full border-4 border-[#0a0e1a] ${
+        <div className={`absolute top-0 left-3 w-4 h-4 rounded-full border-4 border-nexus-dark-navy ${
           stop.status === 'completed' ? 'bg-nexus-success' :
           stop.status === 'arrived' ? 'bg-nexus-warning' :
-          'bg-slate-500'
+          'bg-nexus-muted'
         }`} />
       )}
 
@@ -34,7 +34,7 @@ const RouteStopCard = ({ stop, onNavigate, onMarkArrived, onComplete }) => {
           <div className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
             stop.status === 'completed' ? 'bg-nexus-success/20 text-nexus-success' :
             stop.status === 'arrived' ? 'bg-nexus-warning/20 text-nexus-warning' :
-            'bg-slate-700 text-nexus-textSecondary'
+            'bg-nexus-card text-nexus-textSecondary'
           }`}>
             {stop.status.charAt(0).toUpperCase() + stop.status.slice(1)}
           </div>
@@ -54,7 +54,7 @@ const RouteStopCard = ({ stop, onNavigate, onMarkArrived, onComplete }) => {
         <div className="grid grid-cols-2 gap-2">
           <button 
             onClick={() => onNavigate(stop)}
-            className="flex items-center justify-center gap-2 bg-nexus-bg hover:bg-slate-800 border border-nexus-border/50 rounded-xl py-2.5 transition-colors text-nexus-textSecondary text-sm font-medium"
+            className="flex items-center justify-center gap-2 bg-nexus-bg hover:bg-nexus-hover border border-nexus-border/50 rounded-xl py-2.5 transition-colors text-nexus-textSecondary text-sm font-medium"
           >
             <Navigation size={16} className="text-nexus-primary" />
             Maps
@@ -73,7 +73,7 @@ const RouteStopCard = ({ stop, onNavigate, onMarkArrived, onComplete }) => {
           {stop.status === 'arrived' && (
             <button 
               onClick={() => onComplete(stop)}
-              className="flex items-center justify-center gap-2 bg-gradient-to-r from-nexus-success to-[#047857] hover:opacity-90 rounded-xl py-2.5 transition-opacity text-white text-sm font-bold shadow-lg shadow-[#10b981]/20"
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-nexus-success to-nexus-success hover:opacity-90 rounded-xl py-2.5 transition-opacity text-white text-sm font-bold shadow-lg shadow-nexus-success/20"
             >
               <CheckCircle2 size={16} />
               Complete Stop
@@ -81,7 +81,7 @@ const RouteStopCard = ({ stop, onNavigate, onMarkArrived, onComplete }) => {
           )}
 
           {stop.status === 'completed' && (
-             <button disabled className="flex items-center justify-center gap-2 bg-slate-800/50 rounded-xl py-2.5 text-nexus-textSecondary text-sm font-medium cursor-not-allowed border border-nexus-border/50">
+             <button disabled className="flex items-center justify-center gap-2 bg-nexus-card rounded-xl py-2.5 text-nexus-textSecondary text-sm font-medium cursor-not-allowed border border-nexus-border/50">
                Done
              </button>
           )}

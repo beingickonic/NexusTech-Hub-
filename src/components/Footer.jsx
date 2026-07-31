@@ -4,7 +4,7 @@ import darkLogo from '../assets/logo/logo-dark.png';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0F172A] text-nexus-textSecondary pt-14 sm:pt-20 pb-8 sm:pb-10 border-t border-nexus-border relative overflow-hidden">
+    <footer className="bg-nexus-bg text-nexus-textSecondary pt-14 sm:pt-20 pb-8 sm:pb-10 border-t border-nexus-border relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[400px] sm:w-[800px] h-[200px] sm:h-[300px] bg-primary/10 blur-[100px] sm:blur-[150px] pointer-events-none rounded-full" />
 

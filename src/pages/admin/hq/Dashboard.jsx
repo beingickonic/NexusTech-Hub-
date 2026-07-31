@@ -14,10 +14,10 @@ const Dashboard = () => {
     <div className="animate-fade-in space-y-6 pb-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-nexus-heading mb-1">
             HQ Dashboard
           </h1>
-          <p className="text-sm md:text-nexus-warningase text-nexus-textSecondary dark:text-nexus-textSecondary font-medium">
+          <p className="text-sm md:text-nexus-warningase text-nexus-muted font-medium">
             Welcome back, {user?.full_name || 'Executive'}. Here's the company overview today.
           </p>
         </div>
@@ -33,7 +33,7 @@ const Dashboard = () => {
 
       {/* Department Status */}
       <div>
-        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Department Status</h2>
+        <h2 className="text-lg font-bold text-nexus-heading mb-4">Department Status</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <DepartmentCard name="Finance" manager="Derrick O." status="Online" metrics={['3 Pending Tasks', 'KES 145K Revenue']} link="/finance/dashboard" />
           <DepartmentCard name="Inventory" manager="Sarah K." status="Warning" metrics={['12 Low Stock', '5 PO Requests']} link="/inventory/dashboard" />
@@ -54,8 +54,8 @@ const Dashboard = () => {
 
       {/* Performance Dashboard */}
       <div>
-        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Performance Summary</h2>
-        <div className="bg-white dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-2xl p-6 shadow-sm">
+        <h2 className="text-lg font-bold text-nexus-heading mb-4">Performance Summary</h2>
+        <div className="bg-white dark:bg-nexus-bg border border-nexus-border rounded-2xl p-6 shadow-sm">
            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div>
                  <p className="text-sm text-nexus-textSecondary">Orders Today</p>
@@ -63,7 +63,7 @@ const Dashboard = () => {
               </div>
               <div>
                  <p className="text-sm text-nexus-textSecondary">Revenue Today</p>
-                 <p className="text-xl font-bold text-green-500">KES 2.4M</p>
+                 <p className="text-xl font-bold text-nexus-success">KES 2.4M</p>
               </div>
               <div>
                  <p className="text-sm text-nexus-textSecondary">Deliveries Completed</p>
@@ -71,7 +71,7 @@ const Dashboard = () => {
               </div>
               <div>
                  <p className="text-sm text-nexus-textSecondary">New Customers</p>
-                 <p className="text-xl font-bold text-purple-500">24</p>
+                 <p className="text-xl font-bold text-info">24</p>
               </div>
            </div>
         </div>

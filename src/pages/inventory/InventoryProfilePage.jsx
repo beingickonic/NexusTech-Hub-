@@ -57,21 +57,21 @@ const InventoryProfilePage = () => {
   const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 
   const fieldCls = editing
-    ? 'px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/40 w-full transition-colors'
-    : 'px-4 py-3 bg-slate-50 dark:bg-white/5 border border-transparent rounded-xl text-sm text-slate-900 dark:text-white w-full cursor-default';
+    ? 'px-4 py-3 bg-nexus-surface dark:bg-nexus-hover border border-nexus-border rounded-xl text-sm text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/40 w-full transition-colors'
+    : 'px-4 py-3 bg-nexus-surface dark:bg-nexus-hover border border-transparent rounded-xl text-sm text-nexus-heading w-full cursor-default';
 
   return (
     <div className="space-y-6 max-w-3xl">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">My Profile</h1>
+        <h1 className="text-2xl font-bold text-nexus-heading">My Profile</h1>
         <p className="text-nexus-textSecondary text-sm mt-1">View and update your warehouse portal profile</p>
       </div>
 
       {/* Profile Card */}
-      <div className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden">
+      <div className="bg-nexus-card rounded-2xl border border-nexus-border shadow-sm overflow-hidden">
         {/* Banner */}
-        <div className="h-28 bg-gradient-to-r from-primary via-orange-500 to-amber-500 relative">
+        <div className="h-28 bg-gradient-to-r from-primary via-nexus-primary to-nexus-gold relative">
           <div className="absolute inset-0 opacity-20"
             style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
         </div>
@@ -80,7 +80,7 @@ const InventoryProfilePage = () => {
         <div className="px-6 pb-6">
           <div className="flex items-end justify-between -mt-10 mb-4">
             <div className="relative">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center text-white text-2xl font-black shadow-xl border-4 border-white dark:border-dark-surface overflow-hidden">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-nexus-primary-hover flex items-center justify-center text-white text-2xl font-black shadow-xl border-4 border-white dark:border-dark-surface overflow-hidden">
                 {user?.avatar_url
                   ? <img src={user.avatar_url} alt={displayName} className="w-full h-full object-cover" />
                   : initials
@@ -92,8 +92,8 @@ const InventoryProfilePage = () => {
               disabled={saving}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all ${
                 editing
-                  ? 'bg-primary hover:bg-orange-600 text-white shadow-lg shadow-primary/25'
-                  : 'bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white'
+                  ? 'bg-primary hover:bg-nexus-primary-hover text-white shadow-lg shadow-primary/25'
+                  : 'bg-nexus-surface dark:bg-nexus-hover hover:bg-nexus-surface dark:hover:bg-nexus-hover text-nexus-heading'
               }`}
             >
               {saving ? (
@@ -108,7 +108,7 @@ const InventoryProfilePage = () => {
           </div>
 
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">{displayName}</h2>
+            <h2 className="text-xl font-bold text-nexus-heading">{displayName}</h2>
             <div className="flex items-center gap-2 mt-1">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary">
                 <Shield size={11} />
@@ -116,7 +116,7 @@ const InventoryProfilePage = () => {
               </span>
               {user?.status && (
                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
-                  user.status === 'Active' ? 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-600' : 'bg-slate-100 text-slate-600'
+                  user.status === 'Active' ? 'bg-nexus-success/10 dark:bg-nexus-success/15 text-nexus-success' : 'bg-nexus-surface text-nexus-muted'
                 }`}>
                   <span className="w-1.5 h-1.5 rounded-full bg-current" />
                   {user.status}
@@ -142,7 +142,7 @@ const InventoryProfilePage = () => {
               <label className="block text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider mb-1.5">
                 <Mail size={10} className="inline mr-1" />Email
               </label>
-              <div className="px-4 py-3 bg-slate-50 dark:bg-white/5 border border-transparent rounded-xl text-sm text-nexus-textSecondary w-full">
+              <div className="px-4 py-3 bg-nexus-surface dark:bg-nexus-hover border border-transparent rounded-xl text-sm text-nexus-textSecondary w-full">
                 {user?.email || '—'}
               </div>
             </div>
@@ -196,17 +196,17 @@ const InventoryProfilePage = () => {
           </div>
 
           {editing && (
-            <div className="mt-4 flex gap-3 pt-4 border-t border-slate-100 dark:border-nexus-border">
+            <div className="mt-4 flex gap-3 pt-4 border-t border-nexus-border">
               <button
                 onClick={() => setEditing(false)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-nexus-border text-sm font-medium text-slate-600 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+                className="flex-1 py-2.5 rounded-xl border border-nexus-border text-sm font-medium text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex-1 py-2.5 rounded-xl bg-primary hover:bg-orange-600 text-white text-sm font-semibold transition-colors shadow-lg shadow-primary/25 disabled:opacity-60"
+                className="flex-1 py-2.5 rounded-xl bg-primary hover:bg-nexus-primary-hover text-white text-sm font-semibold transition-colors shadow-lg shadow-primary/25 disabled:opacity-60"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>

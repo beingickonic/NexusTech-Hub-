@@ -1,4 +1,4 @@
-﻿import { supabase } from './supabaseClient';
+import { supabase } from './supabaseClient';
 
 import { DEFAULT_LIMIT, pageRange, responseMeta } from '../utils/pagination';
 
@@ -342,8 +342,6 @@ export const inventoryService = {
       inventory_id:  inventoryId,
       movement_type: 'ADJUSTMENT',
       quantity:      diff,
-      quantity_before: before,
-      quantity_after:  qty,
       reason:        notes || 'Manual stock adjustment',
       user_id:       userId
     }]).select().single();
@@ -509,5 +507,56 @@ export const inventoryService = {
     const { data, error } = await supabase.from('products').select('id, title, sku, stock, price').order('title').limit(500);
     if (error) throw error;
     return { success: true, data: data || [] };
+  },
+
+  // ── Inventory Order Approvals (reserve stock after finance) ──────
+  getOrdersAwaitingInventoryApproval: async () => {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*, order_items(*), profiles!fk_orders_user_profiles(full_name, phone)')
+      .eq('status', 'Finance Approved')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+
+    const orders = data || [];
+    const productIds = [...new Set(orders.flatMap(o => (o.order_items || []).map(i => i.product_id).filter(Boolean)))];
+    let products = [];
+    if (productIds.length) {
+      const { data: pData, error: pError } = await supabase.from('products').select('id, title, sku, price').in('id', productIds);
+      if (!pError) products = pData || [];
+    }
+    const productMap = Object.fromEntries(products.map(p => [p.id, p]));
+    return {
+      success: true,
+      data: orders.map(o => ({
+        ...o,
+        items: (o.order_items || []).map(i => ({
+          ...i,
+          title: productMap[i.product_id]?.title || i.product_name || 'Product',
+          sku: productMap[i.product_id]?.sku || i.sku,
+          price: i.price ?? productMap[i.product_id]?.price ?? 0
+        }))
+      }))
+    };
+  },
+
+  inventoryApproveOrder: async (orderId, userId, notes) => {
+    const { data, error } = await supabase.rpc('inventory_approve_order', {
+      p_order_id: orderId,
+      p_officer_id: userId,
+      p_notes: notes || null
+    });
+    if (error) throw error;
+    return { success: true, data };
+  },
+
+  inventoryRejectOrder: async (orderId, userId, notes) => {
+    const { data, error } = await supabase.rpc('inventory_reject_order', {
+      p_order_id: orderId,
+      p_officer_id: userId,
+      p_notes: notes || 'Rejected by inventory manager'
+    });
+    if (error) throw error;
+    return { success: true, data };
   }
 };

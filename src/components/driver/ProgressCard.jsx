@@ -17,7 +17,7 @@ const ProgressCard = ({ completed, total }) => {
       
       <div className="h-4 bg-nexus-bg rounded-full overflow-hidden border border-nexus-border/50">
         <div 
-          className="h-full bg-gradient-to-r from-nexus-success to-[#34d399] rounded-full transition-all duration-1000 ease-out relative"
+          className="h-full bg-gradient-to-r from-nexus-success to-nexus-success rounded-full transition-all duration-1000 ease-out relative"
           style={{ width: `${percentage}%` }}
         >
           {/* Shine effect */}

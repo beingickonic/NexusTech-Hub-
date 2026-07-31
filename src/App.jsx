@@ -75,6 +75,7 @@ const AdminDispatchPage = lazy(() => import('./pages/admin/DispatchPage'));
 const AdminDriversPage  = lazy(() => import('./pages/admin/DriversPage'));
 const AdminSuppliersPage = lazy(() => import('./pages/admin/SuppliersPage'));
 const AdminUsersPage = lazy(() => import('./pages/admin/UsersPage'));
+const AdminSystemMonitorPage = lazy(() => import('./pages/admin/SystemMonitorPage'));
 
 // New ERP Portals
 import PortalLayout from './components/portal/PortalLayout';
@@ -83,6 +84,7 @@ const UnauthorizedPage = lazy(() => import('./pages/portal/UnauthorizedPage'));
 
 // Finance Portal
 const FinanceDashboard = lazy(() => import('./pages/finance/FinanceDashboard'));
+const FinanceApprovals = lazy(() => import('./pages/finance/ApprovalsPage'));
 const FinanceInvoices = lazy(() => import('./pages/finance/InvoicesPage'));
 const FinancePayments = lazy(() => import('./pages/finance/PaymentsPage'));
 const FinanceExpenses = lazy(() => import('./pages/finance/ExpensesPage'));
@@ -97,6 +99,7 @@ const DispatchDashboard = lazy(() => import('./pages/dispatch/DispatchDashboard'
 const DriverLoginPage = lazy(() => import('./pages/driver/DriverLoginPage'));
 const DriverDashboard = lazy(() => import('./pages/driver/DriverDashboard'));
 const DriverMyDeliveries = lazy(() => import('./pages/driver/pages/MyDeliveriesPage'));
+const DriverDeliveryStatus = lazy(() => import('./pages/driver/pages/DeliveryStatusPage'));
 
 // Inventory Portal
 const InventoryLoginPage = lazy(() => import('./pages/inventory/InventoryLoginPage'));
@@ -114,10 +117,13 @@ const InventoryReportsPage = lazy(() => import('./pages/inventory/InventoryRepor
 const InventoryNotificationsPage = lazy(() => import('./pages/inventory/InventoryNotificationsPage'));
 const InventorySettingsPage = lazy(() => import('./pages/inventory/InventorySettingsPage'));
 const InventoryProfilePage = lazy(() => import('./pages/inventory/InventoryProfilePage'));
+const InventoryApprovalsPage = lazy(() => import('./pages/inventory/InventoryApprovalsPage'));
+const OrderProcessingPage = lazy(() => import('./pages/inventory/OrderProcessingPage'));
 
 // Supplier Portal
 const SupplierLoginPage = lazy(() => import('./pages/supplier/SupplierLoginPage'));
 const SupplierDashboard = lazy(() => import('./pages/supplier/SupplierDashboard'));
+const SupplierProductsPage = lazy(() => import('./pages/supplier/SupplierProductsPage'));
 
 import { Truck, MapPin, Warehouse, Building2, Package, Search, ListTodo, Box, ClipboardCheck, ShoppingCart, Users, ArrowLeftRight, Undo2, AlertTriangle, BarChart2, Bell, Settings, User, PieChart, FileText, CreditCard, Receipt } from 'lucide-react';
 
@@ -126,10 +132,15 @@ const PaymentSuccessPage = lazy(() => import('./pages/payment/PaymentSuccessPage
 const PaymentFailedPage = lazy(() => import('./pages/payment/PaymentFailedPage'));
 const PaymentStatusPage = lazy(() => import('./pages/payment/PaymentStatusPage'));
 const ReceiptPage = lazy(() => import('./pages/payment/ReceiptPage'));
+const MockPaymentPage = lazy(() => import('./pages/payment/MockPaymentPage'));
+const InvoicePage = lazy(() => import('./pages/payment/InvoicePage'));
 const HelpPage = lazy(() => import('./pages/public/HelpPage'));
+const NotificationsPage = lazy(() => import('./pages/portal/NotificationsPage'));
+const ReportsDashboardPage = lazy(() => import('./pages/portal/ReportsDashboardPage'));
+const FailureMonitorPage = lazy(() => import('./pages/admin/FailureMonitorPage'));
 
 const LoadingFallback = () => (
-  <div className="min-h-screen flex items-center justify-center bg-[#F4F4F8] dark:bg-[#0F172A]">
+  <div className="min-h-screen flex items-center justify-center bg-nexus-surface dark:bg-nexus-bg">
     <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
@@ -199,6 +210,8 @@ function App() {
                     <Route path="payment/failed/:orderId" element={<PaymentFailedPage />} />
                     <Route path="payment/status" element={<PaymentStatusPage />} />
                     <Route path="payment/receipt/:receiptId" element={<ReceiptPage />} />
+                    <Route path="payment/mock/:orderId" element={<MockPaymentPage />} />
+                    <Route path="payment/invoice/:orderId" element={<InvoicePage />} />
                     <Route path="orders" element={<OrdersPage />} />
                     <Route path="orders/:id" element={<OrderDetailsPage />} />
                   </Route>
@@ -222,9 +235,15 @@ function App() {
                   <Route path="employees" element={<EmployeesPage />} />
                   <Route path="reports" element={<AdminReportsPage />} />
                   <Route path="settings" element={<AdminSettingsPage />} />
+                  <Route path="notifications" element={<NotificationsPage />} />
+                  <Route path="analytics" element={<ReportsDashboardPage />} />
+                  <Route path="failures" element={<FailureMonitorPage />} />
+                  <Route path="monitor" element={<AdminSystemMonitorPage />} />
+                  <Route path="customers" element={<AdminCustomersPage />} />
                   <Route path="finance">
                     <Route index element={<Navigate to="dashboard" replace />} />
                     <Route path="dashboard" element={<FinanceDashboard />} />
+                    <Route path="approvals" element={<FinanceApprovals />} />
                     <Route path="invoices" element={<FinanceInvoices />} />
                     <Route path="payments" element={<FinancePayments />} />
                     <Route path="expenses" element={<FinanceExpenses />} />
@@ -252,7 +271,11 @@ function App() {
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<DispatchDashboard />} />
                   <Route path="all" element={<AdminDispatchPage />} />
+                  <Route path="pending" element={<AdminDispatchPage defaultStatus="pending" />} />
+                  <Route path="completed" element={<AdminDispatchPage defaultStatus="delivered" />} />
                   <Route path="drivers" element={<AdminDriversPage />} />
+                  <Route path="notifications" element={<NotificationsPage />} />
+                  <Route path="analytics" element={<ReportsDashboardPage />} />
                 </Route>
 
                 {/* â”€â”€ Driver Portal â”€â”€ */}
@@ -271,6 +294,9 @@ function App() {
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<DriverDashboard />} />
                   <Route path="deliveries" element={<DriverMyDeliveries />} />
+                  <Route path="deliveries/:id" element={<DriverDeliveryStatus />} />
+                  <Route path="notifications" element={<NotificationsPage />} />
+                  <Route path="analytics" element={<ReportsDashboardPage />} />
                 </Route>
 
                 {/* â”€â”€ Inventory Portal â”€â”€ */}
@@ -281,6 +307,8 @@ function App() {
                       name: 'Inventory', accentHex: '#FF6B57', homeRoute: '/inventory/dashboard', icon: Warehouse,
                       nav: [
                         { name: 'Dashboard', path: '/inventory/dashboard', icon: Warehouse },
+                        { name: 'Order Approvals', path: '/inventory/order-approvals', icon: ClipboardCheck },
+                        { name: 'Order Processing', path: '/inventory/order-processing', icon: Package },
                         { name: 'Products', path: '/inventory/products', icon: Box },
                         { name: 'Stock Movement', path: '/inventory/movements', icon: Package },
                         { name: 'Goods Received', path: '/inventory/goods-received', icon: ClipboardCheck },
@@ -300,6 +328,8 @@ function App() {
                 }>
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<InventoryDashboard />} />
+                  <Route path="order-approvals" element={<InventoryApprovalsPage />} />
+                  <Route path="order-processing" element={<OrderProcessingPage />} />
                   <Route path="products" element={<InventoryProductsPage />} />
                   <Route path="movements" element={<StockMovementsPage />} />
                   <Route path="goods-received" element={<GoodsReceivedPage />} />
@@ -323,14 +353,18 @@ function App() {
                       name: 'Supplier', accentHex: '#14b8a6', homeRoute: '/supplier/dashboard', icon: Building2,
                       nav: [
                         { name: 'Dashboard', path: '/supplier/dashboard', icon: Building2 },
-                        { name: 'Purchase Orders', path: '/supplier/orders', icon: Package }
+                        { name: 'Products', path: '/supplier/products', icon: Package },
+                        { name: 'Purchase Orders', path: '/supplier/orders', icon: FileText }
                       ]
                     }} />
                   </SupplierRoute>
                 }>
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<SupplierDashboard />} />
+                  <Route path="products" element={<SupplierProductsPage />} />
                   <Route path="orders" element={<AdminSuppliersPage />} />
+                  <Route path="notifications" element={<NotificationsPage />} />
+                  <Route path="analytics" element={<ReportsDashboardPage />} />
                 </Route>
 
                 {/* ── Finance Portal ── */}
@@ -341,20 +375,23 @@ function App() {
                 }>
                   <Route index element={<Navigate to="dashboard" replace />} />
                   <Route path="dashboard" element={<FinanceDashboard />} />
+                  <Route path="approvals" element={<FinanceApprovals />} />
                   <Route path="invoices" element={<FinanceInvoices />} />
                   <Route path="payments" element={<FinancePayments />} />
                   <Route path="expenses" element={<FinanceExpenses />} />
                   <Route path="reports" element={<FinanceReports />} />
                   <Route path="settings" element={<FinanceSettings />} />
+                  <Route path="notifications" element={<NotificationsPage />} />
+                  <Route path="analytics" element={<ReportsDashboardPage />} />
                 </Route>
 
                 {/* Catch-all 404 Route */}
                 <Route path="*" element={
-                  <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4F4F8] dark:bg-dark-bg text-slate-900 dark:text-white text-center px-4">
+                  <div className="min-h-screen flex flex-col items-center justify-center bg-nexus-surface dark:bg-nexus-bg text-nexus-heading text-center px-4">
                     <h1 className="text-6xl font-bold text-primary mb-4">404</h1>
                     <h2 className="text-2xl font-semibold mb-4">Page Not Found</h2>
                     <p className="text-nexus-textSecondary mb-8 max-w-md">The page you are looking for doesn't exist or has been moved.</p>
-                    <a href="/" className="bg-primary hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-medium transition-colors">Go back home</a>
+                    <a href="/" className="bg-primary hover:bg-nexus-primary-hover text-white px-6 py-3 rounded-xl font-medium transition-colors">Go back home</a>
                   </div>
                 } />
               </Routes>

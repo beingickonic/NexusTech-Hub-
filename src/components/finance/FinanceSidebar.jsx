@@ -1,10 +1,11 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LogOut, X, PieChart, FileText, CreditCard, Receipt, BarChart3, Settings, Landmark } from 'lucide-react';
+import { LogOut, X, PieChart, FileText, CreditCard, Receipt, BarChart3, Settings, Landmark, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
 import UserAvatar from '../common/UserAvatar';
 
 const navItems = [
   { name: 'Dashboard', path: '/finance/dashboard', icon: PieChart },
+  { name: 'Approvals', path: '/finance/approvals', icon: ShieldCheck },
   { name: 'Invoices', path: '/finance/invoices', icon: FileText },
   { name: 'Payments', path: '/finance/payments', icon: CreditCard },
   { name: 'Expenses', path: '/finance/expenses', icon: Receipt },
@@ -98,7 +99,7 @@ const FinanceSidebar = ({ isOpen, setIsOpen }) => {
           </div>
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-white/50 hover:bg-red-500/15 hover:text-red-400 transition-all text-sm font-medium"
+            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-white/50 hover:bg-nexus-error/15 hover:text-nexus-error transition-all text-sm font-medium"
           >
             <LogOut size={15} />
             Sign Out

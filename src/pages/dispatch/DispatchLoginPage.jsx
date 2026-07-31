@@ -9,9 +9,9 @@ const DispatchLoginPage = () => {
         subtitle: 'Manage deliveries, drivers, and tracking in real-time.',
         icon: Truck,
         accentHex: '#f59e0b', // amber
-        bgFrom: 'from-amber-600',
-        bgVia: 'via-amber-500',
-        bgTo: 'to-amber-400',
+        bgFrom: 'from-nexus-gold',
+        bgVia: 'via-nexus-light-gold',
+        bgTo: 'to-nexus-light-gold',
         features: [
           'Live driver tracking & status',
           'Automated delivery routing',

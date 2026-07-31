@@ -16,27 +16,27 @@ const OfficeOperations = () => {
   return (
     <div className="animate-fade-in space-y-6 pb-10">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Office Operations</h1>
+        <h1 className="text-2xl font-bold text-nexus-heading">Office Operations</h1>
         <p className="text-sm text-nexus-textSecondary">Manage daily HQ operations and reception.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {operations.map((op, idx) => (
-          <div key={idx} className="bg-white dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+          <div key={idx} className="bg-white dark:bg-nexus-bg border border-nexus-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-3 bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-500 rounded-xl group-hover:scale-110 transition-transform">
+              <div className="p-3 bg-nexus-primary/10 text-nexus-primary dark:bg-nexus-primary/10 dark:text-nexus-primary rounded-xl group-hover:scale-110 transition-transform">
                 <op.icon size={20} />
               </div>
-              <span className="text-2xl font-bold text-slate-900 dark:text-white">{op.count}</span>
+              <span className="text-2xl font-bold text-nexus-heading">{op.count}</span>
             </div>
-            <h3 className="font-bold text-slate-900 dark:text-white mb-1">{op.title}</h3>
-            <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">{op.desc}</p>
+            <h3 className="font-bold text-nexus-heading mb-1">{op.title}</h3>
+            <p className="text-sm text-nexus-muted">{op.desc}</p>
           </div>
         ))}
       </div>
 
-      <div className="bg-white dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-2xl p-6 shadow-sm mt-6">
-         <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Recent Operations Activity</h2>
+      <div className="bg-white dark:bg-nexus-bg border border-nexus-border rounded-2xl p-6 shadow-sm mt-6">
+         <h2 className="text-lg font-bold text-nexus-heading mb-4">Recent Operations Activity</h2>
          <p className="text-sm text-nexus-textSecondary">Operation logs will be displayed here.</p>
       </div>
     </div>

@@ -65,7 +65,7 @@ const Newsletter = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-r from-[#1E293B] to-[#0F172A] p-7 sm:p-10 lg:p-16 text-center shadow-2xl border border-nexus-border"
+        className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-r from-nexus-dark-navy to-nexus-dark-navy p-7 sm:p-10 lg:p-16 text-center shadow-2xl border border-nexus-border"
       >
         {/* Floating Glows */}
         <div className="absolute top-[-50%] left-[-10%] w-64 h-64 bg-primary/30 rounded-full blur-[100px] pointer-events-none" />
@@ -79,7 +79,7 @@ const Newsletter = () => {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">
             Join the NexusTech Hub
           </h2>
-          <p className="text-sm sm:text-base text-gray-300 mb-6 sm:mb-8 max-w-md mx-auto">
+          <p className="text-sm sm:text-base text-white/80 mb-6 sm:mb-8 max-w-md mx-auto">
             Subscribe to our newsletter for exclusive deals, early access to new products, and tech insights.
           </p>
 
@@ -92,9 +92,9 @@ const Newsletter = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="flex items-center gap-3 bg-green-500/20 border border-green-500/40 text-green-300 px-6 py-4 rounded-2xl text-sm font-semibold"
+                className="flex items-center gap-3 bg-nexus-success/20 border border-nexus-success/40 text-nexus-success px-6 py-4 rounded-2xl text-sm font-semibold"
               >
-                <CheckCircle size={20} className="shrink-0 text-green-400" />
+                <CheckCircle size={20} className="shrink-0 text-nexus-success" />
                 {success}
               </motion.div>
             ) : (
@@ -118,7 +118,7 @@ const Newsletter = () => {
                   }}
                   placeholder="Enter your email address"
                   disabled={loading}
-                  className="w-full h-14 bg-white/5 backdrop-blur-sm border border-nexus-border text-white placeholder-slate-400 px-6 rounded-2xl sm:rounded-r-none outline-none focus:bg-white/10 focus:border-primary/50 transition-all shadow-inner text-sm disabled:opacity-60"
+                  className="w-full h-14 bg-white/5 backdrop-blur-sm border border-nexus-border text-white placeholder-nexus-muted px-6 rounded-2xl sm:rounded-r-none outline-none focus:bg-white/10 focus:border-primary/50 transition-all shadow-inner text-sm disabled:opacity-60"
                   aria-label="Email address"
                   aria-required="true"
                 />
@@ -126,7 +126,7 @@ const Newsletter = () => {
                   id="newsletter-submit-btn"
                   type="submit"
                   disabled={loading}
-                  className="h-14 shrink-0 sm:w-auto w-full bg-nexus-primary hover:bg-[#ff5a2e] disabled:bg-nexus-primary/60 text-white px-8 rounded-2xl sm:rounded-l-none font-bold transition-all shadow-[0_0_20px_rgba(255,107,87,0.3)] flex items-center justify-center gap-2 hover:shadow-[0_0_25px_rgba(255,107,87,0.5)] disabled:hover:shadow-[0_0_20px_rgba(255,107,87,0.3)] text-sm whitespace-nowrap"
+                  className="h-14 shrink-0 sm:w-auto w-full bg-nexus-primary hover:bg-nexus-primary-hover disabled:bg-nexus-primary/60 text-white px-8 rounded-2xl sm:rounded-l-none font-bold transition-all shadow-[0_0_20px_rgba(255,107,87,0.3)] flex items-center justify-center gap-2 hover:shadow-[0_0_25px_rgba(255,107,87,0.5)] disabled:hover:shadow-[0_0_20px_rgba(255,107,87,0.3)] text-sm whitespace-nowrap"
                   aria-label="Subscribe to newsletter"
                 >
                   {loading ? (
@@ -151,7 +151,7 @@ const Newsletter = () => {
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="flex items-center gap-1.5 mt-3 text-red-400 text-xs font-medium"
+                className="flex items-center gap-1.5 mt-3 text-nexus-error text-xs font-medium"
                 role="alert"
               >
                 <AlertCircle size={13} className="shrink-0" />
@@ -160,7 +160,7 @@ const Newsletter = () => {
             )}
           </AnimatePresence>
 
-          <p className="text-xs text-gray-500 mt-4">
+          <p className="text-xs text-nexus-muted mt-4">
             By subscribing, you agree to our Terms of Service and Privacy Policy.
           </p>
         </div>

@@ -1,17 +1,33 @@
-import { Clock, CheckCircle, Package, Truck, XCircle, RefreshCw } from 'lucide-react';
+import {
+  Clock, CheckCircle, Package, Truck, XCircle, RefreshCw,
+  CreditCard, AlertTriangle, PackageCheck, ClipboardList,
+  Send, MapPin, Home, Award, ShieldCheck, Search
+} from 'lucide-react';
+
+const STATUS_CONFIG = {
+  'pending':                       { color: 'bg-nexus-gold/10 text-nexus-gold dark:bg-nexus-gold/20 dark:text-nexus-gold', icon: Clock, label: 'Pending' },
+  'awaiting payment':              { color: 'bg-nexus-gold/10 text-nexus-gold dark:bg-nexus-gold/20 dark:text-nexus-gold', icon: Clock, label: 'Awaiting Payment' },
+  'paid':                          { color: 'bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 dark:text-nexus-success', icon: CreditCard, label: 'Paid' },
+  'pending payment verification':  { color: 'bg-nexus-gold/10 text-nexus-gold dark:bg-nexus-gold/20 dark:text-nexus-gold', icon: Clock, label: 'Pending Verification' },
+  'payment failed':                { color: 'bg-nexus-error/10 text-nexus-error dark:bg-nexus-error/20 dark:text-nexus-error', icon: XCircle, label: 'Payment Failed' },
+  'pending finance approval':      { color: 'bg-info/10 text-info dark:bg-info/100/20 dark:text-info', icon: ShieldCheck, label: 'Pending Finance' },
+  'finance approved':              { color: 'bg-nexus-info/10 text-nexus-info dark:bg-nexus-info/20 dark:text-nexus-info', icon: CheckCircle, label: 'Finance Approved' },
+  'waiting for stock':             { color: 'bg-nexus-primary/15 text-nexus-primary dark:bg-nexus-primary/20 dark:text-nexus-primary', icon: AlertTriangle, label: 'Waiting for Stock' },
+  'reserved':                      { color: 'bg-nexus-info/10 text-nexus-info dark:bg-nexus-info/20 dark:text-nexus-info', icon: CheckCircle, label: 'Reserved' },
+  'picking':                       { color: 'bg-info/10 text-info dark:bg-info/100/20 dark:text-info', icon: ClipboardList, label: 'Picking' },
+  'packing':                       { color: 'bg-info/10 text-info dark:bg-info/100/20 dark:text-info', icon: PackageCheck, label: 'Packing' },
+  'ready for dispatch':            { color: 'bg-info/10 text-info dark:bg-info/100/20 dark:text-info', icon: Send, label: 'Ready for Dispatch' },
+  'assigned':                      { color: 'bg-success/10 text-success dark:bg-success/100/20 dark:text-success', icon: Truck, label: 'Assigned' },
+  'out for delivery':              { color: 'bg-info/10 text-info dark:bg-info/100/20 dark:text-info', icon: MapPin, label: 'Out for Delivery' },
+  'delivered':                     { color: 'bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 dark:text-nexus-success', icon: Home, label: 'Delivered' },
+  'completed':                     { color: 'bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 dark:text-nexus-success', icon: Award, label: 'Completed' },
+  'cancelled':                     { color: 'bg-nexus-error/10 text-nexus-error dark:bg-nexus-error/20 dark:text-nexus-error', icon: XCircle, label: 'Cancelled' },
+  'refunded':                      { color: 'bg-nexus-surface text-nexus-heading dark:bg-nexus-muted/20 dark:text-nexus-textSecondary', icon: RefreshCw, label: 'Refunded' },
+};
 
 const OrderStatus = ({ status }) => {
-  const configs = {
-    pending: { color: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400', icon: Clock, label: 'Pending' },
-    confirmed: { color: 'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400', icon: CheckCircle, label: 'Confirmed' },
-    processing: { color: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-400', icon: Package, label: 'Processing' },
-    shipped: { color: 'bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400', icon: Truck, label: 'Shipped' },
-    delivered: { color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400', icon: CheckCircle, label: 'Delivered' },
-    cancelled: { color: 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400', icon: XCircle, label: 'Cancelled' },
-    refunded: { color: 'bg-slate-100 text-slate-700 dark:bg-slate-500/20 dark:text-nexus-textSecondary', icon: RefreshCw, label: 'Refunded' },
-  };
-
-  const config = configs[status] || configs.pending;
+  const key = (status || '').toLowerCase();
+  const config = STATUS_CONFIG[key] || STATUS_CONFIG['pending'];
   const Icon = config.icon;
 
   return (

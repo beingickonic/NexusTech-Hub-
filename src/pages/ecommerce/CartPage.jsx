@@ -14,22 +14,22 @@ const CartPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
+    <div className="min-h-screen pt-32 pb-20 bg-nexus-surface transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6">
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-10">Shopping Cart</h1>
+        <h1 className="text-4xl font-bold text-nexus-heading mb-10">Shopping Cart</h1>
         
         {loading ? (
           <div className="flex justify-center py-20">
-            <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-12 h-12 border-4 border-nexus-primary border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : cartItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-3xl border border-slate-200 dark:border-nexus-border">
-            <ShoppingBag size={80} className="text-nexus-textSecondary dark:text-slate-600 mb-6" />
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Your cart is empty</h2>
-            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-8 max-w-md text-center">
+          <div className="flex flex-col items-center justify-center py-20 bg-white/50 dark:bg-nexus-card backdrop-blur-sm rounded-3xl border border-nexus-border">
+            <ShoppingBag size={80} className="text-nexus-textSecondary dark:text-nexus-muted mb-6" />
+            <h2 className="text-2xl font-bold text-nexus-heading mb-4">Your cart is empty</h2>
+            <p className="text-nexus-muted mb-8 max-w-md text-center">
               Looks like you haven't added anything to your cart yet. Let's fix that!
             </p>
-            <Link to="/products" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 px-10 rounded-xl transition-colors shadow-lg shadow-orange-500/30">
+            <Link to="/products" className="bg-nexus-primary hover:bg-nexus-primary-hover text-white font-semibold py-4 px-10 rounded-xl transition-colors shadow-lg shadow-primary/30">
               Start Shopping
             </Link>
           </div>

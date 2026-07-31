@@ -18,7 +18,7 @@ const AboutPage = () => {
   }, []);
 
   return (
-    <div className="bg-[#F8FAFC] dark:bg-dark-bg min-h-screen transition-colors duration-300">
+    <div className="bg-nexus-surface dark:bg-nexus-bg min-h-screen transition-colors duration-300">
       {/* Hero Section */}
       <section className="relative py-24 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10 blur-[100px] rounded-full w-[600px] h-[600px] left-1/2 -translate-x-1/2 top-0 pointer-events-none" />
@@ -26,7 +26,7 @@ const AboutPage = () => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6"
+            className="text-4xl md:text-6xl font-bold text-nexus-heading mb-6"
           >
             About NexusTech Hub
           </motion.h1>
@@ -34,7 +34,7 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-slate-600 dark:text-gray-400 max-w-2xl mx-auto mb-10"
+            className="text-lg text-nexus-muted max-w-2xl mx-auto mb-10"
           >
             Technology That Powers Your Lifestyle
           </motion.p>
@@ -42,7 +42,7 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-base text-nexus-textSecondary dark:text-gray-400 max-w-3xl mx-auto leading-relaxed"
+            className="text-base text-nexus-textSecondary dark:text-nexus-muted max-w-3xl mx-auto leading-relaxed"
           >
             At NexusTech Hub, we believe that cutting-edge technology should be accessible, beautiful, and seamlessly integrated into your everyday life.
           </motion.p>
@@ -50,7 +50,7 @@ const AboutPage = () => {
       </section>
 
       {/* Stats */}
-      <section className="py-12 border-y border-slate-200 dark:border-nexus-border bg-white dark:bg-dark-surface transition-colors duration-300">
+      <section className="py-12 border-y border-nexus-border bg-nexus-card transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             { label: 'Happy Customers', value: '10,000+' },
@@ -66,7 +66,7 @@ const AboutPage = () => {
               transition={{ delay: i * 0.1 }}
             >
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
-              <div className="text-sm font-medium text-nexus-textSecondary dark:text-gray-400 uppercase tracking-wider">{stat.label}</div>
+              <div className="text-sm font-medium text-nexus-textSecondary dark:text-nexus-muted uppercase tracking-wider">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -80,11 +80,11 @@ const AboutPage = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">Our Mission</h2>
-            <p className="text-slate-600 dark:text-gray-300 leading-relaxed mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-nexus-heading mb-6">Our Mission</h2>
+            <p className="text-nexus-muted leading-relaxed mb-6">
               Founded in 2024, NexusTech Hub was born out of a simple frustration: finding high-quality, reliable, and aesthetically pleasing tech gear was too difficult. We set out to curate a premium collection of the world's best technology, bringing it all together in one beautiful shopping experience.
             </p>
-            <p className="text-slate-600 dark:text-gray-300 leading-relaxed">
+            <p className="text-nexus-muted leading-relaxed">
               We carefully vet every single product that makes it onto our platform. From the tactile feel of a mechanical keyboard switch to the noise-canceling capabilities of over-ear headphones, we ensure that what you buy actually enhances your workflow and life.
             </p>
           </motion.div>
@@ -105,11 +105,11 @@ const AboutPage = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-24 bg-white dark:bg-dark-surface border-t border-slate-200 dark:border-nexus-border transition-colors duration-300">
+      <section className="py-24 bg-nexus-card border-t border-nexus-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Why Choose NexusTech</h2>
-            <p className="text-nexus-textSecondary dark:text-gray-400">The core values that drive our business forward.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-nexus-heading mb-4">Why Choose NexusTech</h2>
+            <p className="text-nexus-textSecondary dark:text-nexus-muted">The core values that drive our business forward.</p>
           </div>
           <motion.div
             variants={stagger}
@@ -130,13 +130,13 @@ const AboutPage = () => {
                 key={item.title}
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-2xl bg-[#F8FAFC] dark:bg-dark-bg border border-slate-200 dark:border-nexus-border hover:border-primary/30 transition-all group"
+                className="p-8 rounded-2xl bg-nexus-surface dark:bg-nexus-bg border border-nexus-border hover:border-primary/30 transition-all group"
               >
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
                   <item.icon size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{item.title}</h3>
-                <p className="text-nexus-textSecondary dark:text-gray-400 leading-relaxed">{item.desc}</p>
+                <h3 className="text-xl font-bold text-nexus-heading mb-3">{item.title}</h3>
+                <p className="text-nexus-textSecondary dark:text-nexus-muted leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -147,8 +147,8 @@ const AboutPage = () => {
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Our Core Values</h2>
-            <p className="text-nexus-textSecondary dark:text-gray-400">The principles that guide everything we do.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-nexus-heading mb-4">Our Core Values</h2>
+            <p className="text-nexus-textSecondary dark:text-nexus-muted">The principles that guide everything we do.</p>
           </div>
           <motion.div
             variants={stagger}
@@ -168,12 +168,12 @@ const AboutPage = () => {
                 key={item.title}
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl bg-white dark:bg-dark-surface border border-slate-200 dark:border-nexus-border hover:border-primary/30 transition-all text-center"
+                className="p-6 rounded-2xl bg-nexus-card border border-nexus-border hover:border-primary/30 transition-all text-center"
               >
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
                   <item.icon size={24} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">{item.title}</h3>
+                <h3 className="text-lg font-bold text-nexus-heading">{item.title}</h3>
               </motion.div>
             ))}
           </motion.div>
@@ -181,11 +181,11 @@ const AboutPage = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-24 bg-white dark:bg-dark-surface border-t border-slate-200 dark:border-nexus-border transition-colors duration-300">
+      <section className="py-24 bg-nexus-card border-t border-nexus-border transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Meet Our Leadership</h2>
-            <p className="text-nexus-textSecondary dark:text-gray-400">The people behind NexusTech Hub.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-nexus-heading mb-4">Meet Our Leadership</h2>
+            <p className="text-nexus-textSecondary dark:text-nexus-muted">The people behind NexusTech Hub.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
@@ -200,13 +200,13 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl bg-[#F8FAFC] dark:bg-dark-bg border border-slate-200 dark:border-nexus-border text-center"
+                className="p-6 rounded-2xl bg-nexus-surface dark:bg-nexus-bg border border-nexus-border text-center"
               >
                 <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
                   <UserRound size={32} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{member.role}</h3>
-                <p className="text-sm text-nexus-textSecondary dark:text-gray-400">{member.desc}</p>
+                <h3 className="text-lg font-bold text-nexus-heading mb-1">{member.role}</h3>
+                <p className="text-sm text-nexus-textSecondary dark:text-nexus-muted">{member.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -216,7 +216,7 @@ const AboutPage = () => {
       {/* Contact CTA */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <div className="rounded-3xl bg-gradient-to-br from-primary to-orange-500 p-12 md:p-16 text-center text-white relative overflow-hidden">
+          <div className="rounded-3xl bg-gradient-to-br from-primary to-nexus-primary p-12 md:p-16 text-center text-white relative overflow-hidden">
             <div className="absolute inset-0 bg-black/10" />
             <div className="relative z-10">
               <h2 className="text-3xl md:text-5xl font-bold mb-6">Need Help Choosing Tech Products?</h2>
@@ -227,7 +227,7 @@ const AboutPage = () => {
                 <Link
                   to="/contact"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="inline-flex items-center justify-center gap-2 bg-white text-primary font-bold py-4 px-8 rounded-xl transition-all hover:bg-gray-50 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] focus:ring-4 focus:ring-white/50 outline-none"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-primary font-bold py-4 px-8 rounded-xl transition-all hover:bg-nexus-surface hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] focus:ring-4 focus:ring-white/50 outline-none"
                   aria-label="Contact Us"
                 >
                   <Phone size={18} />

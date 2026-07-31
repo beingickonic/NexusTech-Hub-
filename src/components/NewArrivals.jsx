@@ -22,7 +22,7 @@ const NewArrivals = () => {
   }, []);
 
   return (
-    <section className="py-20 bg-[#F4F4F8] dark:bg-dark-bg transition-colors duration-300">
+    <section className="py-20 bg-nexus-surface dark:bg-nexus-bg transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         
         {/* Promotional Banners */}
@@ -33,16 +33,16 @@ const NewArrivals = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             whileHover={{ y: -5 }}
-            className="group relative rounded-3xl overflow-hidden bg-white dark:bg-dark-surface p-8 sm:p-12 flex flex-col justify-center min-h-[400px] border border-slate-200 dark:border-transparent hover:border-primary/30 transition-all duration-300 shadow-lg"
+            className="group relative rounded-3xl overflow-hidden bg-nexus-card p-8 sm:p-12 flex flex-col justify-center min-h-[400px] border border-nexus-border dark:border-transparent hover:border-primary/30 transition-all duration-300 shadow-lg"
           >
             <div className="relative z-10 w-full sm:w-1/2">
-              <span className="inline-block px-3 py-1 bg-slate-100 dark:bg-dark-bg text-slate-900 dark:text-white text-xs font-bold rounded-full mb-4 shadow-sm">
+              <span className="inline-block px-3 py-1 bg-nexus-surface dark:bg-nexus-bg text-nexus-heading text-xs font-bold rounded-full mb-4 shadow-sm">
                 NEW ARRIVALS
               </span>
-              <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+              <h3 className="text-3xl font-bold text-nexus-heading mb-4 leading-tight">
                 Next-Gen <br/> Gaming Gear
               </h3>
-              <p className="text-nexus-textSecondary dark:text-gray-400 mb-6 line-clamp-2">
+              <p className="text-nexus-textSecondary dark:text-nexus-muted mb-6 line-clamp-2">
                 Elevate your play with the latest high-performance accessories.
               </p>
               <button className="flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all">
@@ -66,19 +66,19 @@ const NewArrivals = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             whileHover={{ y: -5 }}
-            className="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/5 p-8 sm:p-12 flex flex-col justify-center min-h-[400px] border border-slate-200 dark:border-transparent hover:border-primary/30 transition-all duration-300 shadow-lg"
+            className="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/5 p-8 sm:p-12 flex flex-col justify-center min-h-[400px] border border-nexus-border dark:border-transparent hover:border-primary/30 transition-all duration-300 shadow-lg"
           >
             <div className="relative z-10 w-full sm:w-1/2">
-              <span className="inline-block px-3 py-1 bg-white dark:bg-dark-bg text-primary text-xs font-bold rounded-full mb-4 shadow-sm">
+              <span className="inline-block px-3 py-1 bg-white dark:bg-nexus-bg text-primary text-xs font-bold rounded-full mb-4 shadow-sm">
                 BEST SELLERS
               </span>
-              <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
+              <h3 className="text-3xl font-bold text-nexus-heading mb-4 leading-tight">
                 Trending <br/> Audio
               </h3>
-              <p className="text-nexus-textSecondary dark:text-gray-400 mb-6 line-clamp-2">
+              <p className="text-nexus-textSecondary dark:text-nexus-muted mb-6 line-clamp-2">
                 Discover the headphones everyone is talking about.
               </p>
-              <button className="flex items-center gap-2 text-slate-900 dark:text-white font-bold hover:gap-4 transition-all hover:text-primary dark:hover:text-primary">
+              <button className="flex items-center gap-2 text-nexus-heading font-bold hover:gap-4 transition-all hover:text-primary dark:hover:text-primary">
                 Shop Audio <ArrowRight size={18} />
               </button>
             </div>
@@ -97,7 +97,7 @@ const NewArrivals = () => {
         {products.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Just Landed</h2>
+              <h2 className="text-2xl font-bold text-nexus-heading">Just Landed</h2>
               <button className="text-primary font-medium hover:underline flex items-center gap-1">
                 View All <ArrowRight size={16} />
               </button>

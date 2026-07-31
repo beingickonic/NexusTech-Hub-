@@ -20,7 +20,7 @@ const PortalLayout = ({ config }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-nexus-bg text-slate-900 dark:text-white font-sans">
+    <div className="min-h-screen bg-nexus-surface dark:bg-nexus-bg text-nexus-heading font-sans">
       <PortalSidebar
         config={config}
         isOpen={isSidebarOpen}

@@ -74,8 +74,8 @@ const PaymentLoaderPage = () => {
   }, [checkoutRequestId, navigate]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-nexus-surface flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-nexus-border text-center">
+    <div className="min-h-screen bg-nexus-surface flex items-center justify-center p-4">
+      <div className="bg-nexus-card rounded-3xl p-8 max-w-md w-full shadow-2xl border border-nexus-border text-center">
         
         {status === 'processing' && (
           <motion.div 
@@ -85,10 +85,10 @@ const PaymentLoaderPage = () => {
           >
             <div className="relative w-24 h-24 mb-6">
               <motion.div 
-                className="absolute inset-0 rounded-full border-4 border-slate-100 dark:border-nexus-border"
+                className="absolute inset-0 rounded-full border-4 border-nexus-border"
               />
               <motion.div 
-                className="absolute inset-0 rounded-full border-4 border-orange-500 border-t-transparent"
+                className="absolute inset-0 rounded-full border-4 border-nexus-primary border-t-transparent"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
               />
@@ -97,14 +97,14 @@ const PaymentLoaderPage = () => {
               </div>
             </div>
             
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Awaiting Payment</h2>
-            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-6 leading-relaxed">
+            <h2 className="text-2xl font-bold text-nexus-heading mb-2">Awaiting Payment</h2>
+            <p className="text-nexus-muted mb-6 leading-relaxed">
               Please check your phone. An M-Pesa prompt has been sent to your device. Enter your PIN to complete the transaction.
             </p>
             
-            <div className="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-2 mb-2 overflow-hidden">
+            <div className="w-full bg-nexus-surface rounded-full h-2 mb-2 overflow-hidden">
               <motion.div 
-                className="bg-orange-500 h-full"
+                className="bg-nexus-primary h-full"
                 initial={{ width: "0%" }}
                 animate={{ width: `${(attempts / 30) * 100}%` }}
               />
@@ -117,18 +117,18 @@ const PaymentLoaderPage = () => {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center text-green-500"
+            className="flex flex-col items-center text-nexus-success"
           >
             <motion.div 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", bounce: 0.5 }}
-              className="w-20 h-20 bg-green-100 dark:bg-green-500/20 rounded-full flex items-center justify-center mb-6"
+              className="w-20 h-20 bg-nexus-success/10 dark:bg-nexus-success/20 rounded-full flex items-center justify-center mb-6"
             >
               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
             </motion.div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Payment Successful!</h2>
-            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Generating your receipt...</p>
+            <h2 className="text-2xl font-bold text-nexus-heading mb-2">Payment Successful!</h2>
+            <p className="text-nexus-muted">Generating your receipt...</p>
           </motion.div>
         )}
 
@@ -141,17 +141,17 @@ const PaymentLoaderPage = () => {
             <motion.div 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="w-20 h-20 bg-red-100 dark:bg-red-500/20 text-red-500 rounded-full flex items-center justify-center mb-6"
+              className="w-20 h-20 bg-nexus-error/10 dark:bg-nexus-error/20 text-nexus-error rounded-full flex items-center justify-center mb-6"
             >
               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path></svg>
             </motion.div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+            <h2 className="text-2xl font-bold text-nexus-heading mb-2">
               {status === 'timeout' ? 'Payment Timeout' : 'Payment Failed'}
             </h2>
-            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-6">
+            <p className="text-nexus-muted mb-6">
               We couldn't confirm your payment. You can try again or check your M-Pesa balance.
             </p>
-            <button onClick={() => navigate('/orders')} className="w-full py-3 bg-nexus-surface dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl font-bold transition-colors">
+            <button onClick={() => navigate('/orders')} className="w-full py-3 bg-nexus-heading dark:bg-white text-white dark:text-nexus-navy rounded-xl font-bold transition-colors">
               Go to My Orders
             </button>
           </motion.div>

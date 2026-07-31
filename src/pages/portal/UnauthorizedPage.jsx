@@ -23,7 +23,7 @@ const UnauthorizedPage = () => {
     <div className="min-h-screen bg-nexus-bg flex items-center justify-center p-6">
       {/* Glow */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-96 h-96 rounded-full bg-red-500/10 blur-3xl" />
+        <div className="w-96 h-96 rounded-full bg-nexus-error/10 blur-3xl" />
       </div>
 
       <motion.div
@@ -37,9 +37,9 @@ const UnauthorizedPage = () => {
           initial={{ rotate: -10 }}
           animate={{ rotate: 0 }}
           transition={{ delay: 0.2, type: 'spring' }}
-          className="w-24 h-24 bg-red-500/15 border border-red-500/30 rounded-3xl flex items-center justify-center mx-auto mb-6"
+          className="w-24 h-24 bg-nexus-error/15 border border-nexus-error/30 rounded-3xl flex items-center justify-center mx-auto mb-6"
         >
-          <ShieldOff size={44} className="text-red-400" />
+          <ShieldOff size={44} className="text-nexus-error" />
         </motion.div>
 
         <h1 className="text-5xl font-extrabold text-white mb-2">403</h1>
@@ -56,14 +56,14 @@ const UnauthorizedPage = () => {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={goToMyPortal}
-            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm transition-colors shadow-lg shadow-orange-500/25"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-nexus-primary hover:bg-nexus-primary-hover text-white font-semibold text-sm transition-colors shadow-lg shadow-nexus-primary/25"
           >
             <Home size={16} />
             Go to My Portal
           </button>
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-nexus-border text-nexus-textSecondary hover:text-white hover:border-slate-600 font-semibold text-sm transition-colors"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-nexus-border text-nexus-textSecondary hover:text-white hover:border-nexus-border font-semibold text-sm transition-colors"
           >
             <ArrowLeft size={16} />
             Go Back

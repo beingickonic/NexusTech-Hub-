@@ -8,8 +8,8 @@ const DriverProfilePage = () => {
   return (
     <div className="p-4 md:p-6 max-w-lg mx-auto pb-24">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
-          <User className="text-purple-500" size={24} />
+        <div className="w-10 h-10 rounded-xl bg-info/100/20 flex items-center justify-center">
+          <User className="text-info" size={24} />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-white">Profile</h1>
@@ -30,7 +30,7 @@ const DriverProfilePage = () => {
 
         <div className="space-y-4">
           <div className="flex items-center gap-4 bg-nexus-bg p-4 rounded-xl border border-nexus-border">
-            <div className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-full bg-nexus-card flex items-center justify-center shrink-0">
               <Phone size={18} className="text-nexus-textSecondary" />
             </div>
             <div>
@@ -40,7 +40,7 @@ const DriverProfilePage = () => {
           </div>
 
           <div className="flex items-center gap-4 bg-nexus-bg p-4 rounded-xl border border-nexus-border">
-            <div className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-full bg-nexus-card flex items-center justify-center shrink-0">
               <Truck size={18} className="text-nexus-textSecondary" />
             </div>
             <div>
@@ -50,7 +50,7 @@ const DriverProfilePage = () => {
           </div>
 
           <div className="flex items-center gap-4 bg-nexus-bg p-4 rounded-xl border border-nexus-border">
-            <div className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-full bg-nexus-card flex items-center justify-center shrink-0">
               <MapPin size={18} className="text-nexus-textSecondary" />
             </div>
             <div>
@@ -60,12 +60,12 @@ const DriverProfilePage = () => {
           </div>
 
           <div className="flex items-center gap-4 bg-nexus-bg p-4 rounded-xl border border-nexus-border">
-            <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center shrink-0">
-              <Phone size={18} className="text-red-500" />
+            <div className="w-10 h-10 rounded-full bg-nexus-error/10 flex items-center justify-center shrink-0">
+              <Phone size={18} className="text-nexus-error" />
             </div>
             <div>
-              <p className="text-xs text-red-400/80 mb-0.5">Emergency Contact</p>
-              <p className="text-sm font-medium text-red-400">Dispatch HQ: +1 (800) 999-9999</p>
+              <p className="text-xs text-nexus-error/80 mb-0.5">Emergency Contact</p>
+              <p className="text-sm font-medium text-nexus-error">Dispatch HQ: +1 (800) 999-9999</p>
             </div>
           </div>
         </div>

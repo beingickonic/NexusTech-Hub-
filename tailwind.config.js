@@ -18,30 +18,45 @@ export default {
       },
 
       colors: {
-        primary: '#FF6B57', // Legacy, keeping for fallback
-        success: '#22C55E',
-        warning: '#F59E0B',
-        danger: '#EF4444',
-        accent: '#FDBF50', // Legacy
-        'off-white': '#F4F4F8',
-        'dark-navy': '#111827',
-        'dark-bg': '#070B1A',
-        'dark-surface': '#111827',
-        'muted-text': '#64748B',
-        
-        // Official Nexus Design Tokens
+        // Legacy aliases (kept for back-compat, mapped to brand palette)
+        primary: 'rgb(var(--nexus-primary) / <alpha-value>)',
+        'primary-hover': 'rgb(var(--nexus-primary-hover) / <alpha-value>)',
+        accent: 'rgb(var(--nexus-gold) / <alpha-value>)',
+        success: 'rgb(var(--nexus-success) / <alpha-value>)',
+        warning: 'rgb(var(--nexus-gold) / <alpha-value>)',
+        danger: 'rgb(var(--nexus-error) / <alpha-value>)',
+        info: 'rgb(var(--nexus-info) / <alpha-value>)',
+        'off-white': 'rgb(var(--nexus-bg) / <alpha-value>)',
+        'dark-navy': 'rgb(var(--nexus-dark-navy) / <alpha-value>)',
+        'dark-bg': 'rgb(var(--nexus-bg) / <alpha-value>)',
+        'dark-surface': 'rgb(var(--nexus-surface) / <alpha-value>)',
+        'muted-text': 'rgb(var(--nexus-muted) / <alpha-value>)',
+
+        // Official Nexus Design Tokens (theme-aware CSS variables)
         nexus: {
-          primary: '#FF724C',
-          secondary: '#FDBF50',
-          bg: '#2A2C41',
-          surface: '#353756',
-          text: '#F4F4F8',
-          textSecondary: '#B8BBC7',
-          success: '#22C55E',
-          warning: '#F59E0B',
-          error: '#EF4444',
-          border: 'rgba(255,255,255,0.08)'
-        }
+          primary: 'rgb(var(--nexus-primary) / <alpha-value>)',
+          'primary-hover': 'rgb(var(--nexus-primary-hover) / <alpha-value>)',
+          secondary: 'rgb(var(--nexus-secondary) / <alpha-value>)',
+          navy: 'rgb(var(--nexus-navy) / <alpha-value>)',
+          'dark-navy': 'rgb(var(--nexus-dark-navy) / <alpha-value>)',
+          gold: 'rgb(var(--nexus-gold) / <alpha-value>)',
+          'light-gold': 'rgb(var(--nexus-light-gold) / <alpha-value>)',
+          bg: 'rgb(var(--nexus-bg) / <alpha-value>)',
+          surface: 'rgb(var(--nexus-surface) / <alpha-value>)',
+          card: 'rgb(var(--nexus-card) / <alpha-value>)',
+          sidebar: 'rgb(var(--nexus-sidebar) / <alpha-value>)',
+          navbar: 'rgb(var(--nexus-navbar) / <alpha-value>)',
+          hover: 'rgb(var(--nexus-hover) / <alpha-value>)',
+          heading: 'rgb(var(--nexus-heading) / <alpha-value>)',
+          text: 'rgb(var(--nexus-text) / <alpha-value>)',
+          textSecondary: 'rgb(var(--nexus-muted) / <alpha-value>)',
+          muted: 'rgb(var(--nexus-muted) / <alpha-value>)',
+          border: 'rgb(var(--nexus-border) / <alpha-value>)',
+          success: 'rgb(var(--nexus-success) / <alpha-value>)',
+          warning: 'rgb(var(--nexus-gold) / <alpha-value>)',
+          error: 'rgb(var(--nexus-error) / <alpha-value>)',
+          info: 'rgb(var(--nexus-info) / <alpha-value>)',
+        },
       },
 
       fontFamily: {
@@ -52,16 +67,22 @@ export default {
         'sm': '10px',
         'md': '14px',
         'lg': '18px',
+        'card': '18px',
+        'btn': '12px',
       },
 
       boxShadow: {
         'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
-        'glow': '0 0 20px rgba(255, 107, 87, 0.4)',
+        'card': '0 4px 24px rgba(19, 25, 48, 0.08)',
+        'glow': '0 0 20px rgba(251, 70, 29, 0.35)',
         'glass': '0 8px 32px rgba(0,0,0,.35)',
       },
 
       backgroundImage: {
-        'gradient-cinematic': 'linear-gradient(to bottom right, #070B1A, #111827)',
+        'gradient-cinematic': 'linear-gradient(to bottom right, #131930, #252A40)',
+        'gradient-brand': 'linear-gradient(90deg, #FB461D, #FC6A48, #F7A321)',
+        'gradient-dark': 'linear-gradient(180deg, #131930, #252A40)',
+        'gradient-hero': 'linear-gradient(135deg, #131930, #252A40, #FB461D)',
       },
 
       // ── Min-height with svh for mobile browser chrome ──

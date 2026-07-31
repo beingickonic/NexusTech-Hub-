@@ -8,7 +8,7 @@ const PromoBanner = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="relative w-full rounded-3xl overflow-hidden bg-[#0F172A] h-[400px] sm:h-[500px] flex items-center shadow-2xl border border-nexus-border"
+        className="relative w-full rounded-3xl overflow-hidden bg-nexus-bg h-[400px] sm:h-[500px] flex items-center shadow-2xl border border-nexus-border"
       >
         {/* Background Image & Overlay */}
         <div className="absolute inset-0 z-0">
@@ -17,7 +17,7 @@ const PromoBanner = () => {
             alt="Workspace setup" 
             className="w-full h-full object-cover opacity-40 mix-blend-luminosity"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/80 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-nexus-dark-navy via-nexus-dark-navy/80 to-transparent"></div>
           
           {/* Glowing Gradients */}
           <div className="absolute top-[-20%] left-[-10%] w-96 h-96 bg-primary/40 rounded-full blur-[120px]"></div>
@@ -52,7 +52,7 @@ const PromoBanner = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-white text-dark-bg px-8 py-3.5 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+            className="bg-white text-dark-bg px-8 py-3.5 rounded-full font-bold hover:bg-nexus-surface transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]"
           >
             Shop Setup Gear
           </motion.button>

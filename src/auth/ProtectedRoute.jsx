@@ -4,8 +4,8 @@ import { Loader2 } from 'lucide-react';
 import { ROLE_PORTAL_MAP } from './authService';
 
 const Spinner = () => (
-  <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-nexus-bg">
-    <Loader2 className="animate-spin text-orange-500 w-12 h-12" />
+  <div className="min-h-screen flex items-center justify-center bg-nexus-surface dark:bg-nexus-bg">
+    <Loader2 className="animate-spin text-nexus-primary w-12 h-12" />
   </div>
 );
 

@@ -1,115 +1,55 @@
 import { supabase } from './supabaseClient';
 
-import { DEFAULT_LIMIT, pageRange, responseMeta } from '../utils/pagination';
-
 export const supplierService = {
-  // ── Stats ──────────────────────────────────────────────────────
-  getSupplierStats: async () => {
-    try {
-      const [
-        { count: total },
-        { count: active },
-        { count: suspended }
-      ] = await Promise.all([
-        supabase.from('suppliers').select('*', { count: 'exact', head: true }),
-        supabase.from('suppliers').select('*', { count: 'exact', head: true }).eq('status', 'Active'),
-        supabase.from('suppliers').select('*', { count: 'exact', head: true }).eq('status', 'Suspended')
-      ]);
-
-      return {
-        success: true,
-        stats: { total: total || 0, active: active || 0, suspended: suspended || 0 }
-      };
-    } catch (error) {
-      return { success: false, stats: { total: 0, active: 0, suspended: 0 } };
-    }
+  getProfile: async (userId) => {
+    const { data, error } = await supabase.from('suppliers').select('*').eq('user_id', userId).single();
+    if (error) return null;
+    return data;
   },
 
-  // ── Get Suppliers ──────────────────────────────────────────────
-  getSuppliers: async ({ page = 1, limit = DEFAULT_LIMIT, search = '', status = 'all' } = {}) => {
-    const { from, to } = pageRange(page, limit);
-    let query = supabase
-      .from('suppliers')
-      .select(`
-        *,
-        purchase_requests(id)
-      `, { count: 'exact' })
-      .order('name');
-
-    if (status && status !== 'all') query = query.ilike('status', status);
-    if (search) query = query.or(
-      `name.ilike.%${search}%,contact_person.ilike.%${search}%,email.ilike.%${search}%,phone.ilike.%${search}%`
-    );
-
-    const { data, count, error } = await query.range(from, to);
-    if (error) throw error;
-
-    const suppliers = (data || []).map(s => ({
-      ...s,
-      products_count: s.purchase_requests?.length || 0 // approximate logic using POs
-    }));
-
-    return { success: true, data: suppliers, meta: responseMeta(count, page, limit) };
+  getDashboardStats: async (supplierId) => {
+    const [poCount, deliveryCount, lowStock] = await Promise.all([
+      supabase.from('purchase_orders').select('*', { count: 'exact', head: true }).eq('supplier_id', supplierId),
+      supabase.from('supplier_deliveries').select('*', { count: 'exact', head: true }).eq('supplier_id', supplierId),
+      supabase.rpc('check_low_stock'),
+    ]);
+    return {
+      pendingPO: poCount.count || 0,
+      deliveries: deliveryCount.count || 0,
+      lowStockItems: lowStock.data || [],
+    };
   },
 
-  // ── Get Supplier by ID ─────────────────────────────────────────
-  getSupplier: async (id) => {
+  getPurchaseOrders: async (supplierId) => {
     const { data, error } = await supabase
-      .from('suppliers')
-      .select('*')
-      .eq('id', id)
-      .single();
+      .from('purchase_orders')
+      .select('*, purchase_order_items(*, products(title, sku))')
+      .eq('supplier_id', supplierId)
+      .order('created_at', { ascending: false });
     if (error) throw error;
-
-    // Get purchase history from purchase_requests
-    const { data: purchases } = await supabase
-      .from('purchase_requests')
-      .select('*, products(title, sku, image_url)')
-      .eq('supplier_id', id)
-      .order('created_at', { ascending: false })
-      .limit(20);
-
-    return { success: true, data, purchases: purchases || [] };
+    return data || [];
   },
 
-  // ── Create Supplier ────────────────────────────────────────────
-  createSupplier: async (supplierData) => {
+  getSupplierDeliveries: async (supplierId) => {
     const { data, error } = await supabase
-      .from('suppliers')
-      .insert([supplierData])
-      .select()
-      .single();
+      .from('supplier_deliveries')
+      .select('*, supplier_delivery_items(*, products(title, sku))')
+      .eq('supplier_id', supplierId)
+      .order('created_at', { ascending: false });
     if (error) throw error;
-    return { success: true, data };
+    return data || [];
   },
 
-  // ── Update Supplier ────────────────────────────────────────────
-  updateSupplier: async (id, updates) => {
-    const { data, error } = await supabase
-      .from('suppliers')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', id)
-      .select()
-      .single();
+  recordDelivery: async ({ purchaseOrderId, supplierId, deliveryNote, batchNumber, expiryDate, items }) => {
+    const { data, error } = await supabase.rpc('receive_supplier_delivery', {
+      p_purchase_order_id: purchaseOrderId,
+      p_supplier_id: supplierId,
+      p_delivery_note: deliveryNote || null,
+      p_batch_number: batchNumber || null,
+      p_expiry_date: expiryDate || null,
+      p_items: items || [],
+    });
     if (error) throw error;
-    return { success: true, data };
+    return data;
   },
-
-  // ── Delete Supplier ────────────────────────────────────────────
-  deleteSupplier: async (id) => {
-    const { error } = await supabase.from('suppliers').delete().eq('id', id);
-    if (error) throw error;
-    return { success: true };
-  },
-
-  // ── Create Purchase Request ────────────────────────────────────
-  createPurchaseRequest: async (requestData) => {
-    const { data, error } = await supabase
-      .from('purchase_requests')
-      .insert([requestData])
-      .select()
-      .single();
-    if (error) throw error;
-    return { success: true, data };
-  }
 };

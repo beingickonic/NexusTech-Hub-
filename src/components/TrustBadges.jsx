@@ -41,7 +41,7 @@ const itemVariants = {
 
 const TrustBadges = () => {
   return (
-    <section className="py-8 sm:py-12 bg-transparent dark:bg-dark-bg transition-colors duration-300 relative z-20 -mt-6 sm:-mt-10">
+    <section className="py-8 sm:py-12 bg-transparent dark:bg-nexus-bg transition-colors duration-300 relative z-20 -mt-6 sm:-mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
@@ -55,13 +55,13 @@ const TrustBadges = () => {
               key={idx}
               variants={itemVariants}
               whileHover={{ y: -5, scale: 1.02 }}
-              className="glass-card p-4 sm:p-6 flex flex-col items-center text-center group transition-all hover:shadow-2xl dark:hover:shadow-glow border-slate-200/50 hover:border-primary/50"
+              className="glass-card p-4 sm:p-6 flex flex-col items-center text-center group transition-all hover:shadow-2xl dark:hover:shadow-glow border-nexus-border/50 hover:border-primary/50"
             >
               <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-primary group-hover:text-white transition-colors duration-300 shadow-sm">
                 {badge.icon}
               </div>
-              <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-0.5 sm:mb-1">{badge.title}</h3>
-              <p className="text-xs sm:text-sm text-nexus-textSecondary dark:text-gray-400">{badge.desc}</p>
+              <h3 className="font-bold text-sm sm:text-base text-nexus-heading mb-0.5 sm:mb-1">{badge.title}</h3>
+              <p className="text-xs sm:text-sm text-nexus-textSecondary dark:text-nexus-muted">{badge.desc}</p>
             </motion.div>
           ))}
         </motion.div>

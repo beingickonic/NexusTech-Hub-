@@ -4,6 +4,7 @@ import { Search, Heart, User, ShoppingCart, Menu, X, Sun, Moon, ChevronDown, Fol
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../auth/AuthContext';
+import { ROLE_PORTAL_MAP } from '../auth/authService';
 import { useCart } from '../context/CartContext';
 import CartDrawer from './cart/CartDrawer';
 import UserAvatar from './common/UserAvatar';
@@ -45,7 +46,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-50 transition-all duration-300 text-slate-900 dark:text-white ${
+        className={`sticky top-0 z-50 transition-all duration-300 text-nexus-heading ${
           isScrolled ? 'glass py-2 sm:py-3' : 'bg-transparent py-3 sm:py-5'
         }`}
         style={{ paddingTop: `calc(env(safe-area-inset-top, 0px) + ${isScrolled ? '0.5rem' : '0.75rem'})` }}
@@ -70,7 +71,7 @@ const Navbar = () => {
               <button
                 type="button"
                 aria-label="Select category"
-                className="flex items-center gap-1 pl-4 pr-3 py-2.5 bg-slate-100 dark:bg-dark-bg text-sm font-medium rounded-l-md border-r border-slate-200 dark:border-gray-700 hover:text-primary transition-colors whitespace-nowrap"
+                className="flex items-center gap-1 pl-4 pr-3 py-2.5 bg-nexus-surface dark:bg-nexus-bg text-sm font-medium rounded-l-md border-r border-nexus-border dark:border-nexus-border hover:text-primary transition-colors whitespace-nowrap"
               >
                 Categories <ChevronDown size={14} />
               </button>
@@ -80,12 +81,12 @@ const Navbar = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search premium tech..."
-                className="w-full bg-slate-100 dark:bg-dark-bg py-2.5 px-4 outline-none text-sm focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-nexus-textSecondary"
+                className="w-full bg-nexus-surface dark:bg-nexus-bg py-2.5 px-4 outline-none text-sm focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-nexus-textSecondary"
               />
               <button
                 type="submit"
                 aria-label="Submit search"
-                className="bg-primary hover:bg-orange-600 text-white p-2.5 rounded-r-md transition-colors"
+                className="bg-primary hover:bg-nexus-primary-hover text-white p-2.5 rounded-r-md transition-colors"
               >
                 <Search size={18} />
               </button>
@@ -98,7 +99,7 @@ const Navbar = () => {
             <button
               aria-label="Toggle dark mode"
               onClick={toggleTheme}
-              className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-surface transition-colors"
+              className="flex items-center justify-center p-2 rounded-full hover:bg-nexus-surface dark:hover:bg-dark-surface transition-colors"
             >
               {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
@@ -107,7 +108,7 @@ const Navbar = () => {
             {user && (user.role === 'Admin' || user.role === 'super_admin') && (
               <Link
                 to="/admin/dashboard"
-                className="hidden sm:flex items-center justify-center px-3 py-1.5 rounded-full hover:bg-orange-50 dark:hover:bg-orange-500/10 text-orange-500 transition-colors font-bold text-xs"
+                className="hidden sm:flex items-center justify-center px-3 py-1.5 rounded-full hover:bg-nexus-primary/10 dark:hover:bg-nexus-primary/10 text-nexus-primary transition-colors font-bold text-xs"
               >
                 Admin
               </Link>
@@ -131,17 +132,17 @@ const Navbar = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-48 bg-white dark:bg-dark-surface border border-slate-200 dark:border-[#1F2937] rounded-xl shadow-xl z-50 overflow-hidden"
+                        className="absolute right-0 mt-2 w-48 bg-nexus-card border border-nexus-border dark:border-nexus-card rounded-xl shadow-xl z-50 overflow-hidden"
                       >
-                        <div className="px-4 py-3 border-b border-slate-200 dark:border-[#1F2937]">
+                        <div className="px-4 py-3 border-b border-nexus-border dark:border-nexus-card">
                           <p className="text-sm font-semibold truncate">{user.full_name || 'Customer'}</p>
-                          <p className="text-xs text-nexus-textSecondary dark:text-gray-400 truncate">{user.email}</p>
+                          <p className="text-xs text-nexus-textSecondary dark:text-nexus-muted truncate">{user.email}</p>
                         </div>
                         <div className="py-1">
-                          <Link to={ROLE_PORTAL_MAP[user?.role] || "/profile/account"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                          <Link to={ROLE_PORTAL_MAP[user?.role] || "/profile/account"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors">
                             My Profile
                           </Link>
-                          <Link to={ROLE_PORTAL_MAP[user?.role] ? `${ROLE_PORTAL_MAP[user?.role].replace('/dashboard', '')}/settings` : "/profile/settings"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                          <Link to={ROLE_PORTAL_MAP[user?.role] ? `${ROLE_PORTAL_MAP[user?.role].replace('/dashboard', '')}/settings` : "/profile/settings"} onClick={() => setIsProfileDropdownOpen(false)} className="block px-4 py-2 text-sm text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors">
                             Settings
                           </Link>
                           <button
@@ -149,7 +150,7 @@ const Navbar = () => {
                               setIsProfileDropdownOpen(false);
                               logout();
                             }}
-                            className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors font-medium"
+                            className="w-full text-left px-4 py-2 text-sm text-nexus-error hover:bg-nexus-error/5 dark:hover:bg-nexus-error/10 transition-colors font-medium"
                           >
                             Sign Out
                           </button>
@@ -163,7 +164,7 @@ const Navbar = () => {
               <Link
                 to="/login"
                 aria-label="User profile"
-                className="hidden sm:flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-surface transition-colors"
+                className="hidden sm:flex items-center justify-center p-2 rounded-full hover:bg-nexus-surface dark:hover:bg-dark-surface transition-colors"
               >
                 <User size={18} />
               </Link>
@@ -173,7 +174,7 @@ const Navbar = () => {
             <Link
               to="/wishlist"
               aria-label="Wishlist"
-              className="hidden sm:flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-surface transition-colors"
+              className="hidden sm:flex items-center justify-center p-2 rounded-full hover:bg-nexus-surface dark:hover:bg-dark-surface transition-colors"
             >
               <Heart size={18} />
             </Link>
@@ -182,11 +183,11 @@ const Navbar = () => {
             <button
               aria-label="Open cart"
               onClick={() => setIsCartOpen(true)}
-              className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-surface transition-colors relative"
+              className="flex items-center justify-center p-2 rounded-full hover:bg-nexus-surface dark:hover:bg-dark-surface transition-colors relative"
             >
               <ShoppingCart size={18} className="hover:text-primary transition-colors" />
               {cartItems?.length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-white dark:border-[#1E293B]">
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-white dark:border-nexus-dark-navy">
                   {cartItems.length > 9 ? '9+' : cartItems.length}
                 </span>
               )}
@@ -195,7 +196,7 @@ const Navbar = () => {
             {/* Mobile Menu Toggle */}
             <button
               aria-label="Open mobile menu"
-              className="lg:hidden flex items-center justify-center p-2 rounded-md hover:bg-gray-100 dark:hover:bg-dark-surface transition-colors ml-1"
+              className="lg:hidden flex items-center justify-center p-2 rounded-md hover:bg-nexus-surface dark:hover:bg-dark-surface transition-colors ml-1"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu size={22} />
@@ -220,10 +221,10 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 220 }}
-              className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-white dark:bg-dark-surface z-[70] shadow-2xl flex flex-col text-slate-900 dark:text-white overflow-y-auto"
+              className="fixed top-0 right-0 h-full w-[85%] max-w-[360px] bg-nexus-card z-[70] shadow-2xl flex flex-col text-nexus-heading overflow-y-auto"
             >
               {/* Drawer Header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-nexus-border">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-nexus-border">
                 <img
                   src={isDarkMode ? darkLogo : lightLogo}
                   alt="NexusTech Hub"
@@ -233,7 +234,7 @@ const Navbar = () => {
                 <button
                   aria-label="Close mobile menu"
                   onClick={closeMobile}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-bg transition-colors"
+                  className="p-2 rounded-full hover:bg-nexus-surface dark:hover:bg-dark-bg transition-colors"
                 >
                   <X size={22} />
                 </button>
@@ -247,9 +248,9 @@ const Navbar = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search products..."
-                    className="w-full bg-slate-100 dark:bg-dark-bg py-3 px-4 pl-10 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-nexus-textSecondary text-sm"
+                    className="w-full bg-nexus-surface dark:bg-nexus-bg py-3 px-4 pl-10 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-nexus-textSecondary text-sm"
                   />
-                  <Search size={16} className="absolute left-3 top-3.5 text-gray-400" />
+                  <Search size={16} className="absolute left-3 top-3.5 text-nexus-muted" />
                 </form>
 
                 {/* Nav Links */}
@@ -270,9 +271,9 @@ const Navbar = () => {
                           key={to}
                           to={to}
                           onClick={closeMobile}
-                          className="flex items-center gap-3 py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-base"
+                          className="flex items-center gap-3 py-3 px-3 rounded-xl hover:bg-nexus-surface dark:hover:bg-dark-bg transition-colors font-medium text-base"
                         >
-                          <span className="text-nexus-textSecondary dark:text-gray-400">{icon}</span>
+                          <span className="text-nexus-textSecondary dark:text-nexus-muted">{icon}</span>
                           <span>{label}</span>
                         </Link>
                       ))}
@@ -281,9 +282,9 @@ const Navbar = () => {
                         <Link
                           to="/admin/dashboard"
                           onClick={closeMobile}
-                          className="flex items-center gap-3 py-3 px-3 rounded-xl text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 transition-colors font-semibold text-base mt-2"
+                          className="flex items-center gap-3 py-3 px-3 rounded-xl text-nexus-primary hover:bg-nexus-primary/10 dark:hover:bg-nexus-primary/10 transition-colors font-semibold text-base mt-2"
                         >
-                          <span className="text-orange-400"><User size={18} /></span>
+                          <span className="text-nexus-primary"><User size={18} /></span>
                           Admin Dashboard
                         </Link>
                       )}
@@ -293,9 +294,9 @@ const Navbar = () => {
                           closeMobile();
                           logout();
                         }}
-                        className="flex items-center gap-3 w-full py-3 px-3 mt-4 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors font-medium text-base text-left"
+                        className="flex items-center gap-3 w-full py-3 px-3 mt-4 rounded-xl text-nexus-error hover:bg-nexus-error/5 dark:hover:bg-nexus-error/10 transition-colors font-medium text-base text-left"
                       >
-                        <span className="text-red-400"><LogOut size={18} /></span>
+                        <span className="text-nexus-error"><LogOut size={18} /></span>
                         Logout
                       </button>
                     </>
@@ -312,7 +313,7 @@ const Navbar = () => {
                           key={to}
                           to={to}
                           onClick={closeMobile}
-                          className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-base"
+                          className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-nexus-surface dark:hover:bg-dark-bg transition-colors font-medium text-base"
                         >
                           <span>{label}</span>
                           {icon && <span className="text-nexus-textSecondary">{icon}</span>}
@@ -324,10 +325,10 @@ const Navbar = () => {
               </div>
 
               {/* Drawer Footer */}
-              <div className="px-5 py-4 border-t border-slate-100 dark:border-nexus-border">
+              <div className="px-5 py-4 border-t border-nexus-border">
                 <button
                   onClick={toggleTheme}
-                  className="w-full flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 dark:hover:bg-dark-bg transition-colors font-medium text-sm"
+                  className="w-full flex items-center justify-between py-3 px-3 rounded-xl hover:bg-nexus-surface dark:hover:bg-dark-bg transition-colors font-medium text-sm"
                 >
                   <span>{isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</span>
                   {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}

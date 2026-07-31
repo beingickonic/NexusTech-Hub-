@@ -4,19 +4,19 @@ import { MessageCircle, Zap, Bell } from 'lucide-react';
 const ChatsSection = () => (
   <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
     <div className="mb-8">
-      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Chats with Sellers</h1>
-      <p className="text-nexus-textSecondary dark:text-gray-400 text-sm mt-1">Real-time messaging with sellers</p>
+      <h1 className="text-2xl font-bold text-nexus-heading">Chats with Sellers</h1>
+      <p className="text-nexus-textSecondary dark:text-nexus-muted text-sm mt-1">Real-time messaging with sellers</p>
     </div>
 
-    <div className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-[#1F2937] rounded-2xl overflow-hidden">
+    <div className="bg-white dark:bg-nexus-card border border-nexus-border dark:border-nexus-card rounded-2xl overflow-hidden">
       {/* Animated preview header */}
-      <div className="bg-gradient-to-r from-nexus-primary/10 to-transparent p-6 border-b border-slate-200 dark:border-[#1F2937] flex items-center gap-4">
+      <div className="bg-gradient-to-r from-nexus-primary/10 to-transparent p-6 border-b border-nexus-border dark:border-nexus-card flex items-center gap-4">
         <div className="w-12 h-12 rounded-xl bg-nexus-primary/20 flex items-center justify-center">
           <MessageCircle size={24} className="text-nexus-primary" />
         </div>
         <div>
-          <p className="text-slate-900 dark:text-white font-semibold">Seller Chat</p>
-          <p className="text-nexus-textSecondary dark:text-gray-400 text-xs">Powered by Supabase Realtime</p>
+          <p className="text-nexus-heading font-semibold">Seller Chat</p>
+          <p className="text-nexus-textSecondary dark:text-nexus-muted text-xs">Powered by Supabase Realtime</p>
         </div>
       </div>
 
@@ -33,8 +33,8 @@ const ChatsSection = () => (
           />
         </div>
 
-        <h3 className="text-slate-900 dark:text-white font-bold text-xl mb-2">Coming Soon</h3>
-        <p className="text-nexus-textSecondary dark:text-gray-400 text-sm max-w-sm mb-8">
+        <h3 className="text-nexus-heading font-bold text-xl mb-2">Coming Soon</h3>
+        <p className="text-nexus-textSecondary dark:text-nexus-muted text-sm max-w-sm mb-8">
           Real-time seller chat is being built on Supabase Realtime. You'll be able to message sellers directly about products and orders.
         </p>
 
@@ -44,12 +44,12 @@ const ChatsSection = () => (
             { icon: Bell,      label: 'Notifications',  desc: 'Push alerts for new messages' },
             { icon: MessageCircle, label: 'Threaded',  desc: 'Per-product conversation threads' },
           ].map(f => (
-            <div key={f.label} className="bg-white dark:bg-nexus-bg border border-slate-200 dark:border-[#1F2937] rounded-xl p-4 text-center">
+            <div key={f.label} className="bg-white dark:bg-nexus-bg border border-nexus-border dark:border-nexus-card rounded-xl p-4 text-center">
               <div className="w-9 h-9 rounded-lg bg-nexus-primary/10 flex items-center justify-center mx-auto mb-2">
                 <f.icon size={17} className="text-nexus-primary" />
               </div>
-              <p className="text-slate-900 dark:text-white text-xs font-semibold mb-1">{f.label}</p>
-              <p className="text-nexus-textSecondary dark:text-gray-500 text-xs leading-snug">{f.desc}</p>
+              <p className="text-nexus-heading text-xs font-semibold mb-1">{f.label}</p>
+              <p className="text-nexus-textSecondary dark:text-nexus-muted text-xs leading-snug">{f.desc}</p>
             </div>
           ))}
         </div>

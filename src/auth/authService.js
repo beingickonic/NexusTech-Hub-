@@ -29,38 +29,50 @@ export const PORTAL_ROLES = {
 };
 
 const normaliseRole = (rawRole, email) => {
-  const emailLower = email ? email.toLowerCase() : '';
-  if (emailLower === 'admin@gmail.com') return 'Admin';
-  if (emailLower === 'inventory@gmail.com') return 'inventory';
-  if (emailLower === 'financem@gmail.com') return 'Finance_Manager';
+  // The database (profiles.role) is the source of truth for the user's role.
+  if (rawRole) {
+    const mapped = mapRole(rawRole.trim());
+    if (mapped) return mapped;
+    return rawRole.trim(); // return as-is for unknown roles
+  }
 
-  if (!rawRole) return 'Customer';
-  const r = rawRole.trim();
+  // Legacy fallback only when no DB role is available (e.g. profile not created yet).
+  const emailLower = email ? email.toLowerCase() : '';
+  if (emailLower === 'admin@gmail.com')     return 'Admin';
+  if (emailLower === 'inventory@gmail.com') return 'inventory';
+  if (emailLower === 'financem@gmail.com')  return 'Finance_Manager';
+  return 'Customer';
+};
+
+// Normalise any DB spelling/format to the canonical role used across the app.
+const mapRole = (r) => {
   const lower = r.toLowerCase();
-  if (lower === 'admin')           return 'Admin';
-  if (lower === 'super_admin')     return 'super_admin';
-  if (lower === 'manager')         return 'Manager';
-  if (lower === 'dispatch_officer')return 'Dispatch_Officer';
-  if (lower === 'driver')          return 'Driver';
-  if (lower === 'warehouse_staff') return 'inventory';
-  if (lower === 'inventory')       return 'inventory';
-  if (lower === 'supplier')        return 'Supplier';
-  if (lower === 'finance_director')return 'Finance_Director';
-  if (lower === 'finance_manager') return 'Finance_Manager';
-  if (lower === 'accountant')      return 'Accountant';
-  if (lower === 'finance_officer') return 'Finance_Officer';
-  if (lower === 'auditor')         return 'Auditor';
-  if (lower === 'customer')        return 'Customer';
-  return r; // return as-is for unknown roles
+  if (lower === 'admin')             return 'Admin';
+  if (lower === 'super_admin')       return 'super_admin';
+  if (lower === 'manager')           return 'Manager';
+  if (lower === 'dispatch_officer')  return 'Dispatch_Officer';
+  if (lower === 'driver')            return 'Driver';
+  if (lower === 'warehouse_staff')   return 'inventory';
+  if (lower === 'warehouse')         return 'inventory';
+  if (lower === 'inventory')         return 'inventory';
+  if (lower === 'supplier')          return 'Supplier';
+  if (lower === 'finance_director')  return 'Finance_Director';
+  if (lower === 'finance_manager')   return 'Finance_Manager';
+  if (lower === 'finance')           return 'Finance_Manager';
+  if (lower === 'accountant')        return 'Accountant';
+  if (lower === 'finance_officer')   return 'Finance_Officer';
+  if (lower === 'auditor')           return 'Auditor';
+  if (lower === 'customer')          return 'Customer';
+  return null;
 };
 
 const fetchProfile = async (userId, email = '') => {
   let { data, error } = await supabase
     .from('profiles')
-    .select('role, full_name, avatar_url, phone, department, branch, employee_number, status, last_login, company_name, address, city, postal_code')
+    .select('*')
     .eq('id', userId)
     .maybeSingle();
-    
+
   if (error) {
     console.error("fetchProfile error:", error);
   }
@@ -70,16 +82,15 @@ const fetchProfile = async (userId, email = '') => {
     console.log("No profile found, creating default profile for:", email);
     const defaultProfile = {
       id: userId,
-      email: email,
       role: 'Customer',
       full_name: email?.split('@')[0] || 'New User',
       status: 'Active'
     };
-    
+
     const { error: insertError } = await supabase
       .from('profiles')
-      .insert([defaultProfile]);
-      
+      .upsert([defaultProfile]);
+
     if (insertError) {
       console.error("Error creating default profile:", insertError);
     } else {
@@ -113,8 +124,21 @@ const login = async (email, password) => {
     postal_code: profile?.postal_code,
   };
 
-  // Update last_login
-  await supabase.from('profiles').update({ last_login: new Date().toISOString() }).eq('id', data.user.id);
+  // Update last_login only if the column exists in the live schema
+  if ('last_login' in profile) {
+    await supabase.from('profiles').update({ last_login: new Date().toISOString() }).eq('id', data.user.id);
+  }
+
+  // Record the login in the audit trail so admins can see who has logged in (best-effort)
+  supabase
+    .rpc('log_audit_event', {
+      p_action: 'login',
+      p_entity_type: 'user',
+      p_entity_id: data.user.id,
+      p_metadata: { email },
+    })
+    .then(() => {})
+    .catch(() => {});
 
   return { success: true, data: { user: userWithRole, session: data.session } };
 };

@@ -8,7 +8,7 @@ const QuickActions = ({ onStartRoute, onScanPackage, onUpdateDelivery, onConfirm
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <button 
           onClick={onStartRoute}
-          className="bg-nexus-surface hover:bg-slate-800 border border-nexus-border rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-colors group shadow-lg"
+          className="bg-nexus-surface hover:bg-nexus-hover border border-nexus-border rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-colors group shadow-lg"
         >
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-nexus-primary to-nexus-warning flex items-center justify-center shadow-lg shadow-nexus-primary/20 group-hover:scale-110 transition-transform">
             <Play size={24} className="text-white fill-current" />
@@ -18,7 +18,7 @@ const QuickActions = ({ onStartRoute, onScanPackage, onUpdateDelivery, onConfirm
         
         <button 
           onClick={onScanPackage}
-          className="bg-nexus-surface hover:bg-slate-800 border border-nexus-border rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-colors group shadow-lg"
+          className="bg-nexus-surface hover:bg-nexus-hover border border-nexus-border rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-colors group shadow-lg"
         >
           <div className="w-12 h-12 rounded-full bg-nexus-success/10 flex items-center justify-center text-nexus-success group-hover:bg-nexus-success/20 group-hover:scale-110 transition-all">
             <Scan size={24} />
@@ -28,7 +28,7 @@ const QuickActions = ({ onStartRoute, onScanPackage, onUpdateDelivery, onConfirm
 
         <button 
           onClick={onUpdateDelivery}
-          className="bg-nexus-surface hover:bg-slate-800 border border-nexus-border rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-colors group shadow-lg"
+          className="bg-nexus-surface hover:bg-nexus-hover border border-nexus-border rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-colors group shadow-lg"
         >
           <div className="w-12 h-12 rounded-full bg-nexus-warninglue-500/10 flex items-center justify-center text-nexus-warninglue-500 group-hover:bg-nexus-warninglue-500/20 group-hover:scale-110 transition-all">
             <PenLine size={24} />
@@ -38,7 +38,7 @@ const QuickActions = ({ onStartRoute, onScanPackage, onUpdateDelivery, onConfirm
 
         <button 
           onClick={onConfirmPayment}
-          className="bg-nexus-surface hover:bg-slate-800 border border-nexus-border rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-colors group shadow-lg"
+          className="bg-nexus-surface hover:bg-nexus-hover border border-nexus-border rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition-colors group shadow-lg"
         >
           <div className="w-12 h-12 rounded-full bg-nexus-warning/10 flex items-center justify-center text-nexus-warning group-hover:bg-nexus-warning/20 group-hover:scale-110 transition-all">
             <Banknote size={24} />

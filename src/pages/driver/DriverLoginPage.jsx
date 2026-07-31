@@ -9,9 +9,9 @@ const DriverLoginPage = () => {
         subtitle: 'View your daily routes, track deliveries, and submit proof of delivery.',
         icon: MapPin,
         accentHex: '#10b981', // emerald
-        bgFrom: 'from-emerald-600',
-        bgVia: 'via-emerald-500',
-        bgTo: 'to-emerald-400',
+        bgFrom: 'from-success',
+        bgVia: 'via-success',
+        bgTo: 'to-success',
         features: [
           'GPS turn-by-turn navigation',
           'Offline mode support',

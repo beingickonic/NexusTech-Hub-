@@ -41,7 +41,7 @@ const UserAvatar = ({ src, name, size = 'md', className = '' }) => {
 
   return (
     <div
-      className={`${currentSize} rounded-full bg-gradient-to-br from-nexus-primary to-[#FF8C42] flex items-center justify-center text-white font-bold flex-shrink-0 ${className}`}
+      className={`${currentSize} rounded-full bg-gradient-to-br from-nexus-primary to-nexus-primary-hover flex items-center justify-center text-white font-bold flex-shrink-0 ${className}`}
     >
       {getInitials(name)}
     </div>

@@ -26,31 +26,31 @@ const OfficeDataTable = ({
   return (
     <div className="animate-fade-in">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{title}</h1>
-        <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">{description}</p>
+        <h1 className="text-3xl font-bold text-nexus-heading mb-2">{title}</h1>
+        <p className="text-nexus-muted">{description}</p>
       </div>
 
-      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden flex flex-col">
-        <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-nexus-border">
+      <div className="bg-white/80 dark:bg-nexus-card/80 backdrop-blur-md rounded-2xl border border-nexus-border shadow-sm overflow-hidden flex flex-col">
+        <div className="p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-nexus-border">
           <div className="relative w-full sm:max-w-md flex items-center">
             <input 
               type="text"
               placeholder={searchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder:text-nexus-textSecondary text-slate-900 dark:text-white"
+              className="w-full bg-nexus-surface border border-nexus-border rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-nexus-primary/50 outline-none transition-all placeholder:text-nexus-textSecondary text-nexus-heading"
             />
             <Search size={18} className="absolute left-3 text-nexus-textSecondary" />
           </div>
           
           <div className="flex w-full sm:w-auto items-center gap-3">
-            <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm font-medium transition-colors border border-slate-200 dark:border-slate-600 w-full sm:w-auto">
+            <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-nexus-surface hover:bg-nexus-surface dark:hover:bg-nexus-hover text-nexus-text rounded-lg text-sm font-medium transition-colors border border-nexus-border dark:border-nexus-border w-full sm:w-auto">
               <Filter size={16} /> Filter
             </button>
             {onAdd && (
               <button 
                 onClick={onAdd}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-medium transition-all shadow-lg shadow-orange-500/30 w-full sm:w-auto"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-nexus-primary hover:bg-nexus-primary-hover text-white rounded-lg text-sm font-medium transition-all shadow-lg shadow-primary/30 w-full sm:w-auto"
               >
                 <Plus size={16} /> Add New
               </button>
@@ -61,7 +61,7 @@ const OfficeDataTable = ({
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-nexus-surface/50 text-nexus-textSecondary dark:text-nexus-textSecondary text-xs uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-nexus-border">
+              <tr className="bg-nexus-surface/50 text-nexus-muted text-xs uppercase tracking-wider font-semibold border-b border-nexus-border">
                 {columns.map((col, idx) => (
                   <th key={idx} className="px-6 py-4">{col.header}</th>
                 ))}
@@ -70,26 +70,26 @@ const OfficeDataTable = ({
                 )}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-slate-700/50 text-sm">
+            <tbody className="divide-y divide-nexus-border dark:divide-nexus-card/50 text-sm">
               {isLoading ? (
                 <tr>
                   <td colSpan={columns.length + 1} className="px-6 py-12 text-center text-nexus-textSecondary">
                     <div className="flex justify-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-nexus-primary"></div>
                     </div>
                   </td>
                 </tr>
               ) : filteredData.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length + 1} className="px-6 py-12 text-center text-nexus-textSecondary dark:text-nexus-textSecondary">
+                  <td colSpan={columns.length + 1} className="px-6 py-12 text-center text-nexus-muted">
                     No records found.
                   </td>
                 </tr>
               ) : (
                 filteredData.map((row, rowIdx) => (
-                  <tr key={row.id || rowIdx} className="hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors">
+                  <tr key={row.id || rowIdx} className="hover:bg-nexus-surface/50 dark:hover:bg-nexus-hover/30 transition-colors">
                     {columns.map((col, colIdx) => (
-                      <td key={colIdx} className="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                      <td key={colIdx} className="px-6 py-4 font-medium text-nexus-heading">
                         {col.render ? col.render(row) : row[col.accessor]}
                       </td>
                     ))}
@@ -99,7 +99,7 @@ const OfficeDataTable = ({
                           {onEdit && (
                             <button 
                               onClick={() => onEdit(row)} 
-                              className="p-2 text-nexus-textSecondary hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-colors"
+                              className="p-2 text-nexus-textSecondary hover:text-nexus-primary hover:bg-nexus-primary/10 dark:hover:bg-nexus-primary/10 rounded-lg transition-colors"
                             >
                               <Edit size={16} />
                             </button>
@@ -111,7 +111,7 @@ const OfficeDataTable = ({
                                   onDelete(row.id);
                                 }
                               }} 
-                              className="p-2 text-nexus-textSecondary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
+                              className="p-2 text-nexus-textSecondary hover:text-nexus-error hover:bg-nexus-error/5 dark:hover:bg-nexus-error/10 rounded-lg transition-colors"
                             >
                               <Trash2 size={16} />
                             </button>
@@ -126,13 +126,13 @@ const OfficeDataTable = ({
           </table>
         </div>
 
-        <div className="p-4 border-t border-slate-200 dark:border-nexus-border flex items-center justify-between text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">
+        <div className="p-4 border-t border-nexus-border flex items-center justify-between text-sm text-nexus-muted">
           <div>Showing {filteredData.length} records</div>
           <div className="flex gap-2">
-            <button className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors" disabled>
+            <button className="p-1.5 rounded-md hover:bg-nexus-surface dark:hover:bg-nexus-hover disabled:opacity-50 transition-colors" disabled>
               <ChevronLeft size={16} />
             </button>
-            <button className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors" disabled>
+            <button className="p-1.5 rounded-md hover:bg-nexus-surface dark:hover:bg-nexus-hover disabled:opacity-50 transition-colors" disabled>
               <ChevronRight size={16} />
             </button>
           </div>

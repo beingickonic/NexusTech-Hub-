@@ -53,7 +53,7 @@ const DriverLoginPage = () => {
       <div className="w-full max-w-5xl bg-nexus-bg/80 backdrop-blur-xl rounded-3xl border border-nexus-border shadow-2xl overflow-hidden flex flex-col md:flex-row relative z-10">
         
         {/* Left Side - Branding */}
-        <div className="md:w-5/12 bg-gradient-to-br from-nexus-success to-[#047857] p-10 flex flex-col justify-between text-white relative overflow-hidden">
+        <div className="md:w-5/12 bg-gradient-to-br from-nexus-success to-nexus-success p-10 flex flex-col justify-between text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-nexus-warninglack/10"></div>
           <div className="relative z-10">
             <Link to="/" className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-12 text-sm font-medium">
@@ -102,9 +102,9 @@ const DriverLoginPage = () => {
             <p className="text-nexus-textSecondary mb-8 text-sm">Enter your credentials to access your routes</p>
 
             {error && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
-                <AlertCircle className="text-red-500 shrink-0 mt-0.5" size={18} />
-                <p className="text-sm text-red-400 font-medium">{error}</p>
+              <div className="mb-6 p-4 bg-nexus-error/10 border border-nexus-error/20 rounded-xl flex items-start gap-3">
+                <AlertCircle className="text-nexus-error shrink-0 mt-0.5" size={18} />
+                <p className="text-sm text-nexus-error font-medium">{error}</p>
               </div>
             )}
 
@@ -118,7 +118,7 @@ const DriverLoginPage = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-nexus-surface border border-nexus-border/50 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:border-nexus-success focus:ring-1 focus:ring-[#10b981] transition-all"
+                    className="w-full bg-nexus-surface border border-nexus-border/50 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-nexus-muted focus:outline-none focus:border-nexus-success focus:ring-1 focus:ring-nexus-success transition-all"
                     placeholder="driver@nexustech.com"
                   />
                 </div>
@@ -135,7 +135,7 @@ const DriverLoginPage = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-nexus-surface border border-nexus-border/50 rounded-xl py-3.5 pl-11 pr-12 text-white placeholder-slate-500 focus:outline-none focus:border-nexus-success focus:ring-1 focus:ring-[#10b981] transition-all"
+                    className="w-full bg-nexus-surface border border-nexus-border/50 rounded-xl py-3.5 pl-11 pr-12 text-white placeholder-nexus-muted focus:outline-none focus:border-nexus-success focus:ring-1 focus:ring-nexus-success transition-all"
                     placeholder="••••••••••••"
                   />
                   <button
@@ -150,10 +150,10 @@ const DriverLoginPage = () => {
               
               <div className="flex items-center justify-between text-sm">
                 <label className="flex items-center gap-2 cursor-pointer group">
-                  <input type="checkbox" className="w-4 h-4 rounded border-nexus-border bg-nexus-surface text-nexus-success focus:ring-[#10b981] focus:ring-offset-[#0a0e1a]" />
+                  <input type="checkbox" className="w-4 h-4 rounded border-nexus-border bg-nexus-surface text-nexus-success focus:ring-nexus-success focus:ring-offset-nexus-dark-navy" />
                   <span className="text-nexus-textSecondary group-hover:text-nexus-textSecondary transition-colors">Remember me</span>
                 </label>
-                <Link to="/forgot-password" className="text-nexus-success hover:text-[#059669] font-medium transition-colors">
+                <Link to="/forgot-password" className="text-nexus-success hover:text-nexus-success font-medium transition-colors">
                   Forgot password?
                 </Link>
               </div>
@@ -161,7 +161,7 @@ const DriverLoginPage = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-nexus-success to-[#047857] hover:from-[#34d399] hover:to-nexus-success text-white font-bold py-3.5 rounded-xl shadow-lg shadow-[#10b981]/20 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center mt-4 text-lg"
+                className="w-full bg-gradient-to-r from-nexus-success to-nexus-success hover:from-nexus-success hover:to-nexus-success text-white font-bold py-3.5 rounded-xl shadow-lg shadow-nexus-success/20 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center mt-4 text-lg"
               >
                 {loading ? (
                   <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -172,7 +172,7 @@ const DriverLoginPage = () => {
             </form>
             
             <div className="mt-8 text-center text-sm text-nexus-textSecondary">
-              Not a driver? <Link to="/login" className="text-nexus-success hover:text-[#059669] font-medium transition-colors">Go to main login</Link>
+              Not a driver? <Link to="/login" className="text-nexus-success hover:text-nexus-success font-medium transition-colors">Go to main login</Link>
             </div>
           </div>
         </div>

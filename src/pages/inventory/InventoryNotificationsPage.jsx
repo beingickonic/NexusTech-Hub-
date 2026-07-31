@@ -8,16 +8,16 @@ import { supabase } from '../../services/supabaseClient';
 import { inventoryService } from '../../services/inventoryService';
 
 const SEVERITY_CONFIG = {
-  critical: { label: 'Critical', color: 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400', border: 'border-l-red-500', icon: AlertCircle, dot: 'bg-red-500' },
-  urgent:   { label: 'Urgent',   color: 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400', border: 'border-l-rose-500', icon: AlertTriangle, dot: 'bg-rose-500' },
-  warning:  { label: 'Warning',  color: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400', border: 'border-l-amber-500', icon: AlertTriangle, dot: 'bg-amber-500' },
-  info:     { label: 'Info',     color: 'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400', border: 'border-l-blue-500', icon: Info, dot: 'bg-blue-500' },
+  critical: { label: 'Critical', color: 'bg-nexus-error/10 text-nexus-error dark:bg-nexus-error/20 dark:text-nexus-error', border: 'border-l-red-500', icon: AlertCircle, dot: 'bg-nexus-error' },
+  urgent:   { label: 'Urgent',   color: 'bg-nexus-error/10 text-nexus-error dark:bg-nexus-error/20 dark:text-nexus-error', border: 'border-l-nexus-error', icon: AlertTriangle, dot: 'bg-nexus-error' },
+  warning:  { label: 'Warning',  color: 'bg-nexus-gold/10 text-nexus-gold dark:bg-nexus-gold/20 dark:text-nexus-gold', border: 'border-l-amber-500', icon: AlertTriangle, dot: 'bg-nexus-gold' },
+  info:     { label: 'Info',     color: 'bg-nexus-info/10 text-nexus-info dark:bg-nexus-info/20 dark:text-nexus-info', border: 'border-l-blue-500', icon: Info, dot: 'bg-nexus-info' },
 };
 
 const STATUS_CONFIG = {
-  active:        { label: 'Active',        color: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400' },
-  acknowledged:  { label: 'Acknowledged',  color: 'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400' },
-  resolved:      { label: 'Resolved',      color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400' },
+  active:        { label: 'Active',        color: 'bg-nexus-gold/10 text-nexus-gold dark:bg-nexus-gold/20 dark:text-nexus-gold' },
+  acknowledged:  { label: 'Acknowledged',  color: 'bg-nexus-info/10 text-nexus-info dark:bg-nexus-info/20 dark:text-nexus-info' },
+  resolved:      { label: 'Resolved',      color: 'bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 dark:text-nexus-success' },
 };
 
 const AlertCard = ({ alert, onAcknowledge, onResolve }) => {
@@ -27,7 +27,7 @@ const AlertCard = ({ alert, onAcknowledge, onResolve }) => {
 
   return (
     <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -10 }}
-      className={`bg-white dark:bg-dark-surface rounded-xl border border-slate-200 dark:border-nexus-border border-l-4 ${sev.border} shadow-sm overflow-hidden ${alert.is_read ? 'opacity-70' : ''}`}>
+      className={`bg-nexus-card rounded-xl border border-nexus-border border-l-4 ${sev.border} shadow-sm overflow-hidden ${alert.is_read ? 'opacity-70' : ''}`}>
       <div className="p-4 flex gap-4">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${sev.color}`}>
           <Icon size={18} />
@@ -36,7 +36,7 @@ const AlertCard = ({ alert, onAcknowledge, onResolve }) => {
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <p className="font-semibold text-slate-900 dark:text-white text-sm">{alert.title}</p>
+                <p className="font-semibold text-nexus-heading text-sm">{alert.title}</p>
                 {!alert.is_read && <span className={`w-2 h-2 rounded-full ${sev.dot} flex-shrink-0`} />}
               </div>
               <p className="text-sm text-nexus-textSecondary mt-0.5">{alert.message}</p>
@@ -53,12 +53,12 @@ const AlertCard = ({ alert, onAcknowledge, onResolve }) => {
             <p className="text-xs text-nexus-textSecondary">{new Date(alert.created_at).toLocaleString()}</p>
             <div className="flex gap-2">
               {alert.status === 'active' && (
-                <button onClick={() => onAcknowledge(alert.id)} className="px-2.5 py-1 text-xs bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-500/30 font-medium transition-colors">
+                <button onClick={() => onAcknowledge(alert.id)} className="px-2.5 py-1 text-xs bg-nexus-info/10 dark:bg-nexus-info/20 text-nexus-info rounded-lg hover:bg-nexus-info/20 dark:hover:bg-nexus-info/30 font-medium transition-colors">
                   Acknowledge
                 </button>
               )}
               {['active','acknowledged'].includes(alert.status) && (
-                <button onClick={() => onResolve(alert.id)} className="px-2.5 py-1 text-xs bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-500/30 font-medium transition-colors">
+                <button onClick={() => onResolve(alert.id)} className="px-2.5 py-1 text-xs bg-nexus-success/10 dark:bg-nexus-success/20 text-nexus-success dark:text-nexus-success rounded-lg hover:bg-nexus-success/20 dark:hover:bg-nexus-success/30 font-medium transition-colors">
                   Resolve
                 </button>
               )}
@@ -125,15 +125,15 @@ const InventoryNotificationsPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Stock Alerts</h1>
+          <h1 className="text-2xl font-bold text-nexus-heading">Stock Alerts</h1>
           <p className="text-nexus-textSecondary text-sm mt-1">Monitor inventory health issues in real-time</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={fetchAlerts} className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-nexus-border">
-            <RefreshCw size={16} className="text-slate-600 dark:text-nexus-textSecondary" />
+          <button onClick={fetchAlerts} className="p-2.5 rounded-xl bg-nexus-surface dark:bg-nexus-hover hover:bg-nexus-surface dark:hover:bg-nexus-hover border border-nexus-border">
+            <RefreshCw size={16} className="text-nexus-muted" />
           </button>
           {stats.unread > 0 && (
-            <button onClick={handleMarkAllRead} className="inline-flex items-center gap-2 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-nexus-border text-slate-700 dark:text-nexus-textSecondary px-4 py-2.5 rounded-xl text-sm font-medium transition-colors">
+            <button onClick={handleMarkAllRead} className="inline-flex items-center gap-2 bg-nexus-surface dark:bg-nexus-hover hover:bg-nexus-surface dark:hover:bg-nexus-hover border border-nexus-border text-nexus-muted px-4 py-2.5 rounded-xl text-sm font-medium transition-colors">
               <BellOff size={16} /> Mark All Read
             </button>
           )}
@@ -143,12 +143,12 @@ const InventoryNotificationsPage = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Total Alerts', value: stats.total,    color: 'text-slate-600', bg: 'bg-slate-50 dark:bg-white/5' },
-          { label: 'Active',       value: stats.active,   color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-500/10' },
-          { label: 'Critical',     value: stats.critical, color: 'text-red-600',   bg: 'bg-red-50 dark:bg-red-500/10' },
-          { label: 'Unread',       value: stats.unread,   color: 'text-primary',   bg: 'bg-orange-50 dark:bg-primary/10' },
+          { label: 'Total Alerts', value: stats.total,    color: 'text-nexus-muted', bg: 'bg-nexus-surface dark:bg-nexus-hover' },
+          { label: 'Active',       value: stats.active,   color: 'text-nexus-gold', bg: 'bg-nexus-gold/10 dark:bg-nexus-gold/10' },
+          { label: 'Critical',     value: stats.critical, color: 'text-nexus-error',   bg: 'bg-nexus-error/5 dark:bg-nexus-error/10' },
+          { label: 'Unread',       value: stats.unread,   color: 'text-primary',   bg: 'bg-nexus-primary/10 dark:bg-primary/10' },
         ].map(s => (
-          <div key={s.label} className={`${s.bg} rounded-2xl p-4 border border-slate-200 dark:border-nexus-border`}>
+          <div key={s.label} className={`${s.bg} rounded-2xl p-4 border border-nexus-border`}>
             <p className="text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider">{s.label}</p>
             <p className={`text-3xl font-bold mt-1 ${s.color}`}>{s.value}</p>
           </div>
@@ -159,12 +159,12 @@ const InventoryNotificationsPage = () => {
       <div className="flex flex-wrap items-center gap-3">
         {['active', 'acknowledged', 'resolved', 'all'].map(s => (
           <button key={s} onClick={() => setFilterStatus(s)}
-            className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-colors border ${filterStatus === s ? 'bg-primary text-white border-primary shadow-lg shadow-primary/25' : 'bg-white dark:bg-dark-surface border-slate-200 dark:border-nexus-border text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-50 dark:hover:bg-white/5'}`}>
+            className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-colors border ${filterStatus === s ? 'bg-primary text-white border-primary shadow-lg shadow-primary/25' : 'bg-nexus-card border-nexus-border text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover'}`}>
             {s}
           </button>
         ))}
         <select value={filterSeverity} onChange={e => setFilterSeverity(e.target.value)}
-          className="ml-auto bg-white dark:bg-dark-surface border border-slate-200 dark:border-nexus-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white">
+          className="ml-auto bg-nexus-card border border-nexus-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-nexus-heading">
           <option value="">All Severities</option>
           {Object.entries(SEVERITY_CONFIG).map(([v, c]) => <option key={v} value={v}>{c.label}</option>)}
         </select>
@@ -174,7 +174,7 @@ const InventoryNotificationsPage = () => {
       {loading ? (
         <div className="space-y-3">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-24 bg-white dark:bg-dark-surface rounded-xl border border-slate-200 dark:border-nexus-border animate-pulse" />
+            <div key={i} className="h-24 bg-nexus-card rounded-xl border border-nexus-border animate-pulse" />
           ))}
         </div>
       ) : filtered.length > 0 ? (
@@ -187,8 +187,8 @@ const InventoryNotificationsPage = () => {
         </AnimatePresence>
       ) : (
         <div className="text-center py-24">
-          <Bell size={64} className="mx-auto text-nexus-textSecondary dark:text-slate-600 mb-4" />
-          <h3 className="text-lg font-semibold text-slate-700 dark:text-nexus-textSecondary">No alerts found</h3>
+          <Bell size={64} className="mx-auto text-nexus-textSecondary dark:text-nexus-muted mb-4" />
+          <h3 className="text-lg font-semibold text-nexus-muted">No alerts found</h3>
           <p className="text-nexus-textSecondary text-sm mt-1">
             {filterStatus === 'active' ? 'All inventory is in good health!' : 'No alerts match the current filters.'}
           </p>

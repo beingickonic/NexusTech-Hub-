@@ -11,8 +11,8 @@ const FAQ_CATEGORIES = [
     id: 'orders',
     label: 'Orders',
     icon: ShoppingCart,
-    color: 'text-blue-500',
-    bg: 'bg-blue-50 dark:bg-blue-500/10',
+    color: 'text-nexus-info',
+    bg: 'bg-nexus-info/10 dark:bg-nexus-info/10',
     questions: [
       {
         q: 'How do I place an order?',
@@ -28,7 +28,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: 'What does "Pending" status mean?',
-        a: '"Pending" means we have received your order and are waiting for payment confirmation. Once your payment clears, the status will update to "Processing".'
+        a: '"Pending" means we have received your order and are waiting for payment confirmation. Once your payment clears, the status will update to "Paid" and we will begin processing.'
       },
     ]
   },
@@ -36,8 +36,8 @@ const FAQ_CATEGORIES = [
     id: 'payments',
     label: 'Payments',
     icon: CreditCard,
-    color: 'text-green-500',
-    bg: 'bg-green-50 dark:bg-green-500/10',
+    color: 'text-nexus-success',
+    bg: 'bg-nexus-success/5 dark:bg-nexus-success/10',
     questions: [
       {
         q: 'What payment methods do you accept?',
@@ -65,8 +65,8 @@ const FAQ_CATEGORIES = [
     id: 'products',
     label: 'Products',
     icon: Package,
-    color: 'text-orange-500',
-    bg: 'bg-orange-50 dark:bg-orange-500/10',
+    color: 'text-nexus-primary',
+    bg: 'bg-nexus-primary/10 dark:bg-nexus-primary/10',
     questions: [
       {
         q: 'Are all products genuine?',
@@ -90,8 +90,8 @@ const FAQ_CATEGORIES = [
     id: 'returns',
     label: 'Returns & Refunds',
     icon: RotateCcw,
-    color: 'text-red-500',
-    bg: 'bg-red-50 dark:bg-red-500/10',
+    color: 'text-nexus-error',
+    bg: 'bg-nexus-error/5 dark:bg-nexus-error/10',
     questions: [
       {
         q: 'What is your return policy?',
@@ -115,8 +115,8 @@ const FAQ_CATEGORIES = [
     id: 'account',
     label: 'My Account',
     icon: User,
-    color: 'text-purple-500',
-    bg: 'bg-purple-50 dark:bg-purple-500/10',
+    color: 'text-info',
+    bg: 'bg-info/10 dark:bg-info/100/10',
     questions: [
       {
         q: 'How do I create an account?',
@@ -140,8 +140,8 @@ const FAQ_CATEGORIES = [
     id: 'shipping',
     label: 'Shipping',
     icon: Truck,
-    color: 'text-indigo-500',
-    bg: 'bg-indigo-50 dark:bg-indigo-500/10',
+    color: 'text-info',
+    bg: 'bg-info/10 dark:bg-info/100/10',
     questions: [
       {
         q: 'Where do you deliver?',
@@ -160,12 +160,12 @@ const FAQ_CATEGORIES = [
 ];
 
 const AccordionItem = ({ question, answer, isOpen, onToggle }) => (
-  <div className="border-b border-slate-200 dark:border-nexus-border last:border-0">
+  <div className="border-b border-nexus-border last:border-0">
     <button
       onClick={onToggle}
       className="w-full flex items-center justify-between py-5 text-left group"
     >
-      <span className={`font-medium text-sm sm:text-base transition-colors ${isOpen ? 'text-primary' : 'text-slate-900 dark:text-white group-hover:text-primary'}`}>
+      <span className={`font-medium text-sm sm:text-base transition-colors ${isOpen ? 'text-primary' : 'text-nexus-heading group-hover:text-primary'}`}>
         {question}
       </span>
       {isOpen
@@ -183,7 +183,7 @@ const AccordionItem = ({ question, answer, isOpen, onToggle }) => (
           transition={{ duration: 0.25, ease: 'easeInOut' }}
           className="overflow-hidden"
         >
-          <p className="pb-5 text-nexus-textSecondary dark:text-gray-400 text-sm leading-relaxed">
+          <p className="pb-5 text-nexus-textSecondary dark:text-nexus-muted text-sm leading-relaxed">
             {answer}
           </p>
         </motion.div>
@@ -298,9 +298,9 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
   };
 
   return (
-    <div className="bg-[#F8FAFC] dark:bg-dark-bg min-h-screen transition-colors duration-300">
+    <div className="bg-nexus-surface dark:bg-nexus-bg min-h-screen transition-colors duration-300">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-20 px-4">
+      <div className="bg-gradient-to-br from-nexus-dark-navy via-nexus-navy to-nexus-dark-navy py-20 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -324,7 +324,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
               value={searchQuery}
               onChange={e => { setSearchQuery(e.target.value); setOpenQuestion(null); }}
               placeholder="Search help articles..."
-              className="w-full bg-white dark:bg-slate-800 border border-nexus-border rounded-2xl pl-12 pr-4 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-xl"
+              className="w-full bg-nexus-card border border-nexus-border rounded-2xl pl-12 pr-4 py-4 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-xl"
             />
           </motion.div>
         </div>
@@ -335,7 +335,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
         {/* Search Results */}
         {filteredResults !== null && (
           <div className="mb-16">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">
+            <h2 className="text-xl font-bold text-nexus-heading mb-6">
               {filteredResults.length > 0
                 ? `Found ${filteredResults.length} result${filteredResults.length !== 1 ? 's' : ''} for "${searchQuery}"`
                 : `No results found for "${searchQuery}"`
@@ -343,18 +343,18 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
             </h2>
             {filteredResults.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-nexus-textSecondary dark:text-gray-400 mb-6">Try different keywords or browse categories below.</p>
-                <Link to="/contact" className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-orange-600 transition-colors">
+                <p className="text-nexus-textSecondary dark:text-nexus-muted mb-6">Try different keywords or browse categories below.</p>
+                <Link to="/contact" className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-nexus-primary-hover transition-colors">
                   <MessageCircle size={18} /> Contact Support
                 </Link>
               </div>
             ) : (
               <div className="space-y-4">
                 {filteredResults.map((item, idx) => (
-                  <div key={idx} className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border p-6 shadow-sm">
+                  <div key={idx} className="bg-nexus-card rounded-2xl border border-nexus-border p-6 shadow-sm">
                     <span className="text-xs font-bold uppercase tracking-wider text-primary mb-2 block">{item.category}</span>
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">{item.q}</h3>
-                    <p className="text-nexus-textSecondary dark:text-gray-400 text-sm">{item.a}</p>
+                    <h3 className="font-semibold text-nexus-heading mb-2">{item.q}</h3>
+                    <p className="text-nexus-textSecondary dark:text-nexus-muted text-sm">{item.a}</p>
                   </div>
                 ))}
               </div>
@@ -376,7 +376,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all ${
                       isActive
                         ? 'bg-primary text-white shadow-glow'
-                        : 'bg-white dark:bg-dark-surface text-slate-600 dark:text-gray-400 border border-slate-200 dark:border-nexus-border hover:text-primary hover:border-primary'
+                        : 'bg-nexus-card text-nexus-muted border border-nexus-border hover:text-primary hover:border-primary'
                     }`}
                   >
                     <Icon size={16} />
@@ -390,11 +390,11 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
             {activeData && (
               <div className="grid lg:grid-cols-3 gap-10 mb-20">
                 <div className="lg:col-span-2">
-                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-8">
+                  <div className="bg-nexus-card rounded-3xl border border-nexus-border shadow-sm p-8">
                     <div className={`w-12 h-12 rounded-2xl ${activeData.bg} flex items-center justify-center mb-6`}>
                       <activeData.icon size={24} className={activeData.color} />
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">{activeData.label}</h2>
+                    <h2 className="text-2xl font-bold text-nexus-heading mb-6">{activeData.label}</h2>
                     {activeData.questions.map((item, idx) => (
                       <AccordionItem
                         key={idx}
@@ -409,24 +409,24 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
 
                 {/* Sidebar */}
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-6">
+                  <div className="bg-nexus-card rounded-3xl border border-nexus-border shadow-sm p-6">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                       <MessageCircle size={20} className="text-primary" />
                     </div>
-                    <h3 className="font-bold text-slate-900 dark:text-white mb-2">Still need help?</h3>
-                    <p className="text-sm text-nexus-textSecondary dark:text-gray-400 mb-4">
+                    <h3 className="font-bold text-nexus-heading mb-2">Still need help?</h3>
+                    <p className="text-sm text-nexus-textSecondary dark:text-nexus-muted mb-4">
                       Can't find your answer? Our support team is ready to help.
                     </p>
                     <Link
                       to="/contact"
-                      className="block w-full text-center bg-primary hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition-all hover:-translate-y-0.5 shadow-glow text-sm"
+                      className="block w-full text-center bg-primary hover:bg-nexus-primary-hover text-white font-bold py-3 px-4 rounded-xl transition-all hover:-translate-y-0.5 shadow-glow text-sm"
                     >
                       Contact Support
                     </Link>
                   </div>
 
-                  <div className="bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-6">
-                    <h3 className="font-bold text-slate-900 dark:text-white mb-4">Other Categories</h3>
+                  <div className="bg-nexus-card rounded-3xl border border-nexus-border shadow-sm p-6">
+                    <h3 className="font-bold text-nexus-heading mb-4">Other Categories</h3>
                     <div className="space-y-2">
                       {FAQ_CATEGORIES.filter(c => c.id !== activeCategory).map(cat => {
                         const Icon = cat.icon;
@@ -434,7 +434,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
                           <button
                             key={cat.id}
                             onClick={() => { setActiveCategory(cat.id); setOpenQuestion(null); window.scrollTo(0, 0); }}
-                            className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors text-slate-600 dark:text-gray-400 hover:text-primary text-sm font-medium"
+                            className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors text-nexus-muted hover:text-primary text-sm font-medium"
                           >
                             <Icon size={16} className={cat.color} />
                             {cat.label}
@@ -449,7 +449,7 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
 
             {/* Guides Section */}
             <div>
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">Guides & Policies</h2>
+              <h2 className="text-2xl font-bold text-nexus-heading mb-8">Guides & Policies</h2>
               <div className="grid sm:grid-cols-3 gap-6">
                 {guides.map(guide => {
                   const Icon = guide.icon;
@@ -457,13 +457,13 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
                     <button
                       key={guide.id}
                       onClick={() => setActiveGuide(activeGuide === guide.id ? null : guide.id)}
-                      className="text-left bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-6 hover:border-primary/40 hover:shadow-md transition-all"
+                      className="text-left bg-nexus-card rounded-3xl border border-nexus-border shadow-sm p-6 hover:border-primary/40 hover:shadow-md transition-all"
                     >
                       <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
                         <Icon size={24} className="text-primary" />
                       </div>
-                      <h3 className="font-bold text-slate-900 dark:text-white mb-2">{guide.title}</h3>
-                      <p className="text-sm text-nexus-textSecondary dark:text-gray-400">{guide.desc}</p>
+                      <h3 className="font-bold text-nexus-heading mb-2">{guide.title}</h3>
+                      <p className="text-sm text-nexus-textSecondary dark:text-nexus-muted">{guide.desc}</p>
                     </button>
                   );
                 })}
@@ -475,9 +475,9 @@ For legal enquiries, contact us at muriithiderrick08@gmail.com.
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="mt-6 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm p-8"
+                    className="mt-6 bg-nexus-card rounded-3xl border border-nexus-border shadow-sm p-8"
                   >
-                    <pre className="whitespace-pre-wrap text-sm text-slate-600 dark:text-gray-300 leading-relaxed font-sans">
+                    <pre className="whitespace-pre-wrap text-sm text-nexus-muted leading-relaxed font-sans">
                       {guideContent[activeGuide]}
                     </pre>
                     <button

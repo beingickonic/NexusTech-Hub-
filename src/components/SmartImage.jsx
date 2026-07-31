@@ -84,16 +84,16 @@ const SmartImage = React.memo(({ src, alt, className, imageClassName, iconClassN
 
   return (
     <div
-      className={`relative flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 overflow-hidden ${className || 'w-full h-full'}`}
+      className={`relative flex items-center justify-center bg-nexus-surface overflow-hidden ${className || 'w-full h-full'}`}
     >
       {/* Skeleton pulse — only during active load */}
       {status === 'loading' && (
-        <div className="absolute inset-0 z-10 animate-pulse bg-slate-200 dark:bg-slate-700/50 pointer-events-none" />
+        <div className="absolute inset-0 z-10 animate-pulse bg-nexus-surface dark:bg-nexus-card pointer-events-none" />
       )}
 
       {/* No-image / error fallback */}
       {(status === 'error' || status === 'empty') && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-100 dark:bg-slate-800/80 z-10 p-4 gap-1">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-nexus-surface/80 z-10 p-4 gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className={iconClassName}
@@ -106,7 +106,7 @@ const SmartImage = React.memo(({ src, alt, className, imageClassName, iconClassN
             <circle cx="8.5" cy="8.5" r="1.5" />
             <polyline points="21 15 16 10 5 21" />
           </svg>
-          <span className="text-[10px] text-nexus-textSecondary dark:text-nexus-textSecondary text-center leading-tight mt-1">
+          <span className="text-[10px] text-nexus-muted text-center leading-tight mt-1">
             {status === 'error' ? 'Image unavailable' : 'No image'}
           </span>
         </div>

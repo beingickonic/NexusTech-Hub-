@@ -41,14 +41,14 @@ const DeliveryCard = ({ delivery, onNavigate, onCall, onStart }) => {
       <div className="grid grid-cols-3 gap-2 mt-4">
         <button 
           onClick={() => onNavigate(delivery)}
-          className="flex flex-col items-center justify-center gap-1.5 bg-nexus-bg hover:bg-slate-800 border border-nexus-border/50 rounded-xl py-2.5 transition-colors text-nexus-textSecondary"
+          className="flex flex-col items-center justify-center gap-1.5 bg-nexus-bg hover:bg-nexus-hover border border-nexus-border/50 rounded-xl py-2.5 transition-colors text-nexus-textSecondary"
         >
           <MapPin size={20} />
           <span className="text-xs font-medium">Navigate</span>
         </button>
         <button 
           onClick={() => onCall(delivery)}
-          className="flex flex-col items-center justify-center gap-1.5 bg-nexus-bg hover:bg-slate-800 border border-nexus-border/50 rounded-xl py-2.5 transition-colors text-nexus-textSecondary"
+          className="flex flex-col items-center justify-center gap-1.5 bg-nexus-bg hover:bg-nexus-hover border border-nexus-border/50 rounded-xl py-2.5 transition-colors text-nexus-textSecondary"
         >
           <Phone size={20} />
           <span className="text-xs font-medium">Call</span>

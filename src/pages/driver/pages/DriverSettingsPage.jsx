@@ -8,7 +8,7 @@ const DriverSettingsPage = () => {
   return (
     <div className="p-4 md:p-6 max-w-lg mx-auto pb-24">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-slate-500/20 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-xl bg-nexus-muted/20 flex items-center justify-center">
           <Settings className="text-nexus-textSecondary" size={24} />
         </div>
         <div>
@@ -31,7 +31,7 @@ const DriverSettingsPage = () => {
           </div>
           <button 
             onClick={() => setNotifications(!notifications)}
-            className={`w-12 h-6 rounded-full transition-colors relative ${notifications ? 'bg-nexus-success' : 'bg-slate-700'}`}
+            className={`w-12 h-6 rounded-full transition-colors relative ${notifications ? 'bg-nexus-success' : 'bg-nexus-muted'}`}
           >
             <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${notifications ? 'left-7' : 'left-1'}`} />
           </button>
@@ -50,14 +50,14 @@ const DriverSettingsPage = () => {
           </div>
           <button 
             onClick={() => setDarkMode(!darkMode)}
-            className={`w-12 h-6 rounded-full transition-colors relative ${darkMode ? 'bg-nexus-success' : 'bg-slate-700'}`}
+            className={`w-12 h-6 rounded-full transition-colors relative ${darkMode ? 'bg-nexus-success' : 'bg-nexus-muted'}`}
           >
             <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${darkMode ? 'left-7' : 'left-1'}`} />
           </button>
         </div>
 
         {/* Language */}
-        <button className="w-full p-5 flex items-center justify-between border-b border-nexus-border hover:bg-slate-800/50 transition-colors text-left">
+        <button className="w-full p-5 flex items-center justify-between border-b border-nexus-border hover:bg-nexus-card transition-colors text-left">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-nexus-bg flex items-center justify-center">
               <Globe size={18} className="text-nexus-textSecondary" />
@@ -70,7 +70,7 @@ const DriverSettingsPage = () => {
         </button>
 
         {/* Password */}
-        <button className="w-full p-5 flex items-center justify-between hover:bg-slate-800/50 transition-colors text-left">
+        <button className="w-full p-5 flex items-center justify-between hover:bg-nexus-card transition-colors text-left">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-nexus-bg flex items-center justify-center">
               <Lock size={18} className="text-nexus-textSecondary" />
@@ -83,7 +83,7 @@ const DriverSettingsPage = () => {
         </button>
       </div>
 
-      <div className="mt-8 text-center text-xs text-slate-600">
+      <div className="mt-8 text-center text-xs text-nexus-muted">
         Driver Portal v1.0.0
       </div>
     </div>

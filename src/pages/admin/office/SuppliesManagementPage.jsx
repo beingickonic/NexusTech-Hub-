@@ -46,15 +46,15 @@ const SuppliesManagementPage = () => {
   const columns = [
     { header: 'Item Name', accessor: 'item_name', render: (row) => <span className="font-semibold">{row.item_name}</span> },
     { header: 'Stock', accessor: 'current_stock', render: (row) => (
-      <span className={row.current_stock <= row.min_stock ? 'text-red-500 font-bold' : 'text-slate-700 dark:text-nexus-textSecondary'}>
+      <span className={row.current_stock <= row.min_stock ? 'text-nexus-error font-bold' : 'text-nexus-muted'}>
         {row.current_stock} {row.unit}
       </span>
     )},
     { header: 'Status', accessor: 'status', render: (row) => (
       <span className={`px-2 py-1 rounded text-xs font-medium ${
-        row.status === 'In Stock' ? 'bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400' :
-        row.status === 'Out of Stock' ? 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400' :
-        'bg-yellow-100 text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-400'
+        row.status === 'In Stock' ? 'bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 dark:text-nexus-success' :
+        row.status === 'Out of Stock' ? 'bg-nexus-error/10 text-nexus-error dark:bg-nexus-error/20 dark:text-nexus-error' :
+        'bg-nexus-gold/10 text-nexus-gold dark:bg-nexus-gold/20 dark:text-nexus-gold'
       }`}>
         {row.status}
       </span>

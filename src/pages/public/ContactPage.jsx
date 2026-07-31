@@ -64,7 +64,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="bg-[#F8FAFC] dark:bg-dark-bg min-h-screen transition-colors duration-300 py-20">
+    <div className="bg-nexus-surface dark:bg-nexus-bg min-h-screen transition-colors duration-300 py-20">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         
         {/* Header */}
@@ -72,7 +72,7 @@ const ContactPage = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6"
+            className="text-4xl md:text-5xl font-bold text-nexus-heading mb-6"
           >
             Get in Touch
           </motion.h1>
@@ -80,7 +80,7 @@ const ContactPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-nexus-textSecondary dark:text-gray-400"
+            className="text-lg text-nexus-textSecondary dark:text-nexus-muted"
           >
             Have a question about a product? Need help with an order? We're here to help.
           </motion.p>
@@ -93,13 +93,13 @@ const ContactPage = () => {
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm"
+              className="p-8 bg-nexus-card rounded-3xl border border-nexus-border shadow-sm"
             >
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <Mail size={24} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Email Us</h3>
-              <p className="text-nexus-textSecondary dark:text-gray-400 mb-4">Our friendly team is here to help.</p>
+              <h3 className="text-xl font-bold text-nexus-heading mb-2">Email Us</h3>
+              <p className="text-nexus-textSecondary dark:text-nexus-muted mb-4">Our friendly team is here to help.</p>
               <a href="mailto:muriithiderrick08@gmail.com" className="text-primary font-medium hover:underline">muriithiderrick08@gmail.com</a>
             </motion.div>
 
@@ -107,13 +107,13 @@ const ContactPage = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
-              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm"
+              className="p-8 bg-nexus-card rounded-3xl border border-nexus-border shadow-sm"
             >
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <Phone size={24} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Call Us</h3>
-              <p className="text-nexus-textSecondary dark:text-gray-400 mb-4">Mon-Fri from 8am to 5pm.</p>
+              <h3 className="text-xl font-bold text-nexus-heading mb-2">Call Us</h3>
+              <p className="text-nexus-textSecondary dark:text-nexus-muted mb-4">Mon-Fri from 8am to 5pm.</p>
               <a href="tel:+254728097596" className="text-primary font-medium hover:underline">+254 728 097 596</a>
             </motion.div>
 
@@ -121,14 +121,14 @@ const ContactPage = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="p-8 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border shadow-sm"
+              className="p-8 bg-nexus-card rounded-3xl border border-nexus-border shadow-sm"
             >
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <MapPin size={24} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Visit Us</h3>
-              <p className="text-nexus-textSecondary dark:text-gray-400 mb-4">Visit our tech showroom.</p>
-              <address className="not-italic text-slate-900 dark:text-white font-medium">
+              <h3 className="text-xl font-bold text-nexus-heading mb-2">Visit Us</h3>
+              <p className="text-nexus-textSecondary dark:text-nexus-muted mb-4">Visit our tech showroom.</p>
+              <address className="not-italic text-nexus-heading font-medium">
                 Meru, 6200
               </address>
             </motion.div>
@@ -138,32 +138,32 @@ const ContactPage = () => {
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-3xl border border-slate-200 dark:border-nexus-border p-8 md:p-12 shadow-sm relative overflow-hidden"
+            className="lg:col-span-2 bg-nexus-card rounded-3xl border border-nexus-border p-8 md:p-12 shadow-sm relative overflow-hidden"
           >
             {/* Success State */}
             {status === 'success' && (
-              <div className="absolute inset-0 bg-white/95 dark:bg-dark-surface/95 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-8">
-                <div className="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mb-6 shadow-lg">
+              <div className="absolute inset-0 bg-white/95 dark:bg-nexus-surface/95 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-8">
+                <div className="w-20 h-20 bg-nexus-success text-white rounded-full flex items-center justify-center mb-6 shadow-lg">
                   <CheckCircle size={40} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Message Sent!</h3>
-                <p className="text-nexus-textSecondary dark:text-gray-400 mb-6 max-w-sm">
+                <h3 className="text-2xl font-bold text-nexus-heading mb-2">Message Sent!</h3>
+                <p className="text-nexus-textSecondary dark:text-nexus-muted mb-6 max-w-sm">
                   Thank you for reaching out. Our team will review your message and get back to you within 24 hours.
                 </p>
                 <button
                   onClick={handleReset}
-                  className="px-6 py-3 bg-primary hover:bg-orange-600 text-white font-bold rounded-xl transition-all hover:-translate-y-0.5"
+                  className="px-6 py-3 bg-primary hover:bg-nexus-primary-hover text-white font-bold rounded-xl transition-all hover:-translate-y-0.5"
                 >
                   Send Another Message
                 </button>
               </div>
             )}
 
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">Send us a message</h2>
+            <h2 className="text-2xl font-bold text-nexus-heading mb-8">Send us a message</h2>
 
             {/* Error Banner */}
             {status === 'error' && errorMessage && (
-              <div className="flex items-start gap-3 p-4 mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-xl text-red-600 dark:text-red-400 text-sm">
+              <div className="flex items-start gap-3 p-4 mb-6 bg-nexus-error/5 dark:bg-nexus-error/20 border border-nexus-error/20 dark:border-nexus-error/30 rounded-xl text-nexus-error text-sm">
                 <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
                 <span>{errorMessage}</span>
               </div>
@@ -172,58 +172,58 @@ const ContactPage = () => {
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-gray-300">
-                    Full Name <span className="text-red-500">*</span>
+                  <label htmlFor="name" className="block text-sm font-medium text-nexus-text">
+                    Full Name <span className="text-nexus-error">*</span>
                   </label>
                   <input 
                     type="text" id="name" name="name" required
                     value={formData.name} onChange={handleChange}
                     disabled={status === 'loading'}
-                    className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
+                    className="w-full bg-nexus-surface dark:bg-nexus-bg border border-nexus-border rounded-xl px-4 py-3 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                     placeholder="Mary Ivy"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-gray-300">
-                    Email Address <span className="text-red-500">*</span>
+                  <label htmlFor="email" className="block text-sm font-medium text-nexus-text">
+                    Email Address <span className="text-nexus-error">*</span>
                   </label>
                   <input 
                     type="email" id="email" name="email" required
                     value={formData.email} onChange={handleChange}
                     disabled={status === 'loading'}
-                    className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
+                    className="w-full bg-nexus-surface dark:bg-nexus-bg border border-nexus-border rounded-xl px-4 py-3 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                     placeholder="Ivy@gmail.com"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <label htmlFor="subject" className="block text-sm font-medium text-slate-700 dark:text-gray-300">
-                  Subject <span className="text-red-500">*</span>
+                <label htmlFor="subject" className="block text-sm font-medium text-nexus-text">
+                  Subject <span className="text-nexus-error">*</span>
                 </label>
                 <input 
                   type="text" id="subject" name="subject" required
                   value={formData.subject} onChange={handleChange}
                   disabled={status === 'loading'}
-                  className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
+                  className="w-full bg-nexus-surface dark:bg-nexus-bg border border-nexus-border rounded-xl px-4 py-3 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-60"
                   placeholder="How can we help you?"
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-gray-300">
-                  Message <span className="text-red-500">*</span>
+                <label htmlFor="message" className="block text-sm font-medium text-nexus-text">
+                  Message <span className="text-nexus-error">*</span>
                 </label>
                 <textarea 
                   id="message" name="message" rows="5" required
                   value={formData.message} onChange={handleChange}
                   disabled={status === 'loading'}
-                  className="w-full bg-[#F8FAFC] dark:bg-nexus-bg border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none disabled:opacity-60"
+                  className="w-full bg-nexus-surface dark:bg-nexus-bg border border-nexus-border rounded-xl px-4 py-3 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none disabled:opacity-60"
                   placeholder="Write your message here..."
                 />
               </div>
               <button 
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full bg-primary hover:bg-orange-600 text-white font-bold py-4 rounded-xl shadow-glow transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:translate-y-0"
+                className="w-full bg-primary hover:bg-nexus-primary-hover text-white font-bold py-4 rounded-xl shadow-glow transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:translate-y-0"
               >
                 {status === 'loading' ? (
                   <>

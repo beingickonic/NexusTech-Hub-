@@ -141,12 +141,12 @@ const WarehouseLocationsPage = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Warehouse Locations</h1>
+          <h1 className="text-2xl font-bold text-nexus-heading">Warehouse Locations</h1>
           <p className="text-nexus-textSecondary text-sm mt-1">Manage multiple warehouses and capacity</p>
         </div>
         <button 
           onClick={() => openModal()}
-          className="inline-flex items-center gap-2 bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25"
+          className="inline-flex items-center gap-2 bg-primary hover:bg-nexus-primary-hover text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25"
         >
           <Plus size={18} /> Add Warehouse
         </button>
@@ -155,11 +155,11 @@ const WarehouseLocationsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
           [...Array(3)].map((_, i) => (
-            <div key={i} className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm animate-pulse">
-              <div className="h-6 w-32 bg-slate-100 dark:bg-white/5 rounded mb-4"></div>
-              <div className="h-4 w-48 bg-slate-100 dark:bg-white/5 rounded mb-6"></div>
-              <div className="h-2 w-full bg-slate-100 dark:bg-white/5 rounded-full mb-2"></div>
-              <div className="h-4 w-24 bg-slate-100 dark:bg-white/5 rounded"></div>
+            <div key={i} className="bg-nexus-card p-6 rounded-2xl border border-nexus-border shadow-sm animate-pulse">
+              <div className="h-6 w-32 bg-nexus-surface dark:bg-nexus-hover rounded mb-4"></div>
+              <div className="h-4 w-48 bg-nexus-surface dark:bg-nexus-hover rounded mb-6"></div>
+              <div className="h-2 w-full bg-nexus-surface dark:bg-nexus-hover rounded-full mb-2"></div>
+              <div className="h-4 w-24 bg-nexus-surface dark:bg-nexus-hover rounded"></div>
             </div>
           ))
         ) : locations.length > 0 ? (
@@ -168,17 +168,17 @@ const WarehouseLocationsPage = () => {
               key={loc.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex flex-col group hover:border-primary/40 dark:hover:border-primary/30 transition-colors"
+              className="bg-nexus-card p-6 rounded-2xl border border-nexus-border shadow-sm flex flex-col group hover:border-primary/40 dark:hover:border-primary/30 transition-colors"
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-primary transition-colors">{loc.name}</h3>
+                  <h3 className="text-lg font-bold text-nexus-heading group-hover:text-primary dark:group-hover:text-primary transition-colors">{loc.name}</h3>
                   <div className="flex items-center gap-1.5 text-nexus-textSecondary text-sm mt-1">
                     <MapPin size={14} /> {loc.location}
                   </div>
                 </div>
                 <span className={`px-2.5 py-1 rounded-md text-xs font-semibold capitalize ${
-                  loc.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                  loc.status === 'active' ? 'bg-nexus-success/10 text-nexus-success' : 'bg-nexus-gold/10 text-nexus-gold'
                 }`}>
                   {loc.status}
                 </span>
@@ -187,13 +187,13 @@ const WarehouseLocationsPage = () => {
               <div className="mt-4 flex-1">
                 <div className="flex justify-between text-sm mb-2">
                   <span className="text-nexus-textSecondary font-medium">Capacity Utilization</span>
-                  <span className="text-slate-900 dark:text-white font-bold">{Math.round((loc.current / loc.capacity) * 100)}%</span>
+                  <span className="text-nexus-heading font-bold">{Math.round((loc.current / loc.capacity) * 100)}%</span>
                 </div>
-                <div className="w-full h-2.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                <div className="w-full h-2.5 bg-nexus-surface dark:bg-nexus-hover rounded-full overflow-hidden">
                   <div 
                     className={`h-full rounded-full ${
-                      (loc.current / loc.capacity) > 0.85 ? 'bg-red-500' : 
-                      (loc.current / loc.capacity) > 0.6 ? 'bg-amber-500' : 'bg-emerald-500'
+                      (loc.current / loc.capacity) > 0.85 ? 'bg-nexus-error' : 
+                      (loc.current / loc.capacity) > 0.6 ? 'bg-nexus-gold' : 'bg-nexus-success'
                     }`} 
                     style={{ width: `${(loc.current / loc.capacity) * 100}%` }}
                   ></div>
@@ -204,15 +204,15 @@ const WarehouseLocationsPage = () => {
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-nexus-border flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-nexus-textSecondary">
+              <div className="mt-6 pt-4 border-t border-nexus-border flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-nexus-muted">
                   <Users size={16} /> {loc.manager}
                 </div>
                 <div className="flex items-center gap-3">
-                  <button onClick={() => openModal(loc)} className="text-sm font-semibold text-primary hover:text-orange-600 flex items-center gap-1">
+                  <button onClick={() => openModal(loc)} className="text-sm font-semibold text-primary hover:text-nexus-primary flex items-center gap-1">
                     <Edit2 size={14} /> Edit
                   </button>
-                  <button onClick={() => handleDelete(loc.id)} className="text-sm font-semibold text-red-500 hover:text-red-600 flex items-center gap-1">
+                  <button onClick={() => handleDelete(loc.id)} className="text-sm font-semibold text-nexus-error hover:text-nexus-error flex items-center gap-1">
                     <Trash2 size={14} /> Delete
                   </button>
                 </div>
@@ -220,9 +220,9 @@ const WarehouseLocationsPage = () => {
             </motion.div>
           ))
         ) : (
-          <div className="col-span-1 md:col-span-2 lg:col-span-3 p-12 text-center bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex flex-col items-center justify-center">
-            <Package size={48} className="text-nexus-textSecondary dark:text-slate-600 mb-4" />
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">No Warehouses Found</h3>
+          <div className="col-span-1 md:col-span-2 lg:col-span-3 p-12 text-center bg-nexus-card rounded-2xl border border-nexus-border shadow-sm flex flex-col items-center justify-center">
+            <Package size={48} className="text-nexus-textSecondary dark:text-nexus-muted mb-4" />
+            <h3 className="text-lg font-bold text-nexus-heading mb-1">No Warehouses Found</h3>
             <p className="text-nexus-textSecondary text-sm max-w-sm mx-auto">You haven't added any warehouse locations yet. Click "Add Warehouse" to get started.</p>
           </div>
         )}
@@ -246,13 +246,13 @@ const WarehouseLocationsPage = () => {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-full max-w-lg bg-white dark:bg-dark-card rounded-2xl shadow-xl overflow-hidden"
             >
-              <div className="px-6 py-4 border-b border-slate-100 dark:border-nexus-border flex items-center justify-between">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+              <div className="px-6 py-4 border-b border-nexus-border flex items-center justify-between">
+                <h3 className="text-lg font-bold text-nexus-heading">
                   {editingWarehouse ? 'Edit Warehouse' : 'Add New Warehouse'}
                 </h3>
                 <button
                   onClick={handleCloseModal}
-                  className="p-2 text-nexus-textSecondary hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-colors"
+                  className="p-2 text-nexus-textSecondary hover:text-nexus-muted dark:hover:text-white hover:bg-nexus-surface dark:hover:bg-nexus-hover rounded-full transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -261,7 +261,7 @@ const WarehouseLocationsPage = () => {
               <form onSubmit={handleSubmit} className="p-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
+                    <label className="block text-sm font-medium text-nexus-muted mb-1">
                       Warehouse Name *
                     </label>
                     <input
@@ -269,13 +269,13 @@ const WarehouseLocationsPage = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      className="w-full bg-nexus-surface dark:bg-nexus-hover border border-nexus-border rounded-xl px-4 py-2.5 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50"
                       placeholder="e.g. Main Distribution Center"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
+                    <label className="block text-sm font-medium text-nexus-muted mb-1">
                       Location / Address *
                     </label>
                     <input
@@ -283,14 +283,14 @@ const WarehouseLocationsPage = () => {
                       required
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      className="w-full bg-nexus-surface dark:bg-nexus-hover border border-nexus-border rounded-xl px-4 py-2.5 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50"
                       placeholder="e.g. London, UK"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
+                      <label className="block text-sm font-medium text-nexus-muted mb-1">
                         Max Capacity (Units) *
                       </label>
                       <input
@@ -299,18 +299,18 @@ const WarehouseLocationsPage = () => {
                          min="1"
                          value={formData.capacity}
                          onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
-                         className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                         className="w-full bg-nexus-surface dark:bg-nexus-hover border border-nexus-border rounded-xl px-4 py-2.5 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50"
                          placeholder="50000"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
+                      <label className="block text-sm font-medium text-nexus-muted mb-1">
                         Status
                       </label>
                       <select
                         value={formData.status}
                         onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                        className="w-full bg-nexus-surface dark:bg-nexus-hover border border-nexus-border rounded-xl px-4 py-2.5 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50"
                       >
                         <option value="active">Active</option>
                         <option value="maintenance">Maintenance</option>
@@ -320,14 +320,14 @@ const WarehouseLocationsPage = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">
+                    <label className="block text-sm font-medium text-nexus-muted mb-1">
                       Manager Name
                     </label>
                     <input
                       type="text"
                       value={formData.manager_name}
                       onChange={(e) => setFormData({ ...formData, manager_name: e.target.value })}
-                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+                      className="w-full bg-nexus-surface dark:bg-nexus-hover border border-nexus-border rounded-xl px-4 py-2.5 text-nexus-heading focus:outline-none focus:ring-2 focus:ring-primary/50"
                       placeholder="e.g. John Doe"
                     />
                   </div>
@@ -337,14 +337,14 @@ const WarehouseLocationsPage = () => {
                   <button
                     type="button"
                     onClick={handleCloseModal}
-                    className="px-5 py-2.5 text-sm font-semibold text-slate-600 dark:text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors"
+                    className="px-5 py-2.5 text-sm font-semibold text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover rounded-xl transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-5 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-orange-600 rounded-xl transition-colors shadow-lg shadow-primary/25 disabled:opacity-50 flex items-center gap-2"
+                    className="px-5 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-nexus-primary-hover rounded-xl transition-colors shadow-lg shadow-primary/25 disabled:opacity-50 flex items-center gap-2"
                   >
                     {submitting ? (
                       <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

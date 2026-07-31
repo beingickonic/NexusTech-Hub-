@@ -29,8 +29,7 @@ export const notificationService = {
     }
   },
 
-  // ── Web Portal Notifications (ERP) ───────────────────────────────
-  
+  // ── Legacy Portal Notifications ─────────────────────────────────
   getPortalNotifications: async (userId, role) => {
     const { data, error } = await supabase
       .from('portal_notifications')
@@ -38,7 +37,7 @@ export const notificationService = {
       .or(`user_id.eq.${userId},target_role.eq.${role}`)
       .order('created_at', { ascending: false })
       .limit(50);
-    
+
     if (error) throw error;
     return { success: true, data: data || [] };
   },
@@ -65,10 +64,10 @@ export const notificationService = {
   subscribeToPortalNotifications: (userId, role, callback) => {
     const channel = supabase
       .channel('erp-portal-notifications')
-      .on('postgres_changes', { 
-        event: 'INSERT', 
-        schema: 'public', 
-        table: 'portal_notifications' 
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'portal_notifications'
       }, payload => {
         const n = payload.new;
         if (n.user_id === userId || n.target_role === role) {
@@ -77,5 +76,48 @@ export const notificationService = {
       })
       .subscribe();
     return () => supabase.removeChannel(channel);
-  }
+  },
+
+  // ── Unified Notification Logs (v2) ──────────────────────────────
+
+  getNotifications: async ({ limit = 50, offset = 0, type } = {}) => {
+    let query = supabase
+      .from('notification_logs')
+      .select('*')
+      .order('sent_at', { ascending: false })
+      .limit(limit)
+      .range(offset, offset + limit - 1);
+
+    if (type) query = query.eq('type', type);
+
+    const { data, error } = await query;
+    if (error) throw error;
+    return data || [];
+  },
+
+  getUnreadCount: async () => {
+    const { data, error } = await supabase.rpc('get_unread_notification_count');
+    if (error) throw error;
+    return data || 0;
+  },
+
+  markLogAsRead: async (notificationIds) => {
+    const ids = Array.isArray(notificationIds) ? notificationIds : [notificationIds];
+    const { data, error } = await supabase.rpc('mark_notifications_read', { p_notification_ids: ids });
+    if (error) throw error;
+    return data;
+  },
+
+  subscribeToNotifications: (userId, callback) => {
+    const channel = supabase
+      .channel('notification-logs')
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'notification_logs',
+        filter: `user_id=eq.${userId}`
+      }, payload => callback(payload.new))
+      .subscribe();
+    return () => supabase.removeChannel(channel);
+  },
 };

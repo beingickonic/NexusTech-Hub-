@@ -24,25 +24,25 @@ const WishlistPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
+    <div className="min-h-screen pt-32 pb-20 bg-nexus-surface transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center gap-4 mb-10">
-          <Heart className="text-orange-500" size={36} />
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-white">Your Wishlist</h1>
+          <Heart className="text-nexus-primary" size={36} />
+          <h1 className="text-4xl font-bold text-nexus-heading">Your Wishlist</h1>
         </div>
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-12 h-12 border-4 border-nexus-primary border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : wishlistItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-3xl border border-slate-200 dark:border-nexus-border">
-            <Heart size={80} className="text-nexus-textSecondary dark:text-slate-600 mb-6" />
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Wishlist is empty</h2>
-            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-8 max-w-md text-center">
+          <div className="flex flex-col items-center justify-center py-20 bg-white/50 dark:bg-nexus-card backdrop-blur-sm rounded-3xl border border-nexus-border">
+            <Heart size={80} className="text-nexus-textSecondary dark:text-nexus-muted mb-6" />
+            <h2 className="text-2xl font-bold text-nexus-heading mb-4">Wishlist is empty</h2>
+            <p className="text-nexus-muted mb-8 max-w-md text-center">
               Save items you love to your wishlist and they will show up here.
             </p>
-            <Link to="/products" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 px-10 rounded-xl transition-colors shadow-lg shadow-orange-500/30">
+            <Link to="/products" className="bg-nexus-primary hover:bg-nexus-primary-hover text-white font-semibold py-4 px-10 rounded-xl transition-colors shadow-lg shadow-primary/30">
               Explore Products
             </Link>
           </div>
@@ -56,9 +56,9 @@ const WishlistPage = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   key={item.product_id}
-                  className="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-nexus-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
+                  className="bg-nexus-card rounded-3xl overflow-hidden border border-nexus-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
                 >
-                  <div className="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-700">
+                  <div className="relative h-64 overflow-hidden bg-nexus-surface">
                     <SmartImage 
                       src={getImageUrl(item.image_url)} 
                       alt={item.title} 
@@ -67,7 +67,7 @@ const WishlistPage = () => {
                     />
                     <button 
                       onClick={() => removeFromWishlist(item.product_id)}
-                      className="absolute top-4 right-4 w-10 h-10 bg-white/80 dark:bg-nexus-surface/80 backdrop-blur-md rounded-full flex items-center justify-center text-nexus-textSecondary hover:text-red-500 hover:bg-white dark:hover:bg-slate-800 transition-colors z-10"
+                      className="absolute top-4 right-4 w-10 h-10 bg-nexus-card backdrop-blur-md rounded-full flex items-center justify-center text-nexus-textSecondary hover:text-nexus-error hover:bg-white dark:hover:bg-nexus-hover transition-colors z-10"
                     >
                       <Trash2 size={18} />
                     </button>
@@ -75,17 +75,17 @@ const WishlistPage = () => {
                   
                   <div className="p-6 flex flex-col flex-1">
                     <Link to={`/products/${item.product_id}`} className="block mb-2">
-                      <h3 className="font-bold text-lg text-slate-900 dark:text-white line-clamp-2 group-hover:text-orange-500 transition-colors">
+                      <h3 className="font-bold text-lg text-nexus-heading line-clamp-2 group-hover:text-nexus-primary transition-colors">
                         {item.title}
                       </h3>
                     </Link>
-                    <div className="text-xl font-bold text-orange-500 mb-6 mt-auto">
+                    <div className="text-xl font-bold text-nexus-primary mb-6 mt-auto">
                       {formatCurrency(item.price)}
                     </div>
                     
                     <button 
                       onClick={() => handleAddToCart(item.product_id)}
-                      className="w-full flex items-center justify-center gap-2 bg-nexus-surface dark:bg-slate-700 hover:bg-orange-500 dark:hover:bg-orange-500 text-white font-semibold py-3 rounded-xl transition-colors"
+                      className="w-full flex items-center justify-center gap-2 bg-nexus-surface dark:bg-nexus-card hover:bg-nexus-primary dark:hover:bg-nexus-primary text-white font-semibold py-3 rounded-xl transition-colors"
                     >
                       <ShoppingCart size={18} />
                       Move to Cart

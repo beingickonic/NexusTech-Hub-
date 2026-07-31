@@ -56,32 +56,32 @@ const ShippingForm = ({ formData, setFormData }) => {
     return (
       <div className="space-y-6 animate-fade-in">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white">Shipping Information</h3>
+          <h3 className="text-xl font-bold text-nexus-heading">Shipping Information</h3>
           <button 
             onClick={() => setIsEditing(true)}
-            className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
+            className="text-sm font-medium text-nexus-primary hover:text-nexus-primary transition-colors"
           >
             Edit Address
           </button>
         </div>
         
-        <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-nexus-border/50">
+        <div className="bg-nexus-surface p-6 rounded-2xl border border-nexus-border/50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
             <div>
-              <p className="text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider mb-1">Name</p>
-              <p className="text-slate-900 dark:text-white font-medium">{user.full_name}</p>
+              <p className="text-xs font-semibold text-nexus-muted uppercase tracking-wider mb-1">Name</p>
+              <p className="text-nexus-heading font-medium">{user.full_name}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider mb-1">Phone</p>
-              <p className="text-slate-900 dark:text-white font-medium">{user.phone}</p>
+              <p className="text-xs font-semibold text-nexus-muted uppercase tracking-wider mb-1">Phone</p>
+              <p className="text-nexus-heading font-medium">{user.phone}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider mb-1">Email</p>
-              <p className="text-slate-900 dark:text-white font-medium">{user.email}</p>
+              <p className="text-xs font-semibold text-nexus-muted uppercase tracking-wider mb-1">Email</p>
+              <p className="text-nexus-heading font-medium">{user.email}</p>
             </div>
             <div className="md:col-span-2">
-              <p className="text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider mb-1">Delivery Address</p>
-              <p className="text-slate-900 dark:text-white font-medium">
+              <p className="text-xs font-semibold text-nexus-muted uppercase tracking-wider mb-1">Delivery Address</p>
+              <p className="text-nexus-heading font-medium">
                 {user.address}, {user.city} {user.postal_code ? `- ${user.postal_code}` : ''}
               </p>
             </div>
@@ -93,77 +93,77 @@ const ShippingForm = ({ formData, setFormData }) => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+      <h3 className="text-xl font-bold text-nexus-heading mb-4">
         {hasSavedAddress ? 'Edit Shipping Information' : 'Shipping Information'}
       </h3>
       
       {!hasSavedAddress && (
-        <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary mb-4">
+        <p className="text-sm text-nexus-muted mb-4">
           Please complete your profile details to proceed with checkout. These will be saved for future orders.
         </p>
       )}
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">Full Name</label>
+          <label className="block text-sm font-medium text-nexus-muted mb-1">Full Name</label>
           <input 
             type="text" 
             name="fullName"
             required
             value={formData.fullName || ''}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border focus:ring-2 focus:ring-orange-500 outline-none transition-all dark:text-white"
+            className="w-full px-4 py-3 rounded-xl bg-nexus-card border border-nexus-border focus:ring-2 focus:ring-nexus-primary outline-none transition-all dark:text-white"
             placeholder="Mary Ivy"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">Phone Number</label>
+          <label className="block text-sm font-medium text-nexus-muted mb-1">Phone Number</label>
           <input 
             type="tel" 
             name="phone"
             required
             value={formData.phone || ''}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border focus:ring-2 focus:ring-orange-500 outline-none transition-all dark:text-white"
+            className="w-full px-4 py-3 rounded-xl bg-nexus-card border border-nexus-border focus:ring-2 focus:ring-nexus-primary outline-none transition-all dark:text-white"
             placeholder="+254 700 000000"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">Address</label>
+        <label className="block text-sm font-medium text-nexus-muted mb-1">Address</label>
         <input 
           type="text" 
           name="address"
           required
           value={formData.address || ''}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-xl bg-white dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border focus:ring-2 focus:ring-orange-500 outline-none transition-all dark:text-white"
+          className="w-full px-4 py-3 rounded-xl bg-nexus-card border border-nexus-border focus:ring-2 focus:ring-nexus-primary outline-none transition-all dark:text-white"
           placeholder="123 Tech Hub Street, CBD"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">City</label>
+          <label className="block text-sm font-medium text-nexus-muted mb-1">City</label>
           <input 
             type="text" 
             name="city"
             required
             value={formData.city || ''}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border focus:ring-2 focus:ring-orange-500 outline-none transition-all dark:text-white"
+            className="w-full px-4 py-3 rounded-xl bg-nexus-card border border-nexus-border focus:ring-2 focus:ring-nexus-primary outline-none transition-all dark:text-white"
             placeholder="Nairobi"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700 dark:text-nexus-textSecondary mb-1">Postal Code</label>
+          <label className="block text-sm font-medium text-nexus-muted mb-1">Postal Code</label>
           <input 
             type="text" 
             name="postalCode"
             value={formData.postalCode || ''}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border focus:ring-2 focus:ring-orange-500 outline-none transition-all dark:text-white"
+            className="w-full px-4 py-3 rounded-xl bg-nexus-card border border-nexus-border focus:ring-2 focus:ring-nexus-primary outline-none transition-all dark:text-white"
             placeholder="00100"
           />
         </div>
@@ -174,7 +174,7 @@ const ShippingForm = ({ formData, setFormData }) => {
           <button 
             type="button"
             onClick={() => setIsEditing(false)}
-            className="px-4 py-2 mr-3 rounded-lg font-medium text-slate-600 dark:text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="px-4 py-2 mr-3 rounded-lg font-medium text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors"
           >
             Cancel
           </button>
@@ -183,7 +183,7 @@ const ShippingForm = ({ formData, setFormData }) => {
           type="button"
           onClick={handleSave}
           disabled={isSaving}
-          className="px-6 py-2 rounded-lg font-medium text-white bg-nexus-surface dark:bg-slate-100 dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-white transition-colors disabled:opacity-70"
+          className="px-6 py-2 rounded-lg font-medium text-white bg-nexus-heading hover:bg-nexus-dark-navy dark:bg-white dark:hover:bg-nexus-surface dark:text-nexus-navy transition-colors disabled:opacity-70"
         >
           {isSaving ? 'Saving...' : 'Save & Continue'}
         </button>

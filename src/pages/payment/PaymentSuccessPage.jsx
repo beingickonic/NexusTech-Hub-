@@ -25,49 +25,49 @@ const PaymentSuccessPage = () => {
   }, [paymentId]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-nexus-surface pt-32 pb-20 px-4">
+    <div className="min-h-screen bg-nexus-surface pt-32 pb-20 px-4">
       <div className="max-w-2xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200 dark:border-nexus-border text-center"
+          className="bg-nexus-card rounded-3xl p-8 md:p-12 shadow-sm border border-nexus-border text-center"
         >
           <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", bounce: 0.5, delay: 0.2 }}
-            className="w-24 h-24 bg-green-100 dark:bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8"
+            className="w-24 h-24 bg-nexus-success/10 dark:bg-nexus-success/20 text-nexus-success rounded-full flex items-center justify-center mx-auto mb-8"
           >
             <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
             </svg>
           </motion.div>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-nexus-heading mb-4">
             Payment Successful!
           </h1>
-          <p className="text-nexus-textSecondary dark:text-nexus-textSecondary mb-8 text-lg">
+          <p className="text-nexus-muted mb-8 text-lg">
             Thank you for your purchase. Your order has been placed and payment confirmed.
           </p>
 
           {loading ? (
             <div className="flex flex-col items-center justify-center py-6">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mb-4"></div>
-              <p className="text-nexus-textSecondary dark:text-nexus-textSecondary">Generating digital receipt...</p>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-nexus-primary mb-4"></div>
+              <p className="text-nexus-muted">Generating digital receipt...</p>
             </div>
           ) : receipt ? (
-            <div className="bg-slate-50 dark:bg-nexus-surface/50 rounded-2xl p-6 mb-8 text-left border border-slate-200 dark:border-nexus-border">
-              <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200 dark:border-nexus-border">
-                <span className="text-nexus-textSecondary dark:text-nexus-textSecondary">Receipt Number</span>
-                <span className="font-semibold text-slate-900 dark:text-white">{receipt.mpesa_receipt || receipt.payment_id}</span>
+            <div className="bg-nexus-surface/50 rounded-2xl p-6 mb-8 text-left border border-nexus-border">
+              <div className="flex justify-between items-center mb-4 pb-4 border-b border-nexus-border">
+                <span className="text-nexus-muted">Receipt Number</span>
+                <span className="font-semibold text-nexus-heading">{receipt.mpesa_receipt || receipt.payment_id}</span>
               </div>
-              <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200 dark:border-nexus-border">
-                <span className="text-nexus-textSecondary dark:text-nexus-textSecondary">Amount Paid</span>
-                <span className="font-semibold text-slate-900 dark:text-white">Ksh {parseFloat(receipt.amount).toLocaleString()}</span>
+              <div className="flex justify-between items-center mb-4 pb-4 border-b border-nexus-border">
+                <span className="text-nexus-muted">Amount Paid</span>
+                <span className="font-semibold text-nexus-heading">Ksh {parseFloat(receipt.amount).toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-nexus-textSecondary dark:text-nexus-textSecondary">Payment Method</span>
-                <span className="font-semibold text-slate-900 dark:text-white uppercase">{receipt.provider || 'ONLINE'}</span>
+                <span className="text-nexus-muted">Payment Method</span>
+                <span className="font-semibold text-nexus-heading uppercase">{receipt.provider || 'ONLINE'}</span>
               </div>
             </div>
           ) : null}
@@ -76,14 +76,14 @@ const PaymentSuccessPage = () => {
             {receipt && (
               <Link 
                 to={`/payment/receipt/${receipt.id}`}
-                className="px-8 py-3 bg-nexus-surface dark:bg-slate-100 text-white dark:text-slate-900 font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-white transition-colors"
+                className="px-8 py-3 bg-nexus-heading dark:bg-white text-white dark:text-nexus-navy font-bold rounded-xl hover:bg-nexus-dark-navy dark:hover:bg-nexus-surface transition-colors"
               >
                 View Full Receipt
               </Link>
             )}
             <Link 
               to="/products"
-              className="px-8 py-3 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/30"
+              className="px-8 py-3 bg-nexus-primary text-white font-bold rounded-xl hover:bg-nexus-primary-hover transition-colors shadow-lg shadow-primary/30"
             >
               Continue Shopping
             </Link>

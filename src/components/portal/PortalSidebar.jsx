@@ -92,7 +92,7 @@ const PortalSidebar = ({ config, isOpen, setIsOpen }) => {
           </div>
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-white/50 hover:bg-red-500/15 hover:text-red-400 transition-all text-sm font-medium"
+            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-white/50 hover:bg-nexus-error/15 hover:text-nexus-error transition-all text-sm font-medium"
           >
             <LogOut size={15} />
             Sign Out

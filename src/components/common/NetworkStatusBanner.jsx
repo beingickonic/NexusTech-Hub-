@@ -36,7 +36,7 @@ const NetworkStatusBanner = () => {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
-          className="fixed top-0 left-0 right-0 z-[100] bg-red-600 text-white px-4 py-3 flex items-center justify-center gap-3 shadow-lg"
+          className="fixed top-0 left-0 right-0 z-[100] bg-nexus-error text-white px-4 py-3 flex items-center justify-center gap-3 shadow-lg"
         >
           <WifiOff size={20} />
           <span className="font-medium text-sm md:text-base">

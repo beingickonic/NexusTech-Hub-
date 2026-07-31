@@ -7,12 +7,12 @@ import { getGreeting } from '../../../utils/helpers';
 import toast from 'react-hot-toast';
 
 const StatCard = ({ title, value, icon: Icon, trend, colorClass }) => (
-  <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex items-start justify-between">
+  <div className="bg-white/80 dark:bg-nexus-card/80 backdrop-blur-md p-6 rounded-2xl border border-nexus-border shadow-sm flex items-start justify-between">
     <div>
-      <p className="text-sm font-medium text-nexus-textSecondary dark:text-nexus-textSecondary mb-1">{title}</p>
-      <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{value}</h3>
+      <p className="text-sm font-medium text-nexus-muted mb-1">{title}</p>
+      <h3 className="text-2xl font-bold text-nexus-heading">{value}</h3>
       {trend && (
-        <p className="text-xs font-medium text-green-600 dark:text-green-400 mt-2 flex items-center gap-1">
+        <p className="text-xs font-medium text-nexus-success dark:text-nexus-success mt-2 flex items-center gap-1">
           <TrendingUp size={12} /> {trend}
         </p>
       )}
@@ -64,10 +64,10 @@ const OfficeDashboardPage = () => {
       {/* Dashboard Hero */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-4 px-1 md:px-0">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-nexus-heading mb-1">
             {getGreeting(user?.full_name?.split(' ')[0] || user?.email?.split('@')[0] || 'Admin')}
           </h1>
-          <p className="text-sm md:text-base text-nexus-textSecondary dark:text-nexus-textSecondary font-medium">
+          <p className="text-sm md:text-base text-nexus-muted font-medium">
             Here's your office administration overview for today.
           </p>
         </div>
@@ -80,78 +80,78 @@ const OfficeDashboardPage = () => {
           value={stats.pendingTasks} 
           icon={CheckSquare} 
           trend="2 completed today"
-          colorClass="bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-500" 
+          colorClass="bg-nexus-info/10 text-nexus-info dark:bg-nexus-info/10 dark:text-nexus-info" 
         />
         <StatCard 
           title="Meetings Today" 
           value={stats.meetingsToday} 
           icon={Calendar} 
-          colorClass="bg-purple-50 text-purple-600 dark:bg-purple-500/10 dark:text-purple-500" 
+          colorClass="bg-info/10 text-info dark:bg-info/100/10 dark:text-info" 
         />
         <StatCard 
           title="Unread Messages" 
           value={stats.unreadMessages} 
           icon={MessageSquare} 
           trend="3 new"
-          colorClass="bg-green-50 text-green-600 dark:bg-green-500/10 dark:text-green-500" 
+          colorClass="bg-nexus-success/5 text-nexus-success dark:bg-nexus-success/10 dark:text-nexus-success" 
         />
         <StatCard 
           title="Low Supplies" 
           value={stats.lowSupplies} 
           icon={AlertCircle} 
-          colorClass="bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-500" 
+          colorClass="bg-nexus-error/5 text-nexus-error dark:bg-nexus-error/10 dark:text-nexus-error" 
         />
         <StatCard 
           title="Visitors Today" 
           value={stats.visitorsToday} 
           icon={Users} 
-          colorClass="bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-500" 
+          colorClass="bg-info/10 text-info dark:bg-info/100/10 dark:text-info" 
         />
         <StatCard 
           title="Open Requests" 
           value={stats.openRequests} 
           icon={LifeBuoy} 
-          colorClass="bg-pink-50 text-pink-600 dark:bg-pink-500/10 dark:text-pink-500" 
+          colorClass="bg-error/10 text-error dark:bg-error/100/10 dark:text-error" 
         />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Main Panel */}
-        <div className="lg:col-span-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border p-6 shadow-sm">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Recent Announcements</h3>
+        <div className="lg:col-span-2 bg-white/80 dark:bg-nexus-card/80 backdrop-blur-md rounded-2xl border border-nexus-border p-6 shadow-sm">
+          <h3 className="text-lg font-bold text-nexus-heading mb-4">Recent Announcements</h3>
           <div className="space-y-4">
-            <div className="p-4 rounded-xl bg-orange-50 dark:bg-orange-500/10 border border-orange-100 dark:border-orange-500/20">
+            <div className="p-4 rounded-xl bg-nexus-primary/10 dark:bg-nexus-primary/10 border border-nexus-primary/15 dark:border-nexus-primary/20">
               <div className="flex justify-between items-start mb-2">
-                <h4 className="font-semibold text-orange-800 dark:text-orange-400">Quarterly Review Meeting</h4>
-                <span className="text-xs font-medium text-orange-600 dark:text-orange-500">High Priority</span>
+                <h4 className="font-semibold text-nexus-primary">Quarterly Review Meeting</h4>
+                <span className="text-xs font-medium text-nexus-primary dark:text-nexus-primary">High Priority</span>
               </div>
-              <p className="text-sm text-orange-700/80 dark:text-orange-300/80">Please ensure all Q3 reports are submitted to your managers by Friday. The all-hands meeting is scheduled for next Monday.</p>
+              <p className="text-sm text-nexus-primary/80">Please ensure all Q3 reports are submitted to your managers by Friday. The all-hands meeting is scheduled for next Monday.</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-50 dark:bg-nexus-surface/50 border border-slate-100 dark:border-nexus-border">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-1">Office Maintenance</h4>
-              <p className="text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">The HVAC system on the 3rd floor will be undergoing maintenance this weekend.</p>
+            <div className="p-4 rounded-xl bg-nexus-surface/50 border border-nexus-border">
+              <h4 className="font-semibold text-nexus-heading mb-1">Office Maintenance</h4>
+              <p className="text-sm text-nexus-muted">The HVAC system on the 3rd floor will be undergoing maintenance this weekend.</p>
             </div>
           </div>
         </div>
 
         {/* Side Panel */}
-        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-nexus-border p-6 shadow-sm">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Actions</h3>
+        <div className="bg-white/80 dark:bg-nexus-card/80 backdrop-blur-md rounded-2xl border border-nexus-border p-6 shadow-sm">
+          <h3 className="text-lg font-bold text-nexus-heading mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <button onClick={() => toast('Opening task modal...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-nexus-surface/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-nexus-border transition-colors text-left text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">
-              <div className="p-2 bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-lg">
+            <button onClick={() => toast('Opening task modal...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-nexus-surface/50 hover:bg-nexus-surface dark:hover:bg-nexus-hover border border-nexus-border transition-colors text-left text-sm font-medium text-nexus-muted">
+              <div className="p-2 bg-nexus-info/10 dark:bg-nexus-info/20 text-nexus-info rounded-lg">
                 <CheckSquare size={16} />
               </div>
               Create New Task
             </button>
-            <button onClick={() => toast('Opening schedule modal...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-nexus-surface/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-nexus-border transition-colors text-left text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">
-              <div className="p-2 bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded-lg">
+            <button onClick={() => toast('Opening schedule modal...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-nexus-surface/50 hover:bg-nexus-surface dark:hover:bg-nexus-hover border border-nexus-border transition-colors text-left text-sm font-medium text-nexus-muted">
+              <div className="p-2 bg-info/10 dark:bg-info/100/20 text-info dark:text-info rounded-lg">
                 <Calendar size={16} />
               </div>
               Schedule Meeting
             </button>
-            <button onClick={() => toast('Opening document upload...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-nexus-surface/50 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-100 dark:border-nexus-border transition-colors text-left text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">
-              <div className="p-2 bg-orange-100 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 rounded-lg">
+            <button onClick={() => toast('Opening document upload...')} className="w-full flex items-center gap-3 p-3 rounded-xl bg-nexus-surface/50 hover:bg-nexus-surface dark:hover:bg-nexus-hover border border-nexus-border transition-colors text-left text-sm font-medium text-nexus-muted">
+              <div className="p-2 bg-nexus-primary/15 dark:bg-nexus-primary/20 text-nexus-primary rounded-lg">
                 <FolderOpen size={16} />
               </div>
               Upload Document

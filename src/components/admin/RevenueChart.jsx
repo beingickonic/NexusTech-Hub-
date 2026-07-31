@@ -20,18 +20,18 @@ const RevenueChart = ({ data = [] }) => {
   ];
 
   return (
-    <div className="bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md p-4 md:p-6 rounded-xl md:rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm h-full min-h-[350px] md:min-h-[450px] flex flex-col">
+    <div className="bg-nexus-card backdrop-blur-md p-4 md:p-6 rounded-xl md:rounded-2xl border border-nexus-border shadow-sm h-full min-h-[350px] md:min-h-[450px] flex flex-col">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-4">
-        <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">Revenue Analytics</h3>
-        <div className="flex bg-slate-100 dark:bg-nexus-surface/50 p-1 rounded-lg border border-slate-200 dark:border-nexus-border">
+        <h3 className="text-base md:text-lg font-bold text-nexus-heading">Revenue Analytics</h3>
+        <div className="flex bg-nexus-surface dark:bg-nexus-surface/50 p-1 rounded-lg border border-nexus-border">
           {ranges.map((range) => (
             <button
               key={range}
               onClick={() => setTimeRange(range)}
               className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
                 timeRange === range 
-                  ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' 
-                  : 'text-nexus-textSecondary dark:text-nexus-textSecondary hover:text-slate-700 dark:hover:text-nexus-textSecondary'
+                  ? 'bg-white dark:bg-nexus-card text-nexus-heading shadow-sm' 
+                  : 'text-nexus-muted hover:text-nexus-heading dark:hover:text-nexus-textSecondary'
               }`}
             >
               {range}

@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
   return (
     <motion.div
       whileHover={{ y: -8 }}
-      className="group relative bg-white dark:bg-dark-surface rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-none border border-slate-200 dark:border-nexus-border transition-all duration-300 hover:shadow-glow hover:border-primary/50 flex flex-col h-full"
+      className="group relative bg-nexus-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-none border border-nexus-border transition-all duration-300 hover:shadow-glow hover:border-primary/50 flex flex-col h-full"
     >
       {/* Badges */}
       <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
           </span>
         )}
         {product.new_arrival && (
-          <span className="bg-accent text-gray-900 text-xs font-bold px-2.5 py-1 rounded-md">
+          <span className="bg-accent text-nexus-navy text-xs font-bold px-2.5 py-1 rounded-md">
             NEW
           </span>
         )}
@@ -39,15 +39,15 @@ const ProductCard = ({ product }) => {
         }}
         className={`absolute top-4 right-4 z-20 p-2 rounded-full backdrop-blur-sm transition-colors shadow-sm ${
           isWishlisted && isWishlisted(product.id)
-            ? 'bg-red-50 text-red-500 hover:bg-red-100 dark:bg-red-500/20 dark:hover:bg-red-500/30'
-            : 'bg-white/80 dark:bg-dark-bg/80 text-gray-400 hover:text-red-500 hover:bg-white dark:hover:bg-dark-bg'
+            ? 'bg-nexus-error/5 text-nexus-error hover:bg-nexus-error/10 dark:bg-nexus-error/20 dark:hover:bg-nexus-error/30'
+            : 'bg-white/80 dark:bg-nexus-bg/80 text-nexus-muted hover:text-nexus-error hover:bg-white dark:hover:bg-dark-bg'
         }`}
       >
         <Heart size={18} fill={isWishlisted && isWishlisted(product.id) ? "currentColor" : "none"} />
       </button>
 
       {/* Image Container */}
-      <Link to={`/products/${product.id}`} className="relative w-full aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden flex-shrink-0 block">
+      <Link to={`/products/${product.id}`} className="relative w-full aspect-square bg-nexus-surface dark:bg-nexus-card overflow-hidden flex-shrink-0 block">
         {(() => {
           const rawImage = product.image_url || product.image;
           const resolvedUrl = getImageUrl(rawImage, 'thumb');
@@ -65,12 +65,12 @@ const ProductCard = ({ product }) => {
         {/* Quick Actions (Hover) */}
         <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-20 flex justify-center gap-2">
           <div 
-            className="flex-1 bg-white dark:bg-dark-bg text-slate-900 dark:text-white font-medium py-2.5 rounded-lg shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary transition-colors flex items-center justify-center gap-2 text-sm"
+            className="flex-1 bg-white dark:bg-nexus-bg text-nexus-heading font-medium py-2.5 rounded-lg shadow-lg hover:bg-primary hover:text-white dark:hover:bg-primary transition-colors flex items-center justify-center gap-2 text-sm"
           >
             <Eye size={16} /> Quick View
           </div>
         </div>
-        <div className="absolute inset-0 bg-black/5 dark:bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+        <div className="absolute inset-0 bg-black/5 dark:bg-nexus-bg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
       </Link>
 
       {/* Product Info */}
@@ -81,25 +81,25 @@ const ProductCard = ({ product }) => {
               <Star key={i} size={14} fill={i < Math.floor(product.rating) ? "currentColor" : "none"} />
             ))}
           </div>
-          <span className="text-xs text-nexus-textSecondary dark:text-gray-400">({product.reviews})</span>
+          <span className="text-xs text-nexus-textSecondary dark:text-nexus-muted">({product.reviews})</span>
         </div>
         
-        <Link to={`/products/${product.id}`} className="font-semibold text-slate-900 dark:text-white mb-1 line-clamp-2 leading-snug hover:text-primary transition-colors">
+        <Link to={`/products/${product.id}`} className="font-semibold text-nexus-heading mb-1 line-clamp-2 leading-snug hover:text-primary transition-colors">
           {product.title}
         </Link>
         
-        <p className="text-sm text-nexus-textSecondary dark:text-gray-400 mb-4 line-clamp-1">
+        <p className="text-sm text-nexus-textSecondary dark:text-nexus-muted mb-4 line-clamp-1">
           {product.category}
         </p>
 
         <div className="mt-auto flex items-center justify-between">
           <div className="flex flex-col">
             {product.old_price && (
-              <span className="text-xs text-gray-400 line-through">
+              <span className="text-xs text-nexus-muted line-through">
                 {formatCurrency(product.old_price)}
               </span>
             )}
-            <span className="text-lg font-bold text-slate-900 dark:text-white">
+            <span className="text-lg font-bold text-nexus-heading">
               {formatCurrency(product.price)}
             </span>
           </div>
@@ -111,7 +111,7 @@ const ProductCard = ({ product }) => {
               e.stopPropagation();
               await addToCart(product.id, 1);
             }}
-            className="w-10 h-10 rounded-full bg-slate-100 dark:bg-dark-bg flex items-center justify-center text-slate-900 dark:text-white hover:bg-nexus-primary hover:text-white dark:hover:bg-primary transition-colors z-20 relative"
+            className="w-10 h-10 rounded-full bg-nexus-surface dark:bg-nexus-bg flex items-center justify-center text-nexus-heading hover:bg-nexus-primary hover:text-white dark:hover:bg-primary transition-colors z-20 relative"
           >
             <ShoppingCart size={18} />
           </button>

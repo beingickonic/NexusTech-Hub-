@@ -29,19 +29,19 @@ const SupplierDashboard = () => {
   }, [user]);
 
   const kpis = [
-    { label: 'Products Supplied', value: stats.products, color: 'text-teal-500', bg: 'bg-teal-50 dark:bg-teal-500/10', icon: Package },
-    { label: 'Pending POs', value: stats.orders, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-500/10', icon: FileText },
-    { label: 'Completed Deliveries', value: 0, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-500/10', icon: CheckCircle },
+    { label: 'Products Supplied', value: stats.products, color: 'text-success', bg: 'bg-success/10 dark:bg-success/100/10', icon: Package },
+    { label: 'Pending POs', value: stats.orders, color: 'text-nexus-gold', bg: 'bg-nexus-gold/10 dark:bg-nexus-gold/10', icon: FileText },
+    { label: 'Completed Deliveries', value: 0, color: 'text-nexus-success', bg: 'bg-nexus-success/10 dark:bg-nexus-success/10', icon: CheckCircle },
   ];
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Supplier Partner Dashboard</h1>
+          <h1 className="text-2xl font-bold text-nexus-heading">Supplier Partner Dashboard</h1>
           <p className="text-nexus-textSecondary text-sm mt-1">Welcome back, {user?.company_name || user?.full_name}</p>
         </div>
-        <Link to="/supplier/orders" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-teal-600/20">
+        <Link to="/supplier/orders" className="inline-flex items-center gap-2 bg-success hover:bg-success text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-success/20">
           <FileText size={18} /> View Orders
         </Link>
       </div>
@@ -53,14 +53,14 @@ const SupplierDashboard = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="bg-white dark:bg-dark-surface p-5 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex items-center gap-4"
+            className="bg-nexus-card p-5 rounded-2xl border border-nexus-border shadow-sm flex items-center gap-4"
           >
             <div className={`p-4 rounded-xl ${kpi.bg}`}>
               <kpi.icon size={24} className={kpi.color} />
             </div>
             <div>
-              <p className="text-sm font-medium text-nexus-textSecondary dark:text-nexus-textSecondary">{kpi.label}</p>
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
+              <p className="text-sm font-medium text-nexus-muted">{kpi.label}</p>
+              <h3 className="text-2xl font-bold text-nexus-heading mt-1">
                 {loading ? '-' : kpi.value}
               </h3>
             </div>
@@ -70,32 +70,32 @@ const SupplierDashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent POs Widget */}
-        <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm">
+        <div className="bg-nexus-card p-6 rounded-2xl border border-nexus-border shadow-sm">
            <div className="flex items-center justify-between mb-6">
-             <div className="flex items-center gap-2 text-slate-900 dark:text-white font-bold">
-                <FileText className="text-teal-500" size={20} /> Recent Purchase Orders
+             <div className="flex items-center gap-2 text-nexus-heading font-bold">
+                <FileText className="text-success" size={20} /> Recent Purchase Orders
              </div>
-             <Link to="/supplier/orders" className="text-xs font-bold text-teal-600 hover:text-teal-700">View All</Link>
+             <Link to="/supplier/orders" className="text-xs font-bold text-success hover:text-success">View All</Link>
            </div>
            
            <div className="space-y-4">
-              <div className="text-center p-6 text-nexus-textSecondary text-sm bg-slate-50 dark:bg-white/5 rounded-xl">
+              <div className="text-center p-6 text-nexus-textSecondary text-sm bg-nexus-surface dark:bg-nexus-hover rounded-xl">
                 Purchase orders will appear here once assigned to you by the warehouse.
               </div>
            </div>
         </div>
 
         {/* Shortcuts */}
-        <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm">
-           <h3 className="font-bold text-slate-900 dark:text-white mb-4">Supplier Actions</h3>
+        <div className="bg-nexus-card p-6 rounded-2xl border border-nexus-border shadow-sm">
+           <h3 className="font-bold text-nexus-heading mb-4">Supplier Actions</h3>
            <div className="grid grid-cols-2 gap-3">
-             <Link to="/supplier/orders" className="p-4 bg-slate-50 dark:bg-white/5 rounded-xl text-center hover:bg-slate-100 dark:hover:bg-white/10 transition-colors">
-               <Package className="mx-auto text-teal-500 mb-2" />
-               <p className="text-sm font-medium text-slate-900 dark:text-white">Products</p>
+             <Link to="/supplier/orders" className="p-4 bg-nexus-surface dark:bg-nexus-hover rounded-xl text-center hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors">
+               <Package className="mx-auto text-success mb-2" />
+               <p className="text-sm font-medium text-nexus-heading">Products</p>
              </Link>
-             <div className="p-4 bg-slate-50 dark:bg-white/5 rounded-xl text-center opacity-50 cursor-not-allowed">
-               <Building2 className="mx-auto text-emerald-500 mb-2" />
-               <p className="text-sm font-medium text-slate-900 dark:text-white">Profile</p>
+             <div className="p-4 bg-nexus-surface dark:bg-nexus-hover rounded-xl text-center opacity-50 cursor-not-allowed">
+               <Building2 className="mx-auto text-nexus-success mb-2" />
+               <p className="text-sm font-medium text-nexus-heading">Profile</p>
              </div>
            </div>
         </div>

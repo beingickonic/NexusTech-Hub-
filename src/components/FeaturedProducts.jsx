@@ -29,11 +29,11 @@ const FeaturedProducts = () => {
   }
 
   return (
-    <section className="py-20 bg-white dark:bg-dark-bg/50 transition-colors duration-300">
+    <section className="py-20 bg-white dark:bg-nexus-bg/50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Featured Products</h2>
-          <p className="text-nexus-textSecondary dark:text-gray-400 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-nexus-heading mb-4">Featured Products</h2>
+          <p className="text-nexus-textSecondary dark:text-nexus-muted max-w-2xl mx-auto">
             Handpicked premium gadgets that blend cutting-edge technology with stunning design aesthetics.
           </p>
         </div>

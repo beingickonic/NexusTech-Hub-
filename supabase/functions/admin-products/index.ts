@@ -112,15 +112,47 @@ serve(async (req) => {
           .eq('id', id));
         break;
 
-      case 'update_stock':
+      case 'update_stock': {
         if (!id) throw new Error("Missing product ID");
+        const stockValue = Number(stock);
         ({ data: result, error: dbError } = await serviceClient
           .from('products')
-          .update({ stock })
+          .update({ stock: stockValue })
           .eq('id', id)
           .select()
           .single());
+        if (!dbError) {
+          const { data: existingInv } = await serviceClient
+            .from('inventory')
+            .select('id, warehouse_id')
+            .eq('product_id', id)
+            .limit(1)
+            .maybeSingle();
+          if (existingInv) {
+            const { error: invError } = await serviceClient
+              .from('inventory')
+              .update({ quantity_on_hand: stockValue, updated_at: new Date().toISOString() })
+              .eq('id', existingInv.id);
+            if (invError) dbError = invError;
+          } else {
+            const { data: warehouse } = await serviceClient
+              .from('warehouse_locations')
+              .select('id')
+              .limit(1)
+              .maybeSingle();
+            const { error: invError } = await serviceClient
+              .from('inventory')
+              .insert({
+                product_id: id,
+                warehouse_id: warehouse?.id || null,
+                quantity_on_hand: stockValue,
+                quantity_reserved: 0
+              });
+            if (invError) dbError = invError;
+          }
+        }
         break;
+      }
 
       default:
         throw new Error("Invalid action")

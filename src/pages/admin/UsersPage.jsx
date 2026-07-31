@@ -130,39 +130,39 @@ const AdminUsersPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <ShieldAlert className="text-indigo-500" /> User Management
+          <h1 className="text-2xl font-bold text-nexus-heading flex items-center gap-2">
+            <ShieldAlert className="text-info" /> User Management
           </h1>
           <p className="text-nexus-textSecondary text-sm mt-1">Securely manage employee access and portal roles.</p>
         </div>
         <button 
           onClick={() => setShowModal(true)}
-          className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30"
+          className="flex items-center justify-center gap-2 bg-info text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-info transition-colors shadow-lg shadow-info/30"
         >
           <Plus size={18} /> Add New User
         </button>
       </div>
 
       {/* Filters */}
-      <div className="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="bg-nexus-card p-4 rounded-2xl border border-nexus-border shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="relative w-full md:w-80">
           <input
             type="text"
             placeholder="Search users..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-slate-900 dark:text-white"
+            className="w-full pl-10 pr-4 py-2.5 bg-nexus-surface border border-nexus-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-nexus-info/50 text-nexus-heading"
           />
           <Search size={16} className="absolute left-3.5 top-3 text-nexus-textSecondary" />
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden">
+      <div className="bg-nexus-card rounded-2xl border border-nexus-border shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-nexus-border">
+              <tr className="bg-nexus-surface dark:bg-nexus-hover border-b border-nexus-border">
                 <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase">User</th>
                 <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase">Role / Dept</th>
                 <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase">Status</th>
@@ -170,7 +170,7 @@ const AdminUsersPage = () => {
                 <th className="p-4 text-xs font-semibold text-nexus-textSecondary uppercase text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-white/10">
+            <tbody className="divide-y divide-nexus-border dark:divide-white/10">
               {loading ? (
                 <tr>
                   <td colSpan="5" className="p-8 text-center text-nexus-textSecondary">Loading users...</td>
@@ -180,25 +180,25 @@ const AdminUsersPage = () => {
                   <td colSpan="5" className="p-8 text-center text-nexus-textSecondary">No users found.</td>
                 </tr>
               ) : filtered.map(u => (
-                <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                <tr key={u.id} className="hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
                       <UserAvatar src={u.avatar_url} name={u.full_name} size="sm" />
                       <div>
-                        <p className="font-semibold text-slate-900 dark:text-white text-sm">{u.full_name || 'Unknown User'}</p>
+                        <p className="font-semibold text-nexus-heading text-sm">{u.full_name || 'Unknown User'}</p>
                         <p className="text-xs text-nexus-textSecondary font-mono">{u.id.substring(0,8)}...</p>
                       </div>
                     </div>
                   </td>
                   <td className="p-4">
-                    <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider text-[11px]">{u.role}</p>
+                    <p className="text-sm font-semibold text-info dark:text-info uppercase tracking-wider text-[11px]">{u.role}</p>
                     <p className="text-xs text-nexus-textSecondary">{u.department || 'N/A'}</p>
                   </td>
                   <td className="p-4">
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
                       u.status === 'Active' 
-                        ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400'
-                        : 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400'
+                        ? 'bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 dark:text-nexus-success'
+                        : 'bg-nexus-error/10 text-nexus-error dark:bg-nexus-error/20 dark:text-nexus-error'
                     }`}>
                       {u.status === 'Active' ? <CheckCircle size={12} /> : <XCircle size={12} />}
                       {u.status || 'Active'}
@@ -211,14 +211,14 @@ const AdminUsersPage = () => {
                     <div className="flex items-center justify-end gap-2">
                       <button 
                         onClick={() => toggleStatus(u.id, u.status || 'Active')}
-                        className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-nexus-textSecondary hover:text-amber-500 transition-colors"
+                        className="p-2 rounded-lg bg-nexus-surface text-nexus-muted hover:text-nexus-gold transition-colors"
                         title={u.status === 'Active' ? 'Suspend' : 'Activate'}
                       >
                         <Edit3 size={16} />
                       </button>
                       <button 
                         onClick={() => handleDeleteUser(u.id, u.full_name)}
-                        className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-nexus-textSecondary hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/20 transition-colors"
+                        className="p-2 rounded-lg bg-nexus-surface text-nexus-muted hover:text-nexus-error hover:bg-nexus-error/5 dark:hover:bg-nexus-error/20 transition-colors"
                         title="Delete User"
                       >
                         <Trash2 size={16} />
@@ -238,29 +238,29 @@ const AdminUsersPage = () => {
           <motion.div 
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-white dark:bg-nexus-surface w-full max-w-lg rounded-2xl shadow-xl overflow-hidden border border-slate-200 dark:border-nexus-border"
+            className="bg-nexus-card w-full max-w-lg rounded-2xl shadow-xl overflow-hidden border border-nexus-border"
           >
-            <div className="p-6 border-b border-slate-200 dark:border-nexus-border">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Create Department User</h2>
+            <div className="p-6 border-b border-nexus-border">
+              <h2 className="text-xl font-bold text-nexus-heading">Create Department User</h2>
             </div>
             
             <form onSubmit={handleCreateUser} className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5 col-span-2">
-                  <label className="text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">Full Name</label>
-                  <input type="text" required value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-indigo-500" />
+                  <label className="text-sm font-semibold text-nexus-muted">Full Name</label>
+                  <input type="text" required value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} className="w-full bg-nexus-surface border border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-info" />
                 </div>
                 <div className="space-y-1.5 col-span-2">
-                  <label className="text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">Email Address (Login)</label>
-                  <input type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-indigo-500" />
+                  <label className="text-sm font-semibold text-nexus-muted">Email Address (Login)</label>
+                  <input type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-nexus-surface border border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-info" />
                 </div>
                 <div className="space-y-1.5 col-span-2">
-                  <label className="text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">Password</label>
-                  <input type="text" required value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-indigo-500" />
+                  <label className="text-sm font-semibold text-nexus-muted">Password</label>
+                  <input type="text" required value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full bg-nexus-surface border border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-info" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">Role</label>
-                  <select value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-indigo-500">
+                  <label className="text-sm font-semibold text-nexus-muted">Role</label>
+                  <select value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} className="w-full bg-nexus-surface border border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-info">
                     <option value="customer">Customer</option>
                     <option value="dispatch">Dispatch</option>
                     <option value="driver">Driver</option>
@@ -270,16 +270,16 @@ const AdminUsersPage = () => {
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">Department Name</label>
-                  <input type="text" value={formData.department} onChange={e => setFormData({...formData, department: e.target.value})} placeholder="e.g. Operations" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-indigo-500" />
+                  <label className="text-sm font-semibold text-nexus-muted">Department Name</label>
+                  <input type="text" value={formData.department} onChange={e => setFormData({...formData, department: e.target.value})} placeholder="e.g. Operations" className="w-full bg-nexus-surface border border-nexus-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-info" />
                 </div>
               </div>
 
-              <div className="flex gap-3 pt-4 mt-6 border-t border-slate-200 dark:border-nexus-border">
-                <button type="button" onClick={() => setShowModal(false)} className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-slate-600 dark:text-nexus-textSecondary bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+              <div className="flex gap-3 pt-4 mt-6 border-t border-nexus-border">
+                <button type="button" onClick={() => setShowModal(false)} className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-nexus-muted bg-nexus-surface hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors">
                   Cancel
                 </button>
-                <button type="submit" disabled={isSubmitting} className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors disabled:opacity-50">
+                <button type="submit" disabled={isSubmitting} className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-white bg-info hover:bg-info transition-colors disabled:opacity-50">
                   {isSubmitting ? 'Creating...' : 'Create Account'}
                 </button>
               </div>

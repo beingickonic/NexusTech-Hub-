@@ -46,7 +46,7 @@ const PaymentCard = ({ payment, onConfirmCash, onConfirmDigital, onViewReceipt }
         {payment.status !== 'completed' && payment.method === 'COD' && (
           <button 
             onClick={() => onConfirmCash(payment)}
-            className="col-span-2 bg-gradient-to-r from-nexus-success to-[#047857] hover:opacity-90 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#10b981]/20 flex items-center justify-center gap-2"
+            className="col-span-2 bg-gradient-to-r from-nexus-success to-nexus-success hover:opacity-90 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-nexus-success/20 flex items-center justify-center gap-2"
           >
             <Banknote size={20} />
             Confirm Cash Received
@@ -66,7 +66,7 @@ const PaymentCard = ({ payment, onConfirmCash, onConfirmDigital, onViewReceipt }
         {payment.status === 'completed' && (
           <button 
             onClick={() => onViewReceipt(payment)}
-            className="col-span-2 bg-nexus-bg hover:bg-slate-800 text-white font-medium py-3.5 rounded-xl transition-all border border-nexus-border flex items-center justify-center gap-2"
+            className="col-span-2 bg-nexus-bg hover:bg-nexus-hover text-white font-medium py-3.5 rounded-xl transition-all border border-nexus-border flex items-center justify-center gap-2"
           >
             <ReceiptText size={20} className="text-nexus-textSecondary" />
             View Receipt

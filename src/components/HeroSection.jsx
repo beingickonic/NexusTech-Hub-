@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F4F4F8] dark:bg-gradient-cinematic min-h-[100svh] sm:min-h-[90vh] flex items-center transition-colors duration-300">
+    <section className="relative w-full overflow-hidden bg-nexus-surface dark:bg-gradient-cinematic min-h-[100svh] sm:min-h-[90vh] flex items-center transition-colors duration-300">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] right-[-5%] w-56 sm:w-72 md:w-96 h-56 sm:h-72 md:h-96 bg-primary/40 dark:bg-primary/30 rounded-full blur-[80px] sm:blur-[120px]" />
@@ -30,7 +30,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.1] tracking-tight text-slate-900 dark:text-white"
+              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.1] tracking-tight text-nexus-heading"
             >
               Smart Tech. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
@@ -42,7 +42,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base sm:text-lg text-slate-600 dark:text-gray-300 max-w-lg leading-relaxed"
+              className="text-base sm:text-lg text-nexus-muted max-w-lg leading-relaxed"
             >
               Discover the next generation of premium gadgets designed to elevate
               your everyday experience. Shop curated technology with unparalleled design.
@@ -56,13 +56,13 @@ const HeroSection = () => {
             >
               <Link
                 to="/products"
-                className="bg-primary hover:bg-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold transition-all shadow-glow flex items-center gap-2 hover:-translate-y-1 text-sm sm:text-base"
+                className="bg-primary hover:bg-nexus-primary-hover text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold transition-all shadow-glow flex items-center gap-2 hover:-translate-y-1 text-sm sm:text-base"
               >
                 Shop Now <ArrowRight size={18} />
               </Link>
               <Link
                 to="/products"
-                className="bg-white hover:bg-slate-50 dark:bg-white/10 dark:hover:bg-white/20 text-slate-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl dark:shadow-none backdrop-blur-sm border border-slate-200 dark:border-nexus-border hover:-translate-y-1 text-sm sm:text-base"
+                className="bg-white hover:bg-nexus-surface dark:bg-white/10 dark:hover:bg-nexus-hover/20 text-nexus-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-xl dark:shadow-none backdrop-blur-sm border border-nexus-border hover:-translate-y-1 text-sm sm:text-base"
               >
                 Explore Deals
               </Link>
@@ -96,12 +96,12 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="absolute top-1/4 right-0 z-30 glass px-3 sm:px-4 py-2 sm:py-3 rounded-2xl flex items-center gap-2 sm:gap-3 shadow-xl hidden xs:flex"
             >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 text-sm">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-nexus-success/20 flex items-center justify-center text-nexus-success text-sm">
                 ✓
               </div>
               <div>
-                <p className="text-[10px] sm:text-xs text-nexus-textSecondary dark:text-gray-400 font-medium">Just Purchased</p>
-                <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">Sony WH-1000XM5</p>
+                <p className="text-[10px] sm:text-xs text-nexus-textSecondary dark:text-nexus-muted font-medium">Just Purchased</p>
+                <p className="text-xs sm:text-sm font-bold text-nexus-heading">Sony WH-1000XM5</p>
               </div>
             </motion.div>
 

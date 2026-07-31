@@ -9,13 +9,13 @@ import { supabase } from '../../services/supabaseClient';
 import { inventoryService } from '../../services/inventoryService';
 
 const STATUS_CONFIG = {
-  pending:    { label: 'Pending',    color: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400',   icon: Clock },
-  approved:   { label: 'Approved',   color: 'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400',       icon: CheckCircle2 },
-  rejected:   { label: 'Rejected',   color: 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400',           icon: XCircle },
-  in_transit: { label: 'In Transit', color: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-400', icon: Truck },
-  received:   { label: 'Received',   color: 'bg-teal-100 text-teal-700 dark:bg-teal-500/20 dark:text-teal-400',       icon: Package },
-  completed:  { label: 'Completed',  color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400', icon: CheckCircle2 },
-  cancelled:  { label: 'Cancelled',  color: 'bg-slate-100 text-slate-700 dark:bg-slate-500/20 dark:text-nexus-textSecondary',   icon: XCircle }
+  pending:    { label: 'Pending',    color: 'bg-nexus-gold/10 text-nexus-gold dark:bg-nexus-gold/20 dark:text-nexus-gold',   icon: Clock },
+  approved:   { label: 'Approved',   color: 'bg-nexus-info/10 text-nexus-info dark:bg-nexus-info/20 dark:text-nexus-info',       icon: CheckCircle2 },
+  rejected:   { label: 'Rejected',   color: 'bg-nexus-error/10 text-nexus-error dark:bg-nexus-error/20 dark:text-nexus-error',           icon: XCircle },
+  in_transit: { label: 'In Transit', color: 'bg-info/10 text-info dark:bg-info/100/20 dark:text-info', icon: Truck },
+  received:   { label: 'Received',   color: 'bg-success/10 text-success dark:bg-success/100/20 dark:text-success',       icon: Package },
+  completed:  { label: 'Completed',  color: 'bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 dark:text-nexus-success', icon: CheckCircle2 },
+  cancelled:  { label: 'Cancelled',  color: 'bg-nexus-surface text-nexus-heading dark:bg-nexus-muted/20 dark:text-nexus-textSecondary',   icon: XCircle }
 };
 
 const StatusBadge = ({ status }) => {
@@ -61,14 +61,14 @@ const CreateTransferModal = ({ onClose, onSuccess }) => {
     }
   };
 
-  const inputCls = 'w-full bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-nexus-border rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white';
+  const inputCls = 'w-full bg-white dark:bg-nexus-bg border border-nexus-border rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-nexus-heading';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-2xl w-full max-w-lg">
-        <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-nexus-border">
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2"><ArrowRightLeft size={20} className="text-primary" /> New Stock Transfer</h2>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg"><X size={18} /></button>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-nexus-card rounded-2xl border border-nexus-border shadow-2xl w-full max-w-lg">
+        <div className="flex items-center justify-between p-6 border-b border-nexus-border">
+          <h2 className="text-lg font-bold text-nexus-heading flex items-center gap-2"><ArrowRightLeft size={20} className="text-primary" /> New Stock Transfer</h2>
+          <button onClick={onClose} className="p-2 hover:bg-nexus-surface dark:hover:bg-nexus-hover rounded-lg"><X size={18} /></button>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
@@ -103,8 +103,8 @@ const CreateTransferModal = ({ onClose, onSuccess }) => {
             <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={2} className={inputCls} placeholder="Transfer notes..." />
           </div>
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-nexus-border text-sm font-medium hover:bg-slate-50 dark:hover:bg-white/5">Cancel</button>
-            <button type="submit" disabled={loading} className="flex-1 py-2.5 rounded-xl bg-primary hover:bg-orange-600 text-white text-sm font-semibold disabled:opacity-60 transition-colors">
+            <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-nexus-border text-sm font-medium hover:bg-nexus-surface dark:hover:bg-nexus-hover">Cancel</button>
+            <button type="submit" disabled={loading} className="flex-1 py-2.5 rounded-xl bg-primary hover:bg-nexus-primary-hover text-white text-sm font-semibold disabled:opacity-60 transition-colors">
               {loading ? 'Creating...' : 'Create Transfer'}
             </button>
           </div>
@@ -137,39 +137,39 @@ const TransferDetailModal = ({ transfer, onClose, onAction, currentUser }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-2xl w-full max-w-md">
-        <div className="flex items-center justify-between p-5 border-b border-slate-200 dark:border-nexus-border">
-          <h2 className="font-bold text-slate-900 dark:text-white">Transfer Details</h2>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg"><X size={16} /></button>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-nexus-card rounded-2xl border border-nexus-border shadow-2xl w-full max-w-md">
+        <div className="flex items-center justify-between p-5 border-b border-nexus-border">
+          <h2 className="font-bold text-nexus-heading">Transfer Details</h2>
+          <button onClick={onClose} className="p-2 hover:bg-nexus-surface dark:hover:bg-nexus-hover rounded-lg"><X size={16} /></button>
         </div>
         <div className="p-5 space-y-4">
           <div className="flex items-center justify-between">
             <span className="font-mono text-xs text-nexus-textSecondary">{transfer.reference_number || `TRF-${transfer.id}`}</span>
             <StatusBadge status={transfer.status} />
           </div>
-          <div className="bg-slate-50 dark:bg-white/[0.03] rounded-xl p-4 space-y-3">
+          <div className="bg-nexus-surface dark:bg-white/[0.03] rounded-xl p-4 space-y-3">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg"><Package size={16} className="text-primary" /></div>
-              <div><p className="font-semibold text-slate-900 dark:text-white text-sm">{product.title || 'Unknown'}</p>
+              <div><p className="font-semibold text-nexus-heading text-sm">{product.title || 'Unknown'}</p>
               <p className="text-xs text-nexus-textSecondary">{product.sku || ''}</p></div>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <div className="flex items-center gap-1 text-slate-600 dark:text-nexus-textSecondary"><MapPin size={14} /> {fromWh.name || 'N/A'}</div>
+              <div className="flex items-center gap-1 text-nexus-muted"><MapPin size={14} /> {fromWh.name || 'N/A'}</div>
               <ArrowRight size={16} className="text-primary" />
-              <div className="flex items-center gap-1 text-slate-600 dark:text-nexus-textSecondary"><MapPin size={14} /> {toWh.name || 'N/A'}</div>
+              <div className="flex items-center gap-1 text-nexus-muted"><MapPin size={14} /> {toWh.name || 'N/A'}</div>
             </div>
             <div className="text-center"><span className="text-2xl font-bold text-primary">{transfer.quantity}</span><span className="text-nexus-textSecondary text-sm ml-1">units</span></div>
           </div>
-          {transfer.notes && <p className="text-sm text-slate-600 dark:text-nexus-textSecondary bg-slate-50 dark:bg-white/5 rounded-lg p-3">{transfer.notes}</p>}
-          {transfer.rejection_reason && <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/10 rounded-lg p-3">Rejection: {transfer.rejection_reason}</p>}
+          {transfer.notes && <p className="text-sm text-nexus-muted bg-nexus-surface dark:bg-nexus-hover rounded-lg p-3">{transfer.notes}</p>}
+          {transfer.rejection_reason && <p className="text-sm text-nexus-error bg-nexus-error/5 dark:bg-nexus-error/10 rounded-lg p-3">Rejection: {transfer.rejection_reason}</p>}
 
           {showReject && (
             <div>
               <label className="block text-xs font-semibold text-nexus-textSecondary uppercase mb-1.5">Rejection Reason</label>
-              <textarea value={rejReason} onChange={e => setRejReason(e.target.value)} rows={2} className="w-full bg-white dark:bg-[#0f172a] border border-red-200 dark:border-red-500/30 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400/40 text-slate-900 dark:text-white" placeholder="Reason for rejection..." />
+              <textarea value={rejReason} onChange={e => setRejReason(e.target.value)} rows={2} className="w-full bg-white dark:bg-nexus-bg border border-nexus-error/20 dark:border-nexus-error/30 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-nexus-error/40 text-nexus-heading" placeholder="Reason for rejection..." />
               <div className="flex gap-2 mt-2">
-                <button onClick={() => setShowReject(false)} className="flex-1 py-2 rounded-lg border border-slate-200 dark:border-nexus-border text-sm">Cancel</button>
-                <button onClick={() => handleAction('rejected')} disabled={loading || !rejReason} className="flex-1 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white text-sm font-semibold disabled:opacity-60">Confirm Reject</button>
+                <button onClick={() => setShowReject(false)} className="flex-1 py-2 rounded-lg border border-nexus-border text-sm">Cancel</button>
+                <button onClick={() => handleAction('rejected')} disabled={loading || !rejReason} className="flex-1 py-2 rounded-lg bg-nexus-error hover:bg-nexus-error text-white text-sm font-semibold disabled:opacity-60">Confirm Reject</button>
               </div>
             </div>
           )}
@@ -177,13 +177,13 @@ const TransferDetailModal = ({ transfer, onClose, onAction, currentUser }) => {
           {!showReject && (
             <div className="flex flex-wrap gap-2">
               {transfer.status === 'pending' && <>
-                <button onClick={() => handleAction('approved')} disabled={loading} className="flex-1 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold disabled:opacity-60">Approve</button>
-                <button onClick={() => setShowReject(true)} className="flex-1 py-2 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-500/20 dark:text-red-400 text-sm font-semibold">Reject</button>
+                <button onClick={() => handleAction('approved')} disabled={loading} className="flex-1 py-2 rounded-lg bg-nexus-success hover:bg-nexus-success text-white text-sm font-semibold disabled:opacity-60">Approve</button>
+                <button onClick={() => setShowReject(true)} className="flex-1 py-2 rounded-lg bg-nexus-error/10 text-nexus-error hover:bg-nexus-error/10 dark:bg-nexus-error/20 dark:text-nexus-error text-sm font-semibold">Reject</button>
               </>}
-              {transfer.status === 'approved' && <button onClick={() => handleAction('in_transit')} disabled={loading} className="flex-1 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-semibold disabled:opacity-60">Mark In Transit</button>}
-              {transfer.status === 'in_transit' && <button onClick={() => handleAction('received')} disabled={loading} className="flex-1 py-2 rounded-lg bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold disabled:opacity-60">Mark Received</button>}
-              {transfer.status === 'received' && <button onClick={() => handleAction('completed')} disabled={loading} className="flex-1 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold disabled:opacity-60">Complete</button>}
-              {['pending','approved'].includes(transfer.status) && <button onClick={() => handleAction('cancelled')} disabled={loading} className="px-4 py-2 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-nexus-textSecondary hover:bg-slate-200 dark:hover:bg-white/10 text-sm font-medium disabled:opacity-60">Cancel</button>}
+              {transfer.status === 'approved' && <button onClick={() => handleAction('in_transit')} disabled={loading} className="flex-1 py-2 rounded-lg bg-info/100 hover:bg-info text-white text-sm font-semibold disabled:opacity-60">Mark In Transit</button>}
+              {transfer.status === 'in_transit' && <button onClick={() => handleAction('received')} disabled={loading} className="flex-1 py-2 rounded-lg bg-success/100 hover:bg-success text-white text-sm font-semibold disabled:opacity-60">Mark Received</button>}
+              {transfer.status === 'received' && <button onClick={() => handleAction('completed')} disabled={loading} className="flex-1 py-2 rounded-lg bg-nexus-success hover:bg-nexus-success text-white text-sm font-semibold disabled:opacity-60">Complete</button>}
+              {['pending','approved'].includes(transfer.status) && <button onClick={() => handleAction('cancelled')} disabled={loading} className="px-4 py-2 rounded-lg bg-nexus-surface dark:bg-nexus-hover text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover text-sm font-medium disabled:opacity-60">Cancel</button>}
             </div>
           )}
         </div>
@@ -249,14 +249,14 @@ const StockTransfersPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Stock Transfers</h1>
+          <h1 className="text-2xl font-bold text-nexus-heading">Stock Transfers</h1>
           <p className="text-nexus-textSecondary text-sm mt-1">Manage inventory movements between warehouses</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={fetchTransfers} className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-nexus-border transition-colors">
-            <RefreshCw size={16} className="text-slate-600 dark:text-nexus-textSecondary" />
+          <button onClick={fetchTransfers} className="p-2.5 rounded-xl bg-nexus-surface dark:bg-nexus-hover hover:bg-nexus-surface dark:hover:bg-nexus-hover border border-nexus-border transition-colors">
+            <RefreshCw size={16} className="text-nexus-muted" />
           </button>
-          <button onClick={() => setShowCreate(true)} className="inline-flex items-center gap-2 bg-primary hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25">
+          <button onClick={() => setShowCreate(true)} className="inline-flex items-center gap-2 bg-primary hover:bg-nexus-primary-hover text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25">
             <Plus size={18} /> New Transfer
           </button>
         </div>
@@ -265,12 +265,12 @@ const StockTransfersPage = () => {
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Total', value: summaryStats.total,     color: 'text-slate-600',    bg: 'bg-slate-50 dark:bg-white/5' },
-          { label: 'Pending', value: summaryStats.pending,  color: 'text-amber-600',   bg: 'bg-amber-50 dark:bg-amber-500/10' },
-          { label: 'In Transit', value: summaryStats.inTransit, color: 'text-indigo-600', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
-          { label: 'Completed', value: summaryStats.completed, color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-500/10' },
+          { label: 'Total', value: summaryStats.total,     color: 'text-nexus-muted',    bg: 'bg-nexus-surface dark:bg-nexus-hover' },
+          { label: 'Pending', value: summaryStats.pending,  color: 'text-nexus-gold',   bg: 'bg-nexus-gold/10 dark:bg-nexus-gold/10' },
+          { label: 'In Transit', value: summaryStats.inTransit, color: 'text-info', bg: 'bg-info/10 dark:bg-info/100/10' },
+          { label: 'Completed', value: summaryStats.completed, color: 'text-nexus-success', bg: 'bg-nexus-success/10 dark:bg-nexus-success/10' },
         ].map(s => (
-          <div key={s.label} className={`${s.bg} rounded-2xl p-4 border border-slate-200 dark:border-nexus-border`}>
+          <div key={s.label} className={`${s.bg} rounded-2xl p-4 border border-nexus-border`}>
             <p className="text-xs font-semibold text-nexus-textSecondary uppercase tracking-wider">{s.label}</p>
             <p className={`text-3xl font-bold mt-1 ${s.color}`}>{s.value}</p>
           </div>
@@ -278,13 +278,13 @@ const StockTransfersPage = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-dark-surface rounded-2xl border border-slate-200 dark:border-nexus-border shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-slate-200 dark:border-nexus-border flex flex-col sm:flex-row gap-4 items-center justify-between bg-slate-50/50 dark:bg-white/[0.02]">
+      <div className="bg-nexus-card rounded-2xl border border-nexus-border shadow-sm overflow-hidden">
+        <div className="p-4 border-b border-nexus-border flex flex-col sm:flex-row gap-4 items-center justify-between bg-nexus-surface/50 dark:bg-white/[0.02]">
           <div className="relative w-full sm:max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary" size={18} />
-            <input type="text" placeholder="Search product, warehouse, or ref..." value={search} onChange={e => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-nexus-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white" />
+            <input type="text" placeholder="Search product, warehouse, or ref..." value={search} onChange={e => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-2 bg-white dark:bg-nexus-bg border border-nexus-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-nexus-heading" />
           </div>
-          <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-nexus-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white">
+          <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="bg-white dark:bg-nexus-bg border border-nexus-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 text-nexus-heading">
             <option value="">All Status</option>
             {Object.entries(STATUS_CONFIG).map(([v, c]) => <option key={v} value={v}>{c.label}</option>)}
           </select>
@@ -293,33 +293,33 @@ const StockTransfersPage = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
-              <tr className="bg-slate-50 dark:bg-white/[0.02] border-b border-slate-200 dark:border-nexus-border">
+              <tr className="bg-nexus-surface dark:bg-white/[0.02] border-b border-nexus-border">
                 {['Reference','Product','Route','Quantity','Status','Date','Actions'].map(h => (
-                  <th key={h} className="px-5 py-4 text-xs font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary uppercase tracking-wider">{h}</th>
+                  <th key={h} className="px-5 py-4 text-xs font-semibold text-nexus-muted uppercase tracking-wider">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-white/10">
+            <tbody className="divide-y divide-nexus-border dark:divide-white/10">
               {loading ? [...Array(4)].map((_, i) => (
-                <tr key={i}><td colSpan={7} className="px-5 py-4"><div className="h-8 bg-slate-100 dark:bg-white/5 rounded-lg animate-pulse" /></td></tr>
+                <tr key={i}><td colSpan={7} className="px-5 py-4"><div className="h-8 bg-nexus-surface dark:bg-nexus-hover rounded-lg animate-pulse" /></td></tr>
               )) : filtered.length > 0 ? filtered.map(t => (
-                <motion.tr key={t.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors group">
+                <motion.tr key={t.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hover:bg-nexus-surface/50 dark:hover:bg-nexus-hover/[0.02] transition-colors group">
                   <td className="px-5 py-4">
                     <p className="font-mono text-xs font-semibold text-primary">{t.reference_number || `TRF-${t.id}`}</p>
                     <p className="text-xs text-nexus-textSecondary mt-0.5">#{t.id}</p>
                   </td>
                   <td className="px-5 py-4">
-                    <p className="font-medium text-slate-900 dark:text-white text-sm">{t.products?.title || 'Unknown'}</p>
+                    <p className="font-medium text-nexus-heading text-sm">{t.products?.title || 'Unknown'}</p>
                     <p className="text-xs font-mono text-nexus-textSecondary">{t.products?.sku || ''}</p>
                   </td>
                   <td className="px-5 py-4">
-                    <div className="flex items-center gap-1.5 text-sm text-slate-700 dark:text-nexus-textSecondary">
+                    <div className="flex items-center gap-1.5 text-sm text-nexus-muted">
                       <span className="truncate max-w-[80px]">{t.from_warehouse?.name || 'N/A'}</span>
                       <ArrowRight size={12} className="text-primary flex-shrink-0" />
                       <span className="truncate max-w-[80px]">{t.to_warehouse?.name || 'N/A'}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-4"><span className="font-bold text-slate-900 dark:text-white">{t.quantity}</span><span className="text-nexus-textSecondary text-xs ml-1">units</span></td>
+                  <td className="px-5 py-4"><span className="font-bold text-nexus-heading">{t.quantity}</span><span className="text-nexus-textSecondary text-xs ml-1">units</span></td>
                   <td className="px-5 py-4"><StatusBadge status={t.status} /></td>
                   <td className="px-5 py-4 text-xs text-nexus-textSecondary">{new Date(t.created_at).toLocaleDateString()}</td>
                   <td className="px-5 py-4">
@@ -330,7 +330,7 @@ const StockTransfersPage = () => {
                 </motion.tr>
               )) : (
                 <tr><td colSpan={7} className="px-5 py-16 text-center text-nexus-textSecondary">
-                  <ArrowRightLeft size={48} className="mx-auto text-nexus-textSecondary dark:text-slate-600 mb-3" />
+                  <ArrowRightLeft size={48} className="mx-auto text-nexus-textSecondary dark:text-nexus-muted mb-3" />
                   <p className="font-medium">No transfers found</p>
                   <p className="text-sm mt-1">Create your first stock transfer to get started</p>
                 </td></tr>

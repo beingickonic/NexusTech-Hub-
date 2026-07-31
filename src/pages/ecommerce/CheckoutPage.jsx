@@ -77,6 +77,7 @@ const CheckoutPage = () => {
       items: cartItems,
       total_amount: cartSummary.total,
       payment_status: 'unpaid',
+      payment_method: paymentMethod,
       shippingName: formData.fullName,
       shippingPhone: formData.phone,
       shippingAddress: formData.address,
@@ -93,7 +94,9 @@ const CheckoutPage = () => {
         // Update order status to Awaiting Payment
         await orderService.updateOrderStatus(newOrder.id, 'Awaiting Payment');
         
-        if (paymentMethod === 'mpesa') {
+        if (paymentMethod === 'mock') {
+          navigate(`/payment/mock/${newOrder.id}`);
+        } else if (paymentMethod === 'mpesa') {
           if (!USE_STK_PUSH) {
             // MANUAL M-PESA FLOW
             setCreatedOrder(newOrder);
@@ -191,25 +194,25 @@ const CheckoutPage = () => {
 
   if (createdOrder && paymentMethod === 'mpesa' && !USE_STK_PUSH) {
     return (
-      <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
+      <div className="min-h-screen pt-32 pb-20 bg-nexus-surface transition-colors duration-300">
         <div className="container mx-auto px-4 max-w-2xl">
-          <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-nexus-border shadow-sm text-center">
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Complete Payment</h2>
+          <div className="bg-nexus-card rounded-3xl p-8 border border-nexus-border shadow-sm text-center">
+            <h2 className="text-3xl font-bold text-nexus-heading mb-6">Complete Payment</h2>
             
-            <div className="bg-orange-50 dark:bg-orange-500/10 rounded-2xl p-6 border border-orange-200 dark:border-orange-500/20 text-left mb-8">
-              <h3 className="font-semibold text-orange-900 dark:text-orange-400 mb-4 text-lg">M-Pesa Instructions</h3>
-              <ol className="list-decimal list-inside space-y-3 text-orange-800/80 dark:text-orange-300/80 mb-6">
+            <div className="bg-nexus-primary/10 dark:bg-nexus-primary/10 rounded-2xl p-6 border border-nexus-primary/20 text-left mb-8">
+              <h3 className="font-semibold text-nexus-primary mb-4 text-lg">M-Pesa Instructions</h3>
+              <ol className="list-decimal list-inside space-y-3 text-nexus-primary/80 mb-6">
                 <li>Go to M-Pesa menu on your phone</li>
                 <li>Select <strong>Lipa na M-Pesa</strong> {'>'} <strong>Pay Bill</strong></li>
-                <li>Enter Business No: <strong className="text-orange-900 dark:text-orange-300">{PAYBILL_NUMBER}</strong></li>
-                <li>Enter Account No: <strong className="text-orange-900 dark:text-orange-300">ORD-{createdOrder.id}</strong></li>
-                <li>Enter Amount: <strong className="text-orange-900 dark:text-orange-300">KES {createdOrder.total_amount.toLocaleString()}</strong></li>
+                <li>Enter Business No: <strong className="text-nexus-primary">{PAYBILL_NUMBER}</strong></li>
+                <li>Enter Account No: <strong className="text-nexus-primary">ORD-{createdOrder.id}</strong></li>
+                <li>Enter Amount: <strong className="text-nexus-primary">KES {createdOrder.total_amount.toLocaleString()}</strong></li>
                 <li>Enter your M-Pesa PIN and confirm</li>
               </ol>
             </div>
 
             <div className="space-y-4">
-              <label className="block text-left text-sm font-medium text-slate-700 dark:text-nexus-textSecondary">
+              <label className="block text-left text-sm font-medium text-nexus-muted">
                 M-Pesa Transaction Code
               </label>
               <input 
@@ -217,19 +220,19 @@ const CheckoutPage = () => {
                 value={transactionCode}
                 onChange={(e) => setTransactionCode(e.target.value.toUpperCase())}
                 placeholder="e.g. OXX1234567"
-                className="w-full bg-slate-50 dark:bg-nexus-surface border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 uppercase"
+                className="w-full bg-nexus-surface border border-nexus-border rounded-xl px-4 py-3 text-nexus-heading outline-none focus:ring-2 focus:ring-nexus-primary uppercase"
               />
               <button 
                 onClick={handleVerifyPayment}
                 disabled={loading || !transactionCode.trim()}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-orange-500/30 disabled:opacity-70 flex items-center justify-center"
+                className="w-full bg-nexus-primary hover:bg-nexus-primary-hover text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-primary/30 disabled:opacity-70 flex items-center justify-center"
               >
                 {loading ? <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span> : null}
                 Verify Payment
               </button>
             </div>
             
-            <p className="mt-6 text-sm text-nexus-textSecondary dark:text-nexus-textSecondary">
+            <p className="mt-6 text-sm text-nexus-muted">
               Your order #ORD-{createdOrder.id} has been created and is awaiting payment verification.
             </p>
           </div>
@@ -239,15 +242,15 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="min-h-screen pt-32 pb-20 bg-slate-50 dark:bg-nexus-surface transition-colors duration-300">
+    <div className="min-h-screen pt-32 pb-20 bg-nexus-surface transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-10">Checkout</h1>
+        <h1 className="text-4xl font-bold text-nexus-heading mb-10">Checkout</h1>
         
         <CheckoutSteps currentStep={step} />
 
         <div className="flex flex-col lg:flex-row gap-10 mt-12">
           <div className="flex-1">
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-slate-200 dark:border-nexus-border shadow-sm">
+            <div className="bg-white/80 dark:bg-nexus-card/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-nexus-border shadow-sm">
               
               {step === 1 && (
                 <ShippingForm formData={formData} setFormData={setFormData} />
@@ -259,31 +262,31 @@ const CheckoutPage = () => {
               
               {step === 3 && (
                 <div className="animate-fade-in text-center py-10">
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Almost there!</h3>
-                  <p className="text-nexus-textSecondary dark:text-nexus-textSecondary max-w-md mx-auto mb-8">
+                  <h3 className="text-2xl font-bold text-nexus-heading mb-4">Almost there!</h3>
+                  <p className="text-nexus-muted max-w-md mx-auto mb-8">
                     Please review your order details on the right panel. Once you confirm, your order will be created.
                   </p>
                   {paymentMethod === 'mpesa' && USE_STK_PUSH && (
-                    <div className="bg-orange-50 dark:bg-orange-500/10 p-6 rounded-2xl border border-orange-200 dark:border-orange-500/20 max-w-md mx-auto text-left shadow-inner">
-                      <h4 className="font-semibold text-orange-900 dark:text-orange-300 mb-2">M-Pesa Payment Details</h4>
+                    <div className="bg-nexus-primary/10 dark:bg-nexus-primary/10 p-6 rounded-2xl border border-nexus-primary/20 max-w-md mx-auto text-left shadow-inner">
+                      <h4 className="font-semibold text-nexus-primary mb-2">M-Pesa Payment Details</h4>
                       <div className="mb-4">
-                        <label className="block text-sm font-medium text-orange-800 dark:text-orange-400 mb-1">M-Pesa Phone Number</label>
+                        <label className="block text-sm font-medium text-nexus-primary mb-1">M-Pesa Phone Number</label>
                         <input 
                           type="text" 
                           value={mpesaPhone}
                           onChange={(e) => setMpesaPhone(e.target.value)}
                           placeholder="e.g. 0712345678"
-                          className="w-full bg-white dark:bg-nexus-surface border border-orange-200 dark:border-orange-500/30 rounded-lg px-4 py-2 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-orange-500/50"
+                          className="w-full bg-nexus-card border border-nexus-primary/20 dark:border-nexus-primary/30 rounded-lg px-4 py-2 text-nexus-heading outline-none focus:ring-2 focus:ring-nexus-primary/50"
                         />
                       </div>
-                      <p className="text-xs font-medium text-orange-800/80 dark:text-orange-400/80 leading-relaxed">
+                      <p className="text-xs font-medium text-nexus-primary/80 leading-relaxed">
                         Keep your phone nearby. An STK push prompt will appear on your phone shortly after clicking Place Order.
                       </p>
                     </div>
                   )}
                   {paymentMethod === 'mpesa' && !USE_STK_PUSH && (
-                    <div className="bg-orange-50 dark:bg-orange-500/10 p-6 rounded-2xl border border-orange-200 dark:border-orange-500/20 max-w-md mx-auto text-center shadow-inner">
-                      <p className="text-orange-800 dark:text-orange-400 font-medium">
+                    <div className="bg-nexus-primary/10 dark:bg-nexus-primary/10 p-6 rounded-2xl border border-nexus-primary/20 max-w-md mx-auto text-center shadow-inner">
+                      <p className="text-nexus-primary font-medium">
                         You will be provided with Paybill instructions on the next screen to complete your payment manually.
                       </p>
                     </div>
@@ -291,11 +294,11 @@ const CheckoutPage = () => {
                 </div>
               )}
 
-              <div className="flex justify-between mt-10 pt-6 border-t border-slate-200 dark:border-nexus-border">
+              <div className="flex justify-between mt-10 pt-6 border-t border-nexus-border">
                 {step > 1 ? (
                   <button 
                     onClick={handleBack}
-                    className="px-6 py-3 rounded-xl font-semibold text-nexus-textSecondary dark:text-nexus-textSecondary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    className="px-6 py-3 rounded-xl font-semibold text-nexus-muted hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors"
                   >
                     Back
                   </button>
@@ -304,7 +307,7 @@ const CheckoutPage = () => {
                 {step < 3 ? (
                   <button 
                     onClick={handleNext}
-                    className="bg-nexus-surface dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg"
+                    className="bg-nexus-heading hover:bg-nexus-dark-navy dark:bg-white dark:hover:bg-nexus-surface text-white dark:text-nexus-navy font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg"
                   >
                     Continue
                   </button>
@@ -312,7 +315,7 @@ const CheckoutPage = () => {
                   <button 
                     onClick={handlePlaceOrder}
                     disabled={loading}
-                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-10 rounded-xl transition-all shadow-lg shadow-orange-500/30 disabled:opacity-70 flex items-center"
+                    className="bg-nexus-primary hover:bg-nexus-primary-hover text-white font-bold py-3 px-10 rounded-xl transition-all shadow-lg shadow-primary/30 disabled:opacity-70 flex items-center"
                   >
                     {loading ? (
                       <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>

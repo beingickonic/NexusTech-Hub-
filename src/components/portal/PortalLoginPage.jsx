@@ -64,10 +64,10 @@ const PortalLoginPage = ({ portalConfig }) => {
     }
   };
 
-  const inputCls = 'w-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-nexus-border rounded-xl px-4 py-3 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 transition-all placeholder:text-nexus-textSecondary dark:placeholder:text-white/30';
+  const inputCls = 'w-full bg-nexus-surface dark:bg-nexus-hover border border-nexus-border rounded-xl px-4 py-3 text-nexus-heading text-sm focus:outline-none focus:ring-2 transition-all placeholder:text-nexus-textSecondary dark:placeholder:text-white/30';
 
   return (
-    <div className="min-h-screen flex bg-slate-50 dark:bg-nexus-bg overflow-hidden">
+    <div className="min-h-screen flex bg-nexus-surface dark:bg-nexus-bg overflow-hidden">
 
       {/* ── Left panel: branding ── */}
       <motion.div
@@ -153,7 +153,7 @@ const PortalLoginPage = ({ portalConfig }) => {
       {/* ── Right panel: login form ── */}
       <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-12 relative">
         {/* Mobile back link */}
-        <Link to="/" className="lg:hidden absolute top-6 left-6 flex items-center gap-1.5 text-sm text-nexus-textSecondary hover:text-slate-900 dark:hover:text-white transition-colors">
+        <Link to="/" className="lg:hidden absolute top-6 left-6 flex items-center gap-1.5 text-sm text-nexus-textSecondary hover:text-nexus-heading transition-colors">
           <ArrowLeft size={14} /> Home
         </Link>
 
@@ -173,10 +173,10 @@ const PortalLoginPage = ({ portalConfig }) => {
 
           {/* Heading */}
           <div className="mb-8">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-nexus-heading">
               Sign in to <span style={{ color: accentHex }}>{name}</span>
             </h2>
-            <p className="text-nexus-textSecondary dark:text-nexus-textSecondary text-sm mt-1.5">
+            <p className="text-nexus-muted text-sm mt-1.5">
               Enter your credentials to access the {name} portal
             </p>
           </div>
@@ -186,7 +186,7 @@ const PortalLoginPage = ({ portalConfig }) => {
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-5 p-3.5 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 text-sm font-medium"
+              className="mb-5 p-3.5 rounded-xl bg-nexus-error/5 dark:bg-nexus-error/10 border border-nexus-error/20 dark:border-nexus-error/20 text-nexus-error text-sm font-medium"
             >
               {error}
             </motion.div>
@@ -195,7 +195,7 @@ const PortalLoginPage = ({ portalConfig }) => {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div className="space-y-1.5">
-              <label className="block text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">
+              <label className="block text-sm font-semibold text-nexus-muted">
                 Work Email
               </label>
               <input
@@ -211,7 +211,7 @@ const PortalLoginPage = ({ portalConfig }) => {
 
             {/* Password */}
             <div className="space-y-1.5">
-              <label className="block text-sm font-semibold text-slate-700 dark:text-nexus-textSecondary">
+              <label className="block text-sm font-semibold text-nexus-muted">
                 Password
               </label>
               <div className="relative">
@@ -227,7 +227,7 @@ const PortalLoginPage = ({ portalConfig }) => {
                 <button
                   type="button"
                   onClick={() => setShowPw(!showPw)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary hover:text-slate-600 dark:hover:text-white transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-nexus-textSecondary hover:text-nexus-muted dark:hover:text-white transition-colors"
                 >
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -251,14 +251,14 @@ const PortalLoginPage = ({ portalConfig }) => {
           </form>
 
           {/* Footer */}
-          <div className="mt-8 pt-6 border-t border-slate-200 dark:border-nexus-border text-center">
+          <div className="mt-8 pt-6 border-t border-nexus-border text-center">
             <p className="text-xs text-nexus-textSecondary">
               Not your portal?{' '}
               <Link to="/login" className="font-semibold hover:underline" style={{ color: accentHex }}>
                 Go to main login
               </Link>
             </p>
-            <p className="text-[11px] text-nexus-textSecondary dark:text-slate-600 mt-3">
+            <p className="text-[11px] text-nexus-textSecondary dark:text-nexus-muted mt-3">
               NexusTech Hub Enterprise ERP · Secure Portal Access
             </p>
           </div>

@@ -75,10 +75,10 @@ const DashboardPage = () => {
       {/* Dashboard Hero */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-4 px-1 md:px-0">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-1">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-nexus-heading mb-1">
             {getGreeting(user?.full_name?.split(' ')[0] || user?.email?.split('@')[0] || 'Admin')}
           </h1>
-          <p className="text-sm md:text-base text-nexus-textSecondary dark:text-nexus-textSecondary font-medium">Here's what's happening with your store today.</p>
+          <p className="text-sm md:text-base text-nexus-muted font-medium">Here's what's happening with your store today.</p>
         </div>
       </div>
 

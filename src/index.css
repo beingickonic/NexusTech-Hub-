@@ -1,24 +1,75 @@
 /* ===================================================
-   NEXUS TECHHUB — Global Responsive Stylesheet
-   Mobile-first, tablet & desktop breakpoints
+   NEXUS TECHHUB — Official Brand Design System
+   Theme-aware CSS variables (Light + Dark)
    =================================================== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* ── LIGHT MODE ──────────────────────────────────── */
   :root {
-    --bg-color: #F4F4F8;
-    --text-color: #0F172A;
-    --surface-color: #FFFFFF;
-    --border-color: #E2E8F0;
+    --nexus-primary:        251 70 29;    /* #FB461D  Primary Orange */
+    --nexus-primary-hover:  252 106 72;   /* #FC6A48  Secondary Orange */
+    --nexus-secondary:      37 42 64;     /* #252A40  Primary Navy */
+    --nexus-navy:           37 42 64;     /* #252A40 */
+    --nexus-dark-navy:      19 25 48;     /* #131930  Dark Navy */
+    --nexus-gold:           247 163 33;   /* #F7A321  Gold */
+    --nexus-light-gold:     250 185 90;   /* #FAB95A  Light Gold */
+    --nexus-bg:             255 255 255;  /* #FFFFFF  Background */
+    --nexus-surface:        246 246 248;  /* #F6F6F8  Surface */
+    --nexus-card:           250 250 251;  /* #FAFAFB  Card */
+    --nexus-sidebar:        37 42 64;     /* #252A40  Sidebar */
+    --nexus-navbar:         255 255 255;  /* #FFFFFF  Navbar */
+    --nexus-hover:          240 240 243;  /* hover tint */
+    --nexus-heading:        37 42 64;     /* #252A40  Heading */
+    --nexus-text:           75 85 99;     /* #4B5563  Body Text */
+    --nexus-muted:          104 106 120;  /* #686A78  Muted Text */
+    --nexus-border:         229 231 235;  /* #E5E7EB  Border */
+    --nexus-success:        34 197 94;    /* #22C55E */
+    --nexus-error:          220 38 38;    /* #DC2626 */
+    --nexus-info:           37 99 235;    /* #2563EB */
+
+    --bg-color: #FFFFFF;
+    --text-color: #252A40;
+    --surface-color: #F6F6F8;
+    --border-color: #E5E7EB;
   }
 
+  /* ── DARK MODE ───────────────────────────────────── */
   .dark {
-    --bg-color: #070B1A;
-    --text-color: #F4F4F8;
-    --surface-color: #111827;
-    --border-color: #1F2937;
+    --nexus-primary:        251 70 29;    /* #FB461D */
+    --nexus-primary-hover:  252 106 72;   /* #FC6A48 */
+    --nexus-secondary:      37 42 64;     /* #252A40 */
+    --nexus-navy:           37 42 64;     /* #252A40 */
+    --nexus-dark-navy:      19 25 48;     /* #131930 */
+    --nexus-gold:           247 163 33;   /* #F7A321 */
+    --nexus-light-gold:     250 185 90;   /* #FAB95A */
+    --nexus-bg:             15 23 42;     /* #0F172A  Background */
+    --nexus-surface:        19 25 48;     /* #131930  Surface */
+    --nexus-card:           27 35 56;     /* #1B2338  Card */
+    --nexus-sidebar:        19 25 48;     /* #131930  Sidebar */
+    --nexus-navbar:         37 42 64;     /* #252A40  Navbar */
+    --nexus-hover:          37 42 64;     /* #252A40  hover tint */
+    --nexus-heading:        255 255 255;  /* #FFFFFF  Heading */
+    --nexus-text:           229 231 235;  /* #E5E7EB  Body Text */
+    --nexus-muted:          166 169 179;  /* #A6A9B3  Muted Text */
+    --nexus-border:         255 255 255;  /* rgba(255,255,255,0.08) via opacity */
+    --nexus-success:        34 197 94;    /* #22C55E */
+    --nexus-error:          239 68 68;    /* #EF4444 */
+    --nexus-info:           59 130 246;   /* #3B82F6 */
+
+    --bg-color: #0F172A;
+    --text-color: #E5E7EB;
+    --surface-color: #131930;
+    --border-color: rgba(255,255,255,0.08);
+  }
+
+  /* Dark-mode border: translucent white (8%) by default.
+     Explicit opacity variants (border-nexus-border/50 etc.) override via the
+     utilities layer, which wins over this base rule. */
+  .dark .border-nexus-border {
+    --tw-border-opacity: 0.08;
   }
 
   /* ── Base resets ── */
@@ -60,13 +111,37 @@
   }
 }
 
+@layer components {
+  /* ── Brand Button Standards ──────────────────────── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-nexus-primary/40 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-nexus-primary text-white shadow-soft hover:bg-nexus-primary-hover;
+  }
+  .btn-secondary {
+    @apply btn bg-nexus-secondary text-white hover:bg-nexus-dark-navy;
+  }
+  .btn-outline {
+    @apply btn border-2 border-nexus-primary text-nexus-primary hover:bg-nexus-primary hover:text-white;
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-nexus-primary hover:bg-nexus-primary/10;
+  }
+
+  /* ── Card Standard ───────────────────────────────── */
+  .card {
+    @apply bg-nexus-card rounded-card shadow-card border border-nexus-border/60 dark:border-nexus-border/10;
+  }
+}
+
 @layer utilities {
   /* ── Glass morphism ── */
   .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-slate-200/50;
+    @apply bg-white/70 backdrop-blur-xl border border-nexus-border/50;
   }
   .dark .glass {
-    @apply bg-dark-surface/70 backdrop-blur-md border border-nexus-border;
+    @apply bg-dark-surface/70 backdrop-blur-md border border-nexus-border/10;
   }
   .glass-card {
     @apply glass shadow-xl shadow-black/5 dark:shadow-soft rounded-md;

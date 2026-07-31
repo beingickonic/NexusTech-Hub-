@@ -5,7 +5,7 @@ const Departments = () => {
   return (
     <div className="animate-fade-in space-y-6 pb-10">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Department Overview</h1>
+        <h1 className="text-2xl font-bold text-nexus-heading">Department Overview</h1>
         <p className="text-sm text-nexus-textSecondary">Monitor operational status across all business units.</p>
       </div>
 

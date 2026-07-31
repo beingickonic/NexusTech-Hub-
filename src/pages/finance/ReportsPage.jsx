@@ -3,17 +3,17 @@ import { Download, FileText, CreditCard, Receipt, TrendingUp, Loader2 } from 'lu
 import { financeService } from '../../services/financeService';
 
 const ReportCard = ({ title, description, icon: Icon, onExport, loading }) => (
-  <div className="bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-nexus-border/50 p-6 rounded-2xl shadow-xl flex flex-col items-start">
-    <div className="p-3 bg-rose-500/20 text-rose-500 rounded-xl mb-4">
+  <div className="bg-white/10 dark:bg-nexus-card backdrop-blur-lg border border-white/20 dark:border-nexus-border/50 p-6 rounded-2xl shadow-xl flex flex-col items-start">
+    <div className="p-3 bg-nexus-error/20 text-nexus-error rounded-xl mb-4">
       <Icon size={24} />
     </div>
-    <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{title}</h3>
-    <p className="text-nexus-textSecondary dark:text-nexus-textSecondary text-sm mb-6 flex-1">{description}</p>
+    <h3 className="text-xl font-bold text-nexus-heading mb-2">{title}</h3>
+    <p className="text-nexus-muted text-sm mb-6 flex-1">{description}</p>
     <div className="flex w-full">
       <button 
         onClick={() => onExport('csv')}
         disabled={loading}
-        className="w-full bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors flex items-center justify-center disabled:opacity-50"
+        className="w-full bg-white dark:bg-nexus-card border border-nexus-border dark:border-nexus-border text-nexus-text px-3 py-2 rounded-xl text-sm font-medium hover:bg-nexus-surface dark:hover:bg-nexus-hover transition-colors flex items-center justify-center disabled:opacity-50"
       >
         {loading ? <Loader2 size={16} className="mr-2 animate-spin" /> : <Download size={16} className="mr-2" />}
         Export CSV
@@ -97,7 +97,7 @@ const ReportsPage = () => {
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Reports</h1>
+        <h1 className="text-3xl font-bold text-nexus-heading">Reports</h1>
         <p className="text-nexus-textSecondary mt-1">Generate and export financial reports</p>
       </div>
 
@@ -132,8 +132,8 @@ const ReportsPage = () => {
         />
       </div>
       
-      <div className="bg-white/10 dark:bg-slate-800/50 backdrop-blur-lg border border-white/20 dark:border-nexus-border/50 p-8 rounded-2xl shadow-xl text-center">
-        <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Advanced Reports</h2>
+      <div className="bg-white/10 dark:bg-nexus-card backdrop-blur-lg border border-white/20 dark:border-nexus-border/50 p-8 rounded-2xl shadow-xl text-center">
+        <h2 className="text-xl font-bold text-nexus-heading mb-2">Advanced Reports</h2>
         <p className="text-nexus-textSecondary max-w-2xl mx-auto">
           Phase 2 will introduce Profit & Loss, Balance Sheet, Trial Balance, and Cash Flow Statements.
         </p>

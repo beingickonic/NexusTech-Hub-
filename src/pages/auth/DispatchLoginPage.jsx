@@ -53,7 +53,7 @@ const DispatchLoginPage = () => {
       <div className="w-full max-w-5xl bg-nexus-bg/80 backdrop-blur-xl rounded-3xl border border-nexus-border shadow-2xl overflow-hidden flex flex-col md:flex-row relative z-10">
         
         {/* Left Side - Branding */}
-        <div className="md:w-5/12 bg-gradient-to-br from-nexus-warning to-[#FF724C] p-10 flex flex-col justify-between text-white relative overflow-hidden">
+        <div className="md:w-5/12 bg-gradient-to-br from-nexus-warning to-nexus-primary p-10 flex flex-col justify-between text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-nexus-warninglack/10"></div>
           <div className="relative z-10">
             <Link to="/" className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-12 text-sm font-medium">
@@ -102,9 +102,9 @@ const DispatchLoginPage = () => {
             <p className="text-nexus-textSecondary mb-8 text-sm">Enter your credentials to access the Dispatch portal</p>
 
             {error && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3">
-                <AlertCircle className="text-red-500 shrink-0 mt-0.5" size={18} />
-                <p className="text-sm text-red-400 font-medium">{error}</p>
+              <div className="mb-6 p-4 bg-nexus-error/10 border border-nexus-error/20 rounded-xl flex items-start gap-3">
+                <AlertCircle className="text-nexus-error shrink-0 mt-0.5" size={18} />
+                <p className="text-sm text-nexus-error font-medium">{error}</p>
               </div>
             )}
 
@@ -118,7 +118,7 @@ const DispatchLoginPage = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-nexus-surface border border-nexus-border/50 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#f59e0b] focus:ring-1 focus:ring-[#f59e0b] transition-all"
+                    className="w-full bg-nexus-surface border border-nexus-border/50 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-nexus-muted focus:outline-none focus:border-nexus-gold focus:ring-1 focus:ring-nexus-gold transition-all"
                     placeholder="dispatch@nexustech.com"
                   />
                 </div>
@@ -135,7 +135,7 @@ const DispatchLoginPage = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-nexus-surface border border-nexus-border/50 rounded-xl py-3.5 pl-11 pr-12 text-white placeholder-slate-500 focus:outline-none focus:border-[#f59e0b] focus:ring-1 focus:ring-[#f59e0b] transition-all"
+                    className="w-full bg-nexus-surface border border-nexus-border/50 rounded-xl py-3.5 pl-11 pr-12 text-white placeholder-nexus-muted focus:outline-none focus:border-nexus-gold focus:ring-1 focus:ring-nexus-gold transition-all"
                     placeholder="••••••••••••"
                   />
                   <button
@@ -150,10 +150,10 @@ const DispatchLoginPage = () => {
               
               <div className="flex items-center justify-between text-sm">
                 <label className="flex items-center gap-2 cursor-pointer group">
-                  <input type="checkbox" className="w-4 h-4 rounded border-nexus-border bg-nexus-surface text-nexus-warning focus:ring-[#f59e0b] focus:ring-offset-[#0a0e1a]" />
+                  <input type="checkbox" className="w-4 h-4 rounded border-nexus-border bg-nexus-surface text-nexus-warning focus:ring-nexus-gold focus:ring-offset-nexus-dark-navy" />
                   <span className="text-nexus-textSecondary group-hover:text-nexus-textSecondary transition-colors">Remember me</span>
                 </label>
-                <Link to="/forgot-password" className="text-nexus-warning hover:text-[#fbbf24] font-medium transition-colors">
+                <Link to="/forgot-password" className="text-nexus-warning hover:text-nexus-gold font-medium transition-colors">
                   Forgot password?
                 </Link>
               </div>
@@ -161,7 +161,7 @@ const DispatchLoginPage = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-nexus-warning to-[#FF724C] hover:from-[#fbbf24] hover:to-nexus-warning text-white font-bold py-3.5 rounded-xl shadow-lg shadow-[#f59e0b]/20 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center mt-4"
+                className="w-full bg-gradient-to-r from-nexus-warning to-nexus-primary hover:from-nexus-gold hover:to-nexus-warning text-white font-bold py-3.5 rounded-xl shadow-lg shadow-nexus-gold/20 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center mt-4"
               >
                 {loading ? (
                   <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -172,7 +172,7 @@ const DispatchLoginPage = () => {
             </form>
             
             <div className="mt-8 text-center text-sm text-nexus-textSecondary">
-              Not your portal? <Link to="/login" className="text-nexus-warning hover:text-[#fbbf24] font-medium transition-colors">Go to main login</Link>
+              Not your portal? <Link to="/login" className="text-nexus-warning hover:text-nexus-gold font-medium transition-colors">Go to main login</Link>
             </div>
           </div>
         </div>
