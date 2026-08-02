@@ -4,7 +4,14 @@ import process from 'node:process';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
-const buildCommit = process.env.GITHUB_SHA?.slice(0, 7) || execSync('git rev-parse --short HEAD').toString().trim();
+let buildCommit = process.env.GITHUB_SHA?.slice(0, 7);
+if (!buildCommit) {
+  try {
+    buildCommit = execSync('git rev-parse --short HEAD').toString().trim();
+  } catch (err) {
+    buildCommit = 'local';
+  }
+}
 const buildTimestamp = new Date().toISOString();
 
 // https://vite.dev/config/

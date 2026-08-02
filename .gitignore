@@ -27,3 +27,6 @@ supabase/.temp/
 *.sw?
 
 .vercel
+
+.vercel
+.env*
