@@ -514,7 +514,7 @@ export const inventoryService = {
     const { data, error } = await supabase
       .from('orders')
       .select('*, order_items(*), profiles!fk_orders_user_profiles(full_name, phone)')
-      .eq('status', 'Finance Approved')
+      .in('status', ['Finance Approved', 'Waiting for Stock'])
       .order('created_at', { ascending: false });
     if (error) throw error;
 

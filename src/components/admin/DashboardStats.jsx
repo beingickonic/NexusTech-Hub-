@@ -1,5 +1,5 @@
 import React from 'react';
-import { DollarSign, ShoppingCart, Users, AlertCircle, TrendingUp, Mail, Headset } from 'lucide-react';
+import { DollarSign, ShoppingCart, Users, AlertCircle, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const DashboardStats = ({ stats }) => {
@@ -27,7 +27,7 @@ const DashboardStats = ({ stats }) => {
     {
       title: 'New Customers',
       value: stats?.customers || 0,
-      subtitle: 'This month',
+      subtitle: 'Total customers',
       trend: 'neutral',
       icon: Users,
       color: 'text-nexus-info',
@@ -36,33 +36,13 @@ const DashboardStats = ({ stats }) => {
     },
     {
       title: 'Pending Orders',
-      value: stats?.pendingOrders || 9,
-      subtitle: 'Needs Attention',
+      value: stats?.pendingOrders || 0,
+      subtitle: 'Needs attention',
       trend: 'warning',
       icon: AlertCircle,
       color: 'text-warning',
       bg: 'bg-warning/10',
       border: 'border-warning/20',
-    },
-    {
-      title: 'Cash Orders',
-      value: stats?.cashOrders ?? 0,
-      subtitle: 'Manual payments',
-      trend: 'warning',
-      icon: DollarSign,
-      color: 'text-info',
-      bg: 'bg-info/100/10',
-      border: 'border-info/20',
-    },
-    {
-      title: 'Active Tickets',
-      value: stats?.tickets ?? 0,
-      subtitle: 'Needs Attention',
-      trend: 'warning',
-      icon: Headset,
-      color: 'text-nexus-error',
-      bg: 'bg-nexus-error/10',
-      border: 'border-error/20',
     }
   ];
 

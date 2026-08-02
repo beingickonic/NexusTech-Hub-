@@ -37,7 +37,7 @@ const InventoryApprovalsPage = () => {
         event: '*',
         schema: 'public',
         table: 'orders',
-        filter: 'status=eq.Finance Approved'
+        filter: 'status=in.(Finance Approved,Waiting for Stock)'
       }, () => fetchOrders())
       .subscribe();
 
@@ -152,9 +152,15 @@ const InventoryApprovalsPage = () => {
                     <td className="px-6 py-4">
                       <span className="font-medium text-nexus-heading">{order.order_number || `#ORD-${order.id}`}</span>
                       <div className="text-xs mt-1">
-                        <span className="px-2 py-0.5 rounded-full bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 font-medium">
-                          Finance Approved
-                        </span>
+                        {order.status === 'Waiting for Stock' ? (
+                          <span className="px-2 py-0.5 rounded-full bg-nexus-gold/10 text-nexus-gold dark:bg-nexus-gold/20 font-medium">
+                            Waiting for Stock
+                          </span>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded-full bg-nexus-success/10 text-nexus-success dark:bg-nexus-success/20 font-medium">
+                            Finance Approved
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4 text-nexus-muted">
@@ -184,7 +190,7 @@ const InventoryApprovalsPage = () => {
                         onClick={() => openAction(order, 'approve')}
                         className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-nexus-success/10 text-nexus-success hover:bg-nexus-success/20 transition-colors"
                       >
-                        <CheckCircle2 size={14} /> Approve
+                        <CheckCircle2 size={14} /> {order.status === 'Waiting for Stock' ? 'Retry Reserve' : 'Approve'}
                       </button>
                       <button
                         onClick={() => openAction(order, 'reject')}
@@ -234,8 +240,9 @@ const InventoryApprovalsPage = () => {
                   <div className="flex items-start gap-2 p-3 rounded-xl bg-info/10 text-info text-xs">
                     <AlertTriangle size={16} className="shrink-0 mt-0.5" />
                     <span>
-                      Stock will be reserved for this order (deducted from available quantity). If stock is low, the
-                      order will be marked <strong>Waiting for Stock</strong>.
+                      {actionOrder.status === 'Waiting for Stock'
+                        ? 'Stock has arrived. This will reserve inventory for the order and move it to the dispatch queue.'
+                        : 'Stock will be reserved for this order (deducted from available quantity). If stock is low, the order will be marked <strong>Waiting for Stock</strong>.'}
                     </span>
                   </div>
                 )}
@@ -269,7 +276,7 @@ const InventoryApprovalsPage = () => {
                       : 'bg-nexus-error hover:bg-nexus-error/90'
                   }`}
                 >
-                  {submitting ? 'Processing...' : actionType === 'approve' ? 'Approve & Reserve' : 'Reject Order'}
+                  {submitting ? 'Processing...' : actionType === 'approve' ? (actionOrder.status === 'Waiting for Stock' ? 'Retry Reserve' : 'Approve & Reserve') : 'Reject Order'}
                 </button>
               </div>
             </motion.div>

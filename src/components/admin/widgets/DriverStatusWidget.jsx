@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { UserCheck, Wifi, WifiOff, Truck, AlertTriangle } from 'lucide-react';
+import { Wifi, WifiOff, Truck, AlertTriangle } from 'lucide-react';
 import { driverService } from '../../../services/driverService';
-import { Link } from 'react-router-dom';
 
 const DriverStatusWidget = () => {
   const [stats, setStats] = useState({});
@@ -33,10 +32,6 @@ const DriverStatusWidget = () => {
           <h3 className="font-bold text-nexus-heading text-sm">Driver Status</h3>
           <p className="text-xs text-nexus-textSecondary mt-0.5">{stats.total || 0} drivers total</p>
         </div>
-        <Link to="/admin/drivers"
-          className="text-xs text-nexus-primary hover:text-nexus-primary font-semibold transition-colors">
-          Manage →
-        </Link>
       </div>
 
       {loading ? (

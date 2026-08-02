@@ -9,72 +9,67 @@
 @layer base {
   /* ── LIGHT MODE ──────────────────────────────────── */
   :root {
-    --nexus-primary:        251 70 29;    /* #FB461D  Primary Orange */
-    --nexus-primary-hover:  252 106 72;   /* #FC6A48  Secondary Orange */
-    --nexus-secondary:      37 42 64;     /* #252A40  Primary Navy */
-    --nexus-navy:           37 42 64;     /* #252A40 */
-    --nexus-dark-navy:      19 25 48;     /* #131930  Dark Navy */
-    --nexus-gold:           247 163 33;   /* #F7A321  Gold */
-    --nexus-light-gold:     250 185 90;   /* #FAB95A  Light Gold */
-    --nexus-bg:             255 255 255;  /* #FFFFFF  Background */
-    --nexus-surface:        246 246 248;  /* #F6F6F8  Surface */
-    --nexus-card:           250 250 251;  /* #FAFAFB  Card */
-    --nexus-sidebar:        37 42 64;     /* #252A40  Sidebar */
-    --nexus-navbar:         255 255 255;  /* #FFFFFF  Navbar */
-    --nexus-hover:          240 240 243;  /* hover tint */
-    --nexus-heading:        37 42 64;     /* #252A40  Heading */
-    --nexus-text:           75 85 99;     /* #4B5563  Body Text */
-    --nexus-muted:          104 106 120;  /* #686A78  Muted Text */
-    --nexus-border:         229 231 235;  /* #E5E7EB  Border */
-    --nexus-success:        34 197 94;    /* #22C55E */
-    --nexus-error:          220 38 38;    /* #DC2626 */
-    --nexus-info:           37 99 235;    /* #2563EB */
+    --nexus-primary:        255 106 0;
+    --nexus-primary-hover:  232 93 0;
+    --nexus-secondary:      255 193 7;
+    --nexus-navy:           15 23 42;
+    --nexus-dark-navy:      15 23 42;
+    --nexus-gold:           255 193 7;
+    --nexus-light-gold:     250 185 90;
+    --nexus-bg:             248 250 252;
+    --nexus-surface:        246 246 248;
+    --nexus-card:           255 255 255;
+    --nexus-sidebar:        255 255 255;
+    --nexus-navbar:         255 255 255;
+    --nexus-hover:          255 106 0;
+    --nexus-heading:        15 23 42;
+    --nexus-text:           71 85 105;
+    --nexus-muted:          100 116 139;
+    --nexus-border:         226 232 240;
+    --nexus-success:        34 197 94;
+    --nexus-error:          239 68 68;
+    --nexus-info:           59 130 246;
 
-    --bg-color: #FFFFFF;
-    --text-color: #252A40;
+    --bg-color: #F8FAFC;
+    --text-color: #0F172A;
     --surface-color: #F6F6F8;
-    --border-color: #E5E7EB;
+    --border-color: #E2E8F0;
   }
 
   /* ── DARK MODE ───────────────────────────────────── */
   .dark {
-    --nexus-primary:        251 70 29;    /* #FB461D */
-    --nexus-primary-hover:  252 106 72;   /* #FC6A48 */
-    --nexus-secondary:      37 42 64;     /* #252A40 */
-    --nexus-navy:           37 42 64;     /* #252A40 */
-    --nexus-dark-navy:      19 25 48;     /* #131930 */
-    --nexus-gold:           247 163 33;   /* #F7A321 */
-    --nexus-light-gold:     250 185 90;   /* #FAB95A */
-    --nexus-bg:             15 23 42;     /* #0F172A  Background */
-    --nexus-surface:        19 25 48;     /* #131930  Surface */
-    --nexus-card:           27 35 56;     /* #1B2338  Card */
-    --nexus-sidebar:        19 25 48;     /* #131930  Sidebar */
-    --nexus-navbar:         37 42 64;     /* #252A40  Navbar */
-    --nexus-hover:          37 42 64;     /* #252A40  hover tint */
-    --nexus-heading:        255 255 255;  /* #FFFFFF  Heading */
-    --nexus-text:           229 231 235;  /* #E5E7EB  Body Text */
-    --nexus-muted:          166 169 179;  /* #A6A9B3  Muted Text */
-    --nexus-border:         255 255 255;  /* rgba(255,255,255,0.08) via opacity */
-    --nexus-success:        34 197 94;    /* #22C55E */
-    --nexus-error:          239 68 68;    /* #EF4444 */
-    --nexus-info:           59 130 246;   /* #3B82F6 */
+    --nexus-primary:        255 106 0;
+    --nexus-primary-hover:  232 93 0;
+    --nexus-secondary:      255 193 7;
+    --nexus-navy:           15 23 42;
+    --nexus-dark-navy:      15 23 42;
+    --nexus-gold:           255 193 7;
+    --nexus-light-gold:     250 185 90;
+    --nexus-bg:             15 23 42;
+    --nexus-surface:        30 41 59;
+    --nexus-card:           30 41 59;
+    --nexus-sidebar:        17 24 39;
+    --nexus-navbar:         30 41 59;
+    --nexus-hover:          255 106 0;
+    --nexus-heading:        248 250 252;
+    --nexus-text:           226 232 240;
+    --nexus-muted:          148 163 184;
+    --nexus-border:         51 65 85;
+    --nexus-success:        34 197 94;
+    --nexus-error:          239 68 68;
+    --nexus-info:           59 130 246;
 
     --bg-color: #0F172A;
-    --text-color: #E5E7EB;
-    --surface-color: #131930;
-    --border-color: rgba(255,255,255,0.08);
+    --text-color: #E2E8F0;
+    --surface-color: #1E293B;
+    --border-color: #334155;
   }
 
-  /* Dark-mode border: translucent white (8%) by default.
-     Explicit opacity variants (border-nexus-border/50 etc.) override via the
-     utilities layer, which wins over this base rule. */
   .dark .border-nexus-border {
     --tw-border-opacity: 0.08;
   }
 
-  /* ── Base resets ── */
   html {
-    /* Prevent horizontal overflow on mobile */
     overflow-x: hidden;
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
@@ -82,29 +77,24 @@
 
   body {
     @apply bg-[var(--bg-color)] text-[var(--text-color)] transition-colors duration-300;
-    /* Ensure text stays readable across screen sizes */
     @apply text-base antialiased;
     overflow-x: hidden;
-    /* Safe-area for notched phones (Android & iOS) */
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
     padding-left: env(safe-area-inset-left, 0px);
     padding-right: env(safe-area-inset-right, 0px);
   }
 
-  /* ── Viewport meta handled in HTML, but make images fluid ── */
   img, video {
     max-width: 100%;
     height: auto;
   }
 
-  /* ── Better tap targets on mobile ── */
   button, a, [role="button"] {
     min-height: 44px;
     min-width: 44px;
   }
 
-  /* Allow buttons/links to override min-height inline when they are icon-only */
   button.icon-sm, a.icon-sm {
     min-height: 36px;
     min-width: 36px;
@@ -112,56 +102,97 @@
 }
 
 @layer components {
-  /* ── Brand Button Standards ──────────────────────── */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-btn font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-nexus-primary/40 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl font-medium h-11 px-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-nexus-primary/40 disabled:opacity-50 disabled:cursor-not-allowed select-none;
   }
   .btn-primary {
-    @apply btn bg-nexus-primary text-white shadow-soft hover:bg-nexus-primary-hover;
+    @apply btn bg-nexus-primary text-white shadow-soft hover:bg-nexus-primary-hover active:scale-[0.98];
   }
   .btn-secondary {
-    @apply btn bg-nexus-secondary text-white hover:bg-nexus-dark-navy;
+    @apply btn bg-white dark:bg-nexus-surface border border-nexus-border text-nexus-heading hover:bg-nexus-primary/5 dark:hover:bg-nexus-hover/10 dark:hover:text-nexus-primary active:scale-[0.98];
   }
   .btn-outline {
-    @apply btn border-2 border-nexus-primary text-nexus-primary hover:bg-nexus-primary hover:text-white;
+    @apply btn border border-nexus-primary text-nexus-primary hover:bg-nexus-primary hover:text-white active:scale-[0.98];
   }
   .btn-ghost {
-    @apply btn bg-transparent text-nexus-primary hover:bg-nexus-primary/10;
+    @apply btn bg-transparent text-nexus-primary hover:bg-nexus-primary/10 active:scale-[0.98];
+  }
+  .btn-danger {
+    @apply btn bg-nexus-error text-white shadow-soft hover:bg-nexus-error/90 active:scale-[0.98];
+  }
+  .btn-success {
+    @apply btn bg-nexus-success text-white shadow-soft hover:bg-nexus-success/90 active:scale-[0.98];
   }
 
-  /* ── Card Standard ───────────────────────────────── */
   .card {
-    @apply bg-nexus-card rounded-card shadow-card border border-nexus-border/60 dark:border-nexus-border/10;
+    @apply bg-nexus-card rounded-xl shadow-soft border border-nexus-border transition-all duration-300 hover:shadow-card hover:-translate-y-0.5;
+  }
+
+  /* Premium Form Elements */
+  .form-input, .form-select, .form-textarea {
+    @apply w-full rounded-xl border border-nexus-border bg-nexus-card text-nexus-heading px-4 py-2.5 text-sm transition-all duration-200 outline-none focus:border-nexus-primary focus:ring-2 focus:ring-nexus-primary/20 placeholder:text-nexus-muted;
+  }
+
+  /* Premium Tables */
+  .premium-table-container {
+    @apply overflow-x-auto rounded-xl border border-nexus-border bg-nexus-card;
+  }
+  .premium-table {
+    @apply w-full border-collapse text-left text-sm text-nexus-text;
+  }
+  .premium-table th {
+    @apply bg-nexus-surface/50 text-nexus-heading font-semibold p-4 border-b border-nexus-border sticky top-0 backdrop-blur-sm z-10;
+  }
+  .premium-table td {
+    @apply p-4 border-b border-nexus-border transition-colors duration-150;
+  }
+  .premium-table tr:last-child td {
+    @apply border-b-0;
+  }
+  .premium-table tbody tr:hover td {
+    @apply bg-nexus-primary/5 dark:bg-nexus-hover/5;
+  }
+
+  /* Semantic Badges */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border;
+  }
+  .badge-pending, .badge-processing {
+    @apply badge bg-nexus-primary/10 text-nexus-primary border-nexus-primary/20;
+  }
+  .badge-approved, .badge-completed, .badge-success {
+    @apply badge bg-nexus-success/10 text-nexus-success border-nexus-success/20;
+  }
+  .badge-cancelled, .badge-rejected, .badge-danger {
+    @apply badge bg-nexus-error/10 text-nexus-error border-nexus-error/20;
+  }
+  .badge-info {
+    @apply badge bg-nexus-info/10 text-nexus-info border-nexus-info/20;
   }
 }
 
 @layer utilities {
-  /* ── Glass morphism ── */
   .glass {
     @apply bg-white/70 backdrop-blur-xl border border-nexus-border/50;
   }
   .dark .glass {
-    @apply bg-dark-surface/70 backdrop-blur-md border border-nexus-border/10;
+    @apply bg-nexus-surface/70 backdrop-blur-md border border-nexus-border/10;
   }
   .glass-card {
     @apply glass shadow-xl shadow-black/5 dark:shadow-soft rounded-md;
   }
 
-  /* ── Scrollbar hide (used for horizontal category strips) ── */
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  /* ── Safe bottom padding for mobile navigation bars ── */
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom, 16px);
   }
 
-  /* ── Touch-friendly card press effect ── */
   .touch-card {
     @apply transition-transform duration-150 active:scale-[0.98];
   }
 
-  /* ── Responsive text helpers ── */
   .text-responsive-xl  { @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl; }
   .text-responsive-lg  { @apply text-xl  sm:text-2xl  md:text-3xl; }
   .text-responsive-md  { @apply text-lg  sm:text-xl; }

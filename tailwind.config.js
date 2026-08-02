@@ -64,18 +64,19 @@ export default {
       },
 
       borderRadius: {
-        'sm': '10px',
-        'md': '14px',
-        'lg': '18px',
-        'card': '18px',
+        'sm': '6px',
+        'md': '12px',
+        'lg': '16px',
+        'card': '12px',
         'btn': '12px',
       },
 
       boxShadow: {
         'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
-        'card': '0 4px 24px rgba(19, 25, 48, 0.08)',
-        'glow': '0 0 20px rgba(251, 70, 29, 0.35)',
+        'card': '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1)',
+        'glow': '0 0 20px rgba(255, 106, 0, 0.15)',
         'glass': '0 8px 32px rgba(0,0,0,.35)',
+        'premium': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
       },
 
       backgroundImage: {

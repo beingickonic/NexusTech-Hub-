@@ -1,0 +1,12 @@
+const envFile=await import('fs').then(f=>f.readFileSync('.env','utf8'));
+const url=envFile.match(/VITE_SUPABASE_URL=(.+)/)[1].trim();
+const key=envFile.match(/VITE_SUPABASE_ANON_KEY=(.+)/)[1].trim();
+const { createClient }=await import('@supabase/supabase-js');
+const supabase=createClient(url,key,{auth:{persistSession:false}});
+await supabase.auth.signInWithPassword({email:'admin@gmail.com',password:'derrick1'});
+console.log('logged-in auth uid:', (await supabase.auth.getUser()).data.user.id);
+const { data }=await supabase.from('profiles').select('id, full_name, role');
+const adminCapable=(data||[]).filter(p=>['Admin','super_admin','Manager'].includes(p.role));
+console.log('ADMIN-CAPABLE ROLES:');
+adminCapable.forEach(p=>console.log(`  role=${p.role}  name=${p.full_name}  id=${p.id}`));
+await supabase.auth.signOut();

@@ -12,10 +12,10 @@ const VALID_TRANSITIONS = {
   'paid':                          ['pending finance approval', 'cancelled', 'refunded'],
   'payment verified':              ['pending finance approval', 'cancelled', 'refunded'],
   'pending finance approval':      ['finance approved', 'rejected', 'cancelled', 'refunded'],
-  'finance approved':              ['reserved', 'stock reserved', 'waiting for stock', 'ready for picking', 'cancelled', 'refunded'],
-  'waiting for stock':             ['reserved', 'stock reserved', 'cancelled'],
-  'reserved':                      ['ready for picking', 'picking', 'cancelled'],
-  'stock reserved':                ['ready for picking', 'picking', 'cancelled'],
+  'finance approved':              ['reserved', 'stock reserved', 'ready for dispatch', 'waiting for stock', 'ready for picking', 'cancelled', 'refunded'],
+  'waiting for stock':             ['reserved', 'stock reserved', 'ready for dispatch', 'cancelled'],
+  'reserved':                      ['ready for dispatch', 'ready for picking', 'picking', 'cancelled'],
+  'stock reserved':                ['ready for dispatch', 'ready for picking', 'picking', 'cancelled'],
   'ready for picking':             ['picking', 'cancelled'],
   'rejected':                      ['pending payment verification', 'cancelled', 'refunded'],
   'picking':                       ['packing', 'cancelled'],
@@ -23,7 +23,8 @@ const VALID_TRANSITIONS = {
   'ready for dispatch':            ['assigned', 'cancelled'],
   'assigned':                      ['out for delivery', 'cancelled'],
   'out for delivery':              ['delivered', 'cancelled'],
-  'delivered':                     ['completed', 'refunded'],
+  'delivered':                     ['customer confirmed', 'completed', 'refunded'],
+  'customer confirmed':            ['completed'],
   'completed':                     ['refunded'],
   'cancelled':                     ['refunded'],
   'refunded':                      [],
@@ -192,7 +193,7 @@ const updateOrderStatus = async (orderId, status) => {
       .from('orders')
       .select('status')
       .eq('id', orderId)
-      .single();
+      .maybeSingle();
 
     if (current && !isValidTransition(current.status, status)) {
       return {
@@ -201,15 +202,39 @@ const updateOrderStatus = async (orderId, status) => {
       };
     }
 
-    const { data, error } = await supabase
-      .from('orders')
-      .update({ status })
-      .eq('id', orderId)
-      .select()
-      .single();
+    // Preferred path: SECURITY DEFINER RPC bypasses RLS so warehouse/inventory
+    // staff can transition order status (migration 036).
+    const { data: rpcData, error: rpcError } = await supabase
+      .rpc('update_order_status', { p_order_id: orderId, p_new_status: status });
 
-    if (error) throw error;
-    return { success: true, data };
+    if (!rpcError) {
+      const parsed = rpcData && typeof rpcData === 'string' ? JSON.parse(rpcData) : rpcData;
+      if (parsed?.success) return { success: true, data: parsed.data };
+      return { success: false, message: parsed?.error || 'Failed to update order status' };
+    }
+
+    // Fallback: direct update (only effective for Admin/Manager roles).
+    if (rpcError.code === 'PGRST202') {
+      const { data, error } = await supabase
+        .from('orders')
+        .update({ status })
+        .eq('id', orderId)
+        .select()
+        .maybeSingle();
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          return {
+            success: false,
+            message: 'Order status could not be updated. Your account may not have permission. Please try again or contact an administrator.'
+          };
+        }
+        throw error;
+      }
+      return { success: true, data };
+    }
+
+    throw rpcError;
   } catch (error) {
     return { success: false, message: error.message };
   }

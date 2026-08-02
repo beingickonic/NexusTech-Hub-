@@ -1,23 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import PortalSidebar from './PortalSidebar';
 import PortalNavbar from './PortalNavbar';
 
-/**
- * Generic portal layout reused by Dispatch, Driver, Inventory, and Supplier portals.
- *
- * @param {Object} config
- * @param {string} config.name          - Portal name e.g. "Dispatch"
- * @param {string} config.accent        - Tailwind color name e.g. "amber"
- * @param {string} config.accentHex     - Raw hex e.g. "#f59e0b"
- * @param {string} config.homeRoute     - Default dashboard path
- * @param {Array}  config.nav           - Array of { name, path, icon }
- * @param {React.Component} config.icon - Portal icon component
- * @param {string} config.bgClass       - Sidebar background class
- */
 const PortalLayout = ({ config }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    return localStorage.getItem(`${config.name.toLowerCase()}-sidebar-collapsed`) === 'true';
+  });
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsCollapsed(localStorage.getItem(`${config.name.toLowerCase()}-sidebar-collapsed`) === 'true');
+    };
+    window.addEventListener('storage', handleStorageChange);
+    const interval = setInterval(handleStorageChange, 500);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, [config.name]);
 
   return (
     <div className="min-h-screen bg-nexus-surface dark:bg-nexus-bg text-nexus-heading font-sans">
@@ -27,7 +30,7 @@ const PortalLayout = ({ config }) => {
         setIsOpen={setIsSidebarOpen}
       />
 
-      <div className="lg:ml-60 flex flex-col min-h-screen transition-all duration-300">
+      <div className={`${isCollapsed ? 'lg:ml-20' : 'lg:ml-60'} flex flex-col min-h-screen transition-all duration-300`}>
         <PortalNavbar
           config={config}
           toggleSidebar={() => setIsSidebarOpen(true)}

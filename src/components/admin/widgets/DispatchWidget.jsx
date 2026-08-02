@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Truck, Clock, CheckCircle, XCircle, User, TrendingUp } from 'lucide-react';
 import { dispatchService } from '../../../services/dispatchService';
-import { Link } from 'react-router-dom';
 
 const DispatchWidget = () => {
   const [stats, setStats] = useState({});
@@ -33,10 +32,6 @@ const DispatchWidget = () => {
           <h3 className="font-bold text-nexus-heading text-sm">Today's Dispatches</h3>
           <p className="text-xs text-nexus-textSecondary mt-0.5">{stats.today_delivered || 0} delivered today</p>
         </div>
-        <Link to="/admin/dispatch"
-          className="text-xs text-nexus-primary hover:text-nexus-primary font-semibold transition-colors">
-          View All →
-        </Link>
       </div>
 
       {loading ? (

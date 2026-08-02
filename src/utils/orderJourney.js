@@ -1,6 +1,6 @@
 import {
   ShoppingCart, CreditCard, ShieldCheck, Wallet, BadgeCheck, PackageCheck,
-  Warehouse, Truck, MapPin, CheckCircle, UserCheck, PartyPopper,
+  Warehouse, Truck, MapPin, CheckCircle, UserCheck, Clock, AlertTriangle,
 } from 'lucide-react';
 
 export const ORDER_STAGES = [
@@ -9,13 +9,12 @@ export const ORDER_STAGES = [
   { id: 'payment verified',   key: ['paid', 'payment verified', 'pending payment verification'], label: 'Payment Verified', icon: ShieldCheck, dept: 'Finance', color: '#FB461D' },
   { id: 'finance review',     key: ['pending finance approval'],         label: 'Finance Review',     icon: Wallet,        dept: 'Finance',     color: '#FB461D' },
   { id: 'finance approved',   key: ['finance approved'],                 label: 'Finance Approved',   icon: BadgeCheck,    dept: 'Finance',     color: '#FB461D' },
-  { id: 'inventory reserved', key: ['reserved', 'stock reserved', 'ready for picking', 'picking', 'packing', 'inventory reserved', 'inventory approved'], label: 'Inventory Reserved', icon: PackageCheck, dept: 'Inventory', color: '#F7A321' },
+  { id: 'inventory approved', key: ['reserved', 'stock reserved', 'ready for picking', 'picking', 'packing', 'inventory reserved', 'inventory approved'], label: 'Inventory Approved', icon: PackageCheck, dept: 'Inventory', color: '#F7A321' },
   { id: 'ready for dispatch', key: ['ready for dispatch'],               label: 'Ready for Dispatch', icon: Warehouse,     dept: 'Dispatch',    color: '#F7A321' },
   { id: 'driver assigned',    key: ['assigned'],                         label: 'Driver Assigned',    icon: Truck,         dept: 'Dispatch',    color: '#F7A321' },
-  { id: 'out for delivery',   key: ['out for delivery'],                 label: 'Out for Delivery',   icon: MapPin,        dept: 'Dispatch',    color: '#F7A321' },
-  { id: 'delivered',          key: ['delivered'],                        label: 'Delivered',          icon: CheckCircle,   dept: 'Delivery',    color: '#FB461D' },
-  { id: 'customer confirmed', key: ['delivered'],                        label: 'Customer Confirmed', icon: UserCheck,     dept: 'Customer',    color: '#FB461D' },
-  { id: 'completed',          key: ['completed'],                        label: 'Completed',          icon: PartyPopper,   dept: 'NexusTech',   color: '#FB461D' },
+  { id: 'in transit',         key: ['out for delivery', 'in transit'],   label: 'In Transit',         icon: MapPin,        dept: 'Dispatch',    color: '#F7A321' },
+  { id: 'delivered',          key: ['delivered'],                        label: 'Delivered',          icon: PackageCheck,  dept: 'Delivery',    color: '#FB461D' },
+  { id: 'customer confirmed', key: ['customer confirmed', 'completed'],               label: 'Customer Confirmed', icon: UserCheck,     dept: 'Customer',    color: '#FB461D' },
 ];
 
 export const TERMINAL_STATUSES = ['cancelled', 'refunded', 'rejected', 'payment failed'];
@@ -32,7 +31,7 @@ export const getJourneyIndex = (status, order) => {
   const key = (status || '').toLowerCase();
   if (TERMINAL_STATUSES.includes(key)) return -2;
   if (key === 'waiting for stock') {
-    return { index: ORDER_STAGES.findIndex(s => s.id === 'inventory reserved') - 0.5, lowStock: true };
+    return { index: ORDER_STAGES.findIndex(s => s.id === 'inventory approved') - 0.5, lowStock: true };
   }
   if (key === 'delivered' && order?.delivery_confirmed_at) {
     return ORDER_STAGES.findIndex(s => s.id === 'customer confirmed');
@@ -48,7 +47,8 @@ export const isTerminal = (status) => TERMINAL_STATUSES.includes((status || '').
 export const getProgress = (status, order) => {
   const res = getJourneyIndex(status, order);
   if (res === -2 || res === -1) return 0;
-  return Math.max(0, Math.min(100, Math.round(((res + 1) / ORDER_STAGES.length) * 100)));
+  const idx = typeof res === 'number' ? res : res.index;
+  return Math.max(0, Math.min(100, Math.round(((idx + 1) / ORDER_STAGES.length) * 100)));
 };
 
 export const getCurrentStage = (status, order) => {
@@ -89,6 +89,37 @@ export const estimateNextEta = (status, order) => {
   return '~24 hours';
 };
 
+export const getNextAction = (status, order) => {
+  const key = (status || '').toLowerCase();
+  if (TERMINAL_STATUSES.includes(key) || key === 'completed') return null;
+
+  if (key === 'waiting for stock') {
+    const short = (order?.items || []).filter(i => i?.products && Number(i.products.stock) < Number(i.quantity));
+    if (short.length > 0) {
+      return {
+        title: 'Stock Arriving Soon',
+        detail: `We're waiting for stock on ${short.length} item(s). Your order resumes automatically the moment it's available.`,
+        icon: AlertTriangle,
+      };
+    }
+    return { title: 'Processing Your Order', detail: 'Your items are being reserved. We will update you shortly.', icon: PackageCheck };
+  }
+  if (key === 'pending') return { title: 'Order Received', detail: 'Our team will confirm your payment shortly.', icon: Clock };
+  if (key === 'awaiting payment' || key === 'paid' || key === 'pending payment verification') {
+    return { title: 'Verifying Payment', detail: 'Finance is verifying your payment.', icon: CreditCard };
+  }
+  if (key === 'pending finance approval') return { title: 'Finance Review', detail: 'Finance is reviewing your order.', icon: Wallet };
+  if (key === 'finance approved' || key === 'inventory approved') return { title: 'Reserving Stock', detail: 'Inventory is preparing your items.', icon: PackageCheck };
+  if (['reserved', 'stock reserved', 'ready for picking', 'picking', 'packing', 'inventory reserved'].includes(key)) {
+    return { title: 'Getting Ready for Dispatch', detail: 'Your items are packed and heading to dispatch.', icon: Warehouse };
+  }
+  if (key === 'ready for dispatch') return { title: 'Awaiting Driver', detail: 'Dispatch is assigning a driver to deliver your order.', icon: Truck };
+  if (key === 'assigned') return { title: 'Driver Assigned', detail: 'A driver has been assigned to your order.', icon: Truck };
+  if (key === 'out for delivery') return { title: 'On Its Way!', detail: 'Your order is out for delivery. Keep your phone close.', icon: MapPin };
+  if (key === 'delivered') return { title: 'Confirm Your Delivery', detail: 'Please confirm receipt of your order so we can complete it.', icon: UserCheck };
+  return { title: 'On Track', detail: 'Your order is progressing through our workflow.', icon: CheckCircle };
+};
+
 export const buildStageLog = (order, statusHistory) => {
   const log = {};
   const set = (stageId, at, user) => {
@@ -99,7 +130,7 @@ export const buildStageLog = (order, statusHistory) => {
 
   if (order?.created_at) set('order placed', order.created_at, order.shipping_name || 'Customer');
   if (order?.finance_approved_at) set('finance approved', order.finance_approved_at);
-  if (order?.inventory_approved_at) set('inventory reserved', order.inventory_approved_at);
+  if (order?.inventory_approved_at && order.inventory_status !== 'waiting') set('inventory approved', order.inventory_approved_at);
   if (order?.picked_at) set('picking', order.picked_at);
   if (order?.packed_at) set('packing', order.packed_at);
   if (order?.dispatched_at) set('ready for dispatch', order.dispatched_at);

@@ -45,12 +45,52 @@ export const getMyReview = async (productId) => {
 };
 
 /**
- * Submit a new product review.
+ * Public: whether the current user may review a product (i.e. has paid for
+ * an order containing it). Returns a boolean.
+ */
+export const canReviewProduct = async (userId = null, productId) => {
+  const uid = userId || (await supabase.auth.getUser().then(r => r.data?.user?.id));
+  if (!uid) return false;
+  return hasPurchasedProduct(uid, productId);
+};
+
+/**
+ * Verify the user has actually paid for an order that contains this product
+ * before they're allowed to review it. RLS already limits orders to the caller.
+ */
+const hasPurchasedProduct = async (userId, productId) => {
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('id, payment_status, order_items!inner(product_id, quantity)')
+      .eq('user_id', userId)
+      .eq('order_items.product_id', productId)
+      .limit(50);
+
+    if (error) throw error;
+
+    const paidValues = ['paid', 'completed'];
+    return (data || []).some(o =>
+      paidValues.includes((o.payment_status || '').toLowerCase())
+    );
+  } catch (error) {
+    console.error('Purchased check failed:', error?.message);
+    return false;
+  }
+};
+
+/**
+ * Submit a new product review (only purchasers of the product may review it).
  */
 export const submitReview = async (productId, { rating, title, body }) => {
   try {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { success: false, message: 'You must be logged in to submit a review.' };
+
+    const purchased = await hasPurchasedProduct(user.id, productId);
+    if (!purchased) {
+      return { success: false, message: 'You can only review a product after you have paid for an order containing it.' };
+    }
 
     const { data, error } = await supabase
       .from('product_reviews')

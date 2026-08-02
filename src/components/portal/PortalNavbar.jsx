@@ -67,7 +67,7 @@ const PortalNavbar = ({ config, toggleSidebar }) => {
 
         {/* Page title */}
         <div className="hidden sm:flex items-center gap-2">
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: accentHex }}>
+          <span className="text-xs font-bold uppercase tracking-widest text-nexus-primary">
             {name}
           </span>
           <span className="text-nexus-textSecondary dark:text-nexus-heading">/</span>
@@ -81,8 +81,7 @@ const PortalNavbar = ({ config, toggleSidebar }) => {
           <input
             type="text"
             placeholder="Search..."
-            className="w-44 bg-nexus-surface dark:bg-nexus-surface border-none rounded-lg py-1.5 pl-8 pr-3 text-sm outline-none focus:ring-2 transition-all placeholder:text-nexus-textSecondary"
-            style={{ '--tw-ring-color': `${accentHex}50` }}
+            className="w-44 bg-nexus-surface dark:bg-nexus-surface border-none rounded-lg py-1.5 pl-8 pr-3 text-sm outline-none focus:ring-2 focus:ring-nexus-primary/50 transition-all placeholder:text-nexus-textSecondary"
           />
           <Search size={14} className="absolute left-2.5 text-nexus-textSecondary" />
         </div>
@@ -100,8 +99,7 @@ const PortalNavbar = ({ config, toggleSidebar }) => {
           <Bell size={17} />
           {unread > 0 && (
             <span
-              className="absolute top-1 right-1 w-4 h-4 rounded-full text-white text-[9px] font-bold flex items-center justify-center"
-              style={{ background: accentHex }}
+              className="absolute top-1 right-1 w-4 h-4 rounded-full text-white text-[9px] font-bold flex items-center justify-center bg-nexus-primary"
             >
               {unread > 9 ? '9+' : unread}
             </span>

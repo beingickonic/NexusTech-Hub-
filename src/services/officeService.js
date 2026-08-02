@@ -187,28 +187,59 @@ export const officeService = {
   // Dashboard Stats
   getDashboardStats: async () => {
     const today = new Date().toISOString().split('T')[0];
-    
-    const [tasksRes, meetingsRes, messagesRes, suppliesRes, visitorsRes, requestsRes] = await Promise.all([
-      supabase.from('office_tasks').select('id', { count: 'exact', head: true }).eq('status', 'Pending'),
-      supabase.from('office_meetings').select('id', { count: 'exact', head: true }).gte('date', `${today}T00:00:00`).lt('date', `${today}T23:59:59`),
-      supabase.from('office_messages').select('id', { count: 'exact', head: true }).eq('is_read', false),
-      supabase.from('office_supplies').select('id').then(res => {
-        // Need to fetch to compare current_stock <= min_stock
-        return supabase.from('office_supplies').select('*');
-      }),
-      supabase.from('office_visitors').select('id', { count: 'exact', head: true }).gte('expected_time', `${today}T00:00:00`).lt('expected_time', `${today}T23:59:59`),
-      supabase.from('office_support_requests').select('id', { count: 'exact', head: true }).eq('status', 'Open')
-    ]);
 
-    const lowSuppliesCount = suppliesRes.data ? suppliesRes.data.filter(s => s.current_stock <= s.min_stock).length : 0;
+    // Query each metric independently so a missing table or layout change can
+    // never crash the whole dashboard — that metric just falls back to 0.
+    const safe = async (fn, fallback = 0) => {
+      try { return await fn(); } catch (e) { console.warn('office stat unavailable:', e?.message); return fallback; }
+    };
+
+    const count = (q) => q.then(r => r.count || 0).catch(() => 0);
+    const tasksRes = safe(async () => {
+      const { count } = await supabase.from('office_tasks').select('id', { count: 'exact', head: true }).eq('status', 'Pending');
+      return count || 0;
+    });
+    const meetingsRes = safe(async () => {
+      const { count } = await supabase
+        .from('office_meetings').select('id', { count: 'exact', head: true })
+        .gte('date', `${today}T00:00:00`).lt('date', `${today}T23:59:59`);
+      return count || 0;
+    });
+    const messagesRes = safe(async () => {
+      // office_messages may define the read flag as is_read or read_status
+      const { count } = await supabase
+        .from('office_messages').select('id', { count: 'exact', head: true })
+        .or('is_read.eq.false,read_status.eq.false');
+      return count || 0;
+    });
+    const suppliesRes = safe(async () => {
+      const { data } = await supabase.from('office_supplies').select('current_stock, min_stock');
+      const rows = data || [];
+      return rows.filter(s => Number(s.current_stock) <= Number(s.min_stock)).length;
+    }, 0);
+    const visitorsRes = safe(async () => {
+      const { count } = await supabase
+        .from('office_visitors').select('id', { count: 'exact', head: true })
+        .gte('date', `${today}T00:00:00`).lt('date', `${today}T23:59:59`);
+      return count || 0;
+    });
+    const requestsRes = safe(async () => {
+      const { count } = await supabase
+        .from('office_support_requests').select('id', { count: 'exact', head: true })
+        .eq('status', 'Open');
+      return count || 0;
+    });
+
+    const [pendingTasks, meetingsToday, unreadMessages, lowSupplies, visitorsToday, openRequests] =
+      await Promise.all([tasksRes, meetingsRes, messagesRes, suppliesRes, visitorsRes, requestsRes]);
 
     return {
-      pendingTasks: tasksRes.count || 0,
-      meetingsToday: meetingsRes.count || 0,
-      unreadMessages: messagesRes.count || 0,
-      lowSupplies: lowSuppliesCount,
-      visitorsToday: visitorsRes.count || 0,
-      openRequests: requestsRes.count || 0
+      pendingTasks,
+      meetingsToday,
+      unreadMessages,
+      lowSupplies,
+      visitorsToday,
+      openRequests
     };
   },
 

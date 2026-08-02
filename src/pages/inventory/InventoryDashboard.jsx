@@ -66,17 +66,17 @@ const InventoryDashboard = () => {
   const HEALTH_COLORS = { healthy: '#10b981', low_stock: '#f59e0b', out_of_stock: '#ef4444', overstocked: '#a855f7', slow_moving: '#3b82f6', dead_stock: '#64748b' };
 
   const kpis = [
-    { label: 'Total Products', value: stats.totalProducts.toLocaleString(), color: 'text-primary', bg: 'bg-primary/10 dark:bg-primary/10', icon: Box },
+    { label: 'Total Products', value: stats.totalProducts.toLocaleString(), color: 'text-nexus-primary', bg: 'bg-nexus-primary/10 dark:bg-nexus-primary/10', icon: Box },
     { label: 'Orders Awaiting Approval', value: pendingApprovals, color: 'text-nexus-gold', bg: 'bg-nexus-gold/10 dark:bg-nexus-gold/10', icon: Clock, link: '/inventory/order-approvals' },
     { label: 'Total Inventory', value: stats.totalInventory?.toLocaleString() || 0, color: 'text-nexus-info', bg: 'bg-nexus-info/10 dark:bg-nexus-info/10', icon: Package },
     { label: 'Available Stock', value: stats.availableStock?.toLocaleString() || 0, color: 'text-nexus-success', bg: 'bg-nexus-success/10 dark:bg-nexus-success/10', icon: ClipboardCheck },
     { label: 'Reserved Stock', value: stats.reservedStock?.toLocaleString() || 0, color: 'text-nexus-gold', bg: 'bg-nexus-gold/10 dark:bg-nexus-gold/10', icon: AlertTriangle },
-    { label: 'In Transit', value: stats.inTransitStock?.toLocaleString() || 0, color: 'text-info', bg: 'bg-info/10 dark:bg-info/100/10', icon: Truck },
+    { label: 'In Transit', value: stats.inTransitStock?.toLocaleString() || 0, color: 'text-nexus-info', bg: 'bg-nexus-info/10 dark:bg-nexus-info/10', icon: Truck },
     { label: 'Total Stock Value', value: `$${stats.inventoryValue?.toLocaleString() || 0}`, color: 'text-nexus-success', bg: 'bg-nexus-success/10 dark:bg-nexus-success/10', icon: DollarSign },
     { label: 'Low Stock Items', value: stats.lowStock || 0, color: 'text-nexus-gold', bg: 'bg-nexus-gold/10 dark:bg-nexus-gold/10', icon: TrendingDown },
     { label: 'Out of Stock', value: stats.outOfStock || 0, color: 'text-nexus-error', bg: 'bg-nexus-error/5 dark:bg-nexus-error/10', icon: AlertTriangle },
-    { label: 'Pending POs', value: stats.pendingRequests || 0, color: 'text-info', bg: 'bg-info/10 dark:bg-info/100/10', icon: ShoppingCart },
-    { label: 'Received Today', value: stats.receivedToday || 0, color: 'text-success', bg: 'bg-success/10 dark:bg-success/100/10', icon: Warehouse },
+    { label: 'Pending POs', value: stats.pendingRequests || 0, color: 'text-nexus-info', bg: 'bg-nexus-info/10 dark:bg-nexus-info/10', icon: ShoppingCart },
+    { label: 'Received Today', value: stats.receivedToday || 0, color: 'text-nexus-success', bg: 'bg-nexus-success/10 dark:bg-nexus-success/10', icon: Warehouse },
     { label: 'Warehouse Capacity', value: `${stats.warehouseCapacity || 0}%`, color: 'text-nexus-textSecondary', bg: 'bg-nexus-surface dark:bg-nexus-muted/10', icon: Database },
     { label: 'Inventory Health', value: `${stats.inventoryHealthScore || 0}%`, color: 'text-nexus-success', bg: 'bg-nexus-success/10 dark:bg-nexus-success/10', icon: Activity },
   ];
@@ -96,7 +96,7 @@ const InventoryDashboard = () => {
           <Link to="/inventory/goods-received" className="inline-flex items-center gap-2 bg-nexus-surface dark:bg-nexus-hover hover:bg-nexus-surface dark:hover:bg-nexus-hover text-nexus-heading px-4 py-2.5 rounded-xl font-medium text-sm transition-colors">
             <ClipboardCheck size={18} /> Receive GRN
           </Link>
-          <Link to="/inventory/transfers" className="inline-flex items-center gap-2 bg-primary hover:bg-nexus-primary-hover text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-primary/25">
+          <Link to="/inventory/transfers" className="inline-flex items-center gap-2 bg-nexus-primary hover:bg-nexus-primary-hover text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-nexus-primary/25">
             <ArrowRightLeft size={18} /> Transfers
           </Link>
         </div>
@@ -130,7 +130,7 @@ const InventoryDashboard = () => {
 
       {/* Procurement Overview */}
       <div className="mb-6 bg-nexus-card p-6 rounded-2xl border border-nexus-border shadow-sm">
-        <h3 className="font-bold text-nexus-heading flex items-center gap-2 mb-4"><ShoppingCart className="text-primary" size={20} /> Procurement Overview</h3>
+        <h3 className="font-bold text-nexus-heading flex items-center gap-2 mb-4"><ShoppingCart className="text-nexus-primary" size={20} /> Procurement Overview</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-nexus-surface dark:bg-nexus-hover p-4 rounded-xl border border-nexus-border flex items-center justify-between">
             <div>
@@ -158,7 +158,7 @@ const InventoryDashboard = () => {
               <p className="text-xs font-medium text-nexus-textSecondary uppercase tracking-wide">Received POs</p>
               <p className="text-2xl font-bold text-nexus-heading mt-1">{loading ? '-' : stats.receivedPOs || 0}</p>
             </div>
-            <div className="p-3 bg-info/100/10 text-info rounded-lg"><Warehouse size={20} /></div>
+            <div className="p-3 bg-nexus-info/10 text-nexus-info rounded-lg"><Warehouse size={20} /></div>
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@ const InventoryDashboard = () => {
         {/* Health Breakdown */}
         <div className="lg:col-span-2 bg-nexus-card p-6 rounded-2xl border border-nexus-border shadow-sm">
           <div className="flex items-center justify-between mb-5">
-            <h3 className="font-bold text-nexus-heading flex items-center gap-2"><Activity className="text-primary" size={20} /> Inventory Health Breakdown</h3>
+            <h3 className="font-bold text-nexus-heading flex items-center gap-2"><Activity className="text-nexus-primary" size={20} /> Inventory Health Breakdown</h3>
             <div className="flex items-center gap-2">
               <span className="text-sm text-nexus-textSecondary">Score:</span>
               <span className={`font-bold text-lg ${health.healthScore >= 80 ? 'text-nexus-success' : health.healthScore >= 50 ? 'text-nexus-gold' : 'text-nexus-error'}`}>{loading ? 'â€”' : `${health.healthScore}%`}</span>
@@ -209,10 +209,10 @@ const InventoryDashboard = () => {
         {/* Active Alerts Panel */}
         <div className="bg-nexus-card p-6 rounded-2xl border border-nexus-border shadow-sm">
           <div className="flex items-center justify-between mb-5">
-            <h3 className="font-bold text-nexus-heading flex items-center gap-2"><Bell className="text-primary" size={20} /> Active Alerts
+            <h3 className="font-bold text-nexus-heading flex items-center gap-2"><Bell className="text-nexus-primary" size={20} /> Active Alerts
               {stats.activeAlerts > 0 && <span className="ml-1 px-1.5 py-0.5 bg-nexus-error text-white text-xs rounded-full font-bold">{stats.activeAlerts}</span>}
             </h3>
-            <Link to="/inventory/notifications" className="text-xs font-bold text-primary hover:text-nexus-primary">View All</Link>
+            <Link to="/inventory/notifications" className="text-xs font-bold text-nexus-primary hover:text-nexus-primary">View All</Link>
           </div>
           {loading ? (
             <div className="space-y-3">{[1,2,3].map(i => <div key={i} className="h-14 bg-nexus-surface dark:bg-nexus-hover rounded-xl animate-pulse" />)}</div>
@@ -246,7 +246,7 @@ const InventoryDashboard = () => {
            <h3 className="font-bold text-nexus-heading flex items-center gap-2">
              <Calendar className="text-primary" size={20} /> Recent Activity
            </h3>
-           <Link to="/inventory/movements" className="text-xs font-bold text-primary hover:text-nexus-primary">View All</Link>
+           <Link to="/inventory/movements" className="text-xs font-bold text-nexus-primary hover:text-nexus-primary">View All</Link>
          </div>
          
          <div className="space-y-4">
@@ -259,7 +259,7 @@ const InventoryDashboard = () => {
            ) : activity.length > 0 ? (
              activity.map(act => (
                <div key={act.id} className="flex items-center gap-4 p-4 rounded-xl bg-nexus-surface dark:bg-nexus-hover border border-transparent hover:border-nexus-border dark:hover:border-nexus-border transition-colors">
-                 <div className="p-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary rounded-lg">
+                 <div className="p-2 bg-nexus-primary/10 dark:bg-nexus-primary/20 text-nexus-primary dark:text-nexus-primary rounded-lg">
                    <Package size={20} />
                  </div>
                  <div className="flex-1">

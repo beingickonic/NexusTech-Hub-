@@ -74,6 +74,29 @@ const enrichDrivers = async (rows) => {
   return rows.map(row => normalizeDriver(row, profiles[row.user_id]));
 };
 
+// Set each driver's total_deliveries from actual Delivered/Completed orders
+// (drivers.total_deliveries column is stale/never maintained, so trips read 0).
+const attachDeliveryCounts = async (list) => {
+  if (list.length === 0) return list;
+  const userIds = list.map(d => d.user_id).filter(Boolean);
+  if (userIds.length === 0) return list;
+
+  const counts = new Map();
+  await Promise.all(userIds.map(async (id) => {
+    const { count } = await supabase
+      .from('orders')
+      .select('id', { count: 'exact', head: true })
+      .eq('driver_id', id)
+      .in('status', ['Delivered', 'Completed']);
+    counts.set(id, count || 0);
+  }));
+
+  return list.map(d => ({
+    ...d,
+    total_deliveries: counts.get(d.user_id) || 0
+  }));
+};
+
 const todayStart = () => {
   const t = new Date();
   t.setHours(0, 0, 0, 0);
@@ -126,6 +149,7 @@ export const driverService = {
   getDrivers: async ({ page = 1, limit = DEFAULT_LIMIT, search = '', status = 'all' } = {}) => {
     const rows = await fetchDriverRows({ includeAll: true });
     let list = await enrichDrivers(rows);
+    list = await attachDeliveryCounts(list);
 
     if (status && status !== 'all') list = list.filter(d => d.status === status);
 

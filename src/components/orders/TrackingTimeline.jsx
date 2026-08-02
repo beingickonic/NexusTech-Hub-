@@ -5,6 +5,7 @@ import {
   getJourneyIndex,
   getProgress,
   getNextStage,
+  getNextAction,
   buildStageLog,
   formatJourneyDate,
   formatJourneyTime,
@@ -180,7 +181,8 @@ const TerminalCard = ({ status }) => {
 
 const NextStepCard = ({ status, order }) => {
   const next = getNextStage(status, order);
-  const NextIcon = next?.icon || null;
+  const action = getNextAction(status, order);
+  const NextIcon = action?.icon || next?.icon || null;
   const eta = estimateNextEta(status, order);
   const estDelivery = estimateDelivery(order);
   const key = (status || '').toLowerCase();
@@ -198,21 +200,30 @@ const NextStepCard = ({ status, order }) => {
         {NextIcon && <NextIcon size={22} className="text-[#FB461D] shrink-0" />}
         <div className="min-w-0">
           <p className="text-xs font-bold uppercase tracking-wider text-[#FB461D]">Next Action</p>
-          <p className="text-sm font-semibold text-nexus-heading truncate">
-            {next ? `${next.label} · ${next.dept} department` : 'Order journey complete'}
-          </p>
+          {action ? (
+            <>
+              <p className="text-sm font-semibold text-nexus-heading">{action.title}</p>
+              <p className="text-xs text-nexus-textSecondary mt-0.5">{action.detail}</p>
+            </>
+          ) : (
+            <p className="text-sm font-semibold text-nexus-heading truncate">
+              {next ? `${next.label} · ${next.dept} department` : 'Order journey complete'}
+            </p>
+          )}
         </div>
       </div>
-      <div className="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-0.5 text-sm">
-        {eta && (
-          <p className="text-xs text-nexus-textSecondary"><span className="font-semibold text-nexus-heading">{eta}</span> to complete</p>
-        )}
-        {estDelivery && key !== 'delivered' && (
-          <p className="text-xs text-nexus-textSecondary">
-            Est. delivery <span className="font-semibold text-nexus-heading">{formatJourneyDate(estDelivery.toISOString())}</span>
-          </p>
-        )}
-      </div>
+      {!action && (
+        <div className="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-0.5 text-sm">
+          {eta && (
+            <p className="text-xs text-nexus-textSecondary"><span className="font-semibold text-nexus-heading">{eta}</span> to complete</p>
+          )}
+          {estDelivery && key !== 'delivered' && (
+            <p className="text-xs text-nexus-textSecondary">
+              Est. delivery <span className="font-semibold text-nexus-heading">{formatJourneyDate(estDelivery.toISOString())}</span>
+            </p>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 };
@@ -257,7 +268,7 @@ const TrackingTimeline = ({ order, statusHistory, status }) => {
           </AnimatePresence>
         </div>
         <span className="hidden sm:block text-xs text-nexus-textSecondary">
-          {Math.max(0, Math.floor(effectiveIndex) + 1)} of {ORDER_STAGES.length} stages
+          {effectiveIndex >= 0 ? Math.min(ORDER_STAGES.length, Math.floor(effectiveIndex) + 1) : '—'} of {ORDER_STAGES.length} stages
         </span>
       </div>
       <ProgressBar percent={progress} />

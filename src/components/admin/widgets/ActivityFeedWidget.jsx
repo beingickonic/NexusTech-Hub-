@@ -25,7 +25,7 @@ const ActivityFeedWidget = () => {
       try {
         const [ordersRes, profilesRes] = await Promise.all([
           supabase.from('orders').select('id, total_amount, created_at, status').order('created_at', { ascending: false }).limit(10),
-          supabase.from('profiles').select('id, email, created_at').order('created_at', { ascending: false }).limit(10)
+          supabase.from('profiles').select('id, full_name, created_at').order('created_at', { ascending: false }).limit(10)
         ]);
 
         const acts = [];
@@ -43,7 +43,7 @@ const ActivityFeedWidget = () => {
             id: `usr-${p.id}`,
             type: 'user',
             title: 'New customer registered',
-            description: p.email,
+            description: p.full_name || 'New customer',
             date: p.created_at,
           });
         });

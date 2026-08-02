@@ -45,17 +45,22 @@ const DeliveryStatusPage = () => {
 
   useEffect(() => {
     if (!id || !user) return;
+    let cancelled = false;
     const load = async () => {
       setDriverId(user.id);
       const result = await dispatchService.getDispatch(id);
-      if (result.success) {
+      if (!cancelled && result.success) {
         setDispatch(result.data);
         const stepIdx = DELIVERY_STEPS.findIndex(s => s.key === result.data.status);
         setActiveStep(stepIdx >= 0 ? stepIdx : 0);
       }
-      setLoading(false);
+      if (!cancelled) setLoading(false);
     };
     load();
+
+    const timer = setInterval(load, 15000);
+
+    return () => { cancelled = true; clearInterval(timer); };
   }, [id, user]);
 
   const startGpsTracking = () => {

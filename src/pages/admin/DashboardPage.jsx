@@ -4,7 +4,6 @@ import RevenueChart from '../../components/admin/RevenueChart';
 import RecentOrdersWidget from '../../components/admin/widgets/RecentOrdersWidget';
 import InventoryHealthWidget from '../../components/admin/widgets/InventoryHealthWidget';
 import ActivityFeedWidget from '../../components/admin/widgets/ActivityFeedWidget';
-import QuickActionsPanel from '../../components/admin/widgets/QuickActionsPanel';
 import DispatchWidget from '../../components/admin/widgets/DispatchWidget';
 import DriverStatusWidget from '../../components/admin/widgets/DriverStatusWidget';
 import { adminService } from '../../services/adminService';
@@ -91,7 +90,6 @@ const DashboardPage = () => {
           <RevenueChart data={chartData} />
         </div>
         <div className="flex flex-col gap-4 md:gap-6">
-          <QuickActionsPanel />
           <InventoryHealthWidget products={inventory} />
         </div>
       </div>

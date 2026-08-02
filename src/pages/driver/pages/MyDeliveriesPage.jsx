@@ -27,12 +27,20 @@ const MyDeliveriesPage = () => {
 
   useEffect(() => {
     if (!user) return;
+    let cancelled = false;
     const load = async () => {
       const result = await dispatchService.getDriverDeliveries(user.id);
-      if (result.success) setDeliveries(result.data);
-      setLoading(false);
+      if (!cancelled) {
+        if (result.success) setDeliveries(result.data);
+        setLoading(false);
+      }
     };
     load();
+
+    const unsubscribe = dispatchService.subscribeToDispatches(() => load());
+    const timer = setInterval(load, 15000);
+
+    return () => { cancelled = true; clearInterval(timer); unsubscribe(); };
   }, [user]);
 
   const handleAccept = async (dispatchId) => {

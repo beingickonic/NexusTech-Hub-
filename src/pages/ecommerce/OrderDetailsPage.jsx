@@ -111,24 +111,44 @@ const OrderDetailsPage = () => {
   const [confirmed, setConfirmed] = useState(false);
   const [loyaltyEarned, setLoyaltyEarned] = useState(0);
 
-  useEffect(() => {
-    const fetchOrderDetails = async () => {
-      try {
-        const res = await orderService.getOrderDetails(id);
-        if (res.success) {
-          setOrder(res.data.order);
+  const fetchOrderDetails = async () => {
+    try {
+      const res = await orderService.getOrderDetails(id);
+      if (res.success) {
+        setOrder(res.data.order);
 
-          const historyRes = await orderService.getStatusHistory(id);
-          if (historyRes.success) {
-            setStatusHistory(historyRes.data);
-          }
+        const historyRes = await orderService.getStatusHistory(id);
+        if (historyRes.success) {
+          setStatusHistory(historyRes.data);
         }
-      } catch (error) {
-        console.error('Error fetching order details', error);
       }
-      setLoading(false);
-    };
+    } catch (error) {
+      console.error('Error fetching order details', error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
     fetchOrderDetails();
+  }, [id]);
+
+  useEffect(() => {
+    let unsubscribe = () => {};
+    let cancelled = false;
+
+    const setup = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user || cancelled) return;
+      unsubscribe = orderService.subscribeToOrderUpdates(user.id, () => {
+        fetchOrderDetails();
+      });
+    };
+    setup();
+
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
   }, [id]);
 
   const handleConfirmDelivery = async () => {

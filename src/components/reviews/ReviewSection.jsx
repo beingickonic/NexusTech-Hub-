@@ -7,7 +7,8 @@ import {
   getMyReview,
   submitReview,
   updateReview,
-  deleteReview
+  deleteReview,
+  canReviewProduct
 } from '../../services/reviewService';
 
 const StarRating = ({ rating, onChange, size = 24, readonly = false }) => (
@@ -144,15 +145,18 @@ const ReviewSection = ({ productId }) => {
   const [showForm, setShowForm] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
+  const [purchased, setPurchased] = useState(false);
 
   const fetchReviews = useCallback(async () => {
     setLoading(true);
-    const [reviewsRes, myReviewRes] = await Promise.all([
+    const [reviewsRes, myReviewRes, purchasedRes] = await Promise.all([
       getProductReviews(productId),
       user ? getMyReview(productId) : Promise.resolve({ data: null }),
+      user ? canReviewProduct(user.id, productId) : Promise.resolve(false),
     ]);
     setReviews(reviewsRes.data || []);
     setMyReview(myReviewRes.data || null);
+    setPurchased(purchasedRes);
     setLoading(false);
   }, [productId, user]);
 
@@ -229,6 +233,10 @@ const ReviewSection = ({ productId }) => {
                 Delete
               </button>
             </div>
+          ) : user && !purchased ? (
+            <p className="text-sm text-nexus-textSecondary dark:text-nexus-muted italic">
+              Reviews are reserved for verified buyers. You can review this product once you've paid for an order containing it.
+            </p>
           ) : (
             <button
               onClick={() => setShowForm(true)}

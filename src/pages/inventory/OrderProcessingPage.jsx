@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Box, PackageCheck, Printer, ClipboardList, Send, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Search, Filter, Box, PackageCheck, Printer, ClipboardList, Send, ArrowRight, CheckCircle, AlertTriangle, Loader2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { supabase } from '../../services/supabaseClient';
 import orderService from '../../services/orderService';
 import { formatCurrency } from '../../utils/currency';
 import { formatDate } from '../../utils/dateFormatter';
+
+const notifyCustomer = async (userId, title, message, type = 'info') => {
+  if (!userId) return;
+  try {
+    await supabase.rpc('send_notification', { p_user_id: userId, p_title: title, p_message: message, p_type: type });
+  } catch (e) {
+    console.warn('Customer notification failed:', e?.message);
+  }
+};
 
 const PROCESSING_TABS = [
   { key: 'to pick', label: 'To Pick', icon: ClipboardList, color: 'bg-info/10 text-info dark:bg-info/100/20 dark:text-info' },
@@ -40,6 +50,7 @@ const OrderProcessingPage = () => {
   const [activeTab, setActiveTab] = useState('to pick');
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pickingId, setPickingId] = useState(null);
 
   const fetchOrders = async () => {
     try {
@@ -74,22 +85,49 @@ const OrderProcessingPage = () => {
     return () => supabase.removeChannel(channel);
   }, []);
 
-  const handleStartPicking = async (orderId) => {
-    const res = await orderService.updateOrderStatus(orderId, 'Picking');
-    if (res.success) fetchOrders();
+  const handleStartPicking = async (order) => {
+    if (pickingId) return;
+    setPickingId(order.id);
+    const res = await orderService.updateOrderStatus(order.id, 'Picking');
+    if (res.success) {
+      toast.success('Picking started for this order');
+      notifyCustomer(
+        order.user_id,
+        'Order is being prepared',
+        'Your order is being picked in our warehouse and will be on its way soon.'
+      );
+      fetchOrders();
+    } else {
+      toast.error(res.message || 'Failed to start picking');
+    }
+    setPickingId(null);
   };
 
-  const handleCompletePicking = async (orderId) => {
-    const res = await orderService.deductInventory(orderId);
+  const handleCompletePicking = async (order) => {
+    const loading = toast.loading('Completing pick...');
+    const res = await orderService.deductInventory(order.id);
     if (res.success) {
-      await orderService.updateOrderStatus(orderId, 'Packing');
+      await orderService.updateOrderStatus(order.id, 'Packing');
+      toast.success('Pick complete — order moved to packing', { id: loading });
+      notifyCustomer(
+        order.user_id,
+        'Order packed and ready',
+        'Your order has been packed and is moving to dispatch preparation.'
+      );
       fetchOrders();
+    } else {
+      toast.error(res.message || 'Failed to complete pick', { id: loading });
     }
   };
 
-  const handleCompletePacking = async (orderId) => {
-    const res = await orderService.updateOrderStatus(orderId, 'Ready for Dispatch');
-    if (res.success) fetchOrders();
+  const handleCompletePacking = async (order) => {
+    const res = await orderService.updateOrderStatus(order.id, 'Ready for Dispatch');
+    if (res.success) {
+      toast.success('Order marked ready for dispatch');
+      fetchOrders();
+    } else {
+      toast.error(res.message || 'Failed to mark ready');
+    }
   };
 
   const filteredOrders = orders.filter(order => {
@@ -214,15 +252,16 @@ const OrderProcessingPage = () => {
                     <td className="px-6 py-4 text-right">
                       {activeTab === 'to pick' && PICKABLE_STATUSES.slice(0, 2).includes(order.status) && (
                         <button
-                          onClick={() => handleStartPicking(order.id)}
-                          className="text-info hover:text-info font-medium text-xs inline-flex items-center gap-1 px-3 py-1.5 bg-info/10 dark:bg-info/100/10 rounded-lg transition-colors"
+                          onClick={() => handleStartPicking(order)}
+                          disabled={pickingId === order.id}
+                          className="text-info hover:text-info font-medium text-xs inline-flex items-center gap-1 px-3 py-1.5 bg-info/10 dark:bg-info/100/10 rounded-lg transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                          <Box size={14} /> Start Picking
+                          {pickingId === order.id ? <Loader2 size={14} className="animate-spin" /> : <Box size={14} />} Start Picking
                         </button>
                       )}
                       {activeTab === 'to pick' && order.status === 'Picking' && (
                         <button
-                          onClick={() => handleCompletePicking(order.id)}
+                          onClick={() => handleCompletePicking(order)}
                           className="text-nexus-primary hover:text-nexus-primary font-medium text-xs inline-flex items-center gap-1 px-3 py-1.5 bg-nexus-primary/10 dark:bg-nexus-primary/10 rounded-lg transition-colors"
                         >
                           <PackageCheck size={14} /> Complete Pick
@@ -235,7 +274,7 @@ const OrderProcessingPage = () => {
                       )}
                       {activeTab === 'packing' && (
                         <button
-                          onClick={() => handleCompletePacking(order.id)}
+                          onClick={() => handleCompletePacking(order)}
                           className="text-info hover:text-info font-medium text-xs inline-flex items-center gap-1 px-3 py-1.5 bg-info/10 dark:bg-info/100/10 rounded-lg transition-colors"
                         >
                           <Send size={14} /> Mark Ready

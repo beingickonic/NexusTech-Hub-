@@ -83,7 +83,7 @@ const FinanceNavbar = ({ toggleSidebar }) => {
 
         {/* Page title */}
         <div className="hidden sm:flex items-center gap-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-nexus-success">
+          <span className="text-xs font-bold uppercase tracking-widest text-nexus-primary">
             FINANCE
           </span>
           <span className="text-nexus-textSecondary dark:text-nexus-heading">/</span>
@@ -97,7 +97,7 @@ const FinanceNavbar = ({ toggleSidebar }) => {
           <input
             type="text"
             placeholder="Search finance..."
-            className="w-44 bg-nexus-surface dark:bg-nexus-surface border-none rounded-lg py-1.5 pl-8 pr-3 text-sm outline-none focus:ring-2 transition-all placeholder:text-nexus-textSecondary focus:ring-nexus-success/50"
+            className="w-44 bg-nexus-surface dark:bg-nexus-surface border-none rounded-lg py-1.5 pl-8 pr-3 text-sm outline-none focus:ring-2 transition-all placeholder:text-nexus-textSecondary focus:ring-nexus-primary/50"
           />
           <Search size={14} className="absolute left-2.5 text-nexus-textSecondary" />
         </div>
@@ -115,7 +115,7 @@ const FinanceNavbar = ({ toggleSidebar }) => {
           <Bell size={17} />
           {unread > 0 && (
             <span
-              className="absolute top-1 right-1 w-4 h-4 rounded-full text-white text-[9px] font-bold flex items-center justify-center bg-nexus-success"
+              className="absolute top-1 right-1 w-4 h-4 rounded-full text-white text-[9px] font-bold flex items-center justify-center bg-nexus-primary"
             >
               {unread > 9 ? '9+' : unread}
             </span>
