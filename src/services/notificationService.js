@@ -62,8 +62,9 @@ export const notificationService = {
   },
 
   subscribeToPortalNotifications: (userId, role, callback) => {
+    const uniqueId = Math.random().toString(36).substring(7);
     const channel = supabase
-      .channel('erp-portal-notifications')
+      .channel(`erp-portal-notifications-${uniqueId}`)
       .on('postgres_changes', {
         event: 'INSERT',
         schema: 'public',
@@ -109,8 +110,9 @@ export const notificationService = {
   },
 
   subscribeToNotifications: (userId, callback) => {
+    const uniqueId = Math.random().toString(36).substring(7);
     const channel = supabase
-      .channel('notification-logs')
+      .channel(`notification-logs-${userId}-${uniqueId}`)
       .on('postgres_changes', {
         event: 'INSERT',
         schema: 'public',
