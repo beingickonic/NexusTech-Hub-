@@ -130,7 +130,7 @@ const DispatchPage = ({ defaultStatus = 'all' }) => {
   const fetchDispatches = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await dispatchService.getAllDispatches();
+      const res = await dispatchService.getDispatches();
       if (res.success) {
         setDispatches(res.data || []);
       }
