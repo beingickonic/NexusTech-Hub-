@@ -152,9 +152,9 @@ const DispatchPage = ({ defaultStatus = 'all' }) => {
   const filtered = dispatches.filter(d => {
     const matchesStatus = statusFilter === 'all' || d.status === statusFilter;
     const matchesSearch = !search ||
-      d.dispatch_number?.toLowerCase().includes(search.toLowerCase()) ||
+      d.customer_name?.toLowerCase().includes(search.toLowerCase()) ||
       d.delivery_address?.toLowerCase().includes(search.toLowerCase()) ||
-      d.recipient_name?.toLowerCase().includes(search.toLowerCase());
+      d.customer_phone?.toLowerCase().includes(search.toLowerCase());
     return matchesStatus && matchesSearch;
   });
 
@@ -217,9 +217,9 @@ const DispatchPage = ({ defaultStatus = 'all' }) => {
                   #{d.dispatch_number}
                 </TableCell>
                 <TableCell>
-                  <div className="font-semibold text-nexus-heading text-sm">{d.recipient_name}</div>
+                  <div className="font-semibold text-nexus-heading text-sm">{d.customer_name}</div>
                   <div className="text-xs text-nexus-muted flex items-center gap-1 mt-0.5">
-                    <Phone size={12} /> {d.recipient_phone}
+                    <Phone size={12} /> {d.customer_phone}
                   </div>
                 </TableCell>
                 <TableCell>
